@@ -5,7 +5,7 @@ block append content
         div.row.add-user
             div.panel.panel-default.add-user-panel
                 div.panel-body
-                    form.add-user-form(method='POST', action='/admin/update-user/'+user.id)
+                    form.add-user-form(method='POST', action='/admin/update-user/'+user.id, enctype="application/x-www-form-urlencoded")
                         input(type="hidden", name="_method", value="PUT")
                         div.form-group.add-user-div
                             label.add-user-label(for='login') Login:
