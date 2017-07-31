@@ -1,4 +1,5 @@
 var express = require('express');
+var methodOverride = require('method-override');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -7,6 +8,15 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 
 var app = express();
+
+app.use(bodyParser.urlencoded());
+app.use(methodOverride(function (req, res) {
+    if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+        var method = req.body._method;
+        delete req.body._method;
+        return method;
+    }
+}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

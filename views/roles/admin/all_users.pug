@@ -22,8 +22,8 @@ block append content
                            a(href='/admin/update-user/'+val.id_users)
                                 button.btn.btn-warning(type="submit") Update
                         td
-                            form(method='POST', action='/admin/delete-user/'+val.id_users)
-                                input(type="hidden", name="method",value="DELETE")
+                            form(method='POST', action='/admin/delete-user/'+val.id_users, enctype="application/x-www-form-urlencoded")
+                                input(type="hidden", name="_method",value="DELETE")
                                 button.btn.btn-danger(type="submit") Delete
                     </tr>
     script.
