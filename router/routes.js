@@ -2,12 +2,13 @@
 
 const identification = require('../controllers/IdentificationController');
 const authentication = require('../middleware/authentication');
+const roles = require("../consts/roles");
 
-const admin = require('../controllers/AdminController');
-const moderator = require('../controllers/ModeratorController');
-const executor = require('../controllers/ExecutorController');
-const storeKeeper = require('../controllers/StoreKeeperController');
-const customer = require('../controllers/CustomerController');
+const admin = require('../controllers/AdminController'),
+    moderator = require('../controllers/ModeratorController'),
+    executor = require('../controllers/ExecutorController'),
+    storeKeeper = require('../controllers/StoreKeeperController'),
+    customer = require('../controllers/CustomerController');
 
 module.exports = function (app) {
 
@@ -29,11 +30,11 @@ module.exports = function (app) {
         });
     });
 
-    app.use('/admin', authentication.admin, admin);
-    app.use('/moderator', authentication.moderator, moderator);
-    app.use('/executor', authentication.executor, executor);
-    app.use('/store-keeper', authentication.storeKeeper, storeKeeper);
-    app.use('/customer', authentication.customer, customer);
+    app.use('/admin', authentication(roles.ADMIN), admin);
+    app.use('/moderator', authentication(roles.MODERATOR), moderator);
+    app.use('/executor', authentication(roles.EXECUTOR), executor);
+    app.use('/store-keeper', authentication(roles.STOREKEEPER), storeKeeper);
+    app.use('/customer', authentication(roles.CUSTOMER), customer);
 };
 
 
