@@ -1,0 +1,34 @@
+extends index
+
+block append content
+    div.container
+        div.row.add-user
+            div.panel.panel-default.add-user-panel
+                div.panel-body
+                    form.add-user-form(method='POST', action='/admin/update-user/'+user.id)
+                        div.form-group.add-user-div
+                            label.add-user-label(for='login') Login:
+                                input#login.form-control(type='text', placeholder='Login', name='loginUser', value=user.loginUser)
+                        div.form-group
+                            label.add-user-label(for='first-name') First Name:
+                                input#first-name.form-control(type='text', placeholder='First Name', name='first_name', value=user.firstName)
+                        div.form-group
+                            label.add-user-label(for='last-name') Last Name:
+                                input#last-name.form-control(type='text', placeholder='Last Name', name='last_name', value=user.lastName)
+                        div.form-group
+                            label.add-user-label(for='password') Password:
+                                input#password.form-control(type='Password' name='password', value=user.passwordUser)
+                        div.form-group
+                            label.add-user-label(for='email') Email:
+                                input#email.form-control(type='Email', name='email', value=user.emailUser)
+                        div.form-group
+                            label.add-user-label(for='id_type_user') Role:
+                                select#id_type_user.form-control(name='id_type_user', value=user.idTypeUser)
+                                    option(value = 2) Moderator
+                                    option(value = 3) Executor
+                                    option(value = 4) Store Keeper
+                                    option(value = 5) Customer
+                        div.form-group
+                            label.add-user-label(for='description') Description:
+                                textarea#description.form-control(rows="3", name="description")
+                        button.btn.btn-success(type='submit') Update
