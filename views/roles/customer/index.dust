@@ -1,0 +1,103 @@
+{>"layout" /}
+
+{<body}
+
+{>"layouts/header"/}
+
+<div class="col-lg-12">
+    <div class="panel panel-default">
+        <table class="table">
+            <tbody>
+            <tr>
+                <th colspan="5" class="tittle">Работы</th>
+            </tr>
+            </tbody>
+        </table>
+        <table class="table">
+            <tbody>
+            <tr>
+                <th class="sm tac">№</th>
+                <th class="tac">Наименование</th>
+                <th class="tac md">Кол-во</th>
+                <th class="tac md"></th>
+                <th class="tac md">Всего</th>
+            </tr>
+            <tr>
+                <th scope="row" class="tac">1</th>
+                <td>Диагностика ходовой</td>
+                <td class="tac">1</td>
+                <td></td>
+                <td class="tac">500 грн</td>
+            </tr>
+            <tr>
+                <th scope="row" class="tac">2</th>
+                <td>Замена масла в двигателе</td>
+                <td class="tac">1</td>
+                <td></td>
+                <td class="tac">250 грн</td>
+            </tr>
+            <tr>
+                <th colspan="2" class="tar">Итого работ:</th>
+                <td class="tac">2</td>
+                <th class="tac">На сумму:</th>
+                <td class="tac">750 грн</td>
+            </tr>
+            </tbody>
+        </table>
+        <table class="table">
+            <tbody>
+            <tr>
+                <th colspan="5" class="buffer"></th>
+            </tr>
+            <tr>
+                <th colspan="5" class="tittle">Запасные Части</th>
+            </tr>
+            </tbody>
+        </table>
+        <table class="table">
+            <tbody>
+            <tr>
+                <th class="sm tac">№</th>
+                <th class="tac">Наименование</th>
+                <th class="tac md">Кол-во</th>
+                <th class="tac md"></th>
+                <th class="tac md">Всего</th>
+            </tr>
+            <tr>
+                <th scope="row" class="tac">1</th>
+                <td>Фильтр масляный</td>
+                <td class="tac">1</td>
+                <td></td>
+                <td class="tac">100 грн</td>
+            </tr>
+            <tr>
+                <th scope="row" class="tac">2</th>
+                <td>Масло моторное Shell Helix Ultra 5W30</td>
+                <td class="tac">1</td>
+                <td></td>
+                <td class="tac">300 грн</td>
+            </tr>
+            <tr>
+                <th colspan="2" class="tar">Итого материалов:</th>
+                <td class="tac">2</td>
+                <th class="tac">На сумму:</th>
+                <td class="tac">400 грн</td>
+            </tr>
+            </tbody>
+        </table>
+        <table  class="table">
+            <tr>
+                <th colspan="5" class="buffer"></th>
+            </tr>
+        </table>
+        <table class="table">
+            <tbody>
+            <tr class="result">
+                <th class="tar">Итого по заказ-наряду:</th>
+                <td class="tac md">1150 грн</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{/body}

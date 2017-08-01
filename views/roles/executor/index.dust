@@ -1,0 +1,58 @@
+{>"layout" /}
+
+{<body}
+
+{>"layouts/header"/}
+
+<div class="col-lg-12">
+    <div class="panel panel-default">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="tac" style="width: 50px">ID</th>
+                <th class="tac">Задача</th>
+                <th class="tac">Детали</th>
+                <th class="tac md">Дата</th>
+                <th class="tac" style="width: 60px;"></th>
+                <th class="tac" style="width: 60px;"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th class="tac" scope="row">1</th>
+                <td>Диагностика ходовой</td>
+                <td class="tac">—</td>
+                <td class="tac">28.07.2017</td>
+                <td>
+                    <button class="btn btn-success edit-recipe" title="Выполнить" style="outline: none;">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"/>
+                    </button>
+                </td>
+                <td>
+                    <button class="btn btn-danger edit-recipe" title="Нет деталей" style="outline: none;">
+                        <span class="glyphicon glyphicon-minus" aria-hidden="true"/>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <th class="tac" scope="row">2</th>
+                <td>Замена масла в двигателе</td>
+                <td>Фильтр масляный Toyota 00279-1QT5W, Моторное масло Toyota 00279-1QT5W</td>
+                <td class="tac">28.07.2017</td>
+                <td>
+                    <button class="btn btn-success edit-recipe" title="Выполнить" style="outline: none;">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"/>
+                    </button>
+                </td>
+                <td>
+                    <button class="btn btn-danger edit-recipe" title="Нет деталей" style="outline: none;">
+                        <span class="glyphicon glyphicon-minus" aria-hidden="true"/>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{/body}

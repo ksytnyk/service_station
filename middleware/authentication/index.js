@@ -8,6 +8,3 @@ module.exports = function (role) {
             return res.redirect('/');
     };
 };
-
-
-

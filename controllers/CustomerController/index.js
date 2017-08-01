@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
     if (req.session.user) {
-        res.render('roles/customer/index');
+        res.render('roles/customer');
     } else {
         res.redirect('/');
     }

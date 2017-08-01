@@ -16,10 +16,10 @@ require('../passport/config');
 module.exports = function (app) {
 
     app.get('/', (req, res) => {
-        res.render('main');
+        res.render('layouts/login');
     });
 
-    app.post('/', passport.authenticate('local', {successRedirect: '/auth', failureRedirect: '/'}));
+    app.post('/', passport.authenticate('local', {successRedirect: '/auth', failureRedirect: '/', failureFlash: true}));
 
     app.route('/auth').all(identification);
 

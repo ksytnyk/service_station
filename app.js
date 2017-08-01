@@ -7,6 +7,10 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var passport = require('passport');
+var consolidate = require('consolidate');
+var dust = require('dustjs-helpers');
+var expressValidator = require('express-validator');
+var flash = require('connect-flash');
 
 var app = express();
 
@@ -20,8 +24,9 @@ app.use(methodOverride((req, res) => {
 }));
 
 // view engine setup
+app.engine('dust', consolidate.dust);
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+app.set('view engine', 'dust');
 
 //========= SESSION =========
 
@@ -33,6 +38,27 @@ app.use(session({
 
 //===========================
 
+// Express Validator
+app.use(expressValidator({
+    errorFormatter: function(param, msg, value) {
+        var namespace = param.split('.');
+        var root = namespace.shift();
+        var formParam = root;
+
+        while(namespace.length) {
+            formParam += '[' + namespace.shift() + ']';
+        }
+        return {
+            param: formParam,
+            msg: msg,
+            value: value
+        };
+    }
+}));
+
+// Connect Flash
+app.use(flash());
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
@@ -43,6 +69,16 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //========== ROUTES ==========
+
+app.use(function(req, res, next) {
+    res.locals.success_msg = req.flash('success_msg');
+    res.locals.success_alert = req.flash('success_alert');
+    res.locals.error_msg = req.flash('error_msg');
+    res.locals.error = req.flash('error');
+    res.locals.error_alert = req.flash('error_alert');
+    res.locals.user = req.user || null;
+    next();
+});
 
 require("./router/routes")(app);
 
@@ -57,6 +93,8 @@ app.use(function (req, res, next) {
 
 // error handler
 app.use(function (err, req, res, next) {
+    res.locals.user = req.user || null;
+
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};

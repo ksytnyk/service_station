@@ -1,24 +1,11 @@
 "use strict";
 
-const Sequelize = require('sequelize'), sequelize = require('../connection');
+const Sequelize = require('sequelize');
+const sequelize = require('../connection');
 
 const TypeUser = require('../TypeUser');
 
 const describeUserTable = {
-    loginUser: {
-        type: Sequelize.STRING,
-        field: 'login_user',
-        unique: true
-    },
-    passwordUser: {
-        type: Sequelize.STRING,
-        field: 'password_user',
-    },
-    emailUser: {
-        type: Sequelize.STRING,
-        field: 'email_user',
-        unique: true
-    },
     firstName: {
         type: Sequelize.STRING,
         field: 'first_name'
@@ -27,9 +14,35 @@ const describeUserTable = {
         type: Sequelize.STRING,
         field: 'last_name'
     },
+    companyUser: {
+        type: Sequelize.STRING,
+        field: 'company_user',
+    },
+    addressUser: {
+        type: Sequelize.STRING,
+        field: 'address_user',
+    },
+    phoneUser: {
+        type: Sequelize.STRING,
+        field: 'phone_user',
+    },
+    loginUser: {
+        type: Sequelize.STRING,
+        field: 'login_user',
+        unique: true
+    },
+    emailUser: {
+        type: Sequelize.STRING,
+        field: 'email_user',
+        unique: true
+    },
     idTypeUser: {
         type: Sequelize.INTEGER,
         field: 'id_type_user'
+    },
+    passwordUser: {
+        type: Sequelize.STRING,
+        field: 'password_user',
     }
 };
 
@@ -97,17 +110,31 @@ module.exports = {
         });
     },
 
+    getModeratorUsers: function () {
+        return new Promise((resolve, reject) => {
+            User.findAll({
+                where: {
+                    id_type_user: 5
+                },
+                include: [
+                    {model: TypeUser}
+                ]
+            })
+                .then(users => {
+                    resolve(users);
+                })
+                .catch(err => {
+                    console.warn(err);
+                    reject(err);
+                });
+
+        });
+    },
+
     createUser: function (user) {
         return new Promise((resolve, reject) => {
             User
-                .build({
-                    loginUser: user.login_user,
-                    firstName: user.first_name,
-                    lastName: user.last_name,
-                    passwordUser: user.password,
-                    emailUser: user.email,
-                    idTypeUser: Number(user.id_type_user)
-                })
+                .build(user)
                 .save()
                 .then(result => {
                     resolve(result);

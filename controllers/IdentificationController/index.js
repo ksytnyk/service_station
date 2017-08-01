@@ -10,6 +10,6 @@ function identification(req, res) {
     } else {
         res.redirect('/');
     }
-};
+}
 
 module.exports = identification;
