@@ -6,10 +6,11 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var passport = require('passport');
 
 var app = express();
 
-app.use(bodyParser.urlencoded());
+//app.use(bodyParser.urlencoded());
 app.use(methodOverride(function (req, res) {
     if (req.body && typeof req.body === 'object' && '_method' in req.body) {
         var method = req.body._method;
@@ -37,6 +38,8 @@ app.use(session({
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 

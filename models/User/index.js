@@ -49,6 +49,8 @@ User.belongsTo(TypeUser, {foreignKey: 'id_type_user'});
 
 module.exports = {
 
+    userModel: User,
+
     getCurrentUser: function (params) {
         let queryParams;
 

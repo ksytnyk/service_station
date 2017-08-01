@@ -3,6 +3,7 @@
 const identification = require('../controllers/IdentificationController');
 const authentication = require('../middleware/authentication');
 const roles = require("../consts/roles");
+const passport = require('passport');
 
 const admin = require('../controllers/AdminController'),
     moderator = require('../controllers/ModeratorController'),
@@ -10,19 +11,17 @@ const admin = require('../controllers/AdminController'),
     storeKeeper = require('../controllers/StoreKeeperController'),
     customer = require('../controllers/CustomerController');
 
+require('../passport/config');
+
 module.exports = function (app) {
 
-    app.route('/')
-        .get(function (req, res) {
-            if (req.session.user) {
-                res.redirect('/auth');
-            } else {
-                res.render('main');
-            }
-        });
+    app.get('/', (req, res) => {
+        res.render('main');
+    });
 
-    app.route('/auth')
-        .all(identification);
+    app.post('/', passport.authenticate('local', {successRedirect: '/auth', failureRedirect: '/'}));
+
+    app.route('/auth').all(identification);
 
     app.route("/logout").get((req, res) => {
         req.session.destroy(() => {
