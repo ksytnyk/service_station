@@ -10,9 +10,9 @@
             <thead>
             <tr>
                 <th class="tac sm">ID</th>
-                <th>Логин</th>
-                <th>Имя</th>
-                <th>Фамилия</th>
+                <th class="tac">Логин</th>
+                <th class="tac">Имя</th>
+                <th class="tac">Фамилия</th>
                 <th class="sm"></th>
                 <th class="sm"></th>
             </tr>
@@ -20,15 +20,17 @@
             <tbody>
             {#users}
             <tr>
-                <th class="tac" scope="row">{id}</th>
-                <th><a class="info-user" data-toggle="modal" data-target="#infoUserFormModal" data-id="{id}"
+                <th class="tac pr" scope="row">{id}</th>
+                <th class="tac pr">
+                    <a class="info-user" data-toggle="modal" data-target="#infoUserFormModal" data-id="{id}"
                        data-name="{firstName}" data-surname="{lastName}" data-company="{companyUser}"
                        data-address="{addressUser}" data-phone="{phoneUser}" data-login="{loginUser}"
                        data-email="{emailUser}" data-role="{type_user.dataValues.nameTypeUser}" data-password="{passwordUser}"
-                       title="Информация о пользователе" style="cursor: pointer;">{loginUser}</a>
+                       title="Информация о пользователе" style="cursor: pointer;">{loginUser}
+                    </a>
                 </th>
-                <td>{firstName}</td>
-                <td>{lastName}</td>
+                <td class="tac pr">{firstName}</td>
+                <td class="tac pr">{lastName}</td>
                 <td class="tac">
                     <button class="btn btn-default update-user" type="submit"
                             data-toggle="modal" data-target="#updateUserFormModal" data-id="{id}"

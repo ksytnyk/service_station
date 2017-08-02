@@ -7,9 +7,9 @@ body {
 	margin: 0;
 	padding: 0;
 }
-/*.modal-open .white_block {*/
-	/*margin-left: -8px;*/
-/*}*/
+.modal-open {
+	/*margin-right: -17px;*/
+}
 
 /* LOGIN */
 .login {
@@ -79,7 +79,7 @@ body {
 .nav {
 	padding: 0;
 	font-size: 15px;
-	margin: 20px 0 15px;
+	margin: 20px 0;
 }
 .nav > li > a {
 	color: #fff;
@@ -125,7 +125,7 @@ body {
 	outline: none;
 }
 
-/* ADMIN  MANAGER  CLIENT  STOREKEEPER ENGINEER*/
+/* MODAL WINDOWS */
 .create .width,
 .update .width,
 .delete .width {
@@ -135,10 +135,32 @@ body {
 .info_form .panel {
 	margin: 0;
 }
+
+@media (min-width: 768px) {
+	.create_form,
+	.update_form,
+	.info_form{
+		margin-top: 75px;
+	}
+	.delete_form {
+		margin-top: 150px;
+		width: 450px;
+	}
+}
+
+/* ADMIN  MODERATOR  CUSTOMER  STOREKEEPER  EXECUTOR */
 .panel {
+	margin-top: 5px;
+	border: none;
+	box-shadow: none;
+}
+.panel div.dataTables_wrapper div.dataTables_filter input {
+	font-size: 14px;
+	width: 200px;
+}
+table.dataTable {
 	border: 1px solid #ccc;
-	border-right: none;
-	border-left: none;
+	border-radius: 3px;
 }
 .table {
 	table-layout: fixed;
@@ -160,7 +182,10 @@ thead {
 	vertical-align: middle;
 	border-top: 1px solid #ccc;
 	border-right: 1px solid #ccc;
-	border-left: 1px solid #ccc;
+}
+.table tr td:last-child,
+.table tr th:last-child {
+	border-right: none;
 }
 .table > thead > tr > th {
     border-bottom: 1px solid #ccc;
@@ -186,6 +211,9 @@ thead {
 .table .md {
 	width: 100px;
 }
+.table .pr {
+	padding-right: 30px;
+}
 .table .buffer {
 	background-color: #fff;
 	border-left: none;
@@ -197,20 +225,18 @@ thead {
 .table .result {
 	background-color: #ddd;
 }
-@media (min-width: 768px) {
-	.create_form,
-	.update_form,
-	.info_form{
-		margin-top: 75px;
-	}
-	.delete_form {
-		margin-top: 150px;
-	    width: 450px;
-	}
-}
 
 /* USER */
 .role5 .name {
 	background-color: #333;
 	float: left;
+}
+.role5 .panel {
+	margin-top: 5px;
+	border: 1px solid #ccc;
+}
+.role5 table.dataTable {
+	margin: 0 !important;
+	border-radius: 0 !important;
+	border: none !important;
 }
