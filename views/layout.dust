@@ -5,8 +5,8 @@
     <title>Engine Station</title>
     <link rel="shortcut icon" href="/favicon.png" type="image/png">
     <link rel="stylesheet" href="/css/bootstrap.css">
-    <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <div class="container">
@@ -17,9 +17,9 @@
 </div>
 <script src="/js/jquery-3.2.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
-<script src="/js/main.js"></script>
 <script src="/js/jquery.dataTables.min.js"></script>
 <script src="/js/dataTables.bootstrap.min.js"></script>
 <script src="/js/bootstrap-formhelpers-phone.js"></script>
+<script src="/js/main.js"></script>
 </body>
 </html>

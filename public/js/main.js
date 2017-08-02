@@ -1,5 +1,11 @@
 $(document).ready(function () {
 
+    $('.modal-window-link').on('click', function () {
+        if (document.body.offsetHeight > window.innerHeight) {
+            $('.white_block').outerWidth( +window.innerWidth - 17 );
+        }
+    });
+
     $('.update-user').on('click', function () {
         if ($(this).data('current') === 1) {
             $('#update-form-id').attr('action', ('/admin/update-user/' + $(this).data('id')));
