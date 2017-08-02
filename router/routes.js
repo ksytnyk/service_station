@@ -34,6 +34,9 @@ module.exports = function (app) {
     app.use('/executor', authentication(roles.EXECUTOR), executor);
     app.use('/store-keeper', authentication(roles.STOREKEEPER), storeKeeper);
     app.use('/customer', authentication(roles.CUSTOMER), customer);
+
+    app.use((req, res) => {
+        if (req.isAuthenticated()) res.redirect('/auth');
+        else res.redirect('/');
+    });
 };
-
-
