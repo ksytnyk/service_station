@@ -47,4 +47,6 @@ $(document).ready(function () {
         $('.hide_alert').trigger('click');
     }, 5000);
 
+    $('.table').DataTable();
+
 });

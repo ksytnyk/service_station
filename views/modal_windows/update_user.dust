@@ -29,7 +29,7 @@
                     </div>
                     <div class="form-group col-lg-6">
                         <label>Контактный номер</label>
-                        <input type="text" class="form-control" id="update-form-phone" name="phoneUser">
+                        <input type="text" class="form-control input-medium bfh-phone" data-format="+380 dd ddd dddd" id="update-form-phone" name="phoneUser">
                     </div>
                     <div class="form-group col-lg-6">
                         <label>Логин</label>
