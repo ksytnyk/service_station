@@ -1,0 +1,29 @@
+{
+  "name": "skysoft-sequelize",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "~1.17.1",
+    "connect-flash": "^0.1.1",
+    "consolidate": "^0.14.5",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.3",
+    "dust": "^0.3.0",
+    "dustjs-helpers": "^1.7.3",
+    "dustjs-linkedin": "^2.7.5",
+    "express": "^4.15.3",
+    "express-session": "^1.15.4",
+    "express-validator": "^3.2.1",
+    "method-override": "^2.3.9",
+    "morgan": "~1.8.1",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "pg": "^6.4.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "3.0.0",
+    "serve-favicon": "~2.4.2"
+  }
+}

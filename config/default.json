@@ -1,0 +1,18 @@
+{
+  "app": {
+    "port": 3000
+  },
+  "postgreSQL": {
+    "dialect": "postgres",
+    "username": "postgres",
+    "password": "",
+    "host": "127.0.0.1",
+    "port": "5432",
+    "database": "postgres",
+    "pool": {
+      "max": 5,
+      "min": 0,
+      "idle": 10000
+    }
+  }
+}

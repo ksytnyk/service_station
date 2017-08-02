@@ -1,0 +1,22 @@
+{+header}
+<nav class="col-lg-12 navbar-fixed-top white_block">
+    <div class="container">
+        <ul class="col-lg-12 navbar nav navbar-nav navbar-inverse role{user.dataValues.idTypeUser}">
+            {@lt key=typeUser value=3}
+                <li class="active"><a href="#">Пользователи</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#createUserFormModal">Добавить пользователя</a></li>
+                <!--<li><a href="#">Заказы</a></li>-->
+                <!--<li><a href="#" class="add_link" data-toggle ="modal" data-target="#addTaskFormModal">Добавить заказ</a></li>-->
+            {/lt}
+            {@eq key=typeUser value=3}
+                <li class="active"><a href="#">Задачи</a></li>
+            {/eq}
+            {@eq key=typeUser value=4}
+                <li class="active"><a href="#">Недостающие детали</a></li>
+            {/eq}
+            <li class="logout pull-right" role="presentation"><a href="/logout" class="last">Выйти</a></li>
+            <li class="name"><a>{user.dataValues.firstName} {user.dataValues.lastName}</a></li>
+        </ul>
+    </div>
+</nav>
+{/header}
