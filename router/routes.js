@@ -16,7 +16,8 @@ require('../passport/config');
 module.exports = function (app) {
 
     app.get('/', (req, res) => {
-        res.render('layouts/login');
+        if (req.isAuthenticated()) res.redirect('auth');
+        else res.render('layouts/login');
     });
 
     app.post('/', passport.authenticate('local', {successRedirect: '/auth', failureRedirect: '/', failureFlash: true}));
@@ -35,8 +36,5 @@ module.exports = function (app) {
     app.use('/store-keeper', authentication(roles.STOREKEEPER), storeKeeper);
     app.use('/customer', authentication(roles.CUSTOMER), customer);
 
-    app.use((req, res) => {
-        if (req.isAuthenticated()) res.redirect('/auth');
-        else res.redirect('/');
-    });
+    app.use(authentication());
 };

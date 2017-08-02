@@ -5,10 +5,10 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    if (req.session.user) {
+    if (req.session.passport.user) {
         User.getModeratorUsers()
             .then(users => {
-                res.render('roles/moderator', {users: users, typeUser: req.session.user});
+                res.render('roles/moderator', {users: users, typeUser: req.session.passport.user.id_type_user});
             })
             .catch(err => {
                 console.warn(err);
