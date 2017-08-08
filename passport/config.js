@@ -7,15 +7,11 @@ passport.use(new LocalStrategy({
         passwordField: 'password'
     },
     function (login, password, done) {
-        User.userModel
-            .findOne({
-                where: {
-                    login_user: login
-                }
-            })
+        User.getCurrentUser(login, password)
             .then(function (res) {
                 if (res) {
                     if (res.passwordUser === password) {
+                        console.info('Данные из паспорта:', res);
                         return done(null, res);
                     } else {
                         return done(null, false, {message: 'Неверный пароль.'})
@@ -31,7 +27,8 @@ passport.serializeUser(function (user, done) {
 });
 
 passport.deserializeUser(function (user, done) {
-    User.userModel.findById(user.id)
+    User
+        .getUserById(user.id)
         .then(function (res) {
             done(null, res);
         })

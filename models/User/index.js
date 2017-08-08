@@ -62,34 +62,34 @@ User.belongsTo(TypeUser, {foreignKey: 'id_type_user'});
 
 module.exports = {
 
-    userModel: User,
-
-    getCurrentUser: function (params) {
-        let queryParams;
-
-        if ("id_user" in params) {
-            queryParams = {id: params.id_user};
-        } else if ("login" in params && "password" in params) {
-            queryParams = {login_user: params.login, password_user: params.password};
-        }
-
+    getUserById: function (id) {
         return new Promise((resolve, reject) => {
-            User.find({
-                where: queryParams,
-                include: [
-                    {model: TypeUser}
-                ]
-            }).then((currentUser) => {
-                if (currentUser) {
-                    resolve(currentUser.dataValues);
-                } else {
-                    throw new Error("Not find user.");
-                }
-            }).catch(err => {
-                console.warn(err);
-                reject(err);
-            });
-        });
+            User
+                .findById(id)
+                .then(function (res) {
+                    resolve(res);
+                })
+                .catch(function (err) {
+                    reject(err);
+                })
+        })
+    },
+
+    getCurrentUser: function (login) {
+        return new Promise((resolve, reject) => {
+            User
+                .findOne({
+                    where: {
+                        login_user: login
+                    }
+                })
+                .then(function (res) {
+                    resolve(res)
+                })
+                .catch(function (err) {
+                    reject(err)
+                })
+        })
     },
 
     getAllUsers: function () {
