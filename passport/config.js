@@ -10,7 +10,7 @@ passport.use(new LocalStrategy({
         User.getCurrentUser(login, password)
             .then(function (res) {
                 if (res) {
-                    if (res.passwordUser === password) {
+                    if (res.userPassword === password) {
                         console.info('Данные из паспорта:', res);
                         return done(null, res);
                     } else {

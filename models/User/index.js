@@ -3,46 +3,46 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../connection');
 
-const TypeUser = require('../TypeUser');
+const UserType = require('../UserType');
 
 const describeUserTable = {
-    firstName: {
+    userName: {
         type: Sequelize.STRING,
-        field: 'first_name'
+        field: 'user_name'
     },
-    lastName: {
+    userSurname: {
         type: Sequelize.STRING,
-        field: 'last_name'
+        field: 'user_surname'
     },
-    companyUser: {
-        type: Sequelize.STRING,
-        field: 'company_user',
+    userCompanyName: {
+        type: Sequelize.TEXT,
+        field: 'user_company_name',
     },
-    addressUser: {
+    userAddress: {
         type: Sequelize.STRING,
-        field: 'address_user',
+        field: 'user_address',
     },
-    phoneUser: {
+    userPhone: {
         type: Sequelize.STRING,
-        field: 'phone_user',
+        field: 'user_phone',
     },
-    loginUser: {
+    userLogin: {
         type: Sequelize.STRING,
-        field: 'login_user',
+        field: 'user_login',
         unique: true
     },
-    emailUser: {
+    userEmail: {
         type: Sequelize.STRING,
-        field: 'email_user',
+        field: 'user_email',
         unique: true
     },
-    idTypeUser: {
+    userTypeID: {
         type: Sequelize.INTEGER,
-        field: 'id_type_user'
+        field: 'user_type_id'
     },
-    passwordUser: {
+    userPassword: {
         type: Sequelize.STRING,
-        field: 'password_user',
+        field: 'user_password',
     }
 };
 
@@ -51,14 +51,39 @@ const optionUserTable = {
     indexes: [
         {
             unique: true,
-            fields: ['login_user', 'email_user']
+            fields: ['user_login', 'user_email']
         }
     ]
 };
 
 let User = sequelize.define('users', describeUserTable, optionUserTable);
 
-User.belongsTo(TypeUser, {foreignKey: 'id_type_user'});
+User.belongsTo(UserType, {foreignKey: 'user_type_id'});
+
+User.sync({force: true}).then(() => {
+
+    User.bulkCreate([
+        {
+            userLogin: 'admin',
+            userEmail: 'admin@admin.com',
+            userPassword: '11111',
+            userTypeID: '1'
+        },
+        {
+            userLogin: 'm',
+            userEmail: 'm@admin.com',
+            userPassword: '11',
+            userTypeID: '2'
+        },
+        {
+            userLogin: 'c',
+            userEmail: 'c@admin.com',
+            userPassword: '11',
+            userTypeID: '5'
+        }
+    ]).catch(err => console.log(err));
+});
+
 
 module.exports = {
 
@@ -80,7 +105,7 @@ module.exports = {
             User
                 .findOne({
                     where: {
-                        login_user: login
+                        user_login: login
                     }
                 })
                 .then(function (res) {
@@ -94,11 +119,12 @@ module.exports = {
 
     getAllUsers: function () {
         return new Promise((resolve, reject) => {
-            User.findAll({
-                include: [
-                    {model: TypeUser}
-                ]
-            })
+            User
+                .findAll({
+                    include: [
+                        {model: UserType}
+                    ]
+                })
                 .then(users => {
                     resolve(users);
                 })
@@ -112,14 +138,15 @@ module.exports = {
 
     getModeratorUsers: function () {
         return new Promise((resolve, reject) => {
-            User.findAll({
-                where: {
-                    id_type_user: 5
-                },
-                include: [
-                    {model: TypeUser}
-                ]
-            })
+            User
+                .findAll({
+                    where: {
+                        user_type_id: 5
+                    },
+                    include: [
+                        {model: UserType}
+                    ]
+                })
                 .then(users => {
                     resolve(users);
                 })
@@ -127,7 +154,6 @@ module.exports = {
                     console.warn(err);
                     reject(err);
                 });
-
         });
     },
 
@@ -146,11 +172,12 @@ module.exports = {
         });
     },
 
-    updateUser: function (idUser, params) {
+    updateUser: function (userID, params) {
         return new Promise((resolve, reject) => {
-            User.update(
-                params,
-                {where: {id: idUser}})
+            User
+                .update(
+                    params,
+                    {where: {id: userID}})
                 .then(result => {
                     resolve(result);
                 })
@@ -163,11 +190,12 @@ module.exports = {
 
     deleteUser: function (idUser) {
         return new Promise((resolve, reject) => {
-            User.destroy({
-                where: {
-                    id: Number(idUser)
-                }
-            }).then(result => {
+            User
+                .destroy({
+                    where: {
+                        id: Number(idUser)
+                    }
+                }).then(result => {
                 resolve(result);
             }).catch(err => {
                 console.warn(err);

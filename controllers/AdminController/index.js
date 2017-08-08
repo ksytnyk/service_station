@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
     if (req.session.passport.user) {
         User.getAllUsers()
             .then(users => {
-                res.render('roles/admin', {users: users, typeUser: req.session.passport.user.id_type_user});
+                res.render('roles/admin', {users: users, typeUser: req.session.passport.user.userTypeID});
             })
             .catch(err => {
                 console.warn(err);
@@ -20,27 +20,28 @@ router.get('/', (req, res) => {
 });
 
 router.post('/create-user', function (req, res) {
-    var firstName = req.body.firstName;
-    var lastName = req.body.lastName;
-    var companyUser = req.body.companyUser;
-    var addressUser = req.body.addressUser;
-    var phoneUser = req.body.phoneUser;
-    var loginUser = req.body.loginUser;
-    var emailUser = req.body.emailUser;
-    var idTypeUser = req.body.idTypeUser;
-    var passwordUser = req.body.passwordUser;
+
+    let userName = req.body.userName;
+    let userSurname = req.body.userSurname;
+    let userCompanyName = req.body.userCompanyName;
+    let userAddress = req.body.userAddress;
+    let userPhone = req.body.userPhone;
+    let userLogin = req.body.userLogin;
+    let userEmail = req.body.userEmail;
+    let userTypeID = req.body.userTypeID;
+    let userPassword = req.body.userPassword;
 
     // Validation
-    req.checkBody('firstName', '"Имя" - обязательное поле.').notEmpty();
-    req.checkBody('lastName', '"Фамилия" - обязательное поле.').notEmpty();
-    req.checkBody('companyUser', '"Компания" - обязательное поле.').notEmpty();
-    req.checkBody('addressUser', '"Адрес" - обязательное поле.').notEmpty();
-    req.checkBody('phoneUser', '"Контактный номер" - обязательное поле.').notEmpty();
-    req.checkBody('loginUser', '"Логин" - обязательное поле.').notEmpty();
-    req.checkBody('emailUser', '"Email" - обязательное поле.').notEmpty();
-    req.checkBody('emailUser', '"Email" - некорректное поле.').isEmail();
-    req.checkBody('idTypeUser', '"Роль" - обязательное поле.').notEmpty();
-    req.checkBody('passwordUser', '"Пароль" - обязательное поле.').notEmpty();
+    req.checkBody('userName', '"Имя" - обязательное поле.').notEmpty();
+    req.checkBody('userSurname', '"Фамилия" - обязательное поле.').notEmpty();
+    req.checkBody('userCompanyName', '"Компания" - обязательное поле.').notEmpty();
+    req.checkBody('userAddress', '"Адрес" - обязательное поле.').notEmpty();
+    req.checkBody('userPhone', '"Контактный номер" - обязательное поле.').notEmpty();
+    req.checkBody('userLogin', '"Логин" - обязательное поле.').notEmpty();
+    req.checkBody('userEmail', '"Email" - обязательное поле.').notEmpty();
+    req.checkBody('userEmail', '"Email" - некорректное поле.').isEmail();
+    req.checkBody('userTypeID', '"Роль" - обязательное поле.').notEmpty();
+    req.checkBody('userPassword', '"Пароль" - обязательное поле.').notEmpty();
 
     var errors = req.validationErrors();
 
@@ -65,27 +66,27 @@ router.post('/create-user', function (req, res) {
 });
 
 router.put('/update-user/:id', function (req, res) {
-    var firstName = req.body.firstName;
-    var lastName = req.body.lastName;
-    var companyUser = req.body.companyUser;
-    var addressUser = req.body.addressUser;
-    var phoneUser = req.body.phoneUser;
-    var loginUser = req.body.loginUser;
-    var emailUser = req.body.emailUser;
-    var idTypeUser = req.body.idTypeUser;
-    var passwordUser = req.body.passwordUser;
+    let userName = req.body.userName;
+    let userSurname = req.body.userSurname;
+    let userCompanyName = req.body.userCompanyName;
+    let userAddress = req.body.userAddress;
+    let userPhone = req.body.userPhone;
+    let userLogin = req.body.userLogin;
+    let userEmail = req.body.userEmail;
+    let userTypeID = req.body.userTypeID;
+    let userPassword = req.body.userPassword;
 
     // Validation
-    req.checkBody('firstName', '"Имя" - обязательное поле.').notEmpty();
-    req.checkBody('lastName', '"Фамилия" - обязательное поле.').notEmpty();
-    req.checkBody('companyUser', '"Компания" - обязательное поле.').notEmpty();
-    req.checkBody('addressUser', '"Адрес" - обязательное поле.').notEmpty();
-    req.checkBody('phoneUser', '"Контактный номер" - обязательное поле.').notEmpty();
-    req.checkBody('loginUser', '"Логин" - обязательное поле.').notEmpty();
-    req.checkBody('emailUser', '"Email" - обязательное поле.').notEmpty();
-    req.checkBody('emailUser', '"Email" - некорректное поле.').isEmail();
-    req.checkBody('idTypeUser', '"Роль" - обязательное поле.').notEmpty();
-    req.checkBody('passwordUser', '"Пароль" - обязательное поле.').notEmpty();
+    req.checkBody('userName', '"Имя" - обязательное поле.').notEmpty();
+    req.checkBody('userSurname', '"Фамилия" - обязательное поле.').notEmpty();
+    req.checkBody('userCompanyName', '"Компания" - обязательное поле.').notEmpty();
+    req.checkBody('userAddress', '"Адрес" - обязательное поле.').notEmpty();
+    req.checkBody('userPhone', '"Контактный номер" - обязательное поле.').notEmpty();
+    req.checkBody('userLogin', '"Логин" - обязательное поле.').notEmpty();
+    req.checkBody('userEmail', '"Email" - обязательное поле.').notEmpty();
+    req.checkBody('userEmail', '"Email" - некорректное поле.').isEmail();
+    req.checkBody('userTypeID', '"Роль" - обязательное поле.').notEmpty();
+    req.checkBody('userPassword', '"Пароль" - обязательное поле.').notEmpty();
 
     var errors = req.validationErrors();
 

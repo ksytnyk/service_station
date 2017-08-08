@@ -23,20 +23,20 @@
                 <th class="tac pr" scope="row">{id}</th>
                 <th class="tac pr">
                     <a class="info-user" data-toggle="modal" data-target="#infoUserFormModal" data-id="{id}"
-                       data-name="{firstName}" data-surname="{lastName}" data-company="{companyUser}"
-                       data-address="{addressUser}" data-phone="{phoneUser}" data-login="{loginUser}"
-                       data-email="{emailUser}" data-role="{type_user.dataValues.nameTypeUser}" data-password="{passwordUser}"
-                       title="Информация о пользователе" style="cursor: pointer;">{loginUser}
+                       data-name="{userName}" data-surname="{userSurname}" data-company="{userCompanyName}"
+                       data-address="{userAddress}" data-phone="{userPhone}" data-login="{userLogin}"
+                       data-email="{userEmail}" data-role="{user_type.dataValues.userTypeName}" data-password="{userPassword}"
+                       title="Информация о пользователе" style="cursor: pointer;">{userLogin}
                     </a>
                 </th>
-                <td class="tac pr">{firstName}</td>
-                <td class="tac pr">{lastName}</td>
+                <td class="tac pr">{userName}</td>
+                <td class="tac pr">{userSurname}</td>
                 <td class="tac">
                     <button class="btn btn-default update-user" type="submit"
                             data-toggle="modal" data-target="#updateUserFormModal" data-id="{id}"
-                            data-name="{firstName}" data-surname="{lastName}" data-company="{companyUser}"
-                            data-address="{addressUser}" data-phone="{phoneUser}" data-login="{loginUser}"
-                            data-email="{emailUser}" data-role="{idTypeUser}" data-password="{passwordUser}"
+                            data-name="{userName}" data-surname="{userSurname}" data-company="{userCompanyName}"
+                            data-address="{userAddress}" data-phone="{userPhone}" data-login="{userLogin}"
+                            data-email="{userEmail}" data-role="{userTypeID}" data-password="{userPassword}"
                             title="Редактировать" style="outline: none;">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"/>
                     </button>
@@ -44,7 +44,7 @@
                 <td class="tac">
                     <button class="btn btn-default btn-danger delete-user" type="submit"
                             data-toggle="modal" data-target="#deleteUserFormModal" data-id="{id}"
-                            data-login="{loginUser}" title="Удалить" style="outline: none;">
+                            data-login="{userLogin}" title="Удалить" style="outline: none;">
                         <span class="glyphicon glyphicon-remove" aria-hidden="true"/>
                     </button>
                 </td>
