@@ -102,4 +102,10 @@ router.get('/create-request', function (req, res) {
     res.render('roles/admin_moderator/create-request', {typeUser: req.session.passport.user.userTypeID});
 });
 
+router.get('/update-request', function (req, res) {
+    User.getAllUsers().then(function (users) {
+        res.render('roles/admin_moderator/update_request', {users:users,typeUser: req.session.passport.user.userTypeID});
+    })
+});
+
 module.exports = router;

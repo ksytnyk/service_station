@@ -59,12 +59,11 @@
                         </table>
                     </td>
                     <td class="tac">
-                        <a class="btn btn-default" title="Редактировать заказ" data-toggle="modal"
-                           data-target="#updateTaskFormModal" style="outline: none;">
+                        <a href="update-request" class="btn btn-default" title="Редактировать заказ" style="outline: none;">
                             <span class="glyphicon glyphicon-pencil" aria-hidden="true"/>
                         </a>
-                        <a class="btn btn-danger" title="Удалить заказ" data-toggle="modal"
-                           data-target="#deleteTaskFormModal" style="outline: none; margin-top: 10px;">
+                        <a  href="#" class="btn btn-danger" data-toggle="modal"
+                            data-target="#deleteRequestFormModal" title="Удалить заказ" style="outline: none; margin-top: 10px;">
                             <span class="glyphicon glyphicon-remove" aria-hidden="true"/>
                         </a>
                     </td>
@@ -78,5 +77,6 @@
 {>"modal_windows/update_task"/}
 {>"modal_windows/delete_task"/}
 {>"modal_windows/info_task"/}
+{>"modal_windows/delete_request"/}
 
 {/body}
