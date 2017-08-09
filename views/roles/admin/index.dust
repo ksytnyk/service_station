@@ -6,7 +6,7 @@
 
 <div class="col-lg-12">
     <div class="panel panel-default">
-        <table class="table">
+        <table class="table dtable">
             <thead>
             <tr>
                 <th class="tac sm">ID</th>
@@ -44,7 +44,7 @@
                     </button>
                 </td>
                 <td class="tac">
-                    <button class="btn btn-default btn-danger delete-user modal-window-link" type="submit" data-current="{user.userTypeID}"
+                    <button class="btn btn-danger delete-user modal-window-link" type="submit" data-current="{user.userTypeID}"
                             data-toggle="modal" data-target="#deleteUserFormModal" data-id="{id}"
                             data-login="{userLogin}" title="Удалить" style="outline: none;">
                         <span class="glyphicon glyphicon-remove" aria-hidden="true"/>

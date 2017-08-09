@@ -1,5 +1,8 @@
 $(document).ready(function () {
 
+    var element = document.getElementById(window.location.pathname);
+    element.classList.add("active");
+
     $('.modal-window-link').on('click', function () {
         if (document.body.offsetHeight > window.innerHeight) {
             $('.white_block').outerWidth( +window.innerWidth - 17 );
@@ -53,6 +56,6 @@ $(document).ready(function () {
         $('.hide_alert').trigger('click');
     }, 5000);
 
-    $('.table').DataTable();
+    $('.dtable').DataTable();
 
 });

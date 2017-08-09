@@ -4,7 +4,7 @@ const User = require('../../models/User');
 const express = require('express');
 const router = express.Router();
 
-router.get('/', (req, res) => {
+router.get('/users', (req, res) => {
     if (req.session.passport.user) {
         User.getAllUsers()
             .then(users => {
@@ -54,14 +54,22 @@ router.post('/create-user', function (req, res) {
             .then(() => {
                 req.flash('success_alert', true);
                 req.flash('success_msg', 'Добавление прошло успешно.');
-                res.redirect('/admin');
+                res.redirect('/admin/users');
             })
             .catch(err => {
                 console.log(err);
                 req.flash('error_alert', true);
                 req.flash('error_msg', {msg: 'Возникла ошибка при добавлении.'});
-                res.redirect('/admin');
+                res.redirect('/admin/users');
             });
+    }
+});
+
+router.get('/create-request', (req, res) => {
+    if (req.session.passport.user) {
+        res.render('layouts/create-request', {typeUser: req.session.passport.user.userTypeID});
+    } else {
+        res.redirect('/');
     }
 });
 
@@ -99,12 +107,12 @@ router.put('/update-user/:id', function (req, res) {
             .then(() => {
                 req.flash('success_alert', true);
                 req.flash('success_msg', 'Изменение прошло успешно.');
-                res.redirect('/admin');
+                res.redirect('/admin/users');
             }).catch(err => {
             console.log(err);
             req.flash('error_alert', true);
             req.flash('error_msg', {msg: 'Возникла ошибка при изменении.'});
-            res.redirect('/admin');
+            res.redirect('/admin/users');
         });
     }
 });
@@ -114,13 +122,13 @@ router.delete('/delete-user/:id', function (req, res) {
         .then(() => {
             req.flash('success_alert', true);
             req.flash('success_msg', 'Удаление прошло успешно.');
-            res.redirect('/admin');
+            res.redirect('/admin/users');
         })
         .catch(err => {
             console.warn(err);
             req.flash('error_alert', true);
             req.flash('error_msg', {msg: 'Возникла ошибка при удалении.'});
-            res.redirect('/admin');
+            res.redirect('/admin/users');
         });
 });
 

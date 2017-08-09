@@ -3,10 +3,18 @@
     <div class="container">
         <ul class="col-lg-12 navbar nav navbar-nav navbar-inverse role{user.dataValues.idTypeUser}">
             {@lt key=typeUser value=3}
-                <li class="active"><a href="#">Пользователи</a></li>
-                <li><a href="#" class="modal-window-link" data-toggle="modal" data-target="#createUserFormModal">Добавить пользователя</a></li>
-                <!--<li><a href="#">Заказы</a></li>-->
-                <!--<li><a href="#" class="add_link" data-toggle ="modal" data-target="#addTaskFormModal">Добавить заказ</a></li>-->
+                <li id="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/users">
+                    <a href="users">Пользователи</a>
+                </li>
+                <li>
+                    <a href="#" class="modal-window-link" data-toggle="modal" data-target="#createUserFormModal">Добавить пользователя</a>
+                </li>
+                <li id="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests">
+                    <a href="requests">Заказы</a>
+                </li>
+                <li id="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/create-request">
+                    <a href="create-request">Добавить заказ</a>
+                </li>
             {/lt}
             {@eq key=typeUser value=3}
                 <li class="active"><a href="#">Задачи</a></li>

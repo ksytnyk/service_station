@@ -4,11 +4,11 @@
 }
 
 body {
-	margin: 0;
+	margin: 90px 0 0;
 	padding: 0;
 }
-.modal-open {
-	/*margin-right: -17px;*/
+.form-control {
+	background-color: #f5f5f5;
 }
 
 /* LOGIN */
@@ -79,7 +79,7 @@ body {
 .nav {
 	padding: 0;
 	font-size: 15px;
-	margin: 20px 0;
+	margin: 19px 0;
 }
 .nav > li > a {
 	color: #fff;
@@ -99,9 +99,6 @@ body {
 .nav > .name > a:hover {
 	color: #fff;
 	background-color: #666 !important;
-}
-.alerts_block {
-	margin: 90px 0 0;
 }
 .alert {
 	position: relative;
@@ -142,15 +139,22 @@ body {
 	.info_form{
 		margin-top: 75px;
 	}
+	.info_form .panel {
+		border: 1px solid #ccc;
+	}
 	.delete_form {
 		margin-top: 150px;
 		width: 450px;
+	}
+	.create_task,
+	.update_task {
+		margin-top: 75px;
+		width: 1000px;
 	}
 }
 
 /* ADMIN  MODERATOR  CUSTOMER  STOREKEEPER  EXECUTOR */
 .panel {
-	margin-top: 5px;
 	border: none;
 	box-shadow: none;
 }
@@ -239,4 +243,13 @@ thead {
 	margin: 0 !important;
 	border-radius: 0 !important;
 	border: none !important;
+}
+
+/* CREATE REQUEST */
+.create_request .panel {
+	border: 1px solid #ccc;
+}
+.create_request .table .add_task {
+	width: 250px;
+	margin: 15px 0;
 }

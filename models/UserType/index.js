@@ -12,14 +12,14 @@ var UserType = sequelize.define('user_type', {
     freezeTableName: true
 });
 
-UserType.sync({force: true}).then(() => {
-    UserType.bulkCreate([
-        {userTypeName: 'Admin'},
-        {userTypeName: 'Moderator'},
-        {userTypeName: 'Executor'},
-        {userTypeName: 'StoreKeeper'},
-        {userTypeName: 'Customer'}
-    ]);
-});
+// UserType.sync({force: true}).then(() => {
+//     UserType.bulkCreate([
+//         {userTypeName: 'Admin'},
+//         {userTypeName: 'Moderator'},
+//         {userTypeName: 'Executor'},
+//         {userTypeName: 'StoreKeeper'},
+//         {userTypeName: 'Customer'}
+//     ]);
+// });
 
 module.exports = UserType;

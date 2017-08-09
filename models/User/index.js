@@ -60,29 +60,29 @@ let User = sequelize.define('users', describeUserTable, optionUserTable);
 
 User.belongsTo(UserType, {foreignKey: 'user_type_id'});
 
-User.sync({force: true}).then(() => {
-
-    User.bulkCreate([
-        {
-            userLogin: 'admin',
-            userEmail: 'admin@admin.com',
-            userPassword: '11111',
-            userTypeID: '1'
-        },
-        {
-            userLogin: 'm',
-            userEmail: 'm@admin.com',
-            userPassword: '11',
-            userTypeID: '2'
-        },
-        {
-            userLogin: 'c',
-            userEmail: 'c@admin.com',
-            userPassword: '11',
-            userTypeID: '5'
-        }
-    ]).catch(err => console.log(err));
-});
+// User.sync({force: true}).then(() => {
+//
+//     User.bulkCreate([
+//         {
+//             userLogin: 'admin',
+//             userEmail: 'admin@admin.com',
+//             userPassword: '11111',
+//             userTypeID: '1'
+//         },
+//         {
+//             userLogin: 'm',
+//             userEmail: 'm@admin.com',
+//             userPassword: '11',
+//             userTypeID: '2'
+//         },
+//         {
+//             userLogin: 'c',
+//             userEmail: 'c@admin.com',
+//             userPassword: '11',
+//             userTypeID: '5'
+//         }
+//     ]).catch(err => console.log(err));
+// });
 
 
 module.exports = {
