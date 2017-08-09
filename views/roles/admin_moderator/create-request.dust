@@ -19,13 +19,14 @@
             <label>Цена</label>
             <input type="text" class="form-control disable_input" name="requestPrice">
         </div>
+
         <div class="form-group col-lg-2">
             <label>Время начала</label>
-            <input type="text" class="form-control disable_input" name="requestStartTime">
+            <input type="text" class="form-control datetimepickerN disable_input" name="requestStartTime">
         </div>
         <div class="form-group col-lg-2">
             <label>Планируемое время</label>
-            <input type="text" class="form-control disable_input" name="requestEstimatedTime">
+            <input type="text" class="form-control datetimepickerN disable_input" name="requestEstimatedTime">
         </div>
         <div class="form-group col-lg-2">
             <input id="create_request" value="Добавить заказ"
