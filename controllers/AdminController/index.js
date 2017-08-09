@@ -93,11 +93,45 @@ router.get('/requests', function (req, res) {
 });
 
 router.get('/create-request', function (req, res) {
-    res.render('roles/admin_moderator/create-request', {typeUser: req.session.passport.user.userTypeID});
+    User.getAllUsers().then(function (users) {
+        res.render('roles/admin_moderator/create-request', {users:users,typeUser: req.session.passport.user.userTypeID});
+    })
+
 });
 
 router.post('/create-request', function (req, res) {
+    let requestPrice = req.body.requestPrice;
+    let requestStartTime = req.body.requestStartTime;
+    let requestEstimatedTime = req.body.requestEstimatedTime;
+    // Validation
 
+    req.checkBody('requestPrice', '"Цена" - обязательное поле.').notEmpty();
+    req.checkBody('requestStartTime', '"Время начала" - обязательное поле.').notEmpty();
+    req.checkBody('requestEstimatedTime', '"Планируемове время" - обязательное поле.').notEmpty();
+
+    let errors = req.validationErrors();
+
+    if (errors) {
+        req.flash('error_alert', true);
+        req.flash('error_msg', errors);
+        console.info('11111УУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУ');
+        res.redirect('/admin/requests');
+    } else {
+        Request.createRequest(req.body)
+            .then(() => {
+                console.info('2222УУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУ');
+                req.flash('success_alert', true);
+                req.flash('success_msg', 'Добавление прошло успешно.');
+                res.render('/layouts/create-request');
+            })
+            .catch(err => {
+                console.log(err);
+                console.info('3333УУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУ');
+                req.flash('error_alert', true);
+                req.flash('error_msg', {msg: 'Возникла ошибка при добавлении.'});
+                res.redirect('/admin/create-request');
+            });
+    }
 });
 
 router.put('/update-request/:id', function (req, res) {
