@@ -41,9 +41,9 @@ const describeTaskTable = {
         type: Sequelize.INTEGER,
         field: 'type_id'
     },
-    part: {
+    parts: {
         type: Sequelize.TEXT,
-        field: 'part'
+        field: 'parts'
     },
     customerParts: {
         type: Sequelize.TEXT,
@@ -52,6 +52,14 @@ const describeTaskTable = {
     needBuyParts: {
         type: Sequelize.TEXT,
         field: 'need_buy_parts'
+    },
+    taskComments: {
+        type: Sequelize.TEXT,
+        field: 'task_comments'
+    },
+    taskDescription: {
+        type: Sequelize.TEXT,
+        field: 'task_description'
     }
 };
 
@@ -78,44 +86,24 @@ Task.getTaskById = function (id) {
     });
 };
 
-Task.getAllUsers = function () {
-    return new Promise((resolve, reject) => {
-        Task
-            .findAll({
-                include: [
-                    {model: UserType}
-                ]
-            })
-            .then(users => {
-                resolve(users);
-            })
-            .catch(err => {
-                console.warn(err);
-                reject(err);
-            });
-
-    });
-};
-
-
 Task.createTask = function (task) {
     return new Promise((resolve, reject) => {
-        User
+        Task
             .build(task)
             .save()
             .then(result => {
                 resolve(result);
             })
-            .catch(err => {
+            .catch(error => {
                 console.warn(error);
-                reject(err);
+                reject(error);
             });
     });
 };
 
 Task.updateTask = function (taskID, params) {
     return new Promise((resolve, reject) => {
-        User
+        Task
             .update(
                 params,
                 {where: {id: taskID}})

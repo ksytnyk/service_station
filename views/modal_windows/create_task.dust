@@ -3,59 +3,61 @@
     <div class="modal-dialog create_task" role="document">
         <div class="modal-content">
 
-            <form action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/create-task" method="POST" class="create">
+            <form action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/create-task"
+                  method="POST" class="create" id="createTaskForm">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title text-center">Добавить задачу</h4>
                 </div>
                 <div class="modal-body clearfix">
+                    <input type="hidden" name="requestID" id="requestIDForTask">
                     <div class="form-group col-lg-4">
                         <label>Описание задачи</label>
-                        <input type="text" class="form-control" name="">
+                        <input type="text" class="form-control" name="taskDescription">
                     </div>
                     <div class="form-group col-lg-4">
                         <label>Исполнитель</label>
-                        <select class="form-control selectpicker" name="">
-                            <option value="...">Вася</option>
-                            <option value="...">Петя</option>
-                            <option value="...">Катя</option>
+                        <select class="form-control selectpicker" name="assignedUserID">
+                            <option value="1">Вася</option>
+                            <option value="1">Петя</option>
+                            <option value="1">Катя</option>
                         </select>
                     </div>
                     <div class="form-group col-lg-4">
                         <label>Цена</label>
-                        <input type="text" class="form-control" name="">
+                        <input type="text" class="form-control" name="cost">
                     </div>
                     <div class="form-group col-lg-4">
                         <label>Планируемое время</label>
-                        <input type="text" class="form-control" name="">
+                        <input type="text" class="form-control datetimepickerN" name="estimationTime">
                     </div>
                     <div class="form-group col-lg-4">
                         <label>Время начала</label>
-                        <input type="text" class="form-control" name="">
+                        <input type="text" class="form-control datetimepickerN" name="startTime">
                     </div>
                     <div class="form-group col-lg-4">
                         <label>Конечное время</label>
-                        <input type="text" class="form-control" name="">
+                        <input type="text" class="form-control datetimepickerN" name="endTime">
                     </div>
                     <div class="form-group col-lg-6">
                         <label>Запчасти</label>
-                        <textarea class="form-control" name="" rows="3"></textarea>
+                        <textarea class="form-control" name="parts" rows="3"></textarea>
                     </div>
                     <div class="form-group col-lg-6">
                         <label>Запчасти клиента</label>
-                        <textarea class="form-control" name="" rows="3"></textarea>
+                        <textarea class="form-control" name="customerParts" rows="3"></textarea>
                     </div>
                     <div class="form-group col-lg-6">
                         <label>Недостающие запчасти</label>
-                        <textarea class="form-control" name="" rows="3"></textarea>
+                        <textarea class="form-control" name="needBuyParts" rows="3"></textarea>
                     </div>
                     <div class="form-group col-lg-6">
                         <label>Комментрий</label>
-                        <textarea class="form-control" name="" rows="3"></textarea>
+                        <textarea class="form-control" name="taskComments" rows="3"></textarea>
                     </div>
-                    <div class="form-group col-lg-6 col-lg-offset-6">
-                        <button type="submit" class="btn btn-success width">
+                    <div class='form-group col-lg-6 col-lg-offset-6'>
+                        <button type="button" id="taskAddButton" class="btn btn-success width">
                             Добавить
                         </button>
                         <button type="button" class="btn btn-danger pull-right width" data-dismiss="modal">

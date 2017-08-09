@@ -1,9 +1,12 @@
 "use strict";
 
 const User = require('../../models/User');
+const Task = require('../../models/Task');
 const Request = require('../../models/Request');
+
 const express = require('express');
 const router = express.Router();
+
 const roles = require('../../constants/roles');
 const validationUserParams = require('../../helpers/validationUserParams');
 
@@ -94,7 +97,10 @@ router.get('/requests', function (req, res) {
 
 router.get('/create-request', function (req, res) {
     User.getAllUsers().then(function (users) {
-        res.render('roles/admin_moderator/create-request', {users:users,typeUser: req.session.passport.user.userTypeID});
+        res.render('roles/admin_moderator/create-request', {
+            users: users,
+            typeUser: req.session.passport.user.userTypeID
+        });
     })
 
 });
@@ -112,24 +118,14 @@ router.post('/create-request', function (req, res) {
     let errors = req.validationErrors();
 
     if (errors) {
-        req.flash('error_alert', true);
-        req.flash('error_msg', errors);
-        console.info('11111УУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУ');
-        res.redirect('/admin/requests');
+        res.status(400).send({errors: errors});
     } else {
         Request.createRequest(req.body)
-            .then(() => {
-                console.info('2222УУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУ');
-                req.flash('success_alert', true);
-                req.flash('success_msg', 'Добавление прошло успешно.');
-                res.render('/layouts/create-request');
+            .then((result) => {
+                res.status(200).send({result: result});
             })
-            .catch(err => {
-                console.log(err);
-                console.info('3333УУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУУ');
-                req.flash('error_alert', true);
-                req.flash('error_msg', {msg: 'Возникла ошибка при добавлении.'});
-                res.redirect('/admin/create-request');
+            .catch(errors => {
+                res.status(400).send({errors: errors});
             });
     }
 });
@@ -156,6 +152,19 @@ router.delete('/delete-request/:id', function (req, res) {
             req.flash('error_alert', true);
             req.flash('error_msg', {msg: 'Возникла ошибка при удалении.'});
             res.redirect('/admin/requests');
+        });
+});
+
+router.post('/create-task', function (req, res) {
+
+    Task
+        .createTask(req.body)
+        .then(result => {
+            res.status(200).send({result: result});
+        })
+        .catch(error => {
+            console.warn(error);
+            res.status(400).send({error: error});
         });
 });
 

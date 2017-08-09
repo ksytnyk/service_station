@@ -5,7 +5,7 @@ $(document).ready(function () {
 
     $('.modal-window-link').on('click', function () {
         if (document.body.offsetHeight > window.innerHeight) {
-            $('.white_block').outerWidth( +window.innerWidth - 17 );
+            $('.white_block').outerWidth(+window.innerWidth - 17);
         }
     });
 
@@ -63,14 +63,34 @@ $(document).ready(function () {
             url: '/admin/create-request',
             type: 'Post',
             data: $('#createRequestForm').serializeArray(),
-            success: function (result) {
+            success: function (data) {
+                $('.disable_input').prop('disabled', true);
+                $('#step').slideDown('slow');
+                $('#requestIDForTask').val(data.result.id);
             },
             error: function (err) {
-                console.log(err);
+                $('#errorsCreateRequest').text('ERROR!');
+                console.log(err.responseText);
             }
         });
-        $('.disable_input').prop('disabled', true);
-        $('#step').slideDown('slow');
+    });
+
+    $('#taskAddButton').on('click', function () {
+
+        $('#createTaskFormModal').modal('toggle');
+
+        $.ajax({
+            url: '/admin/create-task',
+            type: 'Post',
+            data: $('#createTaskForm').serializeArray(),
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (err) {
+                $('#errorsCreateRequest').text('ERROR!');
+                console.log(err.responseText);
+            }
+        });
     });
 
     $('.datetimepickerN').datetimepicker(
