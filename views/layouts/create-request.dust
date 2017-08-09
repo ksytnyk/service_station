@@ -44,25 +44,27 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th class="tac sm">ID</th>
+                        <th class="tac" style="width: 40px;">ID</th>
                         <th class="tac">Описание</th>
                         <th class="tac">Исполнитель</th>
-                        <th class="tac">Цена</th>
-                        <th class="tac">Время начала</th>
-                        <th class="tac">Конечное время</th>
-                        <th class="tac sm"></th>
-                        <th class="tac sm"></th>
+                        <th class="tac lg">Цена</th>
+                        <th class="tac lg">План. время</th>
+                        <th class="tac lg">Время начала</th>
+                        <th class="tac lg">Конечное время</th>
+                        <th class="tac" style="width: 60px;"></th>
+                        <th class="tac" style="width: 60px;"></th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
                         <th class="tac">1</th>
-                        <th><a class="modal-window-link" title="Полная информация" data-toggle="modal"
+                        <th class="tac"><a class="modal-window-link" title="Полная информация" data-toggle="modal"
                                data-target="#infoTaskFormModal" style="cursor: pointer">Замена масла</a></th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td class="tac"></td>
+                        <td class="tac"></td>
+                        <td class="tac"></td>
+                        <td class="tac"></td>
+                        <td class="tac"></td>
                         <td class="tac">
                             <a class="btn btn-default" title="Редактировать задачу" data-toggle="modal"
                                data-target="#updateTaskFormModal" style="outline: none;">
@@ -77,7 +79,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="text-center" colspan="8">
+                        <td class="text-center" colspan="9">
                             <a class="btn btn-primary modal-window-link add_task" data-toggle="modal"
                                data-target="#createTaskFormModal">Добавить задачу</a>
                         </td>

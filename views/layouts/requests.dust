@@ -9,25 +9,64 @@
         <table class="table dtable">
             <thead>
             <tr>
-                <th class="tac" style="width: 30px;">ID</th>
+                <th class="tac sm">ID</th>
                 <th class="tac" style="width: 200px;">Информация о заказе</th>
                 <th class="tac">Задачи</th>
+                <th class="tac" style="width: 20px"></th>
             </tr>
             </thead>
             <tbody>
                 <tr>
                     <th class="tac pr">1</th>
-                    <th class="tac pr">1</th>
+                    <th class="tac pr">Lorem ipsum dolor sit amet, consectetur adipisicing elit</th>
                     <td style="padding: 0;">
                         <table class="table task_table">
                             <thead>
                                 <tr>
-                                    <th>sdf</th>
-                                    <th>sdf</th>
-                                    <th>sdf</th>
+                                    <th class="tac">Описание</th>
+                                    <th class="tac">Исполнитель</th>
+                                    <th class="tac md">Цена</th>
+                                    <th class="tac md">Время начала</th>
+                                    <th class="tac md">Конечное время</th>
+                                    <th class="sm"></th>
+                                    <th class="sm"></th>
                                 </tr>
                             </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="tac">
+                                        <a class="modal-window-link" title="Полная информация" data-toggle="modal"
+                                           data-target="#infoTaskFormModal" style="cursor: pointer">Замена масла</a>
+                                    </td>
+                                    <td class="tac">Вася Вася Вася</td>
+                                    <td class="tac">10500</td>
+                                    <td class="tac">8.08.2017</td>
+                                    <td class="tac">14.08.2017</td>
+                                    <td class="tac">
+                                        <a title="Редактировать задачу" data-toggle="modal"
+                                           data-target="#updateTaskFormModal" style="outline: none;">
+                                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"/>
+                                        </a>
+                                    </td>
+                                    <td class="tac">
+                                        <a title="Удалить задачу" data-toggle="modal"
+                                           data-target="#deleteTaskFormModal" style="outline: none;">
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"/>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
                         </table>
+                    </td>
+                    <td class="tac">
+                        <a class="btn btn-default" title="Редактировать заказ" data-toggle="modal"
+                           data-target="#updateTaskFormModal" style="outline: none;">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"/>
+                        </a>
+                        <a class="btn btn-danger" title="Удалить заказ" data-toggle="modal"
+                           data-target="#deleteTaskFormModal" style="outline: none; margin-top: 10px;">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"/>
+                        </a>
                     </td>
                 </tr>
             </tbody>
@@ -36,5 +75,8 @@
 </div>
 
 {>"modal_windows/create_user"/}
+{>"modal_windows/update_task"/}
+{>"modal_windows/delete_task"/}
+{>"modal_windows/info_task"/}
 
 {/body}
