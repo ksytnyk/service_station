@@ -1,6 +1,6 @@
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const User = require('../models/User/index');
+const passport = require('passport'),
+    LocalStrategy = require('passport-local').Strategy,
+    User = require('../User');
 
 passport.use(new LocalStrategy({
         usernameField: 'login',
@@ -11,7 +11,6 @@ passport.use(new LocalStrategy({
             .then(function (res) {
                 if (res) {
                     if (res.userPassword === password) {
-                        console.info('Данные из паспорта:', res);
                         return done(null, res);
                     } else {
                         return done(null, false, {message: 'Неверный пароль.'})

@@ -35,4 +35,76 @@ let Request = sequelize.define('request', describeRequestTable, optionRequestTab
 
 Request.belongsTo(User, {foreignKey: 'assigned_user_id'});
 
+/*Request.create({
+    assignedUserID:1,
+    status:1,
+    cost: 50,
+});*/
+
+Request.getAllRequests = function () {
+    return new Promise((resolve, reject) => {
+        Request
+            .findAll({
+                include: [
+                    {model: User}
+                ]
+            })
+            .then(requests => {
+                resolve(requests);
+            })
+            .catch(err => {
+                console.warn(err);
+                reject(err);
+            });
+
+    });
+};
+
+Request.createRequest = function (request) {
+    return new Promise((resolve, reject) => {
+        Request
+            .build(request)
+            .save()
+            .then(result => {
+                resolve(result);
+            })
+            .catch(err => {
+                console.warn(error);
+                reject(err);
+            });
+    });
+};
+
+Request.updateRequest = function (requestID, params) {
+    return new Promise((resolve, reject) => {
+        Request
+            .update(
+                params,
+                {where: {id: requestID}})
+            .then(result => {
+                resolve(result);
+            })
+            .catch(err => {
+                console.warn(err);
+                reject(err);
+            });
+    });
+};
+
+Request.deleteRequest = function (idRequest) {
+    return new Promise((resolve, reject) => {
+        Request
+            .destroy({
+                where: {
+                    id: Number(idRequest)
+                }
+            }).then(result => {
+            resolve(result);
+        }).catch(err => {
+            console.warn(err);
+            reject(err);
+        });
+    });
+};
+
 module.exports = Request;

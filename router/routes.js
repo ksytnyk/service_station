@@ -2,7 +2,7 @@
 
 const identification = require('../controllers/IdentificationController');
 const authentication = require('../middleware/authentication');
-const roles = require("../consts/roles");
+const roles = require('../consts/roles');
 const passport = require('passport');
 
 const admin = require('../controllers/AdminController'),
@@ -11,7 +11,7 @@ const admin = require('../controllers/AdminController'),
     storeKeeper = require('../controllers/StoreKeeperController'),
     customer = require('../controllers/CustomerController');
 
-require('../passport/config');
+require('../models/Passport');
 
 module.exports = function (app) {
 
