@@ -6,33 +6,30 @@
 
 <div class="col-lg-12 create_request">
     <form action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/create-request"
-          method="POST" class="clearfix">
+          method="post" class="clearfix" id="createRequestForm">
         <div class="form-group col-lg-4">
             <label>Клиент</label>
-            <select class="form-control selectpicker disable_input">
-                <option value="...">Вася Вася Вася</option>
-                <option value="...">Олег Олег Олег</option>
-                <option value="...">Петя Петя Петя</option>
-                <option value="...">Паша Паша Паша</option>
-                <option value="...">Ревенко Владислав Сергеевич</option>
+            <select class="form-control selectpicker disable_input" name="requestUserId">
+                {#users}
+                <option value="{id}">{userName} {userSurname}</option>
+                {/users}
             </select>
         </div>
         <div class="form-group col-lg-2">
             <label>Цена</label>
-            <input type="text" class="form-control disable_input" name="">
+            <input type="text" class="form-control disable_input" name="requestPrice">
         </div>
         <div class="form-group col-lg-2">
             <label>Время начала</label>
-            <input type="text" class="form-control disable_input" name="">
+            <input type="text" class="form-control disable_input" name="requestStartTime">
         </div>
         <div class="form-group col-lg-2">
             <label>Планируемое время</label>
-            <input type="text" class="form-control disable_input" name="">
+            <input type="text" class="form-control disable_input" name="requestEstimatedTime">
         </div>
         <div class="form-group col-lg-2">
-            <button id="create_request" type="submit" class="btn btn-success col-lg-12 disable_input" style="margin-top: 25px;">
-                Добавить заказ
-            </button>
+            <input id="create_request" value="Добавить заказ"
+                   class="btn btn-success col-lg-12 disable_input" style="margin-top: 25px;"/>
         </div>
     </form>
     <div id="step" class="clearfix">

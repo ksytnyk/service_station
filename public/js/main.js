@@ -59,7 +59,19 @@ $(document).ready(function () {
     $('.dtable').DataTable();
 
     $('#create_request').on('click', function () {
+        $.ajax({
+            url: '/admin/create-request',
+            type: 'Post',
+            data: $('#createRequestForm').serializeArray(),
+            success: function (result) {
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
         $('.disable_input').prop('disabled', true);
         $('#step').slideDown('slow');
     });
+
+    $('.')
 });
