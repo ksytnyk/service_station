@@ -21,13 +21,16 @@
             <label>Цена</label>
             <input type="text" class="form-control" name="">
         </div>
-        <div class="form-group col-lg-3">
+        <div class="form-group col-lg-2">
             <label>Время начала</label>
             <input type="text" class="form-control" name="">
         </div>
-        <div class="form-group col-lg-3">
+        <div class="form-group col-lg-2">
             <label>Планируемое время</label>
             <input type="text" class="form-control" name="">
+        </div>
+        <div class="form-group col-lg-2">
+            <button type="submit" class="btn btn-success col-lg-12" style="margin-top: 25px;">Добавить заказ</button>
         </div>
         <div class="form-group col-lg-12" style="margin: 15px 0 0;">
             <label>Список задач</label>
@@ -50,20 +53,20 @@
                     <tbody>
                     <tr>
                         <th class="tac">1</th>
-                        <th><a class="modal-window-link" type="submit" data-toggle="modal"
+                        <th><a class="modal-window-link" title="Полная информация" data-toggle="modal"
                                data-target="#infoTaskFormModal" style="cursor: pointer">Замена масла</a></th>
                         <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
                         <td class="tac">
-                            <a class="btn btn-default" type="submit" title="Редактировать" data-toggle="modal"
+                            <a class="btn btn-default" title="Редактировать задачу" data-toggle="modal"
                                data-target="#updateTaskFormModal" style="outline: none;">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"/>
                             </a>
                         </td>
                         <td class="tac">
-                            <a class="btn btn-danger" type="submit" title="Удалить" data-toggle="modal"
+                            <a class="btn btn-danger" title="Удалить задачу" data-toggle="modal"
                                data-target="#deleteTaskFormModal" style="outline: none;">
                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"/>
                             </a>
@@ -71,7 +74,7 @@
                     </tr>
                     <tr>
                         <td class="text-center" colspan="8">
-                            <a class="btn btn-success modal-window-link add_task" type="submit" data-toggle="modal"
+                            <a class="btn btn-primary modal-window-link add_task" data-toggle="modal"
                                data-target="#createTaskFormModal">Добавить задачу</a>
                         </td>
                     </tr>
