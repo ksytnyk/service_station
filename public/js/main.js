@@ -58,4 +58,8 @@ $(document).ready(function () {
 
     $('.dtable').DataTable();
 
+    $('#create_request').on('click', function () {
+        $('.disable_input').prop('disabled', true);
+        $('#step').slideDown('slow');
+    });
 });

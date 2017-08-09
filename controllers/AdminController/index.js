@@ -126,7 +126,7 @@ router.get('/requests', function (req, res) {
     Request
         .getAllRequests()
         .then(requests => {
-            res.render('roles/admin', {requests: requests, typeUser: req.session.passport.user.userTypeID});
+            res.render('layouts/requests', {requests: requests, typeUser: req.session.passport.user.userTypeID});
         })
 });
 

@@ -6,10 +6,10 @@
 
 <div class="col-lg-12 create_request">
     <form action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/create-request"
-          method="POST" class="create">
+          method="POST" class="clearfix">
         <div class="form-group col-lg-4">
             <label>Клиент</label>
-            <select class="form-control selectpicker">
+            <select class="form-control selectpicker disable_input">
                 <option value="...">Вася Вася Вася</option>
                 <option value="...">Олег Олег Олег</option>
                 <option value="...">Петя Петя Петя</option>
@@ -19,19 +19,23 @@
         </div>
         <div class="form-group col-lg-2">
             <label>Цена</label>
-            <input type="text" class="form-control" name="">
+            <input type="text" class="form-control disable_input" name="">
         </div>
         <div class="form-group col-lg-2">
             <label>Время начала</label>
-            <input type="text" class="form-control" name="">
+            <input type="text" class="form-control disable_input" name="">
         </div>
         <div class="form-group col-lg-2">
             <label>Планируемое время</label>
-            <input type="text" class="form-control" name="">
+            <input type="text" class="form-control disable_input" name="">
         </div>
         <div class="form-group col-lg-2">
-            <button type="submit" class="btn btn-success col-lg-12" style="margin-top: 25px;">Добавить заказ</button>
+            <button id="create_request" type="submit" class="btn btn-success col-lg-12 disable_input" style="margin-top: 25px;">
+                Добавить заказ
+            </button>
         </div>
+    </form>
+    <div id="step" class="clearfix">
         <div class="form-group col-lg-12" style="margin: 15px 0 0;">
             <label>Список задач</label>
         </div>
@@ -82,7 +86,7 @@
                 </table>
             </div>
         </div>
-    </form>
+    </div>
 </div>
 
 {>"modal_windows/create_user"/}

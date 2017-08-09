@@ -35,11 +35,13 @@ let Request = sequelize.define('request', describeRequestTable, optionRequestTab
 
 Request.belongsTo(User, {foreignKey: 'assigned_user_id'});
 
-/*Request.create({
-    assignedUserID:1,
-    status:1,
-    cost: 50,
-});*/
+// Request.sync();
+//
+// Request.create({
+//     assignedUserID:1,
+//     status:1,
+//     cost: 50,
+// });
 
 Request.getAllRequests = function () {
     return new Promise((resolve, reject) => {
