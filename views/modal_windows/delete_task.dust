@@ -1,0 +1,22 @@
+{+delete_task}
+<div class="modal fade" id="deleteTaskFormModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel">
+    <div class="modal-dialog delete_form" role="document">
+        <div class="modal-content">
+
+            <form id="delete-form-id" method="POST" enctype="application/x-www-form-urlencoded" class="delete">
+                <input type="hidden" name="_method" value="DELETE">
+                <div class="modal-header">
+                    <h4 class="modal-title text-center">Удалить задачу "<span>...</span>" ?</h4>
+                </div>
+                <div class="modal-body">
+                    <button type="submit" class="btn btn-success width">Подтвердить</button>
+                    <button type="button" class="btn btn-danger pull-right width" data-dismiss="modal">
+                        Отменить
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+{/delete_task}

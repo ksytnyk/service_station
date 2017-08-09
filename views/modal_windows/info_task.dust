@@ -1,0 +1,62 @@
+{+info_task}
+<div class="modal fade" id="infoTaskFormModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel">
+    <div class="modal-dialog info_form" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title text-center">Информация о задаче</h4>
+            </div>
+            <div class="modal-body clearfix">
+                <div class="panel panel-default">
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <th>Id</th>
+                            <td><span id=""></span></td>
+                        </tr>
+                        <tr>
+                            <th>Описание задачи</th>
+                            <td><span id=""></span></td>
+                        </tr>
+                        <tr>
+                            <th>Исполнитель</th>
+                            <td><span id=""></span></td>
+                        </tr>
+                        <tr>
+                            <th>Цена</th>
+                            <td><span id=""></span></td>
+                        </tr>
+                        <tr>
+                            <th>Планируемое время</th>
+                            <td><span id=""></span></td>
+                        </tr>
+                        <tr>
+                            <th>Время начала</th>
+                            <td><span id=""></span></td>
+                        </tr>
+                        <tr>
+                            <th>Конечное время</th>
+                            <td><span id=""></span></td>
+                        </tr>
+                        <tr>
+                            <th>Запчасти</th>
+                            <td><span id=""></span></td>
+                        </tr>
+                        <tr>
+                            <th>Запчасти клиента</th>
+                            <td><span id=""></span></td>
+                        </tr>
+                        <tr>
+                            <th>Комментрий</th>
+                            <td><span id=""></span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/info_task}

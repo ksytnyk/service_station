@@ -1,0 +1,67 @@
+{+create_task}
+<div class="modal fade" id="createTaskFormModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel">
+    <div class="modal-dialog create_task" role="document">
+        <div class="modal-content">
+
+            <form action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/create-task" method="POST" class="create">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title text-center">Добавить задачу</h4>
+                </div>
+                <div class="modal-body clearfix">
+                    <div class="form-group col-lg-4">
+                        <label>Описание задачи</label>
+                        <input type="text" class="form-control" name="">
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label>Исполнитель</label>
+                        <select class="form-control selectpicker" name="">
+                            <option value="...">Вася</option>
+                            <option value="...">Петя</option>
+                            <option value="...">Катя</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label>Цена</label>
+                        <input type="text" class="form-control" name="">
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label>Планируемое время</label>
+                        <input type="text" class="form-control" name="">
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label>Время начала</label>
+                        <input type="text" class="form-control" name="">
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label>Конечное время</label>
+                        <input type="text" class="form-control" name="">
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label>Запчасти</label>
+                        <textarea class="form-control" name="" rows="3"></textarea>
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label>Запчасти клиента</label>
+                        <textarea class="form-control" name="" rows="3"></textarea>
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label>Комментрий</label>
+                        <textarea class="form-control" name="" rows="3"></textarea>
+                    </div>
+                    <div class='form-group col-lg-6'>
+                        <button type="submit" class="btn btn-success width">
+                            Добавить
+                        </button>
+                        <button type="button" class="btn btn-danger pull-right width" data-dismiss="modal">
+                            Отменить
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+{/create_task}
