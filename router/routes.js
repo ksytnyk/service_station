@@ -17,7 +17,7 @@ module.exports = function (app) {
 
     app.get('/', (req, res) => {
         if (req.isAuthenticated()) res.redirect('auth');
-        else res.render('layouts/login');
+        else res.render('login');
     });
 
     app.post('/', passport.authenticate('local', {successRedirect: '/auth', failureRedirect: '/', failureFlash: true}));

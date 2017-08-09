@@ -72,6 +72,4 @@ $(document).ready(function () {
         $('.disable_input').prop('disabled', true);
         $('#step').slideDown('slow');
     });
-
-    $('.')
 });
