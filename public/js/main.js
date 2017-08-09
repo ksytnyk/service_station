@@ -11,7 +11,7 @@ $(document).ready(function () {
 
     $('.update-user').on('click', function () {
         if ($(this).data('current') === 1) {
-            $('#update-form-id').attr('action', ('/admin/update-user/' + $(this).data('id')));
+            $('#update-form-id').attr('action', ('/admin_moderator/update-user/' + $(this).data('id')));
         } else {
             $('#update-form-id').attr('action', ('/moderator/update-user/' + $(this).data('id')));
         }
@@ -41,7 +41,7 @@ $(document).ready(function () {
 
     $('.delete-user').on('click', function () {
         if ($(this).data('current') === 1) {
-            $('#delete-form-id').attr('action', ('/admin/delete-user/' + $(this).data('id')));
+            $('#delete-form-id').attr('action', ('/admin_moderator/delete-user/' + $(this).data('id')));
         } else {
             $('#delete-form-id').attr('action', ('/moderator/delete-user/' + $(this).data('id')));
         }
@@ -59,7 +59,7 @@ $(document).ready(function () {
     $('.dtable').DataTable();
 
     $('#create_request').on('click', function () {
-        $('.disable_input').prop('disabled', true);
+        // $('.disable_input').prop('disabled', true);
         $('#step').slideDown('slow');
     });
 });

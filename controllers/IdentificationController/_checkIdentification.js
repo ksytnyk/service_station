@@ -9,7 +9,7 @@ module.exports = function _checkIdentification(req, res, userTypeID) {
             break;
         }
         case roles.MODERATOR: {
-            res.redirect('/moderator');
+            res.redirect('/moderator/users');
             break;
         }
         case roles.EXECUTOR: {

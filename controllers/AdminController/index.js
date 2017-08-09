@@ -11,11 +11,11 @@ router.get('/users', function (req, res) {
     User
         .getAllUsers()
         .then(users => {
-            res.render('roles/admin', {users: users, typeUser: req.session.passport.user.userTypeID});
+            res.render('roles/admin_moderator/users', {users: users, typeUser: req.session.passport.user.userTypeID});
         })
         .catch(err => {
             console.warn(err);
-            res.render('roles/admin');
+            res.render('roles/admin_moderator/users');
         });
 });
 
@@ -85,12 +85,15 @@ router.get('/requests', function (req, res) {
     Request
         .getAllRequests()
         .then(requests => {
-            res.render('layouts/requests', {requests: requests, typeUser: req.session.passport.user.userTypeID});
+            res.render('roles/admin_moderator/requests', {
+                requests: requests,
+                typeUser: req.session.passport.user.userTypeID
+            });
         })
 });
 
 router.get('/create-request', function (req, res) {
-    res.render('layouts/create-request', {typeUser: req.session.passport.user.userTypeID});
+    res.render('roles/admin_moderator/create-request', {typeUser: req.session.passport.user.userTypeID});
 });
 
 router.post('/create-request', function (req, res) {

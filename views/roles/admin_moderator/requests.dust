@@ -2,7 +2,7 @@
 
 {<body}
 
-{>"layouts/header"/}
+{>"header/index"/}
 
 <div class="col-lg-12 requests">
     <div class="panel panel-default">

@@ -2,7 +2,7 @@
 
 {<body}
 
-{>"layouts/header"/}
+{>"header/index"/}
 
 <div class="col-lg-12 create_request">
     <form action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/create-request"
