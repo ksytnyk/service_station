@@ -60,147 +60,121 @@ let User = sequelize.define('users', describeUserTable, optionUserTable);
 
 User.belongsTo(UserType, {foreignKey: 'user_type_id'});
 
-User.sync({force: true}).then(() => {
+User.getUserById = function (id) {
+    return new Promise((resolve, reject) => {
+        User
+            .findById(id)
+            .then(function (res) {
+                resolve(res);
+            })
+            .catch(function (err) {
+                reject(err);
+            });
+    });
+};
 
-    User.bulkCreate([
-        {
-            userLogin: 'admin',
-            userEmail: 'admin@admin.com',
-            userPassword: '11111',
-            userTypeID: '1'
-        },
-        {
-            userLogin: 'm',
-            userEmail: 'm@admin.com',
-            userPassword: '11',
-            userTypeID: '2'
-        },
-        {
-            userLogin: 'c',
-            userEmail: 'c@admin.com',
-            userPassword: '11',
-            userTypeID: '5'
-        }
-    ]).catch(err => console.log(err));
-});
+User.getCurrentUser = function (login) {
+    return new Promise((resolve, reject) => {
+        User
+            .findOne({
+                where: {
+                    user_login: login
+                }
+            })
+            .then(function (res) {
+                resolve(res)
+            })
+            .catch(function (err) {
+                reject(err)
+            });
+    })
+};
 
-
-module.exports = {
-
-    getUserById: function (id) {
-        return new Promise((resolve, reject) => {
-            User
-                .findById(id)
-                .then(function (res) {
-                    resolve(res);
-                })
-                .catch(function (err) {
-                    reject(err);
-                })
-        })
-    },
-
-    getCurrentUser: function (login) {
-        return new Promise((resolve, reject) => {
-            User
-                .findOne({
-                    where: {
-                        user_login: login
-                    }
-                })
-                .then(function (res) {
-                    resolve(res)
-                })
-                .catch(function (err) {
-                    reject(err)
-                })
-        })
-    },
-
-    getAllUsers: function () {
-        return new Promise((resolve, reject) => {
-            User
-                .findAll({
-                    include: [
-                        {model: UserType}
-                    ]
-                })
-                .then(users => {
-                    resolve(users);
-                })
-                .catch(err => {
-                    console.warn(err);
-                    reject(err);
-                });
-
-        });
-    },
-
-    getModeratorUsers: function () {
-        return new Promise((resolve, reject) => {
-            User
-                .findAll({
-                    where: {
-                        user_type_id: 5
-                    },
-                    include: [
-                        {model: UserType}
-                    ]
-                })
-                .then(users => {
-                    resolve(users);
-                })
-                .catch(err => {
-                    console.warn(err);
-                    reject(err);
-                });
-        });
-    },
-
-    createUser: function (user) {
-        return new Promise((resolve, reject) => {
-            User
-                .build(user)
-                .save()
-                .then(result => {
-                    resolve(result);
-                })
-                .catch(err => {
-                    console.warn(error);
-                    reject(err);
-                });
-        });
-    },
-
-    updateUser: function (userID, params) {
-        return new Promise((resolve, reject) => {
-            User
-                .update(
-                    params,
-                    {where: {id: userID}})
-                .then(result => {
-                    resolve(result);
-                })
-                .catch(err => {
-                    console.warn(err);
-                    reject(err);
-                });
-        });
-    },
-
-    deleteUser: function (idUser) {
-        return new Promise((resolve, reject) => {
-            User
-                .destroy({
-                    where: {
-                        id: Number(idUser)
-                    }
-                }).then(result => {
-                resolve(result);
-            }).catch(err => {
+User.getAllUsers = function () {
+    return new Promise((resolve, reject) => {
+        User
+            .findAll({
+                include: [
+                    {model: UserType}
+                ]
+            })
+            .then(users => {
+                resolve(users);
+            })
+            .catch(err => {
                 console.warn(err);
                 reject(err);
             });
-        });
-    }
+
+    });
 };
+
+User.getModeratorUsers = function () {
+    return new Promise((resolve, reject) => {
+        User
+            .findAll({
+                where: {
+                    user_type_id: 5
+                },
+                include: [
+                    {model: UserType}
+                ]
+            })
+            .then(users => {
+                resolve(users);
+            })
+            .catch(err => {
+                console.warn(err);
+                reject(err);
+            });
+    });
+};
+
+User.createUser = function (user) {
+    return new Promise((resolve, reject) => {
+        User
+            .build(user)
+            .save()
+            .then(result => {
+                resolve(result);
+            })
+            .catch(err => {
+                console.warn(error);
+                reject(err);
+            });
+    });
+};
+
+User.updateUser = function (userID, params) {
+    return new Promise((resolve, reject) => {
+        User
+            .update(
+                params,
+                {where: {id: userID}})
+            .then(result => {
+                resolve(result);
+            })
+            .catch(err => {
+                console.warn(err);
+                reject(err);
+            });
+    });
+};
+
+User.deleteUser = function (idUser) {
+    return new Promise((resolve, reject) => {
+        User
+            .destroy({
+                where: {
+                    id: Number(idUser)
+                }
+            }).then(result => {
+            resolve(result);
+        }).catch(err => {
+            console.warn(err);
+            reject(err);
+        });
+    });
+};
+
+module.exports = User;
