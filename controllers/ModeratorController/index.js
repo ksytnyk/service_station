@@ -3,6 +3,7 @@
 const User = require('../../models/User');
 const express = require('express');
 const router = express.Router();
+const validationUserParams = require('../../helpers/validationUserParams');
 
 router.get('/', (req, res) => {
     if (req.session.passport.user) {
@@ -20,34 +21,15 @@ router.get('/', (req, res) => {
 });
 
 router.post('/create-user', function (req, res) {
-    let userName = req.body.userName;
-    let userSurname = req.body.userSurname;
-    let userCompanyName = req.body.userCompanyName;
-    let userAddress = req.body.userAddress;
-    let userPhone = req.body.userPhone;
-    let userLogin = req.body.userLogin;
-    let userEmail = req.body.userEmail;
-    let userPassword = req.body.userPassword;
 
-    // Validation
-    req.checkBody('userName', '"Имя" - обязательное поле.').notEmpty();
-    req.checkBody('userSurname', '"Фамилия" - обязательное поле.').notEmpty();
-    req.checkBody('userCompanyName', '"Компания" - обязательное поле.').notEmpty();
-    req.checkBody('userAddress', '"Адрес" - обязательное поле.').notEmpty();
-    req.checkBody('userPhone', '"Контактный номер" - обязательное поле.').notEmpty();
-    req.checkBody('userLogin', '"Логин" - обязательное поле.').notEmpty();
-    req.checkBody('userEmail', '"Email" - обязательное поле.').notEmpty();
-    req.checkBody('userEmail', '"Email" - некорректное поле.').isEmail();
-    req.checkBody('userPassword', '"Пароль" - обязательное поле.').notEmpty();
-
-    var errors = req.validationErrors();
+    let errors = validationUserParams(req);
 
     if (errors) {
         req.flash('error_alert', true);
         req.flash('error_msg', errors);
         res.redirect('/moderator');
     } else {
-        req.body.idTypeUser = '5';
+        req.body.userTypeID = '5';
         User.createUser(req.body)
             .then(() => {
                 req.flash('success_alert', true);
@@ -64,27 +46,8 @@ router.post('/create-user', function (req, res) {
 });
 
 router.put('/update-user/:id', function (req, res) {
-    let userName = req.body.userName;
-    let userSurname = req.body.userSurname;
-    let userCompanyName = req.body.userCompanyName;
-    let userAddress = req.body.userAddress;
-    let userPhone = req.body.userPhone;
-    let userLogin = req.body.userLogin;
-    let userEmail = req.body.userEmail;
-    let userPassword = req.body.userPassword;
 
-    // Validation
-    req.checkBody('userName', '"Имя" - обязательное поле.').notEmpty();
-    req.checkBody('userSurname', '"Фамилия" - обязательное поле.').notEmpty();
-    req.checkBody('userCompanyName', '"Компания" - обязательное поле.').notEmpty();
-    req.checkBody('userAddress', '"Адрес" - обязательное поле.').notEmpty();
-    req.checkBody('userPhone', '"Контактный номер" - обязательное поле.').notEmpty();
-    req.checkBody('userLogin', '"Логин" - обязательное поле.').notEmpty();
-    req.checkBody('userEmail', '"Email" - обязательное поле.').notEmpty();
-    req.checkBody('userEmail', '"Email" - некорректное поле.').isEmail();
-    req.checkBody('userPassword', '"Пароль" - обязательное поле.').notEmpty();
-
-    var errors = req.validationErrors();
+    let errors = validationUserParams(req);
 
     if (errors) {
         req.flash('error_alert', true);
