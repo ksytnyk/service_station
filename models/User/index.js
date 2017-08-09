@@ -59,6 +59,7 @@ const optionUserTable = {
 let User = sequelize.define('users', describeUserTable, optionUserTable);
 
 User.belongsTo(UserType, {foreignKey: 'user_type_id'});
+User.sync();
 
 User.getUserById = function (id) {
     return new Promise((resolve, reject) => {

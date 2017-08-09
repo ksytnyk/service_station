@@ -1,6 +1,6 @@
 "use strict";
 
-const roles = require("../../consts/roles");
+const roles = require("../../constants/roles");
 
 module.exports = function _checkIdentification(req, res, userTypeID) {
     switch (userTypeID) {

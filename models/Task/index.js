@@ -2,6 +2,7 @@
 
 const Sequelize = require('sequelize');
 const sequelize = require('../connection');
+const Request = require('../Request');
 
 const describeTaskTable = {
     requestID: {
@@ -21,15 +22,15 @@ const describeTaskTable = {
         field: 'cost'
     },
     estimationTime: {
-        type: Sequelize.DATETIME,
+        type: Sequelize.DATE,
         field: 'estimation_time'
     },
     startTime: {
-        type: Sequelize.DATETIME,
+        type: Sequelize.DATE,
         field: 'start_time'
     },
     endTime: {
-        type: Sequelize.DATETIME,
+        type: Sequelize.DATE,
         field: 'end_time'
     },
     status: {
@@ -60,4 +61,8 @@ const optionTaskTable = {
 
 let Task = sequelize.define('task', describeTaskTable, optionTaskTable);
 
+Task.belongsTo(Request, {foreignKey: 'assigned_user_id'});
+
 Task.sync();
+
+module.exports = Task;

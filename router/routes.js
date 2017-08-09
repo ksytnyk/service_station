@@ -2,7 +2,7 @@
 
 const identification = require('../controllers/IdentificationController');
 const authentication = require('../middleware/authentication');
-const roles = require('../consts/roles');
+const roles = require('../constants/roles');
 const passport = require('passport');
 
 const admin = require('../controllers/AdminController'),
