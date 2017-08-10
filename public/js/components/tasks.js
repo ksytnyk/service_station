@@ -16,7 +16,7 @@ $(document).ready(function () {
                 $("#tasks-table").append('<tr>' +
                     '<td class="tac">' + data.result.id + '</td>' +
                     '<th class="tac"><a class="modal-window-link" title="Полная информация" data-toggle="modal"' +
-                    'data-target="#infoTaskFormModal" style="cursor: pointer">'+data.result.taskDescription+'</a></th>' +
+                    'data-target="#infoTaskFormModal" style="cursor: pointer">' + data.result.taskDescription + '</a></th>' +
                     '<td class="tac">' + executorNameSurname + '</td>' +
                     '<td class="tac">' + data.result.cost + '</td>' +
                     '<td class="tac">' + data.result.estimationTime + '</td>' +
@@ -30,16 +30,7 @@ $(document).ready(function () {
                     'data-target="#deleteTaskFormModal" style="outline: none;">' +
                     '<span class="glyphicon glyphicon-remove" aria-hidden="true"/></a></td></tr>');
 
-                $('#create-form-task-comments').val('');
-                $('#create-form-task-customer-parts').val('');
-                $('#create-form-task-description').val('');
-                $('#create-form-task-end-time').val('');
-                $('#create-form-task-estimated-time').val('');
-                $('#create-form-task-need-buy-parts').val('');
-                $('#create-form-task-parts').val('');
-                $('#create-form-task-start-time').val('');
-                $('#create-form-task-cost').val('');
-                $('#create-form-task-executor-id').val('');
+                clearModalAddTask()
 
             },
             error: function (err) {
@@ -48,4 +39,22 @@ $(document).ready(function () {
             }
         });
     });
+
+    $('#taskCancelAddButton').on('click', function () {
+        clearModalAddTask();
+    })
+
 });
+
+function clearModalAddTask() {
+    $('#create-form-task-comments').val('');
+    $('#create-form-task-customer-parts').val('');
+    $('#create-form-task-description').val('');
+    $('#create-form-task-end-time').val('');
+    $('#create-form-task-estimated-time').val('');
+    $('#create-form-task-need-buy-parts').val('');
+    $('#create-form-task-parts').val('');
+    $('#create-form-task-start-time').val('');
+    $('#create-form-task-cost').val('');
+    $('#create-form-task-executor-id').val('');
+}

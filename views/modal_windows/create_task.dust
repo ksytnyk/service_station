@@ -21,7 +21,6 @@
                         <select class="form-control selectpicker" name="planedExecutorID" id="create-form-task-executor-id">
                             {#executors}
                             <option value="{id}">{userName} {userSurname}</option>
-                            <input type="hidden" name="executorNameSurname" value="{userName} {userSurname}">
                             {/executors}
                         </select>
                     </div>
@@ -61,7 +60,7 @@
                         <button type="button" id="taskAddButton" class="btn btn-success width">
                             Добавить
                         </button>
-                        <button type="button" class="btn btn-danger pull-right width" data-dismiss="modal">
+                        <button type="button" class="btn btn-danger pull-right width" data-dismiss="modal" id="taskCancelAddButton">
                             Отменить
                         </button>
                     </div>
