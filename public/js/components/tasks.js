@@ -4,8 +4,6 @@ $(document).ready(function () {
 
         $('#createTaskFormModal').modal('toggle');
 
-        console.log(  );
-
         $.ajax({
             url: '/admin/create-task',
             type: 'Post',
@@ -34,8 +32,18 @@ $(document).ready(function () {
 
             },
             error: function (err) {
-                $('#errorsCreateRequest').text('ERROR!');
-                console.log(err.responseText);
+
+                $('.errorsCreateRequestBlock').css("display", "block");
+
+                var errorsTemplate = err.responseJSON.errors.map(error => {
+                    return ("<div class='col-lg-4'>" + error.msg + "</div>");
+                });
+
+                $('#errorsCreateRequest').html(errorsTemplate);
+
+                setTimeout(function () {
+                    $('.hide_alert').trigger('click');
+                }, 5000);
             }
         });
     });

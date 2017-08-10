@@ -75,6 +75,7 @@ router.get('/requests', function (req, res) {
     Task
         .getAllTasks()
         .then(result => {
+
             var requests = {};
 
             result.map(item => {
@@ -88,7 +89,6 @@ router.get('/requests', function (req, res) {
 
                 requests[item.request.id].tasks.push(task);
             });
-
             res.render('roles/admin_moderator/requests', {
                 requests: result,
                 typeUser: req.session.passport.user.userTypeID
@@ -181,15 +181,50 @@ router.delete('/delete-request/:id', function (req, res) {
 });
 
 router.post('/create-task', function (req, res) {
-    Task
-        .createTask(req.body)
-        .then(result => {
-            res.status(200).send({result: result});
-        })
-        .catch(error => {
-            console.warn(error);
-            res.status(400).send({error: error});
-        });
+
+    let taskDescription = req.body.taskDescription;
+    let planedExecutorID = req.body.planedExecutorID;
+    let cost = req.body.cost;
+    let estimationTime = req.body.estimationTime;
+    let startTime = req.body.startTime;
+    let endTime = req.body.endTime;
+
+    /* let parts = req.body.parts;
+     let customerParts = req.body.customerParts;
+     let needBuyParts = req.body.needBuyParts;
+     let taskComments = req.body.taskComments;*/
+
+    // Validation
+
+    req.checkBody('taskDescription', '"Описание задачи" - обязательное поле.').notEmpty();
+    req.checkBody('planedExecutorID', '"Исполнитель" - обязательное поле.').notEmpty();
+    req.checkBody('cost', '"Цена" - обязательное поле.').notEmpty();
+    req.checkBody('estimationTime', '"Планируемове время" - обязательное поле.').notEmpty();
+    req.checkBody('startTime', '"Время начала" - обязательное поле.').notEmpty();
+    req.checkBody('endTime', '"Конечное время" - обязательное поле.').notEmpty();
+    /*
+     req.checkBody('parts', '"Планируемове время" - обязательное поле.').notEmpty();
+     req.checkBody('customerParts', '"Планируемове время" - обязательное поле.').notEmpty();
+     req.checkBody('needBuyParts', '"Планируемове время" - обязательное поле.').notEmpty();
+     req.checkBody('taskComments', '"Планируемове время" - обязательное поле.').notEmpty();
+     */
+
+    let errors = req.validationErrors();
+
+    if (errors) {
+        console.warn(errors);
+        res.status(400).send({errors: errors});
+    } else {
+        Task
+            .createTask(req.body)
+            .then(result => {
+                res.status(200).send({result: result});
+            })
+            .catch(errors => {
+                console.warn(errors);
+                res.status(400).send({errors: errors});
+            });
+    }
 });
 
 module.exports = router;
