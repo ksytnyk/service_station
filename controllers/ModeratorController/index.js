@@ -37,13 +37,13 @@ router.post('/create-user', validation.createAndUpdateUser(roles.MODERATOR), fun
         .then(() => {
             req.flash('success_alert', true);
             req.flash('success_msg', 'Добавление прошло успешно.');
-            res.redirect('roles/admin_moderator/users');
+            res.redirect('/moderator/users');
         })
         .catch(error => {
             console.warn(error);
             req.flash('error_alert', true);
             req.flash('error_msg', {msg: 'Возникла ошибка при добавлении.'});
-            res.redirect('roles/admin_moderator/users');
+            res.redirect('/moderator/users');
         });
 
 });
@@ -55,13 +55,13 @@ router.put('/update-user/:id', validation.createAndUpdateUser(roles.MODERATOR), 
         .then(() => {
             req.flash('success_alert', true);
             req.flash('success_msg', 'Изменение прошло успешно.');
-            res.redirect('roles/admin_moderator/users');
+            res.redirect('/moderator/users');
         })
         .catch(error => {
             console.warn(error);
             req.flash('error_alert', true);
             req.flash('error_msg', {msg: 'Возникла ошибка при изменении.'});
-            res.redirect('roles/admin_moderator/users');
+            res.redirect('/moderator/users');
         });
 
 });
@@ -72,13 +72,13 @@ router.delete('/delete-user/:id', function (req, res) {
         .then(() => {
             req.flash('success_alert', true);
             req.flash('success_msg', 'Удаление прошло успешно.');
-            res.redirect('roles/admin_moderator/users');
+            res.redirect('/moderator/users');
         })
         .catch(error => {
             console.warn(error);
             req.flash('error_alert', true);
             req.flash('error_msg', {msg: 'Возникла ошибка при удалении.'});
-            res.redirect('roles/admin_moderator/users');
+            res.redirect('/moderator/users');
         });
 });
 

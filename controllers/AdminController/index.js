@@ -8,7 +8,7 @@ const express = require('express');
 const router = express.Router();
 
 const roles = require('../../constants/roles');
-const validationUserParams = require('../../helpers/validationUserParams');
+const validation = require('../../middleware/validation');
 
 router.get('/users', function (req, res) {
     User
@@ -22,54 +22,37 @@ router.get('/users', function (req, res) {
         });
 });
 
-router.post('/create-user', function (req, res) {
-
-    let errors = validationUserParams(req, roles.ADMIN);
-
-    if (errors) {
-        req.flash('error_alert', true);
-        req.flash('error_msg', errors);
-        res.redirect('/admin/users');
-    } else {
-        User
-            .createUser(req.body)
-            .then(() => {
-                req.flash('success_alert', true);
-                req.flash('success_msg', 'Добавление прошло успешно.');
-                res.redirect('/admin/users');
-            })
-            .catch(error => {
-                console.warn(error);
-                req.flash('error_alert', true);
-                req.flash('error_msg', {msg: 'Возникла ошибка при добавлении.'});
-                res.redirect('/admin/users');
-            });
-    }
+router.post('/create-user', validation.createAndUpdateUser(roles.ADMIN), function (req, res) {
+    User
+        .createUser(req.body)
+        .then(() => {
+            req.flash('success_alert', true);
+            req.flash('success_msg', 'Добавление прошло успешно.');
+            res.redirect('/admin/users');
+        })
+        .catch(error => {
+            console.warn(error);
+            req.flash('error_alert', true);
+            req.flash('error_msg', {msg: 'Возникла ошибка при добавлении.'});
+            res.redirect('/admin/users');
+        });
 });
 
-router.put('/update-user/:id', function (req, res) {
+router.put('/update-user/:id', validation.createAndUpdateUser(roles.ADMIN), function (req, res) {
 
-    let errors = validationUserParams(req, roles.ADMIN);
-
-    if (errors) {
-        req.flash('error_alert', true);
-        req.flash('error_msg', errors);
-        res.redirect('/admin/users');
-    } else {
-        User
-            .updateUser(req.params.id, req.body)
-            .then(() => {
-                req.flash('success_alert', true);
-                req.flash('success_msg', 'Изменение прошло успешно.');
-                res.redirect('/admin/users');
-            })
-            .catch(error => {
-                console.warn(error);
-                req.flash('error_alert', true);
-                req.flash('error_msg', {msg: 'Возникла ошибка при изменении.'});
-                res.redirect('/admin/users');
-            });
-    }
+    User
+        .updateUser(req.params.id, req.body)
+        .then(() => {
+            req.flash('success_alert', true);
+            req.flash('success_msg', 'Изменение прошло успешно.');
+            res.redirect('/admin/users');
+        })
+        .catch(error => {
+            console.warn(error);
+            req.flash('error_alert', true);
+            req.flash('error_msg', {msg: 'Возникла ошибка при изменении.'});
+            res.redirect('/admin/users');
+        });
 });
 
 router.delete('/delete-user/:id', function (req, res) {
