@@ -14,7 +14,10 @@ router.get('/users', function (req, res) {
     User
         .getAllUsers()
         .then(users => {
-            res.render('roles/admin_moderator/users', {users: users, typeUser: req.session.passport.user.userTypeID});
+            res.render('roles/admin_moderator/users', {
+                users: users,
+                typeUser: req.session.passport.user.userTypeID
+            });
         })
         .catch(err => {
             console.warn(err);
@@ -93,15 +96,25 @@ router.get('/requests', function (req, res) {
                 typeUser: req.session.passport.user.userTypeID
             });
         })
+        .catch(err => {
+            console.warn(err);
+            res.render('roles/admin_moderator/requests');
+        });
 });
 
 router.get('/create-request', function (req, res) {
-    User.getAllUsers().then(function (users) {
-        res.render('roles/admin_moderator/create-request', {
-            users: users,
-            typeUser: req.session.passport.user.userTypeID
+    User
+        .getModeratorUsers()
+        .then(users => {
+            res.render('roles/admin_moderator/create-request', {
+                users: users,
+                typeUser: req.session.passport.user.userTypeID
+            });
+        })
+        .catch(err => {
+            console.warn(err);
+            res.render('roles/admin_moderator/create-request');
         });
-    })
 
 });
 
@@ -131,9 +144,18 @@ router.post('/create-request', function (req, res) {
 });
 
 router.get('/update-request', function (req, res) {
-    User.getAllUsers().then(function (users) {
-        res.render('roles/admin_moderator/update_request', {users:users,typeUser: req.session.passport.user.userTypeID});
-    })
+    User
+        .getAllUsers()
+        .then(users => {
+            res.render('roles/admin_moderator/update_request', {
+                users: users,
+                typeUser: req.session.passport.user.userTypeID
+            });
+        })
+        .catch(err => {
+            console.warn(err);
+            res.render('roles/admin_moderator/update_request');
+        });
 });
 
 router.put('/update-request/:id', function (req, res) {

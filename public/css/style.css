@@ -259,6 +259,9 @@ thead {
 .create_request #step {
 	display: none;
 }
+.create_request .errorsCreateRequestBlock {
+	display: none;
+}
 
 /* REQUESTS */
 .requests .task_table {

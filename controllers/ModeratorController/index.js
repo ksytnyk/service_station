@@ -96,16 +96,66 @@ router.get('/requests', function (req, res) {
                 typeUser: req.session.passport.user.userTypeID
             });
         })
+        .catch(err => {
+            console.warn(err);
+            res.render('roles/admin_moderator/requests');
+        });
 });
 
 router.get('/create-request', function (req, res) {
-    res.render('roles/admin_moderator/create-request', {typeUser: req.session.passport.user.userTypeID});
+    User
+        .getModeratorUsers()
+        .then(users => {
+            res.render('roles/admin_moderator/create-request', {
+                users: users,
+                typeUser: req.session.passport.user.userTypeID
+            });
+        })
+        .catch(err => {
+            console.warn(err);
+            res.render('roles/admin_moderator/create-request');
+        });
+
+});
+
+router.post('/create-request', function (req, res) {
+    let cost = req.body.cost;
+    let startTime = req.body.startTime;
+    let estimatedTime = req.body.estimatedTime;
+    // Validation
+
+    req.checkBody('cost', '"Стоемость" - обязательное поле.').notEmpty();
+    req.checkBody('startTime', '"Время начала" - обязательное поле.').notEmpty();
+    req.checkBody('estimatedTime', '"Планируемове время" - обязательное поле.').notEmpty();
+
+    let errors = req.validationErrors();
+
+    if (errors) {
+        res.status(400).send({errors: errors});
+    } else {
+        Request.createRequest(req.body)
+            .then((result) => {
+                res.status(200).send({result: result});
+            })
+            .catch(errors => {
+                res.status(400).send({errors: errors});
+            });
+    }
 });
 
 router.get('/update-request', function (req, res) {
-    User.getAllUsers().then(function (users) {
-        res.render('roles/admin_moderator/update_request', {users:users,typeUser: req.session.passport.user.userTypeID});
-    })
+    User
+        .getAllUsers()
+        .then(users => {
+            res.render('roles/admin_moderator/update_request', {
+                users: users,
+                typeUser: req.session.passport.user.userTypeID
+            });
+        })
+        .catch(err => {
+            console.warn(err);
+            res.render('roles/admin_moderator/update_request');
+        });
 });
 
 module.exports = router;

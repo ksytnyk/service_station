@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     $('#create_request').on('click', function () {
         $.ajax({
-            url: '/admin/create-request',
+            url: window.location.pathnam ,
             type: 'Post',
             data: $('#createRequestForm').serializeArray(),
             success: function (data) {
@@ -11,8 +11,17 @@ $(document).ready(function () {
                 $('#requestIDForTask').val(data.result.id);
             },
             error: function (err) {
-                $('#errorsCreateRequest').text('ERROR!');
-                console.log(err.responseText);
+                $('.errorsCreateRequestBlock').css("display", "block");
+
+                var errorsTemplate = err.responseJSON.errors.map(error => {
+                    return ("<div class='col-lg-4'>" + error.msg + "</div>");
+                });
+
+                $('#errorsCreateRequest').html(errorsTemplate);
+
+                setTimeout(function () {
+                    $('.hide_alert').trigger('click');
+                }, 5000);
             }
         });
     })

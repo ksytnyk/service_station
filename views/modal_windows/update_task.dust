@@ -47,10 +47,14 @@
                         <textarea class="form-control" name="" rows="3"></textarea>
                     </div>
                     <div class="form-group col-lg-6">
+                        <label>Недостающие запчасти</label>
+                        <textarea class="form-control" name="needBuyParts" rows="3"></textarea>
+                    </div>
+                    <div class="form-group col-lg-6">
                         <label>Комментрий</label>
                         <textarea class="form-control" name="" rows="3"></textarea>
                     </div>
-                    <div class='form-group col-lg-6'>
+                    <div class='form-group col-lg-6 col-lg-offset-6'>
                         <button type="submit" class="btn btn-success width">
                             Сохранить
                         </button>
