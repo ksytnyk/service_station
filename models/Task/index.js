@@ -2,8 +2,12 @@
 
 const Sequelize = require('sequelize');
 const sequelize = require('../connection');
+
 const Request = require('../Request');
 const User = require('../User');
+
+const status = require('../../constants/status');
+
 
 const describeTaskTable = {
     requestID: {
@@ -11,9 +15,9 @@ const describeTaskTable = {
         field: 'request_id'
     },
     /*assignedUserID: {
-        type: Sequelize.INTEGER,
-        field: 'assigned_user_id'
-    },*/
+     type: Sequelize.INTEGER,
+     field: 'assigned_user_id'
+     },*/
     planedExecutorID: {
         type: Sequelize.INTEGER,
         field: 'planed_executor_id'
@@ -91,12 +95,12 @@ Task.getAllTasks = function () {
                     }
                 ]
             })
-            .then(requests => {
-                resolve(requests);
+            .then(tasks => {
+                resolve(tasks);
             })
-            .catch(err => {
-                console.warn(err);
-                reject(err);
+            .catch(error => {
+                console.warn(error);
+                reject(error);
             });
     });
 };
@@ -105,11 +109,29 @@ Task.getTaskById = function (id) {
     return new Promise((resolve, reject) => {
         Task
             .findById(id)
-            .then(function (res) {
-                resolve(res);
+            .then(tasks => {
+                resolve(tasks);
             })
-            .catch(function (err) {
-                reject(err);
+            .catch(error => {
+                reject(error);
+            });
+    });
+};
+
+Task.getAllTasksForStore = function () {
+    return new Promise((resolve, reject) => {
+        Task
+            .findAll({
+                where: {
+                    status: status.HOLD
+                }
+            })
+            .then(tasks => {
+                resolve(tasks);
+            })
+            .catch(error => {
+                console.warn(error);
+                reject(error);
             });
     });
 };

@@ -16,9 +16,18 @@
             </tr>
             </thead>
             <tbody>
+            {#tasks}
             <tr>
-                <th class="tac pr" scope="row">1</th>
-                <td>Фильтр масляный ваз 2101 - <strong>1шт</strong>, Жидкость гидравлическая Hyundai/Kia 03100-00130 - <strong>1л</strong></td>
+                <th class="tac pr" scope="row">{id}</th>
+                <td >
+                    <a class="info-task modal-window-link" title="Полная информация" data-toggle="modal" data-id="{id}"
+                       data-description="{taskDescription}" data-executor-surname="{executor.userSurname}"
+                       data-executor-name="{executor.userName}" data-cost="{cost}" data-estimation-time="{estimationTime}"
+                       data-start="{startTime}" data-end="{endTime}" data-parts="{parts}" data-customer-parts="{customerParts}"
+                       data-need-buy-parts="{needBuyParts}" data-comments="{taskComments}" data-target="#infoTaskFormModal"
+                       style="cursor: pointer">{taskDescription}
+                    </a>
+                </td>
                 <td class="tac">
                     <button class="btn btn-success edit-recipe" title="Выполнить" style="outline: none;">
                         <span class="glyphicon glyphicon-ok" aria-hidden="true"/>
@@ -30,37 +39,11 @@
                     </button>
                 </td>
             </tr>
-            <tr>
-                <th class="tac pr" scope="row">2</th>
-                <td>Моторное масло Toyota 00279-1QT5W - <strong>1л</strong></td>
-                <td class="tac">
-                    <button class="btn btn-success edit-recipe" title="Выполнить" style="outline: none;">
-                        <span class="glyphicon glyphicon-ok" aria-hidden="true"/>
-                    </button>
-                </td>
-                <td class="tac">
-                    <button class="btn btn-danger edit-recipe" title="Отменить" style="outline: none;">
-                        <span class="glyphicon glyphicon-remove" aria-hidden="true"/>
-                    </button>
-                </td>
-            </tr>
-            <tr>
-                <th class="tac" scope="row">3</th>
-                <td>Жидкость гидравлическая Honda 08285-P99-01Z-T1 - <strong>1л</strong></td>
-                <td class="tac">
-                    <button class="btn btn-success edit-recipe" title="Выполнить" style="outline: none;">
-                        <span class="glyphicon glyphicon-ok" aria-hidden="true"/>
-                    </button>
-                </td>
-                <td class="tac">
-                    <button class="btn btn-danger edit-recipe" title="Отменить" style="outline: none;">
-                        <span class="glyphicon glyphicon-remove" aria-hidden="true"/>
-                    </button>
-                </td>
-            </tr>
+            {/tasks}
             </tbody>
         </table>
     </div>
 </div>
 
+{>"modal_windows/info_task"/}
 {/body}

@@ -163,7 +163,7 @@ router.post('/create-request', function (req, res) {
     }
 });
 
-router.get('/update-request', function (req, res) {
+router.get('/update-request/:id', function (req, res) {
     User
         .getAllUsers()
         .then(users => {

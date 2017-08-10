@@ -27,19 +27,4 @@ $(document).ready(function () {
             }
         });
     });
-
-    $('.info-task').on('click', function () {
-        $('#info-id').text($(this).data('id'));
-        $('#info-description').text($(this).data('description'));
-        $('#info-executor-surname').text($(this).data('executor-surname'));
-        $('#info-executor-name').text($(this).data('executor-name'));
-        $('#info-cost').text($(this).data('cost'));
-        $('#info-estimation-time').text($(this).data('estimation-time'));
-        $('#info-start').text($(this).data('start'));
-        $('#info-end').text($(this).data('end'));
-        $('#info-parts').text($(this).data('parts'));
-        $('#info-customer-parts').text($(this).data('customer-parts'));
-        $('#info-need-buy-parts').text($(this).data('need-buy-parts'));
-        $('#info-comments').text($(this).data('comments'));
-    });
 });

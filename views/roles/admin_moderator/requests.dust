@@ -17,70 +17,75 @@
             </thead>
             <tbody>
             {#requests}
-                <tr>
-                    <th class="tac pr">{id}</th>
-                    <td class="tac pr">
-                        <p><strong>Клиент:</strong> {user.userSurname} {user.userName}</p>
-                        <p><strong>Цена:</strong> {cost} грн</p>
-                        <p><strong>Время начала:</strong> {startTime}</p>
-                        <p><strong>Планируемое время:</strong> {estimatedTime}</p>
-                    </td>
-                    <td style="padding: 0; vertical-align: top;">
-                        <table class="table task_table">
-                            <thead>
-                                <tr>
-                                    <th class="tac">Описание</th>
-                                    <th class="tac">Исполнитель</th>
-                                    <th class="tac md">Цена</th>
-                                    <th class="tac md">Время начала</th>
-                                    <th class="tac md">Конечное время</th>
-                                    <th class="sm"></th>
-                                    <th class="sm"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            {#tasks}
-                                <tr>
-                                    <td class="tac">
-                                        <a class="info-task modal-window-link" title="Полная информация" data-toggle="modal" data-id="{id}"
-                                           data-description="{taskDescription}" data-executor-surname="{executor.userSurname}"
-                                           data-executor-name="{executor.userName}" data-cost="{cost}" data-estimation-time="{estimationTime}"
-                                           data-start="{startTime}" data-end="{endTime}" data-parts="{parts}" data-customer-parts="{customerParts}"
-                                           data-need-buy-parts="{needBuyParts}" data-comments="{taskComments}" data-target="#infoTaskFormModal"
-                                           style="cursor: pointer">{taskDescription}
-                                        </a>
-                                    </td>
-                                    <td class="tac">{executor.userSurname} {executor.userName}</td>
-                                    <td class="tac">{cost} грн</td>
-                                    <td class="tac">{startTime}</td>
-                                    <td class="tac">{endTime}</td>
-                                    <td class="tac">
-                                        <a title="Редактировать задачу" data-toggle="modal"
-                                           data-target="#updateTaskFormModal" style="outline: none;">
-                                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"/>
-                                        </a>
-                                    </td>
-                                    <td class="tac">
-                                        <a title="Удалить задачу" data-toggle="modal"
-                                           data-target="#deleteTaskFormModal" style="outline: none;">
-                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"/>
-                                        </a>
-                                    </td>
-                                </tr>
-                            {/tasks}
-                            </tbody>
-                        </table>
-                    </td>
-                    <td class="tac">
-                        <a href="update-request" class="btn btn-default" title="Редактировать заказ" style="outline: none;">
-                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"/>
-                        </a>
-                        <a  href="#" class="btn btn-danger" data-toggle="modal"
-                            data-target="#deleteRequestFormModal" title="Удалить заказ" style="outline: none; margin-top: 10px;">
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"/>
-                        </a>
-                    </td>
-                </tr>
+            <tr>
+                <th class="tac pr">{id}</th>
+                <td class="tac pr">
+                    <p><strong>Клиент:</strong> {user.userSurname} {user.userName}</p>
+                    <p><strong>Цена:</strong> {cost} грн</p>
+                    <p><strong>Время начала:</strong> {startTime}</p>
+                    <p><strong>Планируемое время:</strong> {estimatedTime}</p>
+                </td>
+                <td style="padding: 0; vertical-align: top;">
+                    <table class="table task_table">
+                        <thead>
+                        <tr>
+                            <th class="tac">Описание</th>
+                            <th class="tac">Исполнитель</th>
+                            <th class="tac md">Цена</th>
+                            <th class="tac md">Время начала</th>
+                            <th class="tac md">Конечное время</th>
+                            <th class="sm"></th>
+                            <th class="sm"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {#tasks}
+                        <tr>
+                            <td class="tac">
+                                <a class="info-task modal-window-link" title="Полная информация" data-toggle="modal"
+                                   data-id="{id}"
+                                   data-description="{taskDescription}" data-executor-surname="{executor.userSurname}"
+                                   data-executor-name="{executor.userName}" data-cost="{cost}"
+                                   data-estimation-time="{estimationTime}"
+                                   data-start="{startTime}" data-end="{endTime}" data-parts="{parts}"
+                                   data-customer-parts="{customerParts}"
+                                   data-need-buy-parts="{needBuyParts}" data-comments="{taskComments}"
+                                   data-target="#infoTaskFormModal"
+                                   style="cursor: pointer">{taskDescription}
+                                </a>
+                            </td>
+                            <td class="tac">{executor.userSurname} {executor.userName}</td>
+                            <td class="tac">{cost} грн</td>
+                            <td class="tac">{startTime}</td>
+                            <td class="tac">{endTime}</td>
+                            <td class="tac">
+                                <a title="Редактировать задачу" data-toggle="modal"
+                                   data-target="#updateTaskFormModal" style="outline: none;">
+                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"/>
+                                </a>
+                            </td>
+                            <td class="tac">
+                                <a title="Удалить задачу" data-toggle="modal"
+                                   data-target="#deleteTaskFormModal" style="outline: none;">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"/>
+                                </a>
+                            </td>
+                        </tr>
+                        {/tasks}
+                        </tbody>
+                    </table>
+                </td>
+                <td class="tac">
+                    <a href="update-request" class="btn btn-default" title="Редактировать заказ" style="outline: none;">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"/>
+                    </a>
+                    <a href="#" class="btn btn-danger" data-toggle="modal"
+                       data-target="#deleteRequestFormModal" title="Удалить заказ"
+                       style="outline: none; margin-top: 10px;">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"/>
+                    </a>
+                </td>
+            </tr>
             {/requests}
             </tbody>
         </table>
