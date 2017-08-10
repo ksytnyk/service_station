@@ -4,19 +4,23 @@ const User = require('../../models/User');
 const Request = require('../../models/Request');
 const express = require('express');
 const router = express.Router();
-const validationUserParams = require('../../helpers/validationUserParams');
+
+const roles = require('../../constants/roles');
+const validation = require('../../middleware/validation');
 
 router.get('/users', (req, res) => {
+
     if (req.session.passport.user) {
-        User.getModeratorUsers()
+        User
+            .getCustomerUsers()
             .then(users => {
                 res.render('roles/admin_moderator/users', {
                     users: users,
                     typeUser: req.session.passport.user.userTypeID
                 });
             })
-            .catch(err => {
-                console.warn(err);
+            .catch(error => {
+                console.warn(error);
                 res.render('roles/admin_moderator/users');
             });
     } else {
@@ -24,63 +28,54 @@ router.get('/users', (req, res) => {
     }
 });
 
-router.post('/create-user', function (req, res) {
+router.post('/create-user', validation.createAndUpdateUser(roles.MODERATOR), function (req, res) {
 
-    let errors = validationUserParams(req);
+    req.body.userTypeID = '5'; //TODO магическое число - нужно подхачить
 
-    if (errors) {
-        req.flash('error_alert', true);
-        req.flash('error_msg', errors);
-        res.redirect('roles/admin_moderator/users');
-    } else {
-        req.body.userTypeID = '5';
-        User.createUser(req.body)
-            .then(() => {
-                req.flash('success_alert', true);
-                req.flash('success_msg', 'Добавление прошло успешно.');
-                res.redirect('roles/admin_moderator/users');
-            })
-            .catch(err => {
-                console.log(err);
-                req.flash('error_alert', true);
-                req.flash('error_msg', {msg: 'Возникла ошибка при добавлении.'});
-                res.redirect('roles/admin_moderator/users');
-            });
-    }
+    User
+        .createUser(req.body)
+        .then(() => {
+            req.flash('success_alert', true);
+            req.flash('success_msg', 'Добавление прошло успешно.');
+            res.redirect('roles/admin_moderator/users');
+        })
+        .catch(error => {
+            console.warn(error);
+            req.flash('error_alert', true);
+            req.flash('error_msg', {msg: 'Возникла ошибка при добавлении.'});
+            res.redirect('roles/admin_moderator/users');
+        });
+
 });
 
-router.put('/update-user/:id', function (req, res) {
+router.put('/update-user/:id', validation.createAndUpdateUser(roles.MODERATOR), function (req, res) {
 
-    let errors = validationUserParams(req);
-
-    if (errors) {
-        req.flash('error_alert', true);
-        req.flash('error_msg', errors);
-        res.redirect('roles/admin_moderator/users');
-    } else {
-        User.updateUser(req.params.id, req.body)
-            .then(() => {
-                req.flash('success_alert', true);
-                req.flash('success_msg', 'Изменение прошло успешно.');
-                res.redirect('roles/admin_moderator/users');
-            }).catch(err => {
-            console.log(err);
+    User
+        .updateUser(req.params.id, req.body)
+        .then(() => {
+            req.flash('success_alert', true);
+            req.flash('success_msg', 'Изменение прошло успешно.');
+            res.redirect('roles/admin_moderator/users');
+        })
+        .catch(error => {
+            console.warn(error);
             req.flash('error_alert', true);
             req.flash('error_msg', {msg: 'Возникла ошибка при изменении.'});
             res.redirect('roles/admin_moderator/users');
         });
-    }
+
 });
 
 router.delete('/delete-user/:id', function (req, res) {
-    User.deleteUser(req.params.id)
+    User
+        .deleteUser(req.params.id)
         .then(() => {
             req.flash('success_alert', true);
             req.flash('success_msg', 'Удаление прошло успешно.');
             res.redirect('roles/admin_moderator/users');
         })
-        .catch(err => {
-            console.warn(err);
+        .catch(error => {
+            console.warn(error);
             req.flash('error_alert', true);
             req.flash('error_msg', {msg: 'Возникла ошибка при удалении.'});
             res.redirect('roles/admin_moderator/users');
@@ -96,23 +91,23 @@ router.get('/requests', function (req, res) {
                 typeUser: req.session.passport.user.userTypeID
             });
         })
-        .catch(err => {
-            console.warn(err);
+        .catch(error => {
+            console.warn(error);
             res.render('roles/admin_moderator/requests');
         });
 });
 
 router.get('/create-request', function (req, res) {
     User
-        .getModeratorUsers()
+        .getCustomerUsers()
         .then(users => {
             res.render('roles/admin_moderator/create-request', {
                 users: users,
                 typeUser: req.session.passport.user.userTypeID
             });
         })
-        .catch(err => {
-            console.warn(err);
+        .catch(error => {
+            console.warn(error);
             res.render('roles/admin_moderator/create-request');
         });
 
@@ -133,7 +128,8 @@ router.post('/create-request', function (req, res) {
     if (errors) {
         res.status(400).send({errors: errors});
     } else {
-        Request.createRequest(req.body)
+        Request
+            .createRequest(req.body)
             .then((result) => {
                 res.status(200).send({result: result});
             })
@@ -152,8 +148,8 @@ router.get('/update-request', function (req, res) {
                 typeUser: req.session.passport.user.userTypeID
             });
         })
-        .catch(err => {
-            console.warn(err);
+        .catch(error => {
+            console.warn(error);
             res.render('roles/admin_moderator/update_request');
         });
 });
