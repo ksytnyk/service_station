@@ -139,9 +139,9 @@ User.createUser = function (user) {
             .then(result => {
                 resolve(result);
             })
-            .catch(err => {
+            .catch(error => {
                 console.warn(error);
-                reject(err);
+                reject(error);
             });
     });
 };

@@ -16,16 +16,19 @@
         {+body /}
     </div>
 </div>
-<script src="/js/jquery-3.2.1.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/jquery.dataTables.min.js"></script>
-<script src="/js/dataTables.bootstrap.min.js"></script>
-<script src="/js/bootstrap-formhelpers-phone.js"></script>
-<script src="/js/main.js"></script>
-<script src="/js/moment.js"></script>
-<script src="/js/transition.js"></script>
-<script src="/js/collapse.js"></script>
-<script src="/js/bootstrap-datetimepicker.min.js"></script>
+<script src="/js/libs/jquery-3.2.1.min.js"></script>
+<script src="/js/libs/bootstrap.min.js"></script>
+<script src="/js/libs/jquery.dataTables.min.js"></script>
+<script src="/js/libs/dataTables.bootstrap.min.js"></script>
+<script src="/js/libs/bootstrap-formhelpers-phone.js"></script>
+<script src="/js/components/main.js"></script>
+<script src="/js/components/users.js"></script>
+<script src="/js/components/requests.js"></script>
+<script src="/js/components/tasks.js"></script>
+<script src="/js/libs/moment.js"></script>
+<script src="/js/libs/transition.js"></script>
+<script src="/js/libs/collapse.js"></script>
+<script src="/js/libs/bootstrap-datetimepicker.min.js"></script>
 
 </body>
 </html>

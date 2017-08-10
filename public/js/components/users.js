@@ -1,14 +1,5 @@
 $(document).ready(function () {
 
-    var element = document.getElementById(window.location.pathname);
-    element.classList.add("active");
-
-    $('.modal-window-link').on('click', function () {
-        if (document.body.offsetHeight > window.innerHeight) {
-            $('.white_block').outerWidth(+window.innerWidth - 17);
-        }
-    });
-
     $('.update-user').on('click', function () {
         if ($(this).data('current') === 1) {
             $('#update-form-id').attr('action', ('/admin/update-user/' + $(this).data('id')));
@@ -47,54 +38,5 @@ $(document).ready(function () {
         }
         $('#delete-form-login').html($(this).data('login'));
     });
-
-    $('.hide_alert').on('click', function () {
-        $('.alert').slideUp();
-    });
-
-    setTimeout(function () {
-        $('.hide_alert').trigger('click');
-    }, 5000);
-
-    $('.dtable').DataTable();
-
-    $('#create_request').on('click', function () {
-        $.ajax({
-            url: '/admin/create-request',
-            type: 'Post',
-            data: $('#createRequestForm').serializeArray(),
-            success: function (data) {
-                $('.disable_input').prop('disabled', true);
-                $('#step').slideDown('slow');
-                $('#requestIDForTask').val(data.result.id);
-            },
-            error: function (err) {
-                $('#errorsCreateRequest').text('ERROR!');
-                console.log(err.responseText);
-            }
-        });
-    });
-
-    $('#taskAddButton').on('click', function () {
-
-        $('#createTaskFormModal').modal('toggle');
-
-        $.ajax({
-            url: '/admin/create-task',
-            type: 'Post',
-            data: $('#createTaskForm').serializeArray(),
-            success: function (data) {
-                console.log(data);
-            },
-            error: function (err) {
-                $('#errorsCreateRequest').text('ERROR!');
-                console.log(err.responseText);
-            }
-        });
-    });
-
-    $('.datetimepickerN').datetimepicker(
-
-    );
 
 });

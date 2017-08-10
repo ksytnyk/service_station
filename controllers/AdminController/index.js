@@ -106,14 +106,14 @@ router.get('/create-request', function (req, res) {
 });
 
 router.post('/create-request', function (req, res) {
-    let requestPrice = req.body.requestPrice;
-    let requestStartTime = req.body.requestStartTime;
-    let requestEstimatedTime = req.body.requestEstimatedTime;
+    let cost = req.body.cost;
+    let startTime = req.body.startTime;
+    let estimatedTime = req.body.estimatedTime;
     // Validation
 
-    req.checkBody('requestPrice', '"Цена" - обязательное поле.').notEmpty();
-    req.checkBody('requestStartTime', '"Время начала" - обязательное поле.').notEmpty();
-    req.checkBody('requestEstimatedTime', '"Планируемове время" - обязательное поле.').notEmpty();
+    req.checkBody('cost', '"Стоемость" - обязательное поле.').notEmpty();
+    req.checkBody('startTime', '"Время начала" - обязательное поле.').notEmpty();
+    req.checkBody('estimatedTime', '"Планируемове время" - обязательное поле.').notEmpty();
 
     let errors = req.validationErrors();
 

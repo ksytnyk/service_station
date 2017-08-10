@@ -58,14 +58,9 @@ Request.getAllRequests = function () {
 
 Request.createRequest = function (request) {
     return new Promise((resolve, reject) => {
-
         Request
-            .create({
-                assignedUserID: request.requestUserId,
-                cost: request.requestPrice,
-                startTime: request.requestStartTime,
-                estimatedTime: request.requestEstimatedTime
-            })
+            .build(request)
+            .save()
             .then(result => {
                 resolve(result);
             })
