@@ -33,7 +33,7 @@ const optionRequestTable = {
 
 let Request = sequelize.define('request', describeRequestTable, optionRequestTable);
 
-Request.belongsTo(User, {foreignKey: 'assigned_user_id'});
+Request.belongsTo(User, {foreignKey: 'assignedUserID'});
 
 Request.sync();
 

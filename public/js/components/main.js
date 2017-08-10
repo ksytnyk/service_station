@@ -1,7 +1,9 @@
 $(document).ready(function () {
 
     let element = document.getElementById(window.location.pathname);
-    element.classList.add("active");
+    if (element !== null) {
+        element.classList.add("active");
+    }
 
     $('.modal-window-link').on('click', function () {
         if (document.body.offsetHeight > window.innerHeight) {

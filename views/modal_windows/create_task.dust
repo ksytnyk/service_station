@@ -14,47 +14,48 @@
                     <input type="hidden" name="requestID" id="requestIDForTask">
                     <div class="form-group col-lg-4">
                         <label>Описание задачи</label>
-                        <input type="text" class="form-control" name="taskDescription">
+                        <input type="text" class="form-control" name="taskDescription" id="create-form-task-description">
                     </div>
                     <div class="form-group col-lg-4">
                         <label>Исполнитель</label>
-                        <select class="form-control selectpicker" name="assignedUserID">
+                        <select class="form-control selectpicker" name="planedExecutorID" id="create-form-task-executor-id">
                             {#executors}
                             <option value="{id}">{userName} {userSurname}</option>
+                            <input type="hidden" name="executorNameSurname" value="{userName} {userSurname}">
                             {/executors}
                         </select>
                     </div>
                     <div class="form-group col-lg-4">
                         <label>Цена</label>
-                        <input type="text" class="form-control" name="cost">
+                        <input type="text" class="form-control" name="cost" id="create-form-task-cost">
                     </div>
                     <div class="form-group col-lg-4">
                         <label>Планируемое время</label>
-                        <input type="text" class="form-control datetimepickerN" name="estimationTime">
+                        <input type="text" class="form-control datetimepickerN" name="estimationTime" id="create-form-task-estimated-time">
                     </div>
                     <div class="form-group col-lg-4">
                         <label>Время начала</label>
-                        <input type="text" class="form-control datetimepickerN" name="startTime">
+                        <input type="text" class="form-control datetimepickerN" name="startTime" id="create-form-task-start-time">
                     </div>
                     <div class="form-group col-lg-4">
                         <label>Конечное время</label>
-                        <input type="text" class="form-control datetimepickerN" name="endTime">
+                        <input type="text" class="form-control datetimepickerN" name="endTime" id="create-form-task-end-time">
                     </div>
                     <div class="form-group col-lg-6">
                         <label>Запчасти</label>
-                        <textarea class="form-control" name="parts" rows="3"></textarea>
+                        <textarea class="form-control" name="parts" rows="3" id="create-form-task-parts"></textarea>
                     </div>
                     <div class="form-group col-lg-6">
                         <label>Запчасти клиента</label>
-                        <textarea class="form-control" name="customerParts" rows="3"></textarea>
+                        <textarea class="form-control" name="customerParts" rows="3" id="create-form-task-customer-parts"></textarea>
                     </div>
                     <div class="form-group col-lg-6">
                         <label>Недостающие запчасти</label>
-                        <textarea class="form-control" name="needBuyParts" rows="3"></textarea>
+                        <textarea class="form-control" name="needBuyParts" rows="3" id="create-form-task-need-buy-parts"></textarea>
                     </div>
                     <div class="form-group col-lg-6">
                         <label>Комментрий</label>
-                        <textarea class="form-control" name="taskComments" rows="3"></textarea>
+                        <textarea class="form-control" name="taskComments" rows="3" id="create-form-task-comments"></textarea>
                     </div>
                     <div class='form-group col-lg-6 col-lg-offset-6'>
                         <button type="button" id="taskAddButton" class="btn btn-success width">

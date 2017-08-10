@@ -9,10 +9,10 @@ const describeTaskTable = {
         type: Sequelize.INTEGER,
         field: 'request_id'
     },
-    assignedUserID: {
+    /*assignedUserID: {
         type: Sequelize.INTEGER,
         field: 'assigned_user_id'
-    },
+    },*/
     planedExecutorID: {
         type: Sequelize.INTEGER,
         field: 'planed_executor_id'
@@ -69,9 +69,27 @@ const optionTaskTable = {
 
 let Task = sequelize.define('task', describeTaskTable, optionTaskTable);
 
-Task.belongsTo(Request, {foreignKey: 'assigned_user_id'});
+Task.belongsTo(Request, {foreignKey: 'requestID'});
 
 Task.sync();
+
+Task.getAllTasks = function () {
+    return new Promise((resolve, reject)=>{
+        Task
+            .findAll({
+                include: [
+                    {model: Request}
+                ]
+            })
+            .then(requests => {
+                resolve(requests);
+            })
+            .catch(err => {
+                console.warn(err);
+                reject(err);
+            });
+    })
+};
 
 Task.getTaskById = function (id) {
     return new Promise((resolve, reject) => {

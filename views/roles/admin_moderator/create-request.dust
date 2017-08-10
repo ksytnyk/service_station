@@ -43,7 +43,7 @@
         </div>
         <div class="form-group col-lg-12">
             <div class="panel panel-default">
-                <table class="table">
+                <table class="table" id="tasks-table">
                     <thead>
                     <tr>
                         <th class="tac" style="width: 40px;">ID</th>

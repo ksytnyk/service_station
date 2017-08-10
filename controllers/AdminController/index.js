@@ -72,9 +72,10 @@ router.delete('/delete-user/:id', function (req, res) {
 });
 
 router.get('/requests', function (req, res) {
-    Request
-        .getAllRequests()
+    Task
+        .getAllTasks()
         .then(result => {
+            console.log("RES",result[0].request);
             res.render('roles/admin_moderator/requests', {
                 requests: result,
                 typeUser: req.session.passport.user.userTypeID
