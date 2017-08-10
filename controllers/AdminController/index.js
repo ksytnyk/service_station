@@ -75,7 +75,20 @@ router.get('/requests', function (req, res) {
     Task
         .getAllTasks()
         .then(result => {
-            console.log("RES",result[0].request);
+            var requests = {};
+
+            result.map(item => {
+                if (requests[item.request.id] === undefined) {
+                    requests[item.request.id] = item.request.dataValues;
+                    requests[item.request.id].tasks = [];
+                }
+
+                var task = item.dataValues;
+                delete task.request;
+
+                requests[item.request.id].tasks.push(task);
+            });
+
             res.render('roles/admin_moderator/requests', {
                 requests: result,
                 typeUser: req.session.passport.user.userTypeID

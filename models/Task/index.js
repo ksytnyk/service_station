@@ -74,7 +74,7 @@ Task.belongsTo(Request, {foreignKey: 'requestID'});
 Task.sync();
 
 Task.getAllTasks = function () {
-    return new Promise((resolve, reject)=>{
+    return new Promise((resolve, reject) => {
         Task
             .findAll({
                 include: [
@@ -88,7 +88,7 @@ Task.getAllTasks = function () {
                 console.warn(err);
                 reject(err);
             });
-    })
+    });
 };
 
 Task.getTaskById = function (id) {

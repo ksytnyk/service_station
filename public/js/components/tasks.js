@@ -4,6 +4,8 @@ $(document).ready(function () {
 
         $('#createTaskFormModal').modal('toggle');
 
+        console.log(  );
+
         $.ajax({
             url: '/admin/create-task',
             type: 'Post',

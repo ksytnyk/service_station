@@ -16,10 +16,11 @@
             </tr>
             </thead>
             <tbody>
+            {#requests}
                 <tr>
                     <th class="tac pr">1</th>
-                    <th class="tac pr">Lorem ipsum dolor sit amet, consectetur adipisicing elit</th>
-                    <td style="padding: 0;">
+                    <th class="tac pr">{dataValues.id}, {dataValues.assignedUserID}, {dataValues.cost}, {dataValues.startTime}, {dataValues.estimatedTime}</th>
+                    <td style="padding: 0; vertical-align: top;">
                         <table class="table task_table">
                             <thead>
                                 <tr>
@@ -33,11 +34,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {#requests}
                                 <tr>
                                     <td class="tac">
                                         <a class="modal-window-link" title="Полная информация" data-toggle="modal"
-                                           data-target="#infoTaskFormModal" style="cursor: pointer">{taskDescription}</a>
+                                           data-target="#infoTaskFormModal" style="cursor: pointer">Lorem ipsum dolor</a>
                                     </td>
                                     <td class="tac">Вася Вася Вася</td>
                                     <td class="tac">10500</td>
@@ -56,7 +56,6 @@
                                         </a>
                                     </td>
                                 </tr>
-                                {/requests}
                             </tbody>
                         </table>
                     </td>
@@ -70,6 +69,7 @@
                         </a>
                     </td>
                 </tr>
+            {/requests}
             </tbody>
         </table>
     </div>
