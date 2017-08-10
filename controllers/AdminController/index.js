@@ -90,9 +90,9 @@ router.delete('/delete-user/:id', function (req, res) {
 router.get('/requests', function (req, res) {
     Request
         .getAllRequests()
-        .then(requests => {
+        .then(result => {
             res.render('roles/admin_moderator/requests', {
-                requests: requests,
+                requests: result,
                 typeUser: req.session.passport.user.userTypeID
             });
         })
@@ -104,18 +104,21 @@ router.get('/requests', function (req, res) {
 
 router.get('/create-request', function (req, res) {
     User
-        .getModeratorUsers()
-        .then(users => {
-            res.render('roles/admin_moderator/create-request', {
-                users: users,
-                typeUser: req.session.passport.user.userTypeID
-            });
-        })
-        .catch(err => {
-            console.warn(err);
-            res.render('roles/admin_moderator/create-request');
+        .getCustomerUsers()
+        .then(usersCustomers => {
+            User
+                .getExecutorUsers()
+                .then(usersExecutors =>
+                    res.render('roles/admin_moderator/create-request', {
+                        executors: usersExecutors,
+                        customers: usersCustomers,
+                        typeUser: req.session.passport.user.userTypeID
+                    }))
+                .catch(err => {
+                    console.warn(err);
+                    res.render('roles/admin_moderator/create-request');
+                });
         });
-
 });
 
 router.post('/create-request', function (req, res) {
@@ -178,7 +181,6 @@ router.delete('/delete-request/:id', function (req, res) {
 });
 
 router.post('/create-task', function (req, res) {
-
     Task
         .createTask(req.body)
         .then(result => {

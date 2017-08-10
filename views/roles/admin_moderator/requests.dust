@@ -33,10 +33,11 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                {#requests}
                                 <tr>
                                     <td class="tac">
                                         <a class="modal-window-link" title="Полная информация" data-toggle="modal"
-                                           data-target="#infoTaskFormModal" style="cursor: pointer">Замена масла</a>
+                                           data-target="#infoTaskFormModal" style="cursor: pointer">{taskDescription}</a>
                                     </td>
                                     <td class="tac">Вася Вася Вася</td>
                                     <td class="tac">10500</td>
@@ -55,6 +56,7 @@
                                         </a>
                                     </td>
                                 </tr>
+                                {/requests}
                             </tbody>
                         </table>
                     </td>

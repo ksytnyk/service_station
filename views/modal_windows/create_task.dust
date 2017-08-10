@@ -19,9 +19,9 @@
                     <div class="form-group col-lg-4">
                         <label>Исполнитель</label>
                         <select class="form-control selectpicker" name="assignedUserID">
-                            <option value="1">Вася</option>
-                            <option value="1">Петя</option>
-                            <option value="1">Катя</option>
+                            {#executors}
+                            <option value="{id}">{userName} {userSurname}</option>
+                            {/executors}
                         </select>
                     </div>
                     <div class="form-group col-lg-4">

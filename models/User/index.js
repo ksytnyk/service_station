@@ -110,7 +110,28 @@ User.getAllUsers = function () {
     });
 };
 
-User.getModeratorUsers = function () {
+User.getExecutorUsers = function () {
+    return new Promise((resolve, reject) => {
+        User
+            .findAll({
+                where: {
+                    user_type_id: 3
+                },
+                include: [
+                    {model: UserType}
+                ]
+            })
+            .then(users => {
+                resolve(users);
+            })
+            .catch(err => {
+                console.warn(err);
+                reject(err);
+            });
+    });
+};
+
+User.getCustomerUsers = function () {
     return new Promise((resolve, reject) => {
         User
             .findAll({
