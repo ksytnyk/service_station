@@ -3,6 +3,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../connection');
 const Request = require('../Request');
+const User = require('../User');
 
 const describeTaskTable = {
     requestID: {
@@ -70,6 +71,7 @@ const optionTaskTable = {
 let Task = sequelize.define('task', describeTaskTable, optionTaskTable);
 
 Task.belongsTo(Request, {foreignKey: 'requestID'});
+Task.belongsTo(User, {foreignKey: 'planedExecutorID'});
 
 Task.sync();
 
@@ -78,7 +80,15 @@ Task.getAllTasks = function () {
         Task
             .findAll({
                 include: [
-                    {model: Request}
+                    {
+                        model: Request,
+                        include: {
+                            model: User
+                        }
+                    },
+                    {
+                        model: User
+                    }
                 ]
             })
             .then(requests => {

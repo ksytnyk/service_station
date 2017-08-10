@@ -76,21 +76,39 @@ router.get('/requests', function (req, res) {
         .getAllTasks()
         .then(result => {
 
+            //==============================================
             var requests = {};
+
+            function formatDate(date) {
+                return date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear();
+            }
 
             result.map(item => {
                 if (requests[item.request.id] === undefined) {
                     requests[item.request.id] = item.request.dataValues;
+                    requests[item.request.id].user = item.request.dataValues.user.dataValues;
+                    requests[item.request.id].executor = item.user.dataValues;
+                    requests[item.request.id].startTime = formatDate(requests[item.request.id].startTime);
+                    requests[item.request.id].estimatedTime = formatDate(requests[item.request.id].estimatedTime);
                     requests[item.request.id].tasks = [];
                 }
 
                 var task = item.dataValues;
+                task.estimationTime = formatDate(task.estimationTime);
+                task.startTime = formatDate(task.startTime);
+                task.endTime = formatDate(task.endTime);
                 delete task.request;
 
                 requests[item.request.id].tasks.push(task);
             });
+
+            requests = Object.values(requests);
+            //==============================================
+
+            console.log( 88888888888888888888888888, requests[0]);
+
             res.render('roles/admin_moderator/requests', {
-                requests: result,
+                requests: requests,
                 typeUser: req.session.passport.user.userTypeID
             });
         })

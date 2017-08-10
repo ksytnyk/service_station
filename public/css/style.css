@@ -271,6 +271,13 @@ thead {
 	border-top: none;
 	background-color: #eee;
 }
+.requests p {
+	margin: 0;
+	text-align: left;
+}
+.requests .table tbody tr:nth-child(2n) {
+    background-color: #fff;
+}
 .requests .task_table .btn {
 	padding: 5px;
 }

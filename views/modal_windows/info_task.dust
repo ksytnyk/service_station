@@ -14,43 +14,47 @@
                         <tbody>
                         <tr>
                             <th>Id</th>
-                            <td><span id=""></span></td>
+                            <td><span id="info-id"></span></td>
                         </tr>
                         <tr>
                             <th>Описание задачи</th>
-                            <td><span id=""></span></td>
+                            <td><span id="info-description"></span></td>
                         </tr>
                         <tr>
                             <th>Исполнитель</th>
-                            <td><span id=""></span></td>
+                            <td><span id="info-executor-surname" style="margin-right: 10px;"></span><span id="info-executor-name"></span></td>
                         </tr>
                         <tr>
                             <th>Цена</th>
-                            <td><span id=""></span></td>
+                            <td><span id="info-cost"></span></td>
                         </tr>
                         <tr>
                             <th>Планируемое время</th>
-                            <td><span id=""></span></td>
+                            <td><span id="info-estimation-time"></span></td>
                         </tr>
                         <tr>
                             <th>Время начала</th>
-                            <td><span id=""></span></td>
+                            <td><span id="info-start"></span></td>
                         </tr>
                         <tr>
                             <th>Конечное время</th>
-                            <td><span id=""></span></td>
+                            <td><span id="info-end"></span></td>
                         </tr>
                         <tr>
                             <th>Запчасти</th>
-                            <td><span id=""></span></td>
+                            <td><span id="info-parts"></span></td>
                         </tr>
                         <tr>
                             <th>Запчасти клиента</th>
-                            <td><span id=""></span></td>
+                            <td><span id="info-customer-parts"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Недостающие запчасти</th>
+                            <td><span id="info-need-buy-parts"></span></td>
                         </tr>
                         <tr>
                             <th>Комментрий</th>
-                            <td><span id=""></span></td>
+                            <td><span id="info-comments"></span></td>
                         </tr>
                         </tbody>
                     </table>

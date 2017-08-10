@@ -10,7 +10,7 @@
             <thead>
             <tr>
                 <th class="tac sm">ID</th>
-                <th class="tac" style="width: 200px;">Информация о заказе</th>
+                <th class="tac" style="width: 225px;">Информация о заказе</th>
                 <th class="tac">Задачи</th>
                 <th class="tac" style="width: 20px"></th>
             </tr>
@@ -18,8 +18,13 @@
             <tbody>
             {#requests}
                 <tr>
-                    <th class="tac pr">1</th>
-                    <th class="tac pr">{dataValues.id}, {dataValues.assignedUserID}, {dataValues.cost}, {dataValues.startTime}, {dataValues.estimatedTime}</th>
+                    <th class="tac pr">{id}</th>
+                    <td class="tac pr">
+                        <p><strong>Клиент:</strong> {user.userSurname} {user.userName}</p>
+                        <p><strong>Цена:</strong> {cost} грн</p>
+                        <p><strong>Время начала:</strong> {startTime}</p>
+                        <p><strong>Планируемое время:</strong> {estimatedTime}</p>
+                    </td>
                     <td style="padding: 0; vertical-align: top;">
                         <table class="table task_table">
                             <thead>
@@ -34,15 +39,21 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            {#tasks}
                                 <tr>
                                     <td class="tac">
-                                        <a class="modal-window-link" title="Полная информация" data-toggle="modal"
-                                           data-target="#infoTaskFormModal" style="cursor: pointer">Lorem ipsum dolor</a>
+                                        <a class="info-task modal-window-link" title="Полная информация" data-toggle="modal" data-id="{id}"
+                                           data-description="{taskDescription}" data-executor-surname="{executor.userSurname}"
+                                           data-executor-name="{executor.userName}" data-cost="{cost}" data-estimation-time="{estimationTime}"
+                                           data-start="{startTime}" data-end="{endTime}" data-parts="{parts}" data-customer-parts="{customerParts}"
+                                           data-need-buy-parts="{needBuyParts}" data-comments="{taskComments}" data-target="#infoTaskFormModal"
+                                           style="cursor: pointer">{taskDescription}
+                                        </a>
                                     </td>
-                                    <td class="tac">Вася Вася Вася</td>
-                                    <td class="tac">10500</td>
-                                    <td class="tac">8.08.2017</td>
-                                    <td class="tac">14.08.2017</td>
+                                    <td class="tac">{executor.userSurname} {executor.userName}</td>
+                                    <td class="tac">{cost} грн</td>
+                                    <td class="tac">{startTime}</td>
+                                    <td class="tac">{endTime}</td>
                                     <td class="tac">
                                         <a title="Редактировать задачу" data-toggle="modal"
                                            data-target="#updateTaskFormModal" style="outline: none;">
@@ -56,6 +67,7 @@
                                         </a>
                                     </td>
                                 </tr>
+                            {/tasks}
                             </tbody>
                         </table>
                     </td>
