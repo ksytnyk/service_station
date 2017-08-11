@@ -9,7 +9,8 @@ $(document).ready(function () {
             type: 'Post',
             data: $('#createTaskForm').serializeArray(),
             success: function (data) {
-                let executorNameSurname = $('#createTaskForm').serializeArray()[3].value;
+
+                let executorNameSurname = $('#option'+$('#createTaskForm').serializeArray()[2].value).attr('executorFullName');
 
                 $("#tasks-table").append('<tr>' +
                     '<td class="tac">' + data.result.id + '</td>' +
@@ -24,7 +25,7 @@ $(document).ready(function () {
                     '<a class="btn btn-default" title="Редактировать задачу" data-toggle="modal"' +
                     'data-target="#updateTaskFormModal" style="outline: none;">' +
                     '<span class="glyphicon glyphicon-pencil" aria-hidden="true"/>' +
-                    '</a></td><td class="tac"><a class="btn btn-danger" title="Удалить задачу" data-toggle="modal"' +
+                    '</a></td><td class="tac"><a class="btn btn-danger" title="Удалить задачу" data-toggle="modal" data-id="data.result.id"' +
                     'data-target="#deleteTaskFormModal" style="outline: none;">' +
                     '<span class="glyphicon glyphicon-remove" aria-hidden="true"/></a></td></tr>');
 

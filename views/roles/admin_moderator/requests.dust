@@ -79,8 +79,8 @@
                     <a href="update-request" class="btn btn-default" title="Редактировать заказ" style="outline: none;">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"/>
                     </a>
-                    <a href="#" class="btn btn-danger" data-toggle="modal"
-                       data-target="#deleteRequestFormModal" title="Удалить заказ"
+                    <a href="#" class="btn btn-danger delete-request modal-window-link" data-current="{typeUser}"
+                       data-id="{id}" data-toggle="modal" data-target="#deleteRequestFormModal" title="Удалить заказ"
                        style="outline: none; margin-top: 10px;">
                         <span class="glyphicon glyphicon-remove" aria-hidden="true"/>
                     </a>
