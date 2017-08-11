@@ -6,7 +6,7 @@
             <form id="delete-form-id" method="POST" enctype="application/x-www-form-urlencoded" class="delete">
                 <input type="hidden" name="_method" value="DELETE">
                 <div class="modal-header">
-                    <h4 class="modal-title text-center">Удалить пользователя "<span id="delete-form-login"></span>" ?</h4>
+                    <h4 class="modal-title text-center">Удалить пользователя №"<span id="delete-form-login"></span>" ?</h4>
                 </div>
                 <div class="modal-body">
                     <button type="submit" class="btn btn-success width">Подтвердить</button>

@@ -84,8 +84,8 @@
                                 </a>
                             </td>
                             <td class="tac">
-                                <a title="Удалить задачу" data-toggle="modal"
-                                   data-target="#deleteTaskFormModal" style="outline: none;">
+                                <a href="#" class="btn delete-task modal-window-link" title="Удалить задачу" data-toggle="modal" data-current="{typeUser}" data-id="{id}"
+                                data-target="#deleteTaskFormModal" style="outline: none;">
                                     <span class="glyphicon glyphicon-remove" aria-hidden="true"/>
                                 </a>
                             </td>

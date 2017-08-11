@@ -42,7 +42,7 @@ router.post('/create-user', validation.createAndUpdateUser(roles.ADMIN), functio
         });
 });
 
-router.put('/update-user/:id', validation.createAndUpdateUser(roles.ADMIN), function (req, res) {
+router.put('/update-user/:id', validation.createAndUpdateUser(roles.ADMIN), function (req, res) { //TODO without restart page
 
     User
         .updateUser(req.params.id, req.body)
@@ -59,7 +59,7 @@ router.put('/update-user/:id', validation.createAndUpdateUser(roles.ADMIN), func
         });
 });
 
-router.delete('/delete-user/:id', function (req, res) {
+router.delete('/delete-user/:id', function (req, res) { //TODO without restart page
     User
         .deleteUser(req.params.id)
         .then(() => {
@@ -303,6 +303,26 @@ router.put('/update-task', function (req, res) {
                 res.status(400).send({errors: errors});
             });
     }
+});
+
+router.delete('/delete-task/:id', function (req, res) { //TODO without redirects
+    Task
+        .destroy({
+            where: {
+                request_id: Number(req.params.id)
+            }
+        })
+        .then(() => {
+            req.flash('success_alert', true);
+            req.flash('success_msg', 'Удаление прошло успешно.');
+            res.redirect('/admin/requests');
+        })
+        .catch(error => {
+            console.warn(error);
+            req.flash('error_alert', true);
+            req.flash('error_msg', {msg: 'Возникла ошибка при удалении.'});
+            res.redirect('/admin/requests');
+        })
 });
 
 module.exports = router;
