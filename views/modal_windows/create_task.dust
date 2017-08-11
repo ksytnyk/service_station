@@ -15,12 +15,24 @@
                     <input type="hidden" name="requestID" id="requestIDForTask">
 
                     <div class="form-group col-lg-4">
+                        <label>Имя задачи</label>
+                        <input type="text" class="form-control" name="" id="">
+                    </div>
+                    <div class="form-group col-lg-4">
                         <label>Описание задачи</label>
                         <input type="text" class="form-control" name="taskDescription" id="create-form-task-description">
                     </div>
                     <div class="form-group col-lg-4">
                         <label>Исполнитель</label>
                         <select class="form-control selectpicker" name="planedExecutorID" id="create-form-task-executor-id">
+                            {#executors}
+                            <option value="{id}" executorFullName="{userName} {userSurname}" id="option{id}">{userName} {userSurname}</option>
+                            {/executors}
+                        </select>
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label>Поручить задачу</label>
+                        <select class="form-control selectpicker" name="" id="">
                             {#executors}
                             <option value="{id}" executorFullName="{userName} {userSurname}" id="option{id}">{userName} {userSurname}</option>
                             {/executors}

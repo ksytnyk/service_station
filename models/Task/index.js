@@ -139,7 +139,7 @@ Task.getTaskByExecutorId = function (id) {
                 reject(err);
             })
     })
-}
+};
 
 Task.getAllTasksForStore = function () {
     return new Promise((resolve, reject) => {

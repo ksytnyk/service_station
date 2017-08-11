@@ -83,7 +83,16 @@ router.get('/requests', function (req, res) {
             var requests = {};
 
             function formatDate(date) {
-                return date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear();
+                var day = date.getDate();
+                var month;
+                if ((date.getMonth()+1) < 10) {
+                    month = '0' + (date.getMonth() + 1);
+                } else {
+                    month = date.getMonth() + 1;
+                }
+                var year = date.getFullYear();
+
+                return day + '.' + month + '.' + year;
             }
 
             result.map(item => {
@@ -139,11 +148,15 @@ router.get('/create-request', function (req, res) {
 });
 
 router.post('/create-request', function (req, res) {
+    let name = req.body.name;
+    let description = req.body.description;
     let cost = req.body.cost;
     let startTime = req.body.startTime;
     let estimatedTime = req.body.estimatedTime;
     // Validation
 
+    req.checkBody('name', '"Имя заказа" - обязательное поле.').notEmpty();
+    req.checkBody('description', '"Описание заказа" - обязательное поле.').notEmpty();
     req.checkBody('cost', '"Стоемость" - обязательное поле.').notEmpty();
     req.checkBody('startTime', '"Время начала" - обязательное поле.').notEmpty();
     req.checkBody('estimatedTime', '"Планируемове время" - обязательное поле.').notEmpty();

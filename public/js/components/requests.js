@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     $('#create_request').on('click', function () {
         $.ajax({
-            url: window.location.pathnam,
+            url: window.location.pathname,
             type: 'Post',
             data: $('#createRequestForm').serializeArray(),
             success: function (data) {
