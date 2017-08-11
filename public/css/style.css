@@ -221,6 +221,9 @@ thead {
 .table .pr {
 	padding-right: 30px;
 }
+.table .vat {
+	vertical-align: top;
+}
 .table .buffer {
 	background-color: #fff;
 	border-left: none;
@@ -262,6 +265,9 @@ thead {
 .create_request .errorsCreateRequestBlock {
 	display: none;
 }
+.create_request p {
+	margin: 0;
+}
 
 /* REQUESTS */
 .requests .task_table {
@@ -273,7 +279,6 @@ thead {
 }
 .requests p {
 	margin: 0;
-	text-align: left;
 }
 .requests .table tbody tr:nth-child(2n) {
     background-color: #fff;

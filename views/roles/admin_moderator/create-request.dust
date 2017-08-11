@@ -48,7 +48,7 @@
                    class="btn btn-success col-lg-12 disable_input"/>
             <input type="button" id="create_task" value="Добавить задачу"
                    class="btn btn-primary col-lg-12 modal-window-link " data-toggle="modal"
-                   data-target="#createTaskFormModal" style="display: none"/>
+                   data-target="#createTaskFormModal" style="display: block"/>
         </div>
     </form>
     <div id="step" class="clearfix">
@@ -61,13 +61,9 @@
                     <thead>
                     <tr>
                         <th class="tac" style="width: 40px;">ID</th>
-                        <th class="tac">Описание</th>
-                        <th class="tac">Исполнитель</th>
-                        <th class="tac lg">Цена</th>
-                        <th class="tac lg">План. время</th>
-                        <th class="tac lg">Время начала</th>
-                        <th class="tac lg">Конечное время</th>
-                        <th class="tac" style="width: 60px;"></th>
+                        <th class="tac">Общая информация</th>
+                        <th class="tac">Запчасти</th>
+                        <th class="tac" style="width: 250px">Комментрий</th>
                         <th class="tac" style="width: 60px;"></th>
                     </tr>
                     </thead>

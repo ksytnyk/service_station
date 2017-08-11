@@ -19,7 +19,7 @@
             {#requests}
             <tr>
                 <th class="tac pr">{id}</th>
-                <td class="tac pr">
+                <td class="pr">
                     <p><strong>Клиент:</strong> {user.userSurname} {user.userName}</p>
                     <p><strong>Цена:</strong> {cost} грн</p>
                     <p><strong>Время начала:</strong> {startTime}</p>

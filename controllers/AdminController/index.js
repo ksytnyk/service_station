@@ -228,10 +228,12 @@ router.delete('/delete-request/:id', function (req, res) {
 
 router.post('/create-task', function (req, res) {
 
-    let taskDescription = req.body.taskDescription;
+    let name = req.body.name;
     let planedExecutorID = req.body.planedExecutorID;
-    let cost = req.body.cost;
+    let assignedUserID = req.body.assignedUserID;
+    let description = req.body.description;
     let estimationTime = req.body.estimationTime;
+    let cost = req.body.cost;
     let startTime = req.body.startTime;
     let endTime = req.body.endTime;
 
@@ -242,10 +244,12 @@ router.post('/create-task', function (req, res) {
 
     // Validation
 
-    req.checkBody('taskDescription', '"Описание задачи" - обязательное поле.').notEmpty();
+    req.checkBody('name', '"Имя задачи" - обязательное поле.').notEmpty();
     req.checkBody('planedExecutorID', '"Исполнитель" - обязательное поле.').notEmpty();
-    req.checkBody('cost', '"Цена" - обязательное поле.').notEmpty();
+    req.checkBody('assignedUserID', '"Поручить задачу" - обязательное поле.').notEmpty();
+    req.checkBody('description', '"Описание задачи" - обязательное поле.').notEmpty();
     req.checkBody('estimationTime', '"Планируемове время" - обязательное поле.').notEmpty();
+    req.checkBody('cost', '"Цена" - обязательное поле.').notEmpty();
     req.checkBody('startTime', '"Время начала" - обязательное поле.').notEmpty();
     req.checkBody('endTime', '"Конечное время" - обязательное поле.').notEmpty();
     /*

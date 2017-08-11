@@ -13,21 +13,33 @@ $(document).ready(function () {
                 let executorNameSurname = $('#option'+$('#createTaskForm').serializeArray()[2].value).attr('executorFullName');
 
                 $("#tasks-table").append('<tr>' +
-                    '<td class="tac">' + data.result.id + '</td>' +
-                    '<th class="tac"><a class="modal-window-link" title="Полная информация" data-toggle="modal"' +
-                    'data-target="#infoTaskFormModal" style="cursor: pointer">' + data.result.taskDescription + '</a></th>' +
-                    '<td class="tac">' + executorNameSurname + '</td>' +
-                    '<td class="tac">' + data.result.cost + '</td>' +
-                    '<td class="tac">' + data.result.estimationTime + '</td>' +
-                    '<td class="tac">' + data.result.startTime + '</td>' +
-                    '<td class="tac">' + data.result.endTime + '</td>' +
                     '<td class="tac">' +
-                    '<a class="btn btn-default" title="Редактировать задачу" data-toggle="modal"' +
-                    'data-target="#updateTaskFormModal" style="outline: none;">' +
-                    '<span class="glyphicon glyphicon-pencil" aria-hidden="true"/>' +
-                    '</a></td><td class="tac"><a class="btn btn-danger" title="Удалить задачу" data-toggle="modal" data-id="data.result.id"' +
-                    'data-target="#deleteTaskFormModal" style="outline: none;">' +
-                    '<span class="glyphicon glyphicon-remove" aria-hidden="true"/></a></td></tr>');
+                        data.result.id +
+                    '</td>' +
+                    '<td class="vat">' +
+                        '<p><strong>Имя задачи: </strong>' + data.result.name + '</p>' +
+                        '<p><strong>Исполнитель: </strong>' + executorNameSurname + '</p>' +
+                        '<p><strong>Поручить задачу: </strong>' + data.result.assignedUserID + '</p>' +
+                        '<p><strong>Планируемое время: </strong>' + data.result.estimationTime + '</p>' +
+                        '<p><strong>Цена: </strong>' + data.result.cost + '</p>' +
+                        '<p><strong>Время начала: </strong>' + data.result.startTime + '</p>' +
+                        '<p><strong>Конечное время: </strong>' + data.result.endTime + '</p>' +
+                        '<p><strong>Описание задачи: </strong>' + data.result.description + '</p>' +
+                    '</td>' +
+                    '<td class="vat">' +
+                        '<p><strong>Запчасти: </strong>' + data.result.parts + '</p>' +
+                        '<p><strong>Запчасти клиента: </strong>' + data.result.customerParts + '</p>' +
+                        '<p><strong>Недостающие запчасти: </strong>' + data.result.needBuyParts + '</p>' +
+                    '</td>' +
+                    '<td class="vat">' + data.result.comment + '</td>' +
+                    '<td class="tac">' +
+                        '<a class="btn btn-default" title="Редактировать задачу" data-toggle="modal"' +
+                        'data-target="#updateTaskFormModal" style="outline: none;">' +
+                        '<span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>' +
+                        '<a class="btn btn-danger" title="Удалить задачу" data-toggle="modal" data-id="data.result.id"' +
+                        'data-target="#deleteTaskFormModal" style="outline: none; margin-top: 20px;">' +
+                        '<span class="glyphicon glyphicon-remove" aria-hidden="true"/></a>' +
+                    '</td></tr>');
 
                 clearModalAddTask()
 
@@ -71,14 +83,5 @@ $(document).ready(function () {
 });
 
 function clearModalAddTask() {
-    $('#create-form-task-comments').val('');
-    $('#create-form-task-customer-parts').val('');
-    $('#create-form-task-description').val('');
-    $('#create-form-task-end-time').val('');
-    $('#create-form-task-estimated-time').val('');
-    $('#create-form-task-need-buy-parts').val('');
-    $('#create-form-task-parts').val('');
-    $('#create-form-task-start-time').val('');
-    $('#create-form-task-cost').val('');
-    $('#create-form-task-executor-id').val('');
+    $('.create-form-task').val('');
 }
