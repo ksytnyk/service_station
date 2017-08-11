@@ -94,12 +94,14 @@ Request.deleteRequest = function (idRequest) {
                 where: {
                     id: Number(idRequest)
                 }
-            }).then(result => {
-            resolve(result);
-        }).catch(err => {
-            console.warn(err);
-            reject(err);
-        });
+            })
+            .then(result => {
+                resolve(result);
+            })
+            .catch(err => {
+                console.warn(err);
+                reject(err);
+            });
     });
 };
 

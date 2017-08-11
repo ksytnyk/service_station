@@ -190,12 +190,14 @@ User.deleteUser = function (idUser) {
                 where: {
                     id: Number(idUser)
                 }
-            }).then(result => {
-            resolve(result);
-        }).catch(err => {
-            console.warn(err);
-            reject(err);
-        });
+            })
+            .then(result => {
+                resolve(result);
+            })
+            .catch(err => {
+                console.warn(err);
+                reject(err);
+            });
     });
 };
 

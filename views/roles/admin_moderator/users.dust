@@ -38,7 +38,7 @@
                     <td class="tac pr">{user_type.dataValues.userTypeName}</td>
                 {/eq}
                 <td class="tac">
-                    <button class="btn btn-default update-user modal-window-link" type="submit" data-current="{user.userTypeID}"
+                    <button class="btn btn-default update-user modal-window-link" data-current="{user.userTypeID}"
                             data-toggle="modal" data-target="#updateUserFormModal" data-id="{id}"
                             data-name="{userName}" data-surname="{userSurname}" data-company="{userCompanyName}"
                             data-address="{userAddress}" data-phone="{userPhone}" data-login="{userLogin}"
@@ -48,7 +48,7 @@
                     </button>
                 </td>
                 <td class="tac">
-                    <button class="btn btn-danger delete-user modal-window-link" type="submit" data-current="{user.userTypeID}"
+                    <button class="btn btn-danger delete-user modal-window-link" data-current="{user.userTypeID}"
                             data-toggle="modal" data-target="#deleteUserFormModal" data-id="{id}"
                             data-login="{userLogin}" title="Удалить" style="outline: none;">
                         <span class="glyphicon glyphicon-remove" aria-hidden="true"/>

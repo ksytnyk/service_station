@@ -14,7 +14,10 @@ router.get('/users', function (req, res) {
     User
         .getAllUsers()
         .then(users => {
-            res.render('roles/admin_moderator/users', {users: users, typeUser: req.session.passport.user.userTypeID});
+            res.render('roles/admin_moderator/users', {
+                users: users,
+                typeUser: req.session.passport.user.userTypeID
+            });
         })
         .catch(error => {
             console.warn(error);
@@ -105,8 +108,6 @@ router.get('/requests', function (req, res) {
             requests = Object.values(requests);
             //==============================================
 
-            console.log( 88888888888888888888888888, requests[0]);
-
             res.render('roles/admin_moderator/requests', {
                 requests: requests,
                 typeUser: req.session.passport.user.userTypeID
@@ -183,12 +184,26 @@ router.put('/update-request/:id', function (req, res) {
 });
 
 router.delete('/delete-request/:id', function (req, res) {
-    Request
-        .deleteRequest(req.params.id)
+    Task
+        .destroy({
+            where: {
+                request_id: Number(req.params.id)
+            }
+        })
         .then(() => {
-            req.flash('success_alert', true);
-            req.flash('success_msg', 'Удаление прошло успешно.');
-            res.redirect('/admin/requests');
+            Request
+                .deleteRequest(req.params.id)
+                .then(() => {
+                    req.flash('success_alert', true);
+                    req.flash('success_msg', 'Удаление прошло успешно.');
+                    res.redirect('/admin/requests');
+                })
+                .catch(error => {
+                    console.warn(error);
+                    req.flash('error_alert', true);
+                    req.flash('error_msg', {msg: 'Возникла ошибка при удалении.'});
+                    res.redirect('/admin/requests');
+                });
         })
         .catch(error => {
             console.warn(error);

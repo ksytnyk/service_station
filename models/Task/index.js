@@ -174,12 +174,14 @@ Task.deleteTask = function (taskID) {
                 where: {
                     id: Number(taskID)
                 }
-            }).then(result => {
-            resolve(result);
-        }).catch(err => {
-            console.warn(err);
-            reject(err);
-        });
+            })
+            .then(result => {
+                resolve(result);
+            })
+            .catch(err => {
+                console.warn(err);
+                reject(err);
+            });
     });
 };
 

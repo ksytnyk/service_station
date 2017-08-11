@@ -36,7 +36,7 @@
             <input type="button" id="create_request" value="Добавить заказ"
                    class="btn btn-success col-lg-12 disable_input" style="margin-top: 25px;"/>
             <input type="button" id="create_task" value="Добавить задачу"
-                   class="btn btn-primary modal-window-link " data-toggle="modal"
+                   class="btn btn-primary col-lg-12 modal-window-link " data-toggle="modal"
                    data-target="#createTaskFormModal" style="margin-top: 25px; display: none"/>
         </div>
     </form>
