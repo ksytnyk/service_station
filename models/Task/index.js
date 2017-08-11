@@ -10,17 +10,21 @@ const status = require('../../constants/status');
 
 
 const describeTaskTable = {
-    requestID: {
-        type: Sequelize.INTEGER,
-        field: 'request_id'
+    name: {
+        type: Sequelize.STRING,
+        field: 'name'
     },
-    /*assignedUserID: {
-     type: Sequelize.INTEGER,
-     field: 'assigned_user_id'
-     },*/
     planedExecutorID: {
         type: Sequelize.INTEGER,
         field: 'planed_executor_id'
+    },
+    description: {
+        type: Sequelize.TEXT,
+        field: 'description'
+    },
+    assignedUserID: {
+        type: Sequelize.INTEGER,
+        field: 'assigned_user_id'
     },
     cost: {
         type: Sequelize.FLOAT,
@@ -42,10 +46,6 @@ const describeTaskTable = {
         type: Sequelize.INTEGER,
         field: 'status'
     },
-    typeID: {
-        type: Sequelize.INTEGER,
-        field: 'type_id'
-    },
     parts: {
         type: Sequelize.TEXT,
         field: 'parts'
@@ -58,14 +58,20 @@ const describeTaskTable = {
         type: Sequelize.TEXT,
         field: 'need_buy_parts'
     },
-    taskComments: {
+    comment: {
         type: Sequelize.TEXT,
-        field: 'task_comments'
+        field: 'comment'
     },
-    taskDescription: {
-        type: Sequelize.TEXT,
-        field: 'task_description'
-    }
+    requestID: {
+        type: Sequelize.INTEGER,
+        field: 'request_id'
+    },
+    typeID: {
+        type: Sequelize.INTEGER,
+        field: 'type_id'
+    },
+
+
 };
 
 const optionTaskTable = {

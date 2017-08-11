@@ -5,17 +5,25 @@ const sequelize = require('../connection');
 const User = require('../User');
 
 const describeRequestTable = {
-    assignedUserID: {
+    customerID: {
         type: Sequelize.INTEGER,
-        field: 'assigned_user_id'
+        field: 'customer_id'
+    },
+    name: {
+        type: Sequelize.STRING,
+        field: 'name'
+    },
+    description: {
+        type: Sequelize.STRING,
+        field: 'description'
+    },
+    comment: {
+        type: Sequelize.STRING,
+        field: 'comment'
     },
     status: {
         type: Sequelize.INTEGER,
         field: 'status'
-    },
-    cost: {
-        type: Sequelize.FLOAT,
-        field: 'cost'
     },
     startTime: {
         type: Sequelize.DATE,
@@ -24,6 +32,14 @@ const describeRequestTable = {
     estimatedTime: {
         type: Sequelize.DATE,
         field: 'estimated_time'
+    },
+    cost: {
+        type: Sequelize.FLOAT,
+        field: 'cost'
+    },
+    createdBy: {
+        type: Sequelize.INTEGER,
+        field: 'created_by'
     }
 };
 
@@ -33,7 +49,7 @@ const optionRequestTable = {
 
 let Request = sequelize.define('request', describeRequestTable, optionRequestTable);
 
-Request.belongsTo(User, {foreignKey: 'assignedUserID'});
+Request.belongsTo(User, {foreignKey: 'customerID'});
 
 Request.sync();
 
@@ -71,12 +87,12 @@ Request.createRequest = function (request) {
     });
 };
 
-Request.getRequestByAssignedId = function (AssignedId) {
+Request.getRequestByAssignedId = function (customerID) {
     return new Promise((resolve, reject) => {
         Request
             .findAll({
                 where: {
-                    assigned_user_id: AssignedId
+                    customer_id: customerID
                 }
             })
             .then(result => {
