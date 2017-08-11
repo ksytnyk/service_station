@@ -10,7 +10,7 @@ $(document).ready(function () {
             data: $('#createTaskForm').serializeArray(),
             success: function (data) {
 
-                let executorNameSurname = $('#option'+$('#createTaskForm').serializeArray()[2].value).attr('executorFullName');
+                let executorNameSurname = $('#option' + $('#createTaskForm').serializeArray()[2].value).attr('executorFullName');
 
                 $("#tasks-table").append('<tr>' +
                     '<td class="tac">' +
@@ -41,18 +41,21 @@ $(document).ready(function () {
                         '<span class="glyphicon glyphicon-remove" aria-hidden="true"/></a>' +
                     '</td></tr>');
 
-                clearModalAddTask()
+                clearModalAddTask();
 
             },
             error: function (err) {
 
-                $('.errorsCreateRequestBlock').css("display", "block");
+                console.log(22222222);
+
+
+                $('.errors-info').css("display", "block");
 
                 var errorsTemplate = err.responseJSON.errors.map(error => {
                     return ("<div class='col-lg-4'>" + error.msg + "</div>");
                 });
 
-                $('#errorsCreateRequest').html(errorsTemplate);
+                $('#errors-block').html(errorsTemplate);
 
                 setTimeout(function () {
                     $('.hide_alert').trigger('click');
@@ -78,6 +81,47 @@ $(document).ready(function () {
         $('#info-customer-parts').text($(this).data('customer-parts'));
         $('#info-need-buy-parts').text($(this).data('need-buy-parts'));
         $('#info-comments').text($(this).data('comments'));
+    });
+
+    $('.update-task').on('click', function () {
+        $('#update-form-task-id').val($(this).data('id'));
+        $('#update-form-task-description').val($(this).data('task-description'));
+        $('#update-form-task-planed-executor').val($(this).data('task-planed-executor'));
+        $('#update-form-task-cost').val($(this).data('task-cost'));
+        $('#update-form-task-estimation-time').val($(this).data('task-estimation-time'));
+        $('#update-form-task-start-time').val($(this).data('task-start-time'));
+        $('#update-form-task-end-time').val($(this).data('task-end-time'));
+        $('#update-form-task-parts').val($(this).data('task-parts'));
+        $('#update-form-task-customer-parts').val($(this).data('task-customer-parts'));
+        $('#update-form-task-need-buy-parts').val($(this).data('task-need-buy-parts'));
+        $('#update-form-task-task-comments').val($(this).data('task-comments'));
+    });
+
+    $('#taskUpdateButton').on('click', function () {
+
+        $('#updateTaskFormModal').modal('toggle');
+
+        $.ajax({
+            url: '/admin/update-task',
+            type: 'PUT',
+            data: $('#update-form-task').serializeArray(),
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (err) {
+                $('.errors-info').css("display", "block");
+
+                var errorsTemplate = err.responseJSON.errors.map(error => {
+                    return ("<div class='col-lg-4'>" + error.msg + "</div>");
+                });
+
+                $('#errors-block').html(errorsTemplate);
+
+                setTimeout(function () {
+                    $('.hide_alert').trigger('click');
+                }, 5000);
+            }
+        });
     });
 
 });

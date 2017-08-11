@@ -9,6 +9,7 @@ const router = express.Router();
 
 const roles = require('../../constants/roles');
 const validation = require('../../middleware/validation');
+const formatDate = require('../../helpers/formatDate');
 
 router.get('/users', function (req, res) {
     User
@@ -81,19 +82,6 @@ router.get('/requests', function (req, res) {
 
             //==============================================
             var requests = {};
-
-            function formatDate(date) {
-                var day = date.getDate();
-                var month;
-                if ((date.getMonth()+1) < 10) {
-                    month = '0' + (date.getMonth() + 1);
-                } else {
-                    month = date.getMonth() + 1;
-                }
-                var year = date.getFullYear();
-
-                return day + '.' + month + '.' + year;
-            }
 
             result.map(item => {
                 if (requests[item.request.id] === undefined) {
@@ -267,6 +255,46 @@ router.post('/create-task', function (req, res) {
     } else {
         Task
             .createTask(req.body)
+            .then(result => {
+                res.status(200).send({result: result});
+            })
+            .catch(errors => {
+                console.warn(errors);
+                res.status(400).send({errors: errors});
+            });
+    }
+});
+
+//====================== UPDATE TASK ==========================================
+
+router.put('/update-task', function (req, res) {
+
+    let taskDescription = req.body.taskDescription;
+    let planedExecutorID = req.body.planedExecutorID;
+    let cost = req.body.cost;
+    let estimationTime = req.body.estimationTime;
+    let startTime = req.body.startTime;
+    let endTime = req.body.endTime;
+
+    req.checkBody('taskDescription', '"Описание задачи" - обязательное поле.').notEmpty();
+    req.checkBody('planedExecutorID', '"Исполнитель" - обязательное поле.').notEmpty();
+    req.checkBody('cost', '"Цена" - обязательное поле.').notEmpty();
+    req.checkBody('estimationTime', '"Планируемове время" - обязательное поле.').notEmpty();
+    req.checkBody('startTime', '"Время начала" - обязательное поле.').notEmpty();
+    req.checkBody('endTime', '"Конечное время" - обязательное поле.').notEmpty();
+
+    let errors = req.validationErrors();
+
+    if (errors) {
+        console.warn(errors);
+        res.status(400).send({errors: errors});
+    } else {
+
+        let taskID = req.body.id;
+        let params = req.body;
+
+        Task
+            .updateTask(taskID, params)
             .then(result => {
                 res.status(200).send({result: result});
             })

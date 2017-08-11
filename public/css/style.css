@@ -262,7 +262,7 @@ thead {
 .create_request #step {
 	display: none;
 }
-.create_request .errorsCreateRequestBlock {
+.errors-info {
 	display: none;
 }
 .create_request p {

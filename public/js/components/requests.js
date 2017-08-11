@@ -13,13 +13,15 @@ $(document).ready(function () {
                 $('#create_task').show();
             },
             error: function (err) {
-                $('.errorsCreateRequestBlock').css("display", "block");
+                console.log(1111);
+
+                $('.errors-info').css("display", "block");
 
                 var errorsTemplate = err.responseJSON.errors.map(error => {
                     return ("<div class='col-lg-4'>" + error.msg + "</div>");
                 });
 
-                $('#errorsCreateRequest').html(errorsTemplate);
+                $('#errors-block').html(errorsTemplate);
 
                 setTimeout(function () {
                     $('.hide_alert').trigger('click');

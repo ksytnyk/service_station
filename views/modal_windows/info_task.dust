@@ -22,7 +22,10 @@
                         </tr>
                         <tr>
                             <th>Исполнитель</th>
-                            <td><span id="info-executor-surname" style="margin-right: 10px;"></span><span id="info-executor-name"></span></td>
+                            <td>
+                                <span id="info-executor-surname" style="margin-right: 10px;"></span>
+                                <span id="info-executor-name"></span>
+                            </td>
                         </tr>
                         <tr>
                             <th>Цена</th>

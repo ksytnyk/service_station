@@ -8,7 +8,6 @@ const User = require('../User');
 
 const status = require('../../constants/status');
 
-
 const describeTaskTable = {
     name: {
         type: Sequelize.STRING,
@@ -71,7 +70,6 @@ const describeTaskTable = {
         field: 'type_id'
     },
 
-
 };
 
 const optionTaskTable = {
@@ -127,8 +125,8 @@ Task.getTaskByExecutorId = function (id) {
     return new Promise((resolve, reject) => {
         Task
             .findAll({
-            where: {
-                planed_executor_id: id
+                where: {
+                    planed_executor_id: id
                 }
             })
             .then(result => {
