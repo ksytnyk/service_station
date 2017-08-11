@@ -117,6 +117,23 @@ Task.getTaskById = function (id) {
             });
     });
 };
+Task.getTaskByExecutorId = function (id) {
+    return new Promise((resolve, reject) => {
+        Task
+            .findAll({
+            where: {
+                planed_executor_id: id
+                }
+            })
+            .then(result => {
+                resolve(result)
+            })
+            .catch(err => {
+                console.warn(err);
+                reject(err);
+            })
+    })
+}
 
 Task.getAllTasksForStore = function () {
     return new Promise((resolve, reject) => {

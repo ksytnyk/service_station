@@ -71,6 +71,24 @@ Request.createRequest = function (request) {
     });
 };
 
+Request.getRequestByAssignedId = function (AssignedId) {
+    return new Promise((resolve, reject) => {
+        Request
+            .findAll({
+                where: {
+                    assigned_user_id: AssignedId
+                }
+            })
+            .then(result => {
+                resolve(result)
+            })
+            .catch(err => {
+                console.warn(err);
+                reject(err);
+            })
+    })
+};
+
 Request.updateRequest = function (requestID, params) {
     return new Promise((resolve, reject) => {
         Request

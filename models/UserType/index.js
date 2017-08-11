@@ -9,7 +9,8 @@ const UserType = sequelize.define('user_type', {
         field: 'user_type_name'
     }
 }, {
-    freezeTableName: true
+    freezeTableName: true,
+    timestamps: false
 });
 
 UserType.sync();
