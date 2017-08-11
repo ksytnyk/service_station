@@ -5,6 +5,7 @@
 
             <form action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/create-task"
                   method="POST" class="create" id="createTaskForm">
+
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
@@ -12,6 +13,7 @@
                 </div>
                 <div class="modal-body clearfix">
                     <input type="hidden" name="requestID" id="requestIDForTask">
+
                     <div class="form-group col-lg-4">
                         <label>Описание задачи</label>
                         <input type="text" class="form-control" name="taskDescription" id="create-form-task-description">
@@ -20,7 +22,7 @@
                         <label>Исполнитель</label>
                         <select class="form-control selectpicker" name="planedExecutorID" id="create-form-task-executor-id">
                             {#executors}
-                            <option value="{id}">{userName} {userSurname}</option>
+                            <option value="{id}" executorFullName="{userName} {userSurname}" id="option{id}">{userName} {userSurname}</option>
                             {/executors}
                         </select>
                     </div>
