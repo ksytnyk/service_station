@@ -19,9 +19,22 @@
             </thead>
             <tbody>
             {#task}
+            {#executor}
             <tr>
                 <th class="tac pr" scope="row">{id}</th>
-                <td>{taskDescription}</td>
+                <td class="tac">
+                    <a class="info-task modal-window-link" title="Полная информация" data-toggle="modal"
+                       data-id="{id}"
+                       data-description="{taskDescription}" data-executor-surname="{executor.userSurname}"
+                       data-executor-name="{executor.userName}" data-cost="{cost}"
+                       data-estimation-time="{estimationTime}"
+                       data-start="{startTime}" data-end="{endTime}" data-parts="{parts}"
+                       data-customer-parts="{customerParts}"
+                       data-need-buy-parts="{needBuyParts}" data-comments="{taskComments}"
+                       data-target="#infoTaskFormModal"
+                       style="cursor: pointer">{taskDescription}
+                    </a>
+                </td>
                 <td>{parts}</td>
                 <td class="tac pr">{endTime}</td>
                 <td  class="tac">
@@ -35,10 +48,17 @@
                     </button>
                 </td>
             </tr>
+            {/executor}
             {/task}
             </tbody>
         </table>
     </div>
 </div>
+
+{>"modal_windows/create_user"/}
+{>"modal_windows/update_task"/}
+{>"modal_windows/delete_task"/}
+{>"modal_windows/info_task"/}
+{>"modal_windows/delete_request"/}
 
 {/body}
