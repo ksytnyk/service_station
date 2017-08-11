@@ -5,7 +5,7 @@
   "postgreSQL": {
     "dialect": "postgres",
     "username": "postgres",
-    "password": "1111",
+    "password": "1234",
     "host": "127.0.0.1",
     "port": "5432",
     "database": "postgres",
