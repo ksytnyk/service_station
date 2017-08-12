@@ -288,7 +288,7 @@ router.post('/create-task', function (req, res) {
 
 //====================== UPDATE TASK ==========================================
 
-router.put('/update-task', function (req, res) {
+router.put('/update-task/:id', function (req, res) {
 
     let description = req.body.description;
     let planedExecutorID = req.body.planedExecutorID;

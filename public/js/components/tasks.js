@@ -41,11 +41,11 @@ $(document).ready(function () {
                     '</td>' +
                     '<td class="tac">' +
                         '<a class="" title="Редактировать задачу" data-toggle="modal"' +
-                        'data-target="#updateTaskFormModal">' +
+                        ' data-target="#updateTaskFormModal">' +
                         '<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="font-size: 17px;"/>' +
                         '</a>' +
                         '<a href="#" class="delete-task modal-window-link" title="Удалить задачу" data-toggle="modal" data-current="' + current + '" data-id="' + data.result.id + '"' +
-                        'data-target="#deleteTaskFormModal">' +
+                        ' data-target="#deleteTaskFormModal">' +
                         '<span class="glyphicon glyphicon-remove" aria-hidden="true"  style="font-size: 18px; margin-top: 25px;"/>' +
                         '</a>' +
                     '</td></tr>');
@@ -75,37 +75,21 @@ $(document).ready(function () {
         clearModalAddTask();
     });
 
-    $('.update-task').on('click', function () {
-
-        $('#update-form-task-id').val($(this).data('id'));
-        $('#update-form-task-name').val($(this).data('task-name'));
-        $('#update-form-task-assigned-user').val($(this).data('task-assigned-user'));
-        $('#update-form-task-description').val($(this).data('task-description'));
-        $('#update-form-task-planed-executor').val($(this).data('task-planed-executor'));
-        $('#update-form-task-cost').val($(this).data('task-cost'));
-
-        $('#update-form-task-estimation-time').val(convertFormatDate($(this).data('task-estimation-time')));
-        $('#update-form-task-start-time').val(convertFormatDate($(this).data('task-start-time')));
-        $('#update-form-task-end-time').val(convertFormatDate($(this).data('task-end-time')));
-
-        $('#update-form-task-parts').val($(this).data('task-parts'));
-        $('#update-form-task-customer-parts').val($(this).data('task-customer-parts'));
-        $('#update-form-task-need-buy-parts').val($(this).data('task-need-buy-parts'));
-        $('#update-form-task-comment').val($(this).data('task-comment'));
-
-    });
+    updateTaskOnClick();
 
     $('#taskUpdateButton').on('click', function () {
 
         $('#updateTaskFormModal').modal('toggle');
 
         $.ajax({
-            url: getRole(window.location.pathname) + '/update-task',
+            url: getRole(window.location.pathname) + '/update-task/' + $('#update-form-task-id').val(),
             type: 'PUT',
             data: $('#update-form-task').serializeArray(),
             success: function (data) {
 
                 var idx = "#idx-task-" + data.task.id;
+
+                $(idx).empty();
 
                 var newTask = '<td class="vat">' +
                     '<p><strong>Имя задачи: </strong>' + data.task.name + '</p>' +
@@ -126,34 +110,37 @@ $(document).ready(function () {
                     '<td class="tac" style="background-color: #eee;"> ' +
                     '<a class="update-task modal-window-link"' +
                     'title="Редактировать задачу"' +
-                    'data-toggle="modal"' +
-                    'data-id="' + data.task.id + '"' +
-                    'data-task-description="' + data.task.description + '"' +
-                    'data-task-name="' + data.task.name + '"' +
-                    'data-task-assigned-user="' + data.task.assignedUserID + '"' +
-                    'data-task-executor-surname="' + "executor.Surname" + '"' +
-                    'data-task-executor-name="' + "executor.userName" + '"' +
-                    'data-task-cost=' + data.task.cost + '"' +
-                    'data-task-estimation-time="' + data.task.estimationTime + '"' +
-                    'data-task-start-time="' + data.task.startTime + '"' +
-                    'data-task-end-time="' + data.task.endTime + '"' +
-                    'data-task-parts="' + data.task.parts + '"' +
-                    'data-task-customer-parts="' + data.task.customerParts + '"' +
-                    'data-task-need-buy-parts="' + data.task.needBuyParts + '"' +
-                    'data-task-comment="' + data.task.comment + '"' +
-                    'data-target="#updateTaskFormModal"' +
-                    'style="cursor: pointer"> ' +
+                    ' data-toggle="modal"' +
+                    ' data-id="' + data.task.id + '"' +
+                    ' data-task-description="' + data.task.description + '"' +
+                    ' data-task-name="' + data.task.name + '"' +
+                    ' data-task-assigned-user="' + data.task.assignedUserID + '"' +
+                    ' data-task-executor-surname="' + "executor.Surname" + '"' + //TODO Добавить екзекутора
+                    ' data-task-executor-name="' + "executor.userName" + '"' +  //TODO Добавить екзекутора
+                    ' data-task-cost="' + data.task.cost + '"' +
+                    ' data-task-estimation-time="' + data.task.estimationTime + '"' +
+                    ' data-task-start-time="' + data.task.startTime + '"' +
+                    ' data-task-end-time="' + data.task.endTime + '"' +
+                    ' data-task-parts="' + data.task.parts + '"' +
+                    ' data-task-customer-parts="' + data.task.customerParts + '"' +
+                    ' data-task-need-buy-parts="' + data.task.needBuyParts + '"' +
+                    ' data-task-comment="' + data.task.comment + '"' +
+                    ' data-target="#updateTaskFormModal"' +
+                    ' style="cursor: pointer"> ' +
                     '<span class="glyphicon glyphicon-pencil" aria-hidden="true"/> ' +
                     '</a> ' +
                     '<a href="#"' +
-                    'class="delete-task modal-window-link"' +
-                    'title="Удалить задачу" data-toggle="modal"' +
-                    'data-current="{typeUser}" data-id="{id}"' +
-                    'data-target="#deleteTaskFormModal"' +
-                    'style="margin-top: 20px;"> ' +
+                    ' class="delete-task modal-window-link"' +
+                    ' title="Удалить задачу" data-toggle="modal"' +
+                    ' data-current="{typeUser}" data-id="' + data.task.id + '"' +
+                    ' data-target="#deleteTaskFormModal"' +
+                    ' style="margin-top: 20px;"> ' +
                     '<span class="glyphicon glyphicon-remove" aria-hidden="true"/> ' + '</a>';
 
-                $(idx).html(newTask);
+                $(idx).append(newTask);
+
+                deleteTaskOnClick();
+                updateTaskOnClick();
             },
             error: function (err) {
                 $('.errors-info').css("display", "block");
@@ -170,13 +157,29 @@ $(document).ready(function () {
             }
         });
     });
-
     deleteTaskOnClick();
-
 });
 
 function clearModalAddTask() {
     $('.create-form-task').val('');
+}
+
+function updateTaskOnClick() {
+    $('.update-task').on('click', function () {
+        $('#update-form-task-id').val($(this).data('id'));
+        $('#update-form-task-name').val($(this).data('task-name'));
+        $('#update-form-task-assigned-user').val($(this).data('task-assigned-user'));
+        $('#update-form-task-description').val($(this).data('task-description'));
+        $('#update-form-task-planed-executor').val($(this).data('task-planed-executor'));
+        $('#update-form-task-cost').val($(this).data('task-cost'));
+        $('#update-form-task-estimation-time').val(convertFormatDate($(this).data('task-estimation-time')));
+        $('#update-form-task-start-time').val(convertFormatDate($(this).data('task-start-time')));
+        $('#update-form-task-end-time').val(convertFormatDate($(this).data('task-end-time')));
+        $('#update-form-task-parts').val($(this).data('task-parts'));
+        $('#update-form-task-customer-parts').val($(this).data('task-customer-parts'));
+        $('#update-form-task-need-buy-parts').val($(this).data('task-need-buy-parts'));
+        $('#update-form-task-comment').val($(this).data('task-comment'));
+    });
 }
 
 function deleteTaskOnClick() {
@@ -215,7 +218,6 @@ function deleteTaskOnClick() {
                 }, 5000);
             }
         });
-
     });
 }
 
@@ -235,7 +237,7 @@ function convertFormatDate(date) {
 function formatDate(date) {
     var newDate = new Date(date);
 
-    let day = newDate.getDate(), year = newDate.getFullYear(), month;
+    var day = newDate.getDate(), year = newDate.getFullYear(), month;
 
     if ((newDate.getMonth() + 1) < 10) {
         month = '0' + (newDate.getMonth() + 1);
