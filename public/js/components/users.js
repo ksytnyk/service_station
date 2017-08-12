@@ -17,19 +17,6 @@ $(document).ready(function () {
         $('#update-form-password').val($(this).data('password'));
     });
 
-    $('.info-user').on('click', function () {
-        $('#info-id').text($(this).data('id'));
-        $('#info-name').text($(this).data('name'));
-        $('#info-surname').text($(this).data('surname'));
-        $('#info-company').text($(this).data('company'));
-        $('#info-address').text($(this).data('address'));
-        $('#info-phone').text($(this).data('phone'));
-        $('#info-login').text($(this).data('login'));
-        $('#info-role').text($(this).data('role'));
-        $('#info-email').text($(this).data('email'));
-        $('#info-password').text($(this).data('password'));
-    });
-
     $('.delete-user').on('click', function () {
         if ($(this).data('current') === 1) {
             $('#delete-form-id').attr('action', ('/admin/delete-user/' + $(this).data('id')));

@@ -10,7 +10,40 @@ $(document).ready(function () {
                 $('#step').slideDown('slow');
                 $('#requestIDForTask').val(data.result.id);
                 $('#create_request').hide();
-                $('#create_task').show();
+                $('#access_update_request').show();
+            },
+            error: function (err) {
+
+                $('.errors-info').css("display", "block");
+
+                var errorsTemplate = err.responseJSON.errors.map(error => {
+                    return ("<div class='col-lg-4'>" + error.msg + "</div>");
+                });
+
+                $('#errors-block').html(errorsTemplate);
+
+                setTimeout(function () {
+                    $('.hide_alert').trigger('click');
+                }, 5000);
+            }
+        });
+    });
+
+    $('#access_update_request').on('click', function () {
+        $('.disable_input').prop('disabled', false);
+        $('#access_update_request').hide();
+        $('#update_request').show();
+    });
+
+    $('#update_request').on('click', function () {
+        $.ajax({
+            url: getRole(window.location.pathname) + '/update-request/' + $('#requestIDForTask').val(),
+            type: 'PUT',
+            data: $('#createRequestForm').serializeArray(),
+            success: function (data) {
+                $('.disable_input').prop('disabled', true);
+                $('#update_request').hide();
+                $('#access_update_request').show();
             },
             error: function (err) {
 
@@ -38,3 +71,11 @@ $(document).ready(function () {
         $('#delete-request-id').text($(this).data('id'));
     });
 });
+
+function getRole(pathname) {
+    if (pathname.includes('admin')) {
+        return '/admin';
+    } else {
+        return '/moderator';
+    }
+}

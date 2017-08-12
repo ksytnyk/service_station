@@ -10,9 +10,30 @@ body {
 .form-control {
 	background-color: #f5f5f5;
 }
+a:hover,
 a:focus,
 button:focus {
 	outline: none !important;
+	text-decoration: none;
+}
+.glyphicon-pencil {
+	color: rgba(51, 51, 51, 0.75);
+	cursor: pointer;
+	display: block;
+}
+.glyphicon-pencil:hover {
+	color: rgba(51, 51, 51, 1);
+	cursor: pointer;
+}
+.glyphicon-remove {
+	color: rgba(217, 83, 79, 0.75);
+	cursor: pointer;
+	display: block;
+	margin-top: 10px;
+}
+.glyphicon-remove:hover {
+	color: rgba(217, 83, 79, 1);
+	cursor: pointer;
 }
 
 /* LOGIN */
@@ -236,7 +257,13 @@ thead {
 	background-color: #ddd;
 }
 
-/* USER */
+/* USERS */
+/*.users span {*/
+	/*display: inline-block;*/
+	/*width: 200px;*/
+/*}*/
+
+/* CUSTOMER */
 .role5 .name {
 	background-color: #333;
 	float: left;
@@ -259,6 +286,15 @@ thead {
 	width: 175px;
 	margin: 15px 0;
 }
+.create_request input[disabled],
+.create_request textarea[disabled],
+.create_request select[disabled] {
+	opacity: 0.65;
+}
+.create_request #access_update_request,
+.create_request #update_request {
+	display: none;
+}
 .create_request #step {
 	display: none;
 }
@@ -267,6 +303,12 @@ thead {
 }
 .create_request p {
 	margin: 0;
+}
+.create_request .bt {
+	margin: 5px 0 0 -8px;
+	border-top: 1px solid #ccc;
+	padding: 5px 8px 0;
+	width: 600px
 }
 
 /* REQUESTS */
@@ -277,25 +319,9 @@ thead {
 .requests a {
 	display: block;
 }
-.requests .glyphicon-pencil {
-	color: rgba(51, 51, 51, 0.75);
-	cursor: pointer;
-}
-.requests .glyphicon-pencil:hover {
-	color: rgba(51, 51, 51, 1);
-	cursor: pointer;
-}
-.requests .glyphicon-remove {
-	color: rgba(217, 83, 79, 0.75);
-	cursor: pointer;
-}
-.requests .glyphicon-remove:hover {
-	color: rgba(217, 83, 79, 1);
-	cursor: pointer;
-}
 .requests .task_id {
 	position: absolute;
-	top: 20px;
+	top: 8px;
 	left: 8px;
 	width: 35px;
 }

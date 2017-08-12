@@ -26,7 +26,7 @@
                     <a href="update-request"
                        class=""
                        title="Редактировать заказ"
-                       style="font-size: 17px;">
+                       style="font-size: 17px; margin-top: 10px;">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"/>
                     </a>
                     <a href="#"
@@ -36,7 +36,7 @@
                        data-toggle="modal"
                        data-target="#deleteRequestFormModal"
                        title="Удалить заказ"
-                       style="font-size: 17px; margin-top: 20px;">
+                       style="font-size: 17px;">
                         <span class="glyphicon glyphicon-remove" aria-hidden="true"/>
                     </a>
                 </th>
@@ -96,16 +96,14 @@
                                    data-task-customer-parts="{customerParts}"
                                    data-task-need-buy-parts="{needBuyParts}"
                                    data-task-comment="{comment}"
-                                   data-target="#updateTaskFormModal"
-                                   style="cursor: pointer">
+                                   data-target="#updateTaskFormModal">
                                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"/>
                                 </a>
                                 <a href="#"
                                    class="delete-task modal-window-link"
                                    title="Удалить задачу" data-toggle="modal"
                                    data-current="{typeUser}" data-id="{id}"
-                                   data-target="#deleteTaskFormModal"
-                                   style="margin-top: 20px;">
+                                   data-target="#deleteTaskFormModal">
                                     <span class="glyphicon glyphicon-remove" aria-hidden="true"/>
                                 </a>
                             </td>

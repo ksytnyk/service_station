@@ -126,14 +126,14 @@ router.get('/create-request', function (req, res) {
 
 router.post('/create-request', function (req, res) {
     let name = req.body.name;
-    let description = req.body.description;
+    let customerID = req.body.customerID;
     let cost = req.body.cost;
     let startTime = req.body.startTime;
     let estimatedTime = req.body.estimatedTime;
     // Validation
 
     req.checkBody('name', '"Имя заказа" - обязательное поле.').notEmpty();
-    req.checkBody('description', '"Описание заказа" - обязательное поле.').notEmpty();
+    req.checkBody('customerID', '"Клиент" - обязательное поле.').notEmpty();
     req.checkBody('cost', '"Стоемость" - обязательное поле.').notEmpty();
     req.checkBody('startTime', '"Время начала" - обязательное поле.').notEmpty();
     req.checkBody('estimatedTime', '"Планируемове время" - обязательное поле.').notEmpty();
@@ -171,7 +171,38 @@ router.get('/update-request/:id', function (req, res) {
 });
 
 router.put('/update-request/:id', function (req, res) {
+    let name = req.body.name;
+    let customerID = req.body.customerID;
+    let cost = req.body.cost;
+    let startTime = req.body.startTime;
+    let estimatedTime = req.body.estimatedTime;
+    // Validation
 
+    req.checkBody('name', '"Имя заказа" - обязательное поле.').notEmpty();
+    req.checkBody('customerID', '"Клиент" - обязательное поле.').notEmpty();
+    req.checkBody('cost', '"Стоемость" - обязательное поле.').notEmpty();
+    req.checkBody('startTime', '"Время начала" - обязательное поле.').notEmpty();
+    req.checkBody('estimatedTime', '"Планируемове время" - обязательное поле.').notEmpty();
+
+    let errors = req.validationErrors();
+
+    if (errors) {
+        console.warn(errors);
+        res.status(400).send({errors: errors});
+    } else {
+
+        let requestID = req.params.id;
+        let params = req.body;
+
+        Request
+            .updateRequest(requestID, params)
+            .then((result) => {
+                res.status(200).send({result: result});
+            })
+            .catch(errors => {
+                res.status(400).send({errors: errors});
+            });
+    }
 });
 
 router.delete('/delete-request/:id', function (req, res) {

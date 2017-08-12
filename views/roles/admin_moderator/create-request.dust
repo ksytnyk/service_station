@@ -9,9 +9,8 @@
         <button class="hide_alert">X</button>
         <div id="errors-block"></div>
     </div>
-    <form action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/create-request"
-          method="post" class="clearfix" id="createRequestForm">
-        <div class="form-group col-lg-4">
+    <form class="clearfix" id="createRequestForm">
+        <div class="form-group col-lg-5">
             <label>Имя заказа</label>
             <input type="text" class="form-control disable_input" name="name">
         </div>
@@ -23,36 +22,35 @@
                 {/customers}
             </select>
         </div>
-        <div class="form-group col-lg-2">
-            <label>Время начала</label>
-            <input type="text" class="form-control datetimepickerN disable_input" name="startTime">
-        </div>
-        <div class="form-group col-lg-2">
-            <label>Планируемое время</label>
-            <input type="text" class="form-control datetimepickerN disable_input" name="estimatedTime">
-        </div>
-        <div class="form-group col-lg-4">
+        <div class="form-group col-lg-5">
             <label>Описание заказа</label>
-            <textarea class="form-control disable_input" name="description" rows="3"></textarea>
+            <textarea class="form-control disable_input" name="description" rows="4" style="height: 137px;"></textarea>
         </div>
         <div class="form-group col-lg-4">
             <label>Комментарий</label>
-            <textarea class="form-control disable_input" name="comment" rows="3"></textarea>
+            <textarea class="form-control disable_input" name="comment" rows="4" style="height: 137px;"></textarea>
         </div>
-        <div class="form-group col-lg-2">
-            <label>Стоемость</label>
-            <input type="text" class="form-control disable_input" name="cost">
-        </div>
-        <div class="form-group col-lg-2" style="margin-top: 25px;">
+        <div class="form-group col-lg-3" style="margin-top: -74px;">
+            <label>Время начала</label>
+            <input type="text" class="form-control datetimepickerN disable_input" name="startTime" style="margin-bottom: 5px;">
+            <label>Планируемое время</label>
+            <input type="text" class="form-control datetimepickerN disable_input" name="estimatedTime" style="margin-bottom: 5px;">
+            <label>Стоимость</label>
+            <input type="text" class="form-control disable_input" name="cost" style="margin-bottom: 15px;">
             <input type="button" id="create_request" value="Добавить заказ"
                    class="btn btn-success col-lg-12 disable_input"/>
-            <input type="button" id="create_task" value="Добавить задачу"
-                   class="btn btn-primary col-lg-12 modal-window-link " data-toggle="modal"
-                   data-target="#createTaskFormModal" style="display: none"/>
+            <input type="button" id="access_update_request" value="Редактировать заказ"
+                   class="btn btn-warning col-lg-12"/>
+            <input type="button" id="update_request" value="Сохранить изменения"
+                   class="btn btn-success col-lg-12"/>
         </div>
     </form>
     <div id="step" class="clearfix">
-        <div class="form-group col-lg-12" style="margin: 15px 0 0;">
+        <div class="form-group col-lg-12" style="margin: 30px 0 -15px;">
+            <input type="button" id="create_task" value="Добавить задачу" class="btn btn-primary modal-window-link"
+                   data-toggle="modal" data-target="#createTaskFormModal" style="width: 255px; float: right;"/>
+        </div>
+        <div class="form-group col-lg-12" style="margin: 0;">
             <label>Список задач</label>
         </div>
         <div class="form-group col-lg-12">
@@ -60,10 +58,9 @@
                 <table class="table" id="tasks-table">
                     <thead>
                     <tr>
-                        <th class="tac" style="width: 40px;">ID</th>
+                        <th class="tac" style="width: 60px;">ID</th>
                         <th class="tac">Общая информация</th>
-                        <th class="tac">Запчасти</th>
-                        <th class="tac" style="width: 250px">Комментрий</th>
+                        <th class="tac" style="width: 600px;">Описание / Запчасти / Комментарий</th>
                         <th class="tac" style="width: 60px;"></th>
                     </tr>
                     </thead>
