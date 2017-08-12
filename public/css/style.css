@@ -272,6 +272,7 @@ thead {
 /* REQUESTS */
 .requests p {
 	margin: 0;
+	font-size: 13px;
 }
 .requests a {
 	display: block;
@@ -298,11 +299,11 @@ thead {
 	left: 8px;
 	width: 35px;
 }
-.requests .task_comment {
+.requests .bt {
 	margin: 5px 0 0 -8px;
 	border-top: 1px solid #ccc;
-	padding: 5px 8px;
-	width: 400px
+	padding: 5px 8px 0;
+	width: 475px
 }
 .requests .table tbody tr:nth-child(2n) {
     background-color: #fff;

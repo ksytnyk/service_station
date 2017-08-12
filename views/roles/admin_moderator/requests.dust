@@ -42,19 +42,19 @@
                 </th>
                 <td class="vat pr">
                     <p><strong>Имя заказа: </strong>{name}</p>
+                    <p><strong>Описание заказа: </strong>{description}</p>
                     <p><strong>Клиент: </strong>{user.userSurname} {user.userName}</p>
                     <p><strong>Стоемость: </strong>{cost} грн</p>
                     <p><strong>Время начала: </strong>{startTime}</p>
                     <p><strong>Планируемое время: </strong>{estimatedTime}</p>
                     <p><strong>Комментарий: </strong>{comment}</p>
-                    <p><strong>Описание заказа: </strong>{description}</p>
                 </td>
                 <td style="padding: 0; vertical-align: top;">
                     <table class="table task_table">
                         <thead>
                         <tr>
                             <th class="tac">Общая информация</th>
-                            <th class="tac" style="width: 383px;">Запчасти / Комментарий</th>
+                            <th class="tac" style="width: 475px; box-sizing: border-box;">Описание / Запчасти / Комментарий</th>
                             <th style="width: 15px"></th>
                         </tr>
                         </thead>
@@ -63,7 +63,6 @@
                         <tr>
                             <td class="vat">
                                 <p><strong>Имя задачи: </strong> {name}</p>
-                                <p><strong>Описание задачи: </strong>{description}</p>
                                 <p><strong>Исполнитель: </strong>{user.dataValues.userSurname}
                                     {user.dataValues.userName}</p>
                                 <p><strong>Поручить задачу: </strong>{assignedUserID}</p>
@@ -73,10 +72,11 @@
                                 <p><strong>Конечное время: </strong>{endTime}</p>
                             </td>
                             <td class="vat">
-                                <p><strong>Запчасти: </strong>{parts}</p>
+                                <p><strong>Описание задачи: </strong>{description}</p>
+                                <p class="bt"><strong>Запчасти: </strong>{parts}</p>
                                 <p><strong>Запчасти клиента: </strong>{customerParts}</p>
                                 <p><strong>Недостающие запчасти: </strong>{needBuyParts}</p>
-                                <p class="task_comment"><strong>Комментарий: </strong>{comment}</p>
+                                <p class="bt"><strong>Комментарий: </strong>{comment}</p>
                             </td>
                             <td class="tac" style="background-color: #eee;">
                                 <a class="update-task modal-window-link"
