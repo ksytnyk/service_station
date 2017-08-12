@@ -2,75 +2,80 @@
 <div class="modal fade" id="updateTaskFormModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel">
     <div class="modal-dialog update_task" role="document">
         <div class="modal-content">
-
             <form id="update-form-task" action="" class="create">
-
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title text-center">Редактировать задачу</h4>
+                    <h4 class="modal-title text-center">Добавить задачу</h4>
                 </div>
-
                 <input type="hidden" id="update-form-task-id" name="id">
-
                 <div class="modal-body clearfix">
-
                     <div class="form-group col-lg-4">
-                        <label>Описание задачи</label>
-                        <input type="text" class="form-control" name="taskDescription"
-                               id="update-form-task-description">
+                        <label>Имя задачи</label>
+                        <input type="text" class="form-control create-form-task" name="name" id="update-form-task-name">
                     </div>
-
                     <div class="form-group col-lg-4">
                         <label>Исполнитель</label>
-                        <select class="form-control selectpicker" name="" id="update-form-task-planed-executor">
-                            <option value="...">Вася</option>
-                            <option value="...">Петя</option>
-                            <option value="...">Катя</option>
+                        <select class="form-control create-form-task selectpicker" name="planedExecutorID"
+                                id="update-form-task-planed-executor">
+                            <option value="1">Вася</option>
+                            <option value="2">Петя</option>
+                            <option value="3">Катя</option>
                         </select>
                     </div>
-
                     <div class="form-group col-lg-4">
-                        <label>Цена</label>
-                        <input type="text" class="form-control" name="cost" id="update-form-task-cost" >
+                        <label>Поручить задачу</label>
+                        <select class="form-control create-form-task selectpicker" name="assignedUserID"
+                                id="update-form-task-assigned-user">
+                            <option value="1">Вася</option>
+                            <option value="2">Петя</option>
+                            <option value="3">Катя</option>
+                        </select>
                     </div>
-
+                    <div class="form-group col-lg-4">
+                        <label>Описание задачи</label>
+                        <textarea type="text" class="form-control create-form-task" name="description"
+                                  id="update-form-task-description" rows="3" style="height: 108px;"></textarea>
+                    </div>
                     <div class="form-group col-lg-4">
                         <label>Планируемое время</label>
-                        <input type="text" class="form-control" name="estimationTime" id="update-form-task-estimation-time">
+                        <input type="text" class="form-control create-form-task datetimepickerN" name="estimationTime"
+                               id="update-form-task-estimation-time">
                     </div>
-
+                    <div class="form-group col-lg-4">
+                        <label>Цена</label>
+                        <input type="text" class="form-control create-form-task" name="cost" id="update-form-task-cost">
+                    </div>
                     <div class="form-group col-lg-4">
                         <label>Время начала</label>
-                        <input type="text" class="form-control" name="startTime" id="update-form-task-start-time">
+                        <input type="text" class="form-control create-form-task datetimepickerN" name="startTime"
+                               id="update-form-task-start-time">
                     </div>
-
                     <div class="form-group col-lg-4">
                         <label>Конечное время</label>
-                        <input type="text" class="form-control" name="endTime" id="update-form-task-end-time">
+                        <input type="text" class="form-control create-form-task datetimepickerN" name="endTime"
+                               id="update-form-task-end-time">
                     </div>
-
                     <div class="form-group col-lg-6">
                         <label>Запчасти</label>
-                        <textarea class="form-control" name="parts" rows="3" id="update-form-task-parts"></textarea>
+                        <textarea class="form-control create-form-task" name="parts" rows="3"
+                                  id="update-form-task-parts"></textarea>
                     </div>
-
                     <div class="form-group col-lg-6">
                         <label>Запчасти клиента</label>
-                        <textarea class="form-control" name="customerParts" rows="3" id="update-form-task-customer-parts"></textarea>
+                        <textarea class="form-control create-form-task" name="customerParts" rows="3"
+                                  id="update-form-task-customer-parts"></textarea>
                     </div>
-
                     <div class="form-group col-lg-6">
                         <label>Недостающие запчасти</label>
-                        <textarea class="form-control" name="needBuyParts" rows="3"
+                        <textarea class="form-control create-form-task" name="needBuyParts" rows="3"
                                   id="update-form-task-need-buy-parts"></textarea>
                     </div>
-
                     <div class="form-group col-lg-6">
                         <label>Комментрий</label>
-                        <textarea class="form-control" name="taskComments" rows="3" id="update-form-task-task-comments"></textarea>
+                        <textarea class="form-control create-form-task" name="comment" rows="3"
+                                  id="update-form-task-comment"></textarea>
                     </div>
-
                     <div class='form-group col-lg-6 col-lg-offset-6'>
                         <button type="button" class="btn btn-success width" id="taskUpdateButton">
                             Обновить
@@ -79,10 +84,8 @@
                             Отменить
                         </button>
                     </div>
-
                 </div>
             </form>
-
         </div>
     </div>
 </div>

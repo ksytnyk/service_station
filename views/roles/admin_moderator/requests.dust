@@ -60,7 +60,7 @@
                         </thead>
                         <tbody>
                         {#tasks}
-                        <tr>
+                        <tr  id="idx-task-{id}">
                             <td class="vat">
                                 <p><strong>Имя задачи: </strong> {name}</p>
                                 <p><strong>Исполнитель: </strong>{user.dataValues.userSurname}
@@ -83,7 +83,9 @@
                                    title="Редактировать задачу"
                                    data-toggle="modal"
                                    data-id="{id}"
-                                   data-task-description="{taskDescription}"
+                                   data-task-description="{description}"
+                                   data-task-name="{name}"
+                                   data-task-assigned-user="{assignedUserID}"
                                    data-task-executor-surname="{executor.userSurname}"
                                    data-task-executor-name="{executor.userName}"
                                    data-task-cost="{cost}"
@@ -93,8 +95,9 @@
                                    data-task-parts="{parts}"
                                    data-task-customer-parts="{customerParts}"
                                    data-task-need-buy-parts="{needBuyParts}"
-                                   data-task-comments="{taskComments}"
-                                   data-target="#updateTaskFormModal">
+                                   data-task-comment="{comment}"
+                                   data-target="#updateTaskFormModal"
+                                   style="cursor: pointer">
                                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"/>
                                 </a>
                                 <a href="#"

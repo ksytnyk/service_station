@@ -20,7 +20,7 @@ $(document).ready(function () {
                     current = 2;
                 }
 
-                $("#tasks-table").append('<tr>' +
+                $("#tasks-table").append('<tr id="idx-task-' + data.result.id + '">' +
                     '<td class="tac">' +
                     count +
                     '</td>' +
@@ -94,6 +94,8 @@ $(document).ready(function () {
 
     $('.update-task').on('click', function () {
         $('#update-form-task-id').val($(this).data('id'));
+        $('#update-form-task-name').val($(this).data('task-name'));
+        $('#update-form-task-assigned-user').val($(this).data('task-assigned-user'));
         $('#update-form-task-description').val($(this).data('task-description'));
         $('#update-form-task-planed-executor').val($(this).data('task-planed-executor'));
         $('#update-form-task-cost').val($(this).data('task-cost'));
@@ -103,7 +105,7 @@ $(document).ready(function () {
         $('#update-form-task-parts').val($(this).data('task-parts'));
         $('#update-form-task-customer-parts').val($(this).data('task-customer-parts'));
         $('#update-form-task-need-buy-parts').val($(this).data('task-need-buy-parts'));
-        $('#update-form-task-task-comments').val($(this).data('task-comments'));
+        $('#update-form-task-comment').val($(this).data('task-comment'));
     });
 
     $('#taskUpdateButton').on('click', function () {
@@ -142,13 +144,45 @@ function clearModalAddTask() {
 }
 
 function deleteTaskOnClick() {
+
     $('.delete-task').on('click', function () {
-        if ($(this).data('current') === 1) {
-            $('#delete-task-form-id').attr('action', ('/admin/delete-task/' + $(this).data('id')));
-        } else {
-            $('#delete-task-form-id').attr('action', ('/moderator/delete-task/' + $(this).data('id')));
-        }
-        $('#delete-task-id').text($(this).data('id'));
+
+        $('#delete-button').attr('test', ($(this).data('id')));
+        $('#delete-task-id').html($(this).data('id'));
+    });
+
+    $('#delete-button').on('click', function () {
+
+        var taskID = $(this).attr('test');
+
+        $('#deleteTaskFormModal').modal('hide');
+
+        $.ajax({
+            url: '/admin/delete-task/' + taskID,
+            type: 'DELETE',
+            data: $(this).data('id'),
+            success: function (data) {
+                console.log('ajax id ', data);
+                var idx = "#idx-task-" + data.id;
+                $(idx).remove();
+            },
+            error: function (err) {
+                $('.errors-info').css("display", "block");
+
+                console.log('==>', err.responseJSON.errors);
+
+                let errorsTemplate = err.responseJSON.errors.map(error => {
+                    return ("<div class='col-lg-4'>" + error.msg + "</div>");
+                });
+
+                $('#errors-block').html(errorsTemplate);
+
+                setTimeout(function () {
+                    $('.hide_alert').trigger('click');
+                }, 5000);
+            }
+        });
+
     });
 }
 
