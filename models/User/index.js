@@ -152,6 +152,7 @@ User.getCustomerUsers = function () {
     });
 };
 
+
 User.createUser = function (user) {
     return new Promise((resolve, reject) => {
         User

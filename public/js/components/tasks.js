@@ -11,6 +11,7 @@ $(document).ready(function () {
             success: function (data) {
 
                 var executorNameSurname = $('#option' + $('#createTaskForm').serializeArray()[2].value).attr('executorFullName');
+                var assignedNameSurname = $('.optionAE' + $('#createTaskForm').serializeArray()[3].value).attr('assignedUserFullName');
                 var current;
                 if (window.location.pathname.includes('admin')) {
                     current = 1;
@@ -25,7 +26,7 @@ $(document).ready(function () {
                     '<td class="vat">' +
                     '<p><strong>Имя задачи: </strong>' + data.result.name + '</p>' +
                     '<p><strong>Исполнитель: </strong>' + executorNameSurname + '</p>' +
-                    '<p><strong>Поручить задачу: </strong>' + data.result.assignedUserID + '</p>' +
+                    '<p><strong>Поручить задачу: </strong>' + assignedNameSurname + '</p>' +
                     '<p><strong>Планируемое время: </strong>' + data.result.estimationTime + '</p>' +
                     '<p><strong>Цена: </strong>' + data.result.cost + '</p>' +
                     '<p><strong>Время начала: </strong>' + data.result.startTime + '</p>' +
@@ -90,6 +91,7 @@ $(document).ready(function () {
     });
 
     $('.update-task').on('click', function () {
+
         $('#update-form-task-id').val($(this).data('id'));
         $('#update-form-task-name').val($(this).data('task-name'));
         $('#update-form-task-assigned-user').val($(this).data('task-assigned-user'));
@@ -105,6 +107,7 @@ $(document).ready(function () {
         $('#update-form-task-customer-parts').val($(this).data('task-customer-parts'));
         $('#update-form-task-need-buy-parts').val($(this).data('task-need-buy-parts'));
         $('#update-form-task-comment').val($(this).data('task-comment'));
+
     });
 
     $('#taskUpdateButton').on('click', function () {

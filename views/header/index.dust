@@ -17,10 +17,13 @@
                 </li>
             {/lt}
             {@eq key=typeUser value=3}
-                <li class="active"><a href="#">Задачи</a></li>
+                <li class="active"><a href="executor">Задачи</a></li>
             {/eq}
             {@eq key=typeUser value=4}
-                <li class="active"><a href="#">Недостающие детали</a></li>
+                <li class="active"><a href="store-keeper">Недостающие детали</a></li>
+            {/eq}
+            {@eq key=typeUser value=5}
+            <li class="active"><a href="customer">Запросы</a></li>
             {/eq}
             <li class="logout pull-right" role="presentation"><a href="/logout" class="last">Выйти</a></li>
             <li class="name"><a>{user.dataValues.firstName} {user.dataValues.lastName}</a></li>

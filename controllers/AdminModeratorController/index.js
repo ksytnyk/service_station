@@ -85,10 +85,19 @@ router.get('/requests', function (req, res) {
     Task
         .getAllTasks()
         .then(result => {
-            res.render('roles/admin_moderator/requests', {
-                requests: requestsFactory(result),
-                typeUser: req.session.passport.user.userTypeID
-            });
+            User
+                .getAllUsers()
+                .then(users => {
+                    res.render('roles/admin_moderator/requests', {
+                        assignedExecutorUsers: users,
+                        requests: requestsFactory(result),
+                        typeUser: req.session.passport.user.userTypeID
+                    });
+                })
+                .catch(error => {
+                    console.warn(error);
+                    res.render('roles/admin_moderator/update_request');
+                });
         })
         .catch(error => {
             console.warn(error);
@@ -101,10 +110,10 @@ router.get('/create-request', function (req, res) {
         .getCustomerUsers()
         .then(usersCustomers => {
             User
-                .getExecutorUsers()
-                .then(usersExecutors =>
+                .getAllUsers()
+                .then(users =>
                     res.render('roles/admin_moderator/create-request', {
-                        executors: usersExecutors,
+                        usersAssignedExecutors: users,
                         customers: usersCustomers,
                         typeUser: req.session.passport.user.userTypeID
                     }))
@@ -146,6 +155,7 @@ router.post('/create-request', function (req, res) {
 });
 
 router.get('/update-request/:id', function (req, res) {
+
     User
         .getAllUsers()
         .then(users => {
