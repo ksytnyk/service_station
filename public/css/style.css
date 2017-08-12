@@ -270,35 +270,54 @@ thead {
 }
 
 /* REQUESTS */
+.requests p {
+	margin: 0;
+}
+.requests a {
+	display: block;
+}
+.requests .glyphicon-pencil {
+	color: rgba(51, 51, 51, 0.75);
+	cursor: pointer;
+}
+.requests .glyphicon-pencil:hover {
+	color: rgba(51, 51, 51, 1);
+	cursor: pointer;
+}
+.requests .glyphicon-remove {
+	color: rgba(217, 83, 79, 0.75);
+	cursor: pointer;
+}
+.requests .glyphicon-remove:hover {
+	color: rgba(217, 83, 79, 1);
+	cursor: pointer;
+}
+.requests .task_id {
+	position: absolute;
+	top: 20px;
+	left: 8px;
+	width: 35px;
+}
+.requests .task_comment {
+	margin: 5px 0 0 -8px;
+	border-top: 1px solid #ccc;
+	padding: 5px 8px;
+	width: 400px
+}
+.requests .table tbody tr:nth-child(2n) {
+    background-color: #fff;
+}
+.requests .task_table p {
+	font-size: 13px;
+}
+.requests .task_table .btn {
+	padding: 5px;
+}
 .requests .task_table {
 	margin: 0;
 }
 .requests .task_table th {
 	border-top: none;
 	background-color: #eee;
-}
-.requests p {
-	margin: 0;
-}
-.requests .table tbody tr:nth-child(2n) {
-    background-color: #fff;
-}
-.requests .task_table .btn {
-	padding: 5px;
-}
-.requests .task_table .glyphicon-pencil {
-	color: rgba(51, 51, 51, 0.75);
-	cursor: pointer;
-}
-.requests .task_table .glyphicon-pencil:hover {
-	color: rgba(51, 51, 51, 1);
-	cursor: pointer;
-}
-.requests .task_table .glyphicon-remove {
-	color: rgba(217, 83, 79, 0.75);
-	cursor: pointer;
-}
-.requests .task_table .glyphicon-remove:hover {
-	color: rgba(217, 83, 79, 1);
-	cursor: pointer;
+	font-size: 13px;
 }
