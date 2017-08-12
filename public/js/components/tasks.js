@@ -12,12 +12,6 @@ $(document).ready(function () {
 
                 var executorNameSurname = $('#option' + $('#createTaskForm').serializeArray()[2].value).attr('executorFullName');
                 var assignedNameSurname = $('.optionAE' + $('#createTaskForm').serializeArray()[3].value).attr('assignedUserFullName');
-                var current;
-                if (window.location.pathname.includes('admin')) {
-                    current = 1;
-                } else {
-                    current = 2;
-                }
 
                 $("#tasks-table").append('<tr id="idx-task-' + data.result.id + '">' +
                     '<th class="tac">' +
@@ -40,11 +34,27 @@ $(document).ready(function () {
                         '<p class="bt"><strong>Комментарий: </strong>' + data.result.comment + '</p>' +
                     '</td>' +
                     '<td class="tac">' +
-                        '<a class="" title="Редактировать задачу" data-toggle="modal"' +
-                        ' data-target="#updateTaskFormModal">' +
-                        '<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="font-size: 17px;"/>' +
-                        '</a>' +
-                        '<a href="#" class="delete-task modal-window-link" title="Удалить задачу" data-toggle="modal" data-current="' + current + '" data-id="' + data.result.id + '"' +
+                        '<a class="update-task modal-window-link"' +
+                        ' title="Редактировать задачу"' +
+                        ' data-toggle="modal"' +
+                        ' data-id="' + data.result.id + '"' +
+                        ' data-task-description="' + data.result.description + '"' +
+                        ' data-task-name="' + data.result.name + '"' +
+                        ' data-task-assigned-user="' + data.result.assignedUserID + '"' +
+                        ' data-task-planed-executor="' + data.result.planedExecutorID + '"' +
+                        ' data-task-cost="' + data.result.cost + '"' +
+                        ' data-task-estimation-time="' + formatDate(data.result.estimationTime) + '"' +
+                        ' data-task-start-time="' + formatDate(data.result.startTime) + '"' +
+                        ' data-task-end-time="' + formatDate(data.result.endTime) + '"' +
+                        ' data-task-parts="' + data.result.parts + '"' +
+                        ' data-task-customer-parts="' + data.result.customerParts + '"' +
+                        ' data-task-need-buy-parts="' + data.result.needBuyParts + '"' +
+                        ' data-task-comment="' + data.result.comment + '"' +
+                        ' data-target="#updateTaskFormModal"' +
+                        ' style="cursor: pointer"> ' +
+                        '<span class="glyphicon glyphicon-pencil" aria-hidden="true"/> ' +
+                        '</a> '+
+                        '<a href="#" class="delete-task modal-window-link" title="Удалить задачу" data-toggle="modal" data-current="' + getIdRole(window.location.pathname) + '" data-id="' + data.result.id + '"' +
                         ' data-target="#deleteTaskFormModal">' +
                         '<span class="glyphicon glyphicon-remove" aria-hidden="true"  style="font-size: 18px; margin-top: 25px;"/>' +
                         '</a>' +
@@ -52,6 +62,7 @@ $(document).ready(function () {
 
                 deleteTaskOnClick();
                 clearModalAddTask();
+                updateTaskOnClick();
 
             },
             error: function (err) {
@@ -75,8 +86,6 @@ $(document).ready(function () {
         clearModalAddTask();
     });
 
-    updateTaskOnClick();
-
     $('#taskUpdateButton').on('click', function () {
 
         $('#updateTaskFormModal').modal('toggle');
@@ -91,10 +100,14 @@ $(document).ready(function () {
 
                 $(idx).empty();
 
-                var newTask = '<td class="vat">' +
+                var executorNameSurname = $('#option' + $('#update-form-task').serializeArray()[2].value).attr('executorFullName');
+                var assignedNameSurname = $('.optionAE' + $('#update-form-task').serializeArray()[3].value).attr('assignedUserFullName');
+
+                var newTask = '<th class="tac">' + data.task.id + '</th>' +
+                    '<td class="vat">' +
                     '<p><strong>Имя задачи: </strong>' + data.task.name + '</p>' +
-                    '<p><strong>Исполнитель: </strong>userSurname' + 'userName</p> ' +
-                    '<p><strong>Поручить задачу: </strong>' + data.task.assignedUserID + '</p>' +
+                    '<p><strong>Исполнитель: </strong>'+executorNameSurname+'</p> ' +
+                    '<p><strong>Поручить задачу: </strong>' + assignedNameSurname + '</p>' +
                     '<p><strong>Стоимость: </strong>' + data.task.cost + 'грн</p>' +
                     '<p><strong>Планируемое время: </strong>' + formatDate(data.task.estimationTime) + '</p>' +
                     '<p><strong>Время начала: </strong>' + formatDate(data.task.startTime) + '</p> ' +
@@ -109,18 +122,17 @@ $(document).ready(function () {
                     '</td> ' +
                     '<td class="tac" style="background-color: #eee;"> ' +
                     '<a class="update-task modal-window-link"' +
-                    'title="Редактировать задачу"' +
+                    ' title="Редактировать задачу"' +
                     ' data-toggle="modal"' +
                     ' data-id="' + data.task.id + '"' +
                     ' data-task-description="' + data.task.description + '"' +
                     ' data-task-name="' + data.task.name + '"' +
                     ' data-task-assigned-user="' + data.task.assignedUserID + '"' +
-                    ' data-task-executor-surname="' + "executor.Surname" + '"' + //TODO Добавить екзекутора
-                    ' data-task-executor-name="' + "executor.userName" + '"' +  //TODO Добавить екзекутора
+                    ' data-task-planed-executor="' + data.task.planedExecutorID + '"' +
                     ' data-task-cost="' + data.task.cost + '"' +
-                    ' data-task-estimation-time="' + data.task.estimationTime + '"' +
-                    ' data-task-start-time="' + data.task.startTime + '"' +
-                    ' data-task-end-time="' + data.task.endTime + '"' +
+                    ' data-task-estimation-time="' + formatDate(data.task.estimationTime) + '"' +
+                    ' data-task-start-time="' + formatDate(data.task.startTime) + '"' +
+                    ' data-task-end-time="' + formatDate(data.task.endTime) + '"' +
                     ' data-task-parts="' + data.task.parts + '"' +
                     ' data-task-customer-parts="' + data.task.customerParts + '"' +
                     ' data-task-need-buy-parts="' + data.task.needBuyParts + '"' +
@@ -132,14 +144,16 @@ $(document).ready(function () {
                     '<a href="#"' +
                     ' class="delete-task modal-window-link"' +
                     ' title="Удалить задачу" data-toggle="modal"' +
-                    ' data-current="{typeUser}" data-id="' + data.task.id + '"' +
+                    ' data-current="'+getIdRole(window.location.pathname)+'" data-id="' + data.task.id + '"' +
                     ' data-target="#deleteTaskFormModal"' +
                     ' style="margin-top: 20px;"> ' +
-                    '<span class="glyphicon glyphicon-remove" aria-hidden="true"/> ' + '</a>';
+                    '<span class="glyphicon glyphicon-remove" aria-hidden="true"/> ' + '</a>'+
+                '</td>';
 
                 $(idx).append(newTask);
 
                 deleteTaskOnClick();
+                clearModalAddTask();
                 updateTaskOnClick();
             },
             error: function (err) {
@@ -157,7 +171,9 @@ $(document).ready(function () {
             }
         });
     });
+
     deleteTaskOnClick();
+    updateTaskOnClick();
 });
 
 function clearModalAddTask() {
@@ -219,6 +235,14 @@ function deleteTaskOnClick() {
             }
         });
     });
+}
+
+function getIdRole(pathname) {
+    if (pathname.includes('admin')) {
+        return 1;
+    } else {
+        return 2;
+    }
 }
 
 function getRole(pathname) {

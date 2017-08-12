@@ -79,7 +79,8 @@ const optionTaskTable = {
 let Task = sequelize.define('task', describeTaskTable, optionTaskTable);
 
 Task.belongsTo(Request, {foreignKey: 'requestID'});
-Task.belongsTo(User, {foreignKey: 'planedExecutorID'});
+Task.belongsTo(User, {foreignKey: 'planedExecutorID', as: 'planedExecutor'});
+Task.belongsTo(User, {foreignKey: 'assignedUserID', as: 'assignedUser'});
 
 Task.sync();
 
@@ -95,7 +96,12 @@ Task.getAllTasks = function () {
                         }
                     },
                     {
-                        model: User
+                        model: User,
+                        as: 'planedExecutor'
+                    },
+                    {
+                        model: User,
+                        as: 'assignedUser'
                     }
                 ]
             })
@@ -124,9 +130,13 @@ Task.getAllTasksForCustomer = function (id) {
                         },
                     },
                     {
-                        model: User
+                        model: User,
+                        as: 'planedExecutor'
+                    },
+                    {
+                        model: User,
+                        as: 'assignedUser'
                     }
-
                 ]
             })
             .then(tasks => {

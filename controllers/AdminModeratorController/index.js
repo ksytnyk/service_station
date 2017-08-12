@@ -10,7 +10,7 @@ const router = express.Router();
 const roles = require('../../constants/roles');
 const validation = require('../../middleware/validation');
 const formatDate = require('../../helpers/formatDate');
-const requestsFactory = require('../../middleware/requestsFactory');
+const requestsFactory = require('../../helpers/requestsFactory');
 
 router.get('/users', function (req, res) {
 
@@ -96,7 +96,7 @@ router.get('/requests', function (req, res) {
                 })
                 .catch(error => {
                     console.warn(error);
-                    res.render('roles/admin_moderator/update_request');
+                    res.render('roles/admin_moderator/requests');
                 });
         })
         .catch(error => {
@@ -113,7 +113,7 @@ router.get('/create-request', function (req, res) {
                 .getAllUsers()
                 .then(users =>
                     res.render('roles/admin_moderator/create-request', {
-                        usersAssignedExecutors: users,
+                        assignedExecutorUsers: users,
                         customers: usersCustomers,
                         typeUser: req.session.passport.user.userTypeID
                     }))

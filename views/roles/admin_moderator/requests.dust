@@ -63,8 +63,8 @@
                         <tr  id="idx-task-{id}">
                             <td class="vat">
                                 <p><strong>Имя задачи: </strong> {name}</p>
-                                <p><strong>Исполнитель: </strong>{user.dataValues.userSurname} {user.dataValues.userName}</p>
-                                <p><strong>Поручить задачу: </strong>{assignedUserID}</p>
+                                <p><strong>Исполнитель: </strong>{planedExecutor.dataValues.userSurname} {planedExecutor.dataValues.userName}</p>
+                                <p><strong>Поручить задачу: </strong>{assignedUser.dataValues.userSurname} {assignedUser.dataValues.userName}</p>
                                 <p><strong>Стоимость: </strong>{cost} грн</p>
                                 <p><strong>Планируемое время: </strong>{estimationTime}</p>
                                 <p><strong>Время начала: </strong>{startTime}</p>
@@ -86,8 +86,6 @@
                                    data-task-name="{name}"
                                    data-task-assigned-user="{assignedUserID}"
                                    data-task-planed-executor="{planedExecutorID}"
-                                   data-task-executor-surname="{executor.userSurname}"
-                                   data-task-executor-name="{executor.userName}"
                                    data-task-cost="{cost}"
                                    data-task-estimation-time="{estimationTime}"
                                    data-task-start-time="{startTime}"
