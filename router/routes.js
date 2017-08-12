@@ -5,8 +5,8 @@ const authentication = require('../middleware/authentication');
 const roles = require('../constants/roles');
 const passport = require('passport');
 
-const admin = require('../controllers/AdminController'),
-    moderator = require('../controllers/ModeratorController'),
+const admin = require('../controllers/AdminModeratorController'),
+    moderator = require('../controllers/AdminModeratorController'),
     executor = require('../controllers/ExecutorController'),
     storeKeeper = require('../controllers/StoreKeeperController'),
     customer = require('../controllers/CustomerController');
@@ -16,8 +16,11 @@ require('../models/Passport');
 module.exports = function (app) {
 
     app.get('/', (req, res) => {
-        if (req.isAuthenticated()) res.redirect('auth');
-        else res.render('login');
+        if (req.isAuthenticated()) {
+            res.redirect('auth');
+        } else {
+            res.render('login');
+        }
     });
 
     app.post('/', passport.authenticate('local', {successRedirect: '/auth', failureRedirect: '/', failureFlash: true}));

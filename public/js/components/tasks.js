@@ -1,19 +1,19 @@
 $(document).ready(function () {
 
-    let count = 1;
+    var count = 1;
 
     $('#taskAddButton').on('click', function () {
 
         $('#createTaskFormModal').modal('toggle');
 
         $.ajax({
-            url: '/admin/create-task', // TODO норм
+            url: getRole(window.location.pathname) + '/create-task',
             type: 'Post',
             data: $('#createTaskForm').serializeArray(),
             success: function (data) {
 
-                let executorNameSurname = $('#option' + $('#createTaskForm').serializeArray()[2].value).attr('executorFullName');
-                let current;
+                var executorNameSurname = $('#option' + $('#createTaskForm').serializeArray()[2].value).attr('executorFullName');
+                var current;
                 if (window.location.pathname.includes('admin')) {
                     current = 1;
                 } else {
@@ -50,17 +50,6 @@ $(document).ready(function () {
 
                     '<span class="glyphicon glyphicon-remove" aria-hidden="true"/></a>' +
                     '</td></tr>');
-
-                $('.delete-task').on('click', function () {
-                    console.log('lal', $(this).data('id'));
-
-                    if ($(this).data('current') === 1) {
-                        $('#delete-task-form-id').attr('action', ('/admin/delete-task/' + $(this).data('id')));
-                    } else {
-                        $('#delete-task-form-id').attr('action', ('/moderator/delete-task/' + $(this).data('id')));
-                    }
-                    $('#delete-task-id').text($(this).data('id'));
-                });
 
                 count++;
                 deleteTaskOnClick();
@@ -122,7 +111,7 @@ $(document).ready(function () {
         $('#updateTaskFormModal').modal('toggle');
 
         $.ajax({
-            url: '/admin/update-task',
+            url: getRole(window.location.pathname)+'/update-task',
             type: 'PUT',
             data: $('#update-form-task').serializeArray(),
             success: function (data) {
@@ -131,7 +120,7 @@ $(document).ready(function () {
             error: function (err) {
                 $('.errors-info').css("display", "block");
 
-                let errorsTemplate = err.responseJSON.errors.map(error => {
+                var errorsTemplate = err.responseJSON.errors.map(error => {
                     return ("<div class='col-lg-4'>" + error.msg + "</div>");
                 });
 
@@ -161,4 +150,12 @@ function deleteTaskOnClick() {
         }
         $('#delete-task-id').text($(this).data('id'));
     });
+}
+
+function getRole(pathname) {
+    if (pathname.includes('admin')) {
+        return '/admin';
+    } else {
+        return '/moderator';
+    }
 }

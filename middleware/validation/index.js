@@ -4,10 +4,11 @@ const roles = require('../../constants/roles');
 
 module.exports = {
 
-    createAndUpdateUser: function (role) {
+    createAndUpdateUser: function () {
 
         return function (req, res, next) {
 
+            let role = req.baseUrl;
             let userName = req.body.userName;
             let userSurname = req.body.userSurname;
             let userCompanyName = req.body.userCompanyName;
@@ -17,7 +18,7 @@ module.exports = {
             let userEmail = req.body.userEmail;
             let userPassword = req.body.userPassword;
 
-            if (role === roles.ADMIN) {
+            if (role === '/admin') {
                 let userTypeID = req.body.userTypeID;
                 req.checkBody('userTypeID', '"Роль" - обязательное поле.').notEmpty();
             }
@@ -37,8 +38,7 @@ module.exports = {
             if (errors) {
                 req.flash('error_alert', true);
                 req.flash('error_msg', errors);
-                role == roles.ADMIN ? res.redirect('/admin/users') :
-                    role == roles.MODERATOR ? res.redirect('/moderator/users') : "";
+                res.redirect(req.baseUrl + '/users');
             } else {
                 next();
             }

@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    let element = document.getElementById(window.location.pathname);
+    var element = document.getElementById(window.location.pathname);
     if (element !== null) {
         element.classList.add("active");
     }

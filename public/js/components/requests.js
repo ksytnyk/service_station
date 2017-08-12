@@ -13,7 +13,6 @@ $(document).ready(function () {
                 $('#create_task').show();
             },
             error: function (err) {
-                console.log(1111);
 
                 $('.errors-info').css("display", "block");
 
