@@ -1,7 +1,5 @@
 $(document).ready(function () {
 
-    var count = 1;
-
     $('#taskAddButton').on('click', function () {
 
         $('#createTaskFormModal').modal('toggle');
@@ -22,7 +20,7 @@ $(document).ready(function () {
 
                 $("#tasks-table").append('<tr id="idx-task-' + data.result.id + '">' +
                     '<td class="tac">' +
-                    count +
+                    data.result.id +
                     '</td>' +
                     '<td class="vat">' +
                     '<p><strong>Имя задачи: </strong>' + data.result.name + '</p>' +
@@ -51,7 +49,6 @@ $(document).ready(function () {
                     '<span class="glyphicon glyphicon-remove" aria-hidden="true"/></a>' +
                     '</td></tr>');
 
-                count++;
                 deleteTaskOnClick();
                 clearModalAddTask();
 
@@ -113,7 +110,7 @@ $(document).ready(function () {
         $('#updateTaskFormModal').modal('toggle');
 
         $.ajax({
-            url: getRole(window.location.pathname)+'/update-task',
+            url: getRole(window.location.pathname) + '/update-task',
             type: 'PUT',
             data: $('#update-form-task').serializeArray(),
             success: function (data) {
@@ -158,7 +155,7 @@ function deleteTaskOnClick() {
         $('#deleteTaskFormModal').modal('hide');
 
         $.ajax({
-            url: '/admin/delete-task/' + taskID,
+            url: getRole(window.location.pathname) + '/delete-task/' + taskID,
             type: 'DELETE',
             data: $(this).data('id'),
             success: function (data) {

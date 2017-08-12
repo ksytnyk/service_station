@@ -274,14 +274,14 @@ router.post('/create-task', function (req, res) {
 
 router.put('/update-task', function (req, res) {
 
-    let taskDescription = req.body.taskDescription;
+    let description = req.body.description;
     let planedExecutorID = req.body.planedExecutorID;
     let cost = req.body.cost;
     let estimationTime = req.body.estimationTime;
     let startTime = req.body.startTime;
     let endTime = req.body.endTime;
 
-    req.checkBody('taskDescription', '"Описание задачи" - обязательное поле.').notEmpty();
+    req.checkBody('description', '"Описание задачи" - обязательное поле.').notEmpty();
     req.checkBody('planedExecutorID', '"Исполнитель" - обязательное поле.').notEmpty();
     req.checkBody('cost', '"Цена" - обязательное поле.').notEmpty();
     req.checkBody('estimationTime', '"Планируемове время" - обязательное поле.').notEmpty();
@@ -310,23 +310,21 @@ router.put('/update-task', function (req, res) {
     }
 });
 
-router.delete('/delete-task/:id', function (req, res) { //TODO without redirects
+router.delete('/delete-task/:id', function (req, res) {
+
+    let taskID = req.params.id;
     Task
         .destroy({
             where: {
-                id: Number(req.params.id)
+                id: Number(taskID)
             }
         })
         .then(() => {
-            req.flash('success_alert', true);
-            req.flash('success_msg', 'Удаление прошло успешно.');
-            res.redirect(req.baseUrl + '/requests');
+            res.status(200).send({id: taskID});
         })
-        .catch(error => {
-            console.warn(error);
-            req.flash('error_alert', true);
-            req.flash('error_msg', {msg: 'Возникла ошибка при удалении.'});
-            res.redirect(req.baseUrl + '/requests');
+        .catch(errors => {
+            console.warn(errors);
+            res.status(400).send({errors: errors});
         })
 });
 
