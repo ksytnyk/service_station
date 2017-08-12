@@ -10,6 +10,7 @@ const router = express.Router();
 const roles = require('../../constants/roles');
 const validation = require('../../middleware/validation');
 const formatDate = require('../../helpers/formatDate');
+const requestsFactory = require('../../middleware/requestsFactory');
 
 router.get('/users', function (req, res) {
 
@@ -84,34 +85,8 @@ router.get('/requests', function (req, res) {
     Task
         .getAllTasks()
         .then(result => {
-
-            //==============================================
-            var requests = {};
-
-            result.map(item => {
-                if (requests[item.request.id] === undefined) {
-                    requests[item.request.id] = item.request.dataValues;
-                    requests[item.request.id].user = item.request.dataValues.user.dataValues;
-                    requests[item.request.id].executor = item.user.dataValues;
-                    requests[item.request.id].startTime = formatDate(requests[item.request.id].startTime);
-                    requests[item.request.id].estimatedTime = formatDate(requests[item.request.id].estimatedTime);
-                    requests[item.request.id].tasks = [];
-                }
-
-                var task = item.dataValues;
-                task.estimationTime = formatDate(task.estimationTime);
-                task.startTime = formatDate(task.startTime);
-                task.endTime = formatDate(task.endTime);
-                delete task.request;
-
-                requests[item.request.id].tasks.push(task);
-            });
-
-            requests = Object.values(requests);
-            //==============================================
-
             res.render('roles/admin_moderator/requests', {
-                requests: requests,
+                requests: requestsFactory(result),
                 typeUser: req.session.passport.user.userTypeID
             });
         })

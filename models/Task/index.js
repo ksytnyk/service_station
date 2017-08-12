@@ -109,6 +109,36 @@ Task.getAllTasks = function () {
     });
 };
 
+Task.getAllTasksForCustomer = function (id) {
+    return new Promise((resolve, reject) => {
+        Task
+            .findAll({
+                include: [
+                    {
+                        model: Request,
+                        where: {
+                            customerID: id
+                        },
+                        include: {
+                            model: User
+                        },
+                    },
+                    {
+                        model: User
+                    }
+
+                ]
+            })
+            .then(tasks => {
+                resolve(tasks);
+            })
+            .catch(error => {
+                console.warn(error);
+                reject(error);
+            });
+    });
+};
+
 Task.getTaskById = function (id) {
     return new Promise((resolve, reject) => {
         Task
