@@ -10,5 +10,5 @@ module.exports = function formatDate(date) {
         month = date.getMonth() + 1;
     }
 
-    return day + '.' + month + '.' + year;
+    return year + '.' + month + '.' + day + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
 };

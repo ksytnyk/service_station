@@ -21,6 +21,11 @@ $(document).ready(function () {
 
     $('.dtable').DataTable();
 
-    $('.datetimepickerN').datetimepicker();
+    $('.datetimepickerN').datetimepicker(
+        {
+            locale: "ru",
+            format: "YYYY-MM-DD HH:mm:ss"
+        }
+    );
 
 });

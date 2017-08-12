@@ -15,7 +15,7 @@ $(document).ready(function () {
 
                 $("#tasks-table").append('<tr id="idx-task-' + data.result.id + '">' +
                     '<th class="tac">' +
-                        data.result.id +
+                    data.result.id +
                     '</th>' +
                     '<td class="vat">' +
                         '<p><strong>Имя задачи: </strong>' + data.result.name + '</p>' +
@@ -188,9 +188,9 @@ function updateTaskOnClick() {
         $('#update-form-task-description').val($(this).data('task-description'));
         $('#update-form-task-planed-executor').val($(this).data('task-planed-executor'));
         $('#update-form-task-cost').val($(this).data('task-cost'));
-        $('#update-form-task-estimation-time').val(convertFormatDate($(this).data('task-estimation-time')));
-        $('#update-form-task-start-time').val(convertFormatDate($(this).data('task-start-time')));
-        $('#update-form-task-end-time').val(convertFormatDate($(this).data('task-end-time')));
+        $('#update-form-task-estimation-time').val($(this).data('task-estimation-time'));
+        $('#update-form-task-start-time').val($(this).data('task-start-time'));
+        $('#update-form-task-end-time').val($(this).data('task-end-time'));
         $('#update-form-task-parts').val($(this).data('task-parts'));
         $('#update-form-task-customer-parts').val($(this).data('task-customer-parts'));
         $('#update-form-task-need-buy-parts').val($(this).data('task-need-buy-parts'));
@@ -253,15 +253,13 @@ function getRole(pathname) {
     }
 }
 
-function convertFormatDate(date) {
-    var arrayDate = date.split('.');
-    return new Date(arrayDate[2], arrayDate[1], arrayDate[0]);
-}
-
 function formatDate(date) {
     var newDate = new Date(date);
-
-    var day = newDate.getDate(), year = newDate.getFullYear(), month;
+    var day = newDate.getDate(),
+        year = newDate.getFullYear(),
+        month, hours = newDate.getHours(),
+        minutes = newDate.getMinutes(),
+        seconds = newDate.getSeconds();
 
     if ((newDate.getMonth() + 1) < 10) {
         month = '0' + (newDate.getMonth() + 1);
@@ -269,5 +267,5 @@ function formatDate(date) {
         month = newDate.getMonth() + 1;
     }
 
-    return day + '.' + month + '.' + year;
+    return year + '.' + month + '.' + day + ' ' + hours + ':' + minutes + ':' + seconds;
 }
