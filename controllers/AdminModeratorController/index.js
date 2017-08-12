@@ -275,8 +275,16 @@ router.put('/update-task', function (req, res) {
 
         Task
             .updateTask(taskID, params)
-            .then(result => {
-                res.status(200).send({result: result});
+            .then(() => {
+                Task
+                    .getTaskById(taskID)
+                    .then(task => {
+                        res.status(200).send({task: task});
+                    })
+                    .catch(errors => {
+                        console.warn(errors);
+                        res.status(400).send({errors: errors});
+                    });
             })
             .catch(errors => {
                 console.warn(errors);

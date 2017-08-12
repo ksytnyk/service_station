@@ -96,9 +96,11 @@ $(document).ready(function () {
         $('#update-form-task-description').val($(this).data('task-description'));
         $('#update-form-task-planed-executor').val($(this).data('task-planed-executor'));
         $('#update-form-task-cost').val($(this).data('task-cost'));
-        $('#update-form-task-estimation-time').val($(this).data('task-estimation-time'));
-        $('#update-form-task-start-time').val($(this).data('task-start-time'));
-        $('#update-form-task-end-time').val($(this).data('task-end-time'));
+
+        $('#update-form-task-estimation-time').val(convertFormatDate($(this).data('task-estimation-time')));
+        $('#update-form-task-start-time').val(convertFormatDate($(this).data('task-start-time')));
+        $('#update-form-task-end-time').val(convertFormatDate($(this).data('task-end-time')));
+
         $('#update-form-task-parts').val($(this).data('task-parts'));
         $('#update-form-task-customer-parts').val($(this).data('task-customer-parts'));
         $('#update-form-task-need-buy-parts').val($(this).data('task-need-buy-parts'));
@@ -114,7 +116,56 @@ $(document).ready(function () {
             type: 'PUT',
             data: $('#update-form-task').serializeArray(),
             success: function (data) {
-                console.log(data);
+
+                var idx = "#idx-task-" + data.task.id;
+
+                var newTask = '<td class="vat">' +
+                    '<p><strong>Имя задачи: </strong>' + data.task.name + '</p>' +
+                    '<p><strong>Исполнитель: </strong>userSurname' + 'userName</p> ' +
+                    '<p><strong>Поручить задачу: </strong>' + data.task.assignedUserID + '</p>' +
+                    '<p><strong>Стоимость: </strong>' + data.task.cost + 'грн</p>' +
+                    '<p><strong>Планируемое время: </strong>' + formatDate(data.task.estimationTime) + '</p>' +
+                    '<p><strong>Время начала: </strong>' + formatDate(data.task.startTime) + '</p> ' +
+                    '<p><strong>Конечное время: </strong>' + formatDate(data.task.endTime) + '</p> ' +
+                    '</td> ' +
+                    '<td class="vat"> ' +
+                    '<p><strong>Описание задачи: </strong>' + data.task.description + '</p> ' +
+                    '<p class="bt"><strong>Запчасти: </strong>' + data.task.parts + '</p> ' +
+                    '<p><strong>Запчасти клиента: </strong>' + data.task.customerParts + '</p> ' +
+                    '<p><strong>Недостающие запчасти: </strong>' + data.task.needBuyParts + '</p> ' +
+                    '<p class="bt"><strong>Комментарий: </strong>' + data.task.comment + '</p> ' +
+                    '</td> ' +
+                    '<td class="tac" style="background-color: #eee;"> ' +
+                    '<a class="update-task modal-window-link"' +
+                    'title="Редактировать задачу"' +
+                    'data-toggle="modal"' +
+                    'data-id="' + data.task.id + '"' +
+                    'data-task-description="' + data.task.description + '"' +
+                    'data-task-name="' + data.task.name + '"' +
+                    'data-task-assigned-user="' + data.task.assignedUserID + '"' +
+                    'data-task-executor-surname="' + "executor.Surname" + '"' +
+                    'data-task-executor-name="' + "executor.userName" + '"' +
+                    'data-task-cost=' + data.task.cost + '"' +
+                    'data-task-estimation-time="' + data.task.estimationTime + '"' +
+                    'data-task-start-time="' + data.task.startTime + '"' +
+                    'data-task-end-time="' + data.task.endTime + '"' +
+                    'data-task-parts="' + data.task.parts + '"' +
+                    'data-task-customer-parts="' + data.task.customerParts + '"' +
+                    'data-task-need-buy-parts="' + data.task.needBuyParts + '"' +
+                    'data-task-comment="' + data.task.comment + '"' +
+                    'data-target="#updateTaskFormModal"' +
+                    'style="cursor: pointer"> ' +
+                    '<span class="glyphicon glyphicon-pencil" aria-hidden="true"/> ' +
+                    '</a> ' +
+                    '<a href="#"' +
+                    'class="delete-task modal-window-link"' +
+                    'title="Удалить задачу" data-toggle="modal"' +
+                    'data-current="{typeUser}" data-id="{id}"' +
+                    'data-target="#deleteTaskFormModal"' +
+                    'style="margin-top: 20px;"> ' +
+                    '<span class="glyphicon glyphicon-remove" aria-hidden="true"/> ' + '</a>';
+
+                $(idx).html(newTask);
             },
             error: function (err) {
                 $('.errors-info').css("display", "block");
@@ -143,7 +194,6 @@ function clearModalAddTask() {
 function deleteTaskOnClick() {
 
     $('.delete-task').on('click', function () {
-
         $('#delete-button').attr('test', ($(this).data('id')));
         $('#delete-task-id').html($(this).data('id'));
     });
@@ -159,16 +209,14 @@ function deleteTaskOnClick() {
             type: 'DELETE',
             data: $(this).data('id'),
             success: function (data) {
-                console.log('ajax id ', data);
                 var idx = "#idx-task-" + data.id;
                 $(idx).remove();
             },
             error: function (err) {
+
                 $('.errors-info').css("display", "block");
 
-                console.log('==>', err.responseJSON.errors);
-
-                let errorsTemplate = err.responseJSON.errors.map(error => {
+                var errorsTemplate = err.responseJSON.errors.map(error => {
                     return ("<div class='col-lg-4'>" + error.msg + "</div>");
                 });
 
@@ -189,4 +237,23 @@ function getRole(pathname) {
     } else {
         return '/moderator';
     }
+}
+
+function convertFormatDate(date) {
+    var arrayDate = date.split('.');
+    return new Date(arrayDate[2], arrayDate[1], arrayDate[0]);
+}
+
+function formatDate(date) {
+    var newDate = new Date(date);
+
+    let day = newDate.getDate(), year = newDate.getFullYear(), month;
+
+    if ((newDate.getMonth() + 1) < 10) {
+        month = '0' + (newDate.getMonth() + 1);
+    } else {
+        month = newDate.getMonth() + 1;
+    }
+
+    return day + '.' + month + '.' + year;
 }
