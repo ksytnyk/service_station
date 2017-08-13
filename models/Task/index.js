@@ -202,7 +202,14 @@ Task.getTaskByExecutorId = function (id) {
             .findAll({
                 where: {
                     planedExecutorID: id,
-                    status: status.PENDING
+                    $or: [
+                        {
+                            status: status.PENDING
+                        },
+                        {
+                            status: status.PROCESSING
+                        }
+                    ]
                 }
             })
             .then(result => {
