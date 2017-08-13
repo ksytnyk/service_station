@@ -363,35 +363,17 @@ router.delete('/delete-task/:id', function (req, res) {
         })
 });
 
-router.post('/change-request-status-processing', (req, res) => {
-    Request.changeStatus(req.body.requestID, statuses.PROCESSING)
+router.post('/change-request-status/:id', (req, res) => {
+    Request.changeStatus(req.params.id, req.body.statusID)
         .then(()=> {
-                res.redirect(req.baseUrl + '/requests');
-            })
-        .catch(error => {
-            console.warn(error);
-            res.redirect(req.baseUrl + '/requests');
-        })
-});
-
-router.post('/change-request-status-done', (req, res) => {
-    Request.changeStatus(req.body.requestID, statuses.DONE)
-        .then(()=> {
+            req.flash('success_alert', true);
+            req.flash('success_msg', 'Статус успешно изменен.');
             res.redirect(req.baseUrl + '/requests');
         })
         .catch(error => {
             console.warn(error);
-            res.redirect(req.baseUrl + '/requests');
-        })
-});
-
-router.post('/change-request-status-canceled', (req, res) => {
-    Request.changeStatus(req.body.requestID, statuses.CANCELED)
-        .then(()=> {
-            res.redirect(req.baseUrl + '/requests');
-        })
-        .catch(error => {
-            console.warn(error);
+            req.flash('error_alert', true);
+            req.flash('error_msg', {msg: 'Возникла ошибка при изменении.'});
             res.redirect(req.baseUrl + '/requests');
         })
 });

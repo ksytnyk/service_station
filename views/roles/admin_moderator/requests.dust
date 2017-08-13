@@ -27,16 +27,16 @@
                     <span class="glyphicon glyphicon-question-sign" title="Pending" style="color:#f0ad4e; font-size: 18px;" aria-hidden="true"/>
                     {/eq}
                     {@eq key=status value=2}
-                    <span class="glyphicon glyphicon-info-sign" title="Processing" style="color:#90EE90; font-size: 18px;" aria-hidden="true"/>
+                    <span class="glyphicon glyphicon-info-sign" title="Processing" style="color:#0040ff; font-size: 18px;" aria-hidden="true"/>
                     {/eq}
                     {@eq key=status value=3}
                     <span class="glyphicon glyphicon-ok-circle" title="Done" style="color:#00FA9A; font-size: 18px;" aria-hidden="true"/>
                     {/eq}
                     {@eq key=status value=4}
-                    <span class="glyphicon glyphicon-exclamation-sign" title="Hold" style="color:#7B68EE; font-size: 18px;" aria-hidden="true"/>
+                    <span class="glyphicon glyphicon-exclamation-sign" title="Hold" style="color:#ff0000; font-size: 18px;" aria-hidden="true"/>
                     {/eq}
                     {@eq key=status value=5}
-                    <span class="glyphicon glyphicon-remove-circle" title="Canceled" style="color:#DC143C; font-size: 18px;" aria-hidden="true"/>
+                    <span class="glyphicon glyphicon-remove-circle" title="Canceled" style=" font-size: 18px;" aria-hidden="true"/>
                     {/eq}
                     <a href="update-request/{id}"
                        class=""
@@ -62,20 +62,20 @@
                     <p><strong>Время начала: </strong>{startTime}</p>
                     <p><strong>План. время: </strong>{estimatedTime}</p>
                     <p><strong>Комментарий: </strong>{comment}</p>
-                    <form style="display: inline-block" action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/change-request-status-processing" method="POST">
-                    <input type="submit" id="requestProcessing" value="Processing" class="btn"
-                            style="width: auto; background-color:#90EE90; margin: 1px; font-size: 12px "/>
-                        <input type="hidden" value="{id}" name="requestID">
+                    <form style="display: inline-block" action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/change-request-status/{id}" method="POST">
+                    <input type="submit" class="btn btn-primary" id="requestProcessing" value="Начать" class="btn"
+                            style="width: auto; margin: 1px;"/>
+                        <input type="hidden" value="2" name="statusID">
                     </form>
-                    <form style="display: inline-block" action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/change-request-status-done" method="POST">
-                    <input type="submit" id="requestDone" value="Done" class="btn"
-                           style="width: auto; background-color:#00FA9A; margin: 1px; font-size: 12px "/>
-                        <input type="hidden" value="{id}" name="requestID">
+                    <form style="display: inline-block" action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/change-request-status/{id}" method="POST">
+                    <input type="submit" class="btn btn-success" id="requestDone" value="Завершить" class="btn"
+                           style="width: auto; margin: 1px;"/>
+                        <input type="hidden" value="3" name="statusID">
                     </form>
-                    <form style="display: inline-block" action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/change-request-status-canceled" method="POST">
-                        <input type="submit" id="requestCanceled" value="Canceled" class="btn"
-                           style="width: auto; background-color:#DC143C; margin: 1px; font-size: 12px"/>
-                        <input type="hidden" value="{id}" name="requestID">
+                    <form style="display: inline-block" action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/change-request-status/{id}" method="POST">
+                        <input type="submit" class="btn label-default" id="requestCanceled" value="Анулировать" class="btn"
+                           style="width: auto; margin: 1px;"/>
+                        <input type="hidden" value="5" name="statusID">
                     </form>
                 </td>
                 <td style="padding: 0; vertical-align: top;">
