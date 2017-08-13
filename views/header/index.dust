@@ -23,7 +23,7 @@
                 <li class="active"><a href="/store-keeper">Недостающие детали</a></li>
             {/eq}
             <li class="logout pull-right" role="presentation"><a href="/logout" class="last">Выйти</a></li>
-            <li id="headerName" {@eq key=typeUser value=5}style="background-color: #333; float: left;"{/eq}><a>USER NAME {typeUser}</a></li>
+            <li id="headerName" {@eq key=typeUser value=5} style="background-color: #333; float: left;"{/eq}><a>{user.userName} {user.userSurname}</a></li>
         </ul>
     </div>
 </nav>

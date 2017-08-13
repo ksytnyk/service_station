@@ -26,6 +26,9 @@
                     {@eq key=status value=1}
                     <span class="glyphicon glyphicon-question-sign" title="Pending" style="color:#f0ad4e; font-size: 17px;" aria-hidden="true"/>
                     {/eq}
+                    {@eq key=status value=2}
+                    <span class="glyphicon glyphicon-question-sign" title="Pending" style="color:#f0ad4e; font-size: 17px;" aria-hidden="true"/>
+                    {/eq}
                     <a href="update-request/{id}"
                        class=""
                        title="Редактировать заказ"
