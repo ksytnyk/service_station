@@ -25,31 +25,8 @@ $(document).ready(function () {
                 var executorNameSurname = $('#option' + $('#createTaskForm').serializeArray()[2].value).attr('executorFullName');
                 var assignedNameSurname = $('.optionAE' + $('#createTaskForm').serializeArray()[3].value).attr('assignedUserFullName');
 
-                var classNameForTask = '';
-
-                switch (data.result.status) {
-                    case 1: {
-                        classNameForTask = 'class="tac status-bgc-pending"';
-                        break;
-                    }
-                    case 2: {
-                        classNameForTask = 'class="tac status-bgc-processing"';
-                        break;
-                    }
-                    case 3: {
-                        classNameForTask = 'class="tac status-bgc-done"';
-                        break;
-                    }
-                    case 4: {
-                        classNameForTask = 'class="tac status-bgc-hold"';
-                        break;
-                    }
-                    case 5: {
-                        classNameForTask = 'class="tac status-bgc-canceled"';
-                        break;
-                    }
-                }
-
+                var classNameForTask = changeClassForStatus(data.result.status);
+                console.log(classNameForTask);
                 $("#tasks-table").append('<tr id="idx-task-' + data.result.id + '">' +
                     '<th ' + classNameForTask + '>' +
                     data.result.id +
@@ -142,34 +119,12 @@ $(document).ready(function () {
                     var assignedNameSurname = $('.optionAE' + $('#update-form-task').serializeArray()[3].value).attr('assignedUserFullName');
                 }
 
-                var classNameForTask = "";
+                var classNameForTask = changeClassForStatus(data.task.status);
 
-                switch (data.task.status) {
-                    case 1: {
-                        classNameForTask = 'class="tac status-bgc-pending"';
-                        break;
-                    }
-                    case 2: {
-                        classNameForTask = 'class="tac status-bgc-processing"';
-                        break;
-                    }
-                    case 3: {
-                        classNameForTask = 'class="tac status-bgc-done"';
-                        break;
-                    }
-                    case 4: {
-                        classNameForTask = 'class="tac status-bgc-hold"';
-                        break;
-                    }
-                    case 5: {
-                        classNameForTask = 'class="tac status-bgc-canceled"';
-                        break;
-                    }
-                }
-
+                console.log(classNameForTask);
                 var newTask, newTask1 = '', newTask2;
 
-                newTask = '<th ' +classNameForTask + '>' + data.task.id + '</th>' +
+                newTask = '<th ' + classNameForTask + '>' + data.task.id + '</th>' +
                     '<td class="vat">' +
                     '<p><strong>Имя задачи: </strong>' + data.task.name + '</p>' +
                     '<p class="executor_name_surname"><strong>Исполнитель: </strong>' + executorNameSurname + '</p> ' +
@@ -360,4 +315,33 @@ function formatDate(date) {
     });
 
     return res[0] + '.' + res[1] + '.' + res[2] + ' ' + res[3] + ':' + res[4] + ':' + res[5];
+}
+
+//====================== function change class for status ==============================================================
+
+function changeClassForStatus(data) {
+    var newClass = "";
+    switch (data) {
+        case 1: {
+            newClass = 'class="tac bb status-bgc-pending"';
+            break;
+        }
+        case 2: {
+            newClass = 'class="tac bb status-bgc-processing"';
+            break;
+        }
+        case 3: {
+            newClass = 'class="tac bb status-bgc-done"';
+            break;
+        }
+        case 4: {
+            newClass = 'class="tac bb status-bgc-hold"';
+            break;
+        }
+        case 5: {
+            newClass = 'class="tac bb status-bgc-canceled"';
+            break;
+        }
+    }
+    return newClass;
 }

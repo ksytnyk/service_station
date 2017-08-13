@@ -19,27 +19,27 @@ button:focus {
     text-decoration: none;
 }
 
-.requests .task_table .status-bgc-pending {
+.status-bgc-pending {
     background-color: rgba(255, 165, 0, 0.4);
 }
 
-.requests .task_table .status-bgc-processing {
+.status-bgc-processing {
     background-color: rgba(51, 122, 183, 0.6);
 }
 
-.requests .task_table .status-bgc-hold {
+.status-bgc-hold {
     background-color: rgba(255, 0, 0, 0.4);
 }
 
-.requests .task_table .status-bgc-done {
+.status-bgc-done {
     background-color: rgba(0, 128, 0, 0.4);
 }
 
-.requests .task_table .status-bgc-canceled {
+.status-bgc-canceled {
     background-color: rgba(0, 0, 0, 0.4);
 }
 
-.popover-content{
+.popover-content {
     width: 185px;
     font-weight: bold;
 }
@@ -447,6 +447,7 @@ thead {
     background-color: #eee;
     font-size: 13px;
 }
+
 .requests .task_table tr td:last-child {
     background-color: #eee;
 }
@@ -460,8 +461,9 @@ thead {
 .executor .executor_name_surname,
 .executor .assigned_name_surname,
 .executor .delete-task {
-	display: none;
+    display: none;
 }
+
 .executor .bt {
     width: 581px;
 }
