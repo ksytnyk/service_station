@@ -9,8 +9,12 @@ router.get('/', (req, res) => {
         Task
             .getTaskByExecutorId(req.session.passport.user.id)
             .then(result => {
-                console.log('===============================================================================', req.session.passport.user);
-                res.render('roles/executor', {typeUser: req.session.passport.user.userTypeID, task: result, executor: req.session.passport});        
+                console.log('================================================================================================', result)
+                res.render('roles/executor', {
+                    typeUser: req.session.passport.user.userTypeID,
+                    task: result,
+                    executor: req.session.passport.user
+                });
             });
     } else {
         res.redirect('/');
