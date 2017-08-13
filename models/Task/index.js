@@ -43,6 +43,7 @@ const describeTaskTable = {
     },
     status: {
         type: Sequelize.INTEGER,
+        defaultValue: 1,
         field: 'status'
     },
     parts: {
@@ -213,12 +214,13 @@ Task.getTaskByExecutorId = function (id) {
     })
 };
 
-Task.getAllTasksForStore = function () {
+Task.getAllTasksForStore = function (storeID) {
     return new Promise((resolve, reject) => {
         Task
             .findAll({
                 where: {
-                    status: status.HOLD
+                    status: status.PENDING,
+                    assignedUserID: storeID
                 }
             })
             .then(tasks => {

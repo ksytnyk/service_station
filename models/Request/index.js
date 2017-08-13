@@ -24,6 +24,7 @@ const describeRequestTable = {
     },
     status: {
         type: Sequelize.INTEGER,
+        defaultValue: 1,
         field: 'status'
     },
     startTime: {

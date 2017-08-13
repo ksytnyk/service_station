@@ -143,7 +143,7 @@ router.post('/create-request', function (req, res) {
     if (errors) {
         res.status(400).send({errors: errors});
     } else {
-        console.log(req.body);
+        req.body.createdBy = req.session.passport.user.id;
         Request
             .createRequest(req.body)
             .then((result) => {

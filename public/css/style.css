@@ -1,87 +1,101 @@
 @font-face {
-	font-family: 'Spiderman-Homecoming';
-	src: url('../fonts/Spiderman-Homecoming.otf');
+    font-family: 'Spiderman-Homecoming';
+    src: url('../fonts/Spiderman-Homecoming.otf');
 }
 
 body {
-	margin: 90px 0 0;
-	padding: 0;
+    margin: 90px 0 0;
+    padding: 0;
 }
+
 .form-control {
-	background-color: #f5f5f5;
+    background-color: #f5f5f5;
 }
+
 a:hover,
 a:focus,
 button:focus {
-	outline: none !important;
-	text-decoration: none;
+    outline: none !important;
+    text-decoration: none;
 }
+
+.glyphicon, glyphicon:hover {
+    margin: 15px 0px;
+    cursor: pointer;
+    display: block;
+}
+
 .glyphicon-pencil {
-	color: rgba(51, 51, 51, 0.75);
-	cursor: pointer;
-	display: block;
+    color: rgba(51, 51, 51, 0.75);
 }
+
 .glyphicon-pencil:hover {
-	color: rgba(51, 51, 51, 1);
-	cursor: pointer;
+    color: rgba(51, 51, 51, 1);
 }
+
 .glyphicon-remove {
-	color: rgba(217, 83, 79, 0.75);
-	cursor: pointer;
-	display: block;
-	margin-top: 25px;
-	font-size: 16px;
+    color: rgba(217, 83, 79, 0.75);
+    font-size: 16px;
 }
+
 .glyphicon-remove:hover {
-	color: rgba(217, 83, 79, 1);
-	cursor: pointer;
+    color: rgba(217, 83, 79, 1);
 }
+
 input[disabled],
 textarea[disabled],
 select[disabled] {
-	opacity: 0.65 !important;
+    opacity: 0.65 !important;
 }
 
 /* LOGIN */
 .login {
-	margin-top: 75px;
+    margin-top: 75px;
 }
+
 .login .logo {
-	margin: 0 0 25px;
-	text-transform: uppercase;
+    margin: 0 0 25px;
+    text-transform: uppercase;
     font-family: Spiderman-Homecoming, sans-serif;
     font-size: 25px;
     letter-spacing: 1px;
 }
+
 .login .logo span {
-	margin-right: 15px;
+    margin-right: 15px;
 }
+
 .login form {
-	border-top: 1px solid #ddd;
-	padding-top: 20px;
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
 
 }
+
 .login input {
-	background-color: #f5f5f5;
+    background-color: #f5f5f5;
 }
+
 .login input:focus,
 .login button:focus {
     border: 1px solid #ccc;
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
     outline: none;
 }
+
 .login .alert {
-	margin: 20px 0 0;
+    margin: 20px 0 0;
 }
+
 .login button:last-child {
-	background-color: #777;
+    background-color: #777;
     border-color: #666;
-	transition: 0.3s;
-	color: #fff;
+    transition: 0.3s;
+    color: #fff;
 }
+
 .login button:last-child:hover,
 .login button:last-child:focus {
-	background-color: #333;
+    background-color: #333;
     border-color: #222;
 }
 
@@ -89,258 +103,312 @@ select[disabled] {
 .white_block {
     background-color: #fff;
 }
+
 .navbar {
-	background-color: #666;
-	border: 1px solid #333;
+    background-color: #666;
+    border: 1px solid #333;
     margin: 0 auto;
 }
+
 .navbar #headerName {
-	float: right;
+    float: right;
 }
+
 .navbar > .active > a,
 .navbar > .active > a:hover,
 .navbar > .active > a:focus {
-	background-color: #333;
-	color: #fff;
+    background-color: #333;
+    color: #fff;
 }
+
 .navbar > li > a:hover {
-	color: #fff;
-	background-color: #333 !important;
+    color: #fff;
+    background-color: #333 !important;
 }
+
 .nav {
-	padding: 0;
-	font-size: 15px;
-	margin: 19px 0;
+    padding: 0;
+    font-size: 15px;
+    margin: 19px 0;
 }
+
 .nav > li > a {
-	color: #fff;
-	transition: 0.3s;
-	border-right: 1px solid #666;
+    color: #fff;
+    transition: 0.3s;
+    border-right: 1px solid #666;
 }
+
 .nav > li > .last {
-	border-right: none;
+    border-right: none;
 }
+
 .nav > li > a:focus {
-	background-color: #666;
+    background-color: #666;
 }
+
 .nav > .name > a {
-	color: #fff;
+    color: #fff;
 }
+
 .nav > .name > a:hover {
-	color: #fff;
-	background-color: #666 !important;
+    color: #fff;
+    background-color: #666 !important;
 }
+
 .alert {
-	position: relative;
-	width: 100%;
-	padding: 10px 15px;
+    position: relative;
+    width: 100%;
+    padding: 10px 15px;
 }
+
 .alert button {
-	position: absolute;
-	top: 5px;
-	right: 10px;
-	background: transparent;
-	border: none;
-	color: #aaa;
-	padding: 0;
-	transition: 0.3s;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    color: #aaa;
+    padding: 0;
+    transition: 0.3s;
 }
+
 .alert button:hover {
-	color: #000;
+    color: #000;
 }
 
 /* MODAL WINDOWS */
 .width {
-	width: 49%;
+    width: 49%;
 }
+
 .info_form .panel {
-	margin: 0;
+    margin: 0;
 }
 
 @media (min-width: 768px) {
-	.create_form,
-	.update_form,
-	.info_form{
-		margin-top: 75px;
-	}
-	.info_form .panel {
-		border: 1px solid #ccc;
-	}
-	.delete_form {
-		margin-top: 150px;
-		width: 450px;
-	}
-	.create_task,
-	.update_task {
-		margin-top: 50px;
-		width: 1000px;
-	}
+    .create_form,
+    .update_form,
+    .info_form {
+        margin-top: 75px;
+    }
+
+    .info_form .panel {
+        border: 1px solid #ccc;
+    }
+
+    .delete_form {
+        margin-top: 150px;
+        width: 450px;
+    }
+
+    .create_task,
+    .update_task {
+        margin-top: 50px;
+        width: 1000px;
+    }
 }
 
 /* ADMIN  MODERATOR  CUSTOMER  STOREKEEPER  EXECUTOR */
 .panel {
-	border: none;
-	box-shadow: none;
+    border: none;
+    box-shadow: none;
 }
+
 .panel div.dataTables_wrapper div.dataTables_filter input {
-	font-size: 14px;
-	width: 200px;
+    font-size: 14px;
+    width: 200px;
 }
+
 table.dataTable {
-	border: 1px solid #ccc;
-	border-radius: 3px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
 }
+
 .table {
-	table-layout: fixed;
+    table-layout: fixed;
 }
+
 .table td,
 .table th {
-	word-wrap: break-word;
+    word-wrap: break-word;
 }
+
 thead {
-	background-color: #ddd;
-	border-bottom: none;
+    background-color: #ddd;
+    border-bottom: none;
 }
-.table > thead > tr > th, 
-.table > tbody > tr > th, 
-.table > tfoot > tr > th, 
-.table > thead > tr > td, 
-.table > tbody > tr > td, 
+
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td,
 .table > tfoot > tr > td {
-	vertical-align: middle;
-	border-top: 1px solid #ccc;
-	border-right: 1px solid #ccc;
+    vertical-align: middle;
+    border-top: 1px solid #ccc;
+    border-right: 1px solid #ccc;
 }
+
 .table tr td:last-child,
 .table tr th:last-child {
-	border-right: none;
+    border-right: none;
 }
+
 .table > thead > tr > th {
     border-bottom: 1px solid #ccc;
 }
+
 .table tbody tr:nth-child(2n) {
-	background-color: #f5f5f5;
+    background-color: #f5f5f5;
 }
+
 .table .tittle {
-	border-bottom: 1px solid #ccc;
-	font-size: 20px;
-	padding-left: 15px;
-	background-color: #ddd;
+    border-bottom: 1px solid #ccc;
+    font-size: 20px;
+    padding-left: 15px;
+    background-color: #ddd;
 }
+
 .table .tac {
-	text-align: center;
+    text-align: center;
 }
+
 .table .tar {
-	text-align: right;
+    text-align: right;
 }
+
 .table .sm {
-	width: 30px;
+    width: 30px;
 }
+
 .table .md {
-	width: 80px;
+    width: 80px;
 }
+
 .table .lg {
-	width: 100px;
+    width: 100px;
 }
+
 .table .pr {
-	padding-right: 30px;
+    padding-right: 30px;
 }
+
 .table .vat {
-	vertical-align: top;
+    vertical-align: top;
 }
+
 .table .buffer {
-	background-color: #fff;
-	border-left: none;
-	border-right: none;
-	border-top: 1px solid #ccc !important;
-	border-bottom: 1px solid #ccc !important;
-	height: 30px;
+    background-color: #fff;
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid #ccc !important;
+    border-bottom: 1px solid #ccc !important;
+    height: 30px;
 }
+
 .table .result {
-	background-color: #ddd;
+    background-color: #ddd;
 }
 
 /* CREATE REQUEST */
 .create_request .panel,
 .update_request .panel {
-	border: 1px solid #ccc;
+    border: 1px solid #ccc;
 }
+
 .create_request .table .add_task {
-	width: 175px;
-	margin: 15px 0;
+    width: 175px;
+    margin: 15px 0;
 }
+
 .create_request #access_update_request,
 .create_request #update_request {
-	display: none;
+    display: none;
 }
+
 .create_request #step {
-	display: none;
+    display: none;
 }
+
 .errors-info {
-	display: none;
+    display: none;
 }
+
 .create_request p,
 .update_request p {
-	margin: 0;
+    margin: 0;
 }
+
 .create_request .bt,
 .update_request .bt {
-	margin: 5px 0 0 -8px;
-	border-top: 1px solid #ccc;
-	padding: 5px 8px 0;
-	width: 600px
+    margin: 5px 0 0 -8px;
+    border-top: 1px solid #ccc;
+    padding: 5px 8px 0;
+    width: 600px
 }
+
 .create_request .glyphicon-pencil,
 .update_request .glyphicon-pencil {
-	font-size: 17px;
+    font-size: 17px;
 }
+
 .create_request .glyphicon-remove,
 .update_request .glyphicon-remove {
-	font-size: 19px;
+    font-size: 19px;
 }
+
 /* UPDATE REQUEST */
 .update_request #update_request {
-	display: none;
+    display: none;
 }
 
 /* REQUESTS */
 .requests p {
-	margin: 0;
-	font-size: 13px;
+    margin: 0;
+    font-size: 13px;
 }
+
 .requests a {
-	display: block;
+    display: block;
 }
+
 .requests .requests_id {
-	position: absolute;
-	top: 8px;
-	left: 8px;
-	width: 35px;
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    width: 35px;
 }
+
 .requests .bt {
-	margin: 5px 0 0 -8px;
-	border-top: 1px solid #ccc;
-	padding: 5px 8px 0;
-	width: 450px
+    margin: 5px 0 0 -8px;
+    border-top: 1px solid #ccc;
+    padding: 5px 8px 0;
+    width: 450px
 }
+
 .requests .table tbody tr:nth-child(2n) {
     background-color: #fff;
 }
+
 .requests .task_table p {
-	font-size: 13px;
+    font-size: 13px;
 }
+
 .requests .task_table .btn {
-	padding: 5px;
+    padding: 5px;
 }
+
 .requests .task_table {
-	margin: 0;
+    margin: 0;
 }
+
 .requests .task_table th {
-	border-top: none;
-	background-color: #eee;
-	font-size: 13px;
+    border-top: none;
+    background-color: #eee;
+    font-size: 13px;
 }
+
 /* CUSTOMER */
 .role5 .bt {
-	width: 475px;
+    width: 475px;
 }

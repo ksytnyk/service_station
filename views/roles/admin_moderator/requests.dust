@@ -23,6 +23,9 @@
             <tr>
                 <th class="tac" style="position: relative;">
                     <span class="requests_id">{id}</span>
+                    {@eq key=status value=1}
+                    <span class="glyphicon glyphicon-question-sign" title="Pending" style="color:#f0ad4e; font-size: 17px;" aria-hidden="true"/>
+                    {/eq}
                     <a href="update-request/{id}"
                        class=""
                        title="Редактировать заказ"
@@ -36,7 +39,7 @@
                        data-toggle="modal"
                        data-target="#deleteRequestFormModal"
                        title="Удалить заказ">
-                        <span class="glyphicon glyphicon-remove" aria-hidden="true" style="font-size: 19px;"/>
+                        <span class="glyphicon glyphicon-remove icon-margin" aria-hidden="true" style="font-size: 19px;"/>
                     </a>
                 </th>
                 <td class="vat pr">
