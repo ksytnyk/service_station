@@ -29,11 +29,17 @@ button:focus {
 	color: rgba(217, 83, 79, 0.75);
 	cursor: pointer;
 	display: block;
-	margin-top: 10px;
+	margin-top: 25px;
+	font-size: 16px;
 }
 .glyphicon-remove:hover {
 	color: rgba(217, 83, 79, 1);
 	cursor: pointer;
+}
+input[disabled],
+textarea[disabled],
+select[disabled] {
+	opacity: 0.65 !important;
 }
 
 /* LOGIN */
@@ -88,7 +94,7 @@ button:focus {
 	border: 1px solid #333;
     margin: 0 auto;
 }
-.navbar .name {
+.navbar #headerName {
 	float: right;
 }
 .navbar > .active > a,
@@ -144,11 +150,8 @@ button:focus {
 }
 
 /* MODAL WINDOWS */
-.create .width,
-.update .width,
-.delete .width {
+.width {
 	width: 49%;
-	margin-top: 25px;
 }
 .info_form .panel {
 	margin: 0;
@@ -169,7 +172,7 @@ button:focus {
 	}
 	.create_task,
 	.update_task {
-		margin-top: 75px;
+		margin-top: 50px;
 		width: 1000px;
 	}
 }
@@ -257,39 +260,14 @@ thead {
 	background-color: #ddd;
 }
 
-/* USERS */
-/*.users span {*/
-	/*display: inline-block;*/
-	/*width: 200px;*/
-/*}*/
-
-/* CUSTOMER */
-.role5 .name {
-	background-color: #333;
-	float: left;
-}
-.role5 .panel {
-	margin-top: 5px;
-	border: 1px solid #ccc;
-}
-.role5 table.dataTable {
-	margin: 0 !important;
-	border-radius: 0 !important;
-	border: none !important;
-}
-
 /* CREATE REQUEST */
-.create_request .panel {
+.create_request .panel,
+.update_request .panel {
 	border: 1px solid #ccc;
 }
 .create_request .table .add_task {
 	width: 175px;
 	margin: 15px 0;
-}
-.create_request input[disabled],
-.create_request textarea[disabled],
-.create_request select[disabled] {
-	opacity: 0.65;
 }
 .create_request #access_update_request,
 .create_request #update_request {
@@ -301,14 +279,28 @@ thead {
 .errors-info {
 	display: none;
 }
-.create_request p {
+.create_request p,
+.update_request p {
 	margin: 0;
 }
-.create_request .bt {
+.create_request .bt,
+.update_request .bt {
 	margin: 5px 0 0 -8px;
 	border-top: 1px solid #ccc;
 	padding: 5px 8px 0;
 	width: 600px
+}
+.create_request .glyphicon-pencil,
+.update_request .glyphicon-pencil {
+	font-size: 17px;
+}
+.create_request .glyphicon-remove,
+.update_request .glyphicon-remove {
+	font-size: 19px;
+}
+/* UPDATE REQUEST */
+.update_request #update_request {
+	display: none;
 }
 
 /* REQUESTS */
@@ -319,7 +311,7 @@ thead {
 .requests a {
 	display: block;
 }
-.requests .task_id {
+.requests .requests_id {
 	position: absolute;
 	top: 8px;
 	left: 8px;
@@ -329,7 +321,7 @@ thead {
 	margin: 5px 0 0 -8px;
 	border-top: 1px solid #ccc;
 	padding: 5px 8px 0;
-	width: 475px
+	width: 450px
 }
 .requests .table tbody tr:nth-child(2n) {
     background-color: #fff;
@@ -347,4 +339,8 @@ thead {
 	border-top: none;
 	background-color: #eee;
 	font-size: 13px;
+}
+/* CUSTOMER */
+.role5 .bt {
+	width: 475px;
 }

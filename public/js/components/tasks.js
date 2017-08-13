@@ -1,5 +1,9 @@
 $(document).ready(function () {
 
+    $('#create_task').on('click', function () {
+        $('#requestIDForTask').val($("#update_request").attr("request-id"));
+    });
+
     $('#taskAddButton').on('click', function () {
 
         $('#createTaskFormModal').modal('toggle');
@@ -22,7 +26,7 @@ $(document).ready(function () {
                         '<p><strong>Исполнитель: </strong>' + executorNameSurname + '</p>' +
                         '<p><strong>Поручить задачу: </strong>' + assignedNameSurname + '</p>' +
                         '<p><strong>Стоимость: </strong>' + data.result.cost + '</p>' +
-                        '<p><strong>Планируемое время: </strong>' + formatDate(data.result.estimationTime) + '</p>' +
+                        '<p><strong>План. время: </strong>' + formatDate(data.result.estimationTime) + '</p>' +
                         '<p><strong>Время начала: </strong>' + formatDate(data.result.startTime) + '</p>' +
                         '<p><strong>Конечное время: </strong>' + formatDate(data.result.endTime) + '</p>' +
                     '</td>' +
@@ -51,12 +55,12 @@ $(document).ready(function () {
                         ' data-task-need-buy-parts="' + data.result.needBuyParts + '"' +
                         ' data-task-comment="' + data.result.comment + '"' +
                         ' data-target="#updateTaskFormModal"' +
-                        ' style="cursor: pointer"> ' +
+                        ' style=""> ' +
                         '<span class="glyphicon glyphicon-pencil" aria-hidden="true"/> ' +
                         '</a> '+
                         '<a href="#" class="delete-task modal-window-link" title="Удалить задачу" data-toggle="modal" data-current="' + getIdRole(window.location.pathname) + '" data-id="' + data.result.id + '"' +
                         ' data-target="#deleteTaskFormModal">' +
-                        '<span class="glyphicon glyphicon-remove" aria-hidden="true"  style="font-size: 18px; margin-top: 25px;"/>' +
+                        '<span class="glyphicon glyphicon-remove" aria-hidden="true"  style="margin-top: 25px;"/>' +
                         '</a>' +
                     '</td></tr>');
 
@@ -109,16 +113,16 @@ $(document).ready(function () {
                     '<p><strong>Исполнитель: </strong>'+executorNameSurname+'</p> ' +
                     '<p><strong>Поручить задачу: </strong>' + assignedNameSurname + '</p>' +
                     '<p><strong>Стоимость: </strong>' + data.task.cost + 'грн</p>' +
-                    '<p><strong>Планируемое время: </strong>' + formatDate(data.task.estimationTime) + '</p>' +
+                    '<p><strong>План. время: </strong>' + formatDate(data.task.estimationTime) + '</p>' +
                     '<p><strong>Время начала: </strong>' + formatDate(data.task.startTime) + '</p> ' +
                     '<p><strong>Конечное время: </strong>' + formatDate(data.task.endTime) + '</p> ' +
                     '</td> ' +
                     '<td class="vat"> ' +
-                    '<p><strong>Описание задачи: </strong>' + data.task.description + '</p> ' +
-                    '<p class="bt"><strong>Запчасти: </strong>' + data.task.parts + '</p> ' +
-                    '<p><strong>Запчасти клиента: </strong>' + data.task.customerParts + '</p> ' +
-                    '<p><strong>Недостающие запчасти: </strong>' + data.task.needBuyParts + '</p> ' +
-                    '<p class="bt"><strong>Комментарий: </strong>' + data.task.comment + '</p> ' +
+                        '<p><strong>Описание задачи: </strong>' + data.task.description + '</p> ' +
+                        '<p class="bt"><strong>Запчасти: </strong>' + data.task.parts + '</p> ' +
+                        '<p><strong>Запчасти клиента: </strong>' + data.task.customerParts + '</p> ' +
+                        '<p><strong>Недостающие запчасти: </strong>' + data.task.needBuyParts + '</p> ' +
+                        '<p class="bt"><strong>Комментарий: </strong>' + data.task.comment + '</p> ' +
                     '</td> ' +
                     '<td class="tac" style="background-color: #eee;"> ' +
                     '<a class="update-task modal-window-link"' +
@@ -138,7 +142,7 @@ $(document).ready(function () {
                     ' data-task-need-buy-parts="' + data.task.needBuyParts + '"' +
                     ' data-task-comment="' + data.task.comment + '"' +
                     ' data-target="#updateTaskFormModal"' +
-                    ' style="cursor: pointer"> ' +
+                    ' style=""> ' +
                     '<span class="glyphicon glyphicon-pencil" aria-hidden="true"/> ' +
                     '</a> ' +
                     '<a href="#"' +
@@ -146,7 +150,7 @@ $(document).ready(function () {
                     ' title="Удалить задачу" data-toggle="modal"' +
                     ' data-current="'+getIdRole(window.location.pathname)+'" data-id="' + data.task.id + '"' +
                     ' data-target="#deleteTaskFormModal"' +
-                    ' style="margin-top: 20px;"> ' +
+                    ' style=""> ' +
                     '<span class="glyphicon glyphicon-remove" aria-hidden="true"/> ' + '</a>'+
                 '</td>';
 
@@ -254,18 +258,20 @@ function getRole(pathname) {
 }
 
 function formatDate(date) {
-    var newDate = new Date(date);
-    var day = newDate.getDate(),
-        year = newDate.getFullYear(),
-        month, hours = newDate.getHours(),
-        minutes = newDate.getMinutes(),
-        seconds = newDate.getSeconds();
+    var date = new Date(date);
+    var array = [
+        date.getFullYear(),
+        date.getMonth() + 1,
+        date.getDate(),
+        date.getHours(),
+        date.getMinutes(),
+        date.getSeconds()
+    ];
 
-    if ((newDate.getMonth() + 1) < 10) {
-        month = '0' + (newDate.getMonth() + 1);
-    } else {
-        month = newDate.getMonth() + 1;
-    }
+    var res = array.map(item => {
+        if (item < 10) item = "0" + item;
+        return item;
+    });
 
-    return year + '.' + month + '.' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+    return res[0] + '.' + res[1] + '.' + res[2] + ' ' + res[3] + ':' + res[4] + ':' + res[5];
 }

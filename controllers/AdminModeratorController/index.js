@@ -156,18 +156,27 @@ router.post('/create-request', function (req, res) {
 });
 
 router.get('/update-request/:id', function (req, res) {
-
     User
-        .getAllUsers()
-        .then(users => {
-            res.render('roles/admin_moderator/update_request', {
-                users: users,
-                typeUser: req.session.passport.user.userTypeID
-            });
-        })
-        .catch(error => {
-            console.warn(error);
-            res.render('roles/admin_moderator/update_request');
+        .getCustomerUsers()
+        .then(usersCustomers => {
+            User
+                .getAllUsers()
+                .then(users => {
+                    Task
+                        .getAllTasksOfRequest(req.params.id)
+                        .then(result => {
+                            res.render('roles/admin_moderator/update_request', {
+                                assignedExecutorUsers: users,
+                                customers: usersCustomers,
+                                typeUser: req.session.passport.user.userTypeID,
+                                request: requestsFactory(result)
+                            });
+                        })
+                        .catch(error => {
+                            console.warn(error);
+                            res.render('roles/admin_moderator/update_request');
+                        });
+                });
         });
 });
 

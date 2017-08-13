@@ -115,6 +115,40 @@ Task.getAllTasks = function () {
     });
 };
 
+Task.getAllTasksOfRequest = function (id) {
+    return new Promise((resolve, reject) => {
+        Task
+            .findAll({
+                where: {
+                    requestID: id
+                },
+                include: [
+                    {
+                        model: Request,
+                        include: {
+                            model: User
+                        }
+                    },
+                    {
+                        model: User,
+                        as: 'planedExecutor'
+                    },
+                    {
+                        model: User,
+                        as: 'assignedUser'
+                    }
+                ]
+            })
+            .then(tasks => {
+                resolve(tasks);
+            })
+            .catch(error => {
+                console.warn(error);
+                reject(error);
+            });
+    });
+};
+
 Task.getAllTasksForCustomer = function (id) {
     return new Promise((resolve, reject) => {
         Task

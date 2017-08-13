@@ -6,7 +6,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title text-center">Обновить задачу</h4>
+                    <h4 class="modal-title text-center">Редактировать задачу</h4>
                 </div>
                 <input type="hidden" id="update-form-task-id" name="id">
                 <div class="modal-body clearfix">
@@ -32,11 +32,11 @@
                                 id="update-form-task-assigned-user">
                             {#assignedExecutorUsers}
                             {@eq key=userTypeID value=4}
-                            <option value="{id}" assignedUserFullName="{userName} {userSurname}" class="optionAE{id}">Кладовщик {userName} {userSurname}
+                            <option value="{id}" assignedUserFullName="{userName} {userSurname}" class="optionAE{id}">(Кладовщик) {userName} {userSurname}
                             </option>
                             {/eq}
                             {@eq key=userTypeID value=3}
-                            <option value="{id}" assignedUserFullName="{userName} {userSurname}" class="optionAE{id}">Инженер {userName} {userSurname}
+                            <option value="{id}" assignedUserFullName="{userName} {userSurname}" class="optionAE{id}">(Инженер) {userName} {userSurname}
                             </option>
                             {/eq}
                             {/assignedExecutorUsers}

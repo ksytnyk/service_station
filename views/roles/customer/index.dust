@@ -4,7 +4,7 @@
 
 {>"header/index"/}
 
-<div class="col-lg-12 requests">
+<div class="col-lg-12 requests role{typeUser}">
     <div class="alert alert-danger clearfix errors-info">
         <button class="hide_alert">X</button>
         <div id="errors-block"></div>
@@ -30,26 +30,30 @@
                     <p><strong>Клиент: </strong>{user.userSurname} {user.userName}</p>
                     <p><strong>Стоемость: </strong>{cost} грн</p>
                     <p><strong>Время начала: </strong>{startTime}</p>
-                    <p><strong>Планируемое время: </strong>{estimatedTime}</p>
+                    <p><strong>План. время: </strong>{estimatedTime}</p>
                     <p><strong>Комментарий: </strong>{comment}</p>
                 </td>
                 <td style="padding: 0; vertical-align: top;">
                     <table class="table task_table">
                         <thead>
                         <tr>
+                            <th class="tac" style="width: 30px;">ID</th>
                             <th class="tac">Общая информация</th>
                             <th class="tac" style="width: 475px; box-sizing: border-box;">Описание / Запчасти / Комментарий</th>
                         </tr>
                         </thead>
                         <tbody>
                         {#tasks}
-                        <tr  id="idx-task-{id}">
+                        <tr id="idx-task-{id}">
+                            <td class="tac">
+                                <strong>{id}</strong>
+                            </td>
                             <td class="vat">
                                 <p><strong>Имя задачи: </strong> {name}</p>
                                 <p><strong>Исполнитель: </strong>{user.dataValues.userSurname} {user.dataValues.userName}</p>
                                 <p><strong>Поручить задачу: </strong>{assignedUserID}</p>
                                 <p><strong>Стоимость: </strong>{cost} грн</p>
-                                <p><strong>Планируемое время: </strong>{estimationTime}</p>
+                                <p><strong>План. время: </strong>{estimationTime}</p>
                                 <p><strong>Время начала: </strong>{startTime}</p>
                                 <p><strong>Конечное время: </strong>{endTime}</p>
                             </td>

@@ -9,6 +9,7 @@ $(document).ready(function () {
                 $('.disable_input').prop('disabled', true);
                 $('#step').slideDown('slow');
                 $('#requestIDForTask').val(data.result.id);
+                $('#update_request').attr("request-id", data.result.id);
                 $('#create_request').hide();
                 $('#access_update_request').show();
             },
@@ -37,7 +38,7 @@ $(document).ready(function () {
 
     $('#update_request').on('click', function () {
         $.ajax({
-            url: getRole(window.location.pathname) + '/update-request/' + $('#requestIDForTask').val(),
+            url: getRole(window.location.pathname) + '/update-request/' + $(this).attr("request-id"),
             type: 'PUT',
             data: $('#createRequestForm').serializeArray(),
             success: function (data) {

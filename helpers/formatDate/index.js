@@ -1,14 +1,19 @@
 "use strict";
 
 module.exports = function formatDate(date) {
+    let array = [
+        date.getFullYear(),
+        date.getMonth() + 1,
+        date.getDate(),
+        date.getHours(),
+        date.getMinutes(),
+        date.getSeconds()
+    ];
 
-    let day = date.getDate(), year = date.getFullYear(), month;
+    let res = array.map(item => {
+        if (item < 10) item = "0" + item;
+        return item;
+    });
 
-    if ((date.getMonth() + 1) < 10) {
-        month = '0' + (date.getMonth() + 1);
-    } else {
-        month = date.getMonth() + 1;
-    }
-
-    return year + '.' + month + '.' + day + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+    return res[0] + '.' + res[1] + '.' + res[2] + ' ' + res[3] + ':' + res[4] + ':' + res[5];
 };

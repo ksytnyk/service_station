@@ -58,7 +58,6 @@
 {>"modal_windows/create_user"/}
 {>"modal_windows/update_task"/}
 {>"modal_windows/delete_task"/}
-{>"modal_windows/info_task"/}
 {>"modal_windows/delete_request"/}
 
 {/body}

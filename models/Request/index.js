@@ -3,6 +3,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../connection');
 const User = require('../User');
+const Task = require('../Task');
 
 const describeRequestTable = {
     customerID: {
@@ -71,6 +72,28 @@ Request.sync();
 //
 //     });
 // };
+
+Request.getRequestById = function (id) {
+    return new Promise((resolve, reject) => {
+        Request
+            .findAll({
+                where: {
+                    id: id
+                },
+                include: [
+                    {
+                        model: User
+                    }
+                ]
+            })
+            .then(request => {
+                resolve(request);
+            })
+            .catch(error => {
+                reject(error);
+            });
+    });
+};
 
 Request.createRequest = function (request) {
     return new Promise((resolve, reject) => {

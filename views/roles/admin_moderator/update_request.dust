@@ -4,94 +4,131 @@
 
 {>"header/index"/}
 
-<div class="col-lg-12 create_request">
-    <form action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/update-request"
-          method="post" class="clearfix" id="createRequestForm">
+<div class="col-lg-12 update_request">
+    <div class="alert alert-danger clearfix errors-info">
+        <button class="hide_alert">X</button>
+        <div id="errors-block"></div>
+    </div>
+    {#request}
+    <form class="clearfix" id="createRequestForm">
+        <div class="form-group col-lg-5">
+            <label>Имя заказа</label>
+            <input type="text" class="form-control disable_input" name="name" value="{name}" disabled>
+        </div>
         <div class="form-group col-lg-4">
             <label>Клиент</label>
-            <select class="form-control selectpicker disable_input" name="requestUserId">
-                {#users}
-                    <option value="{id}">{userName} {userSurname}</option>
-                {/users}
+            <select class="form-control selectpicker disable_input" name="customerID" disabled>
+                {#customers}
+                <option value="{id}" {@eq key=customerID value=id}selected{/eq}>{userName} {userSurname}</option>
+                {/customers}
             </select>
         </div>
-        <div class="form-group col-lg-2">
-            <label>Цена</label>
-            <input type="text" class="form-control disable_input" name="requestPrice">
+        <div class="form-group col-lg-5">
+            <label>Описание заказа</label>
+            <textarea class="form-control disable_input" name="description" rows="4" style="height: 137px;" disabled>{description}</textarea>
         </div>
-        <div class="form-group col-lg-2">
+        <div class="form-group col-lg-4">
+            <label>Комментарий</label>
+            <textarea class="form-control disable_input" name="comment" rows="4" style="height: 137px;" disabled>{comment}</textarea>
+        </div>
+        <div class="form-group col-lg-3" style="margin-top: -74px;">
             <label>Время начала</label>
-            <input type="text" class="form-control disable_input" name="requestStartTime">
-        </div>
-        <div class="form-group col-lg-2">
+            <input type="text" class="form-control datetimepickerN disable_input" value="{startTime}" name="startTime" style="margin-bottom: 5px;" disabled>
             <label>Планируемое время</label>
-            <input type="text" class="form-control disable_input" name="requestEstimatedTime">
-        </div>
-        <div class="form-group col-lg-2">
-            <input id="create_request" value="Сохранить заказ"
-                   class="btn btn-success col-lg-12 disable_input" style="margin-top: 25px;"/>
+            <input type="text" class="form-control datetimepickerN disable_input" value="{estimatedTime}" name="estimatedTime" style="margin-bottom: 5px;" disabled>
+            <label>Стоимость</label>
+            <input type="text" class="form-control disable_input" value="{cost}" name="cost" style="margin-bottom: 15px;" disabled>
+            <input type="button" id="access_update_request" value="Редактировать заказ"
+                   class="btn btn-warning col-lg-12"/>
+            <input type="button" id="update_request" value="Сохранить изменения" request-id="{id}"
+                   class="btn btn-success col-lg-12"/>
         </div>
     </form>
+
     <div class="clearfix">
-        <div class="form-group col-lg-12" style="margin: 15px 0 0;">
+        <div class="form-group col-lg-12" style="margin: 30px 0 -15px;">
+            <input type="button" id="create_task" value="Добавить задачу" class="btn btn-primary modal-window-link"
+                   data-toggle="modal" data-target="#createTaskFormModal" style="width: 255px; float: right;"/>
+        </div>
+        <div class="form-group col-lg-12" style="margin: 0;">
             <label>Список задач</label>
         </div>
         <div class="form-group col-lg-12">
             <div class="panel panel-default">
-                <table class="table">
+                <table class="table" id="tasks-table">
                     <thead>
                     <tr>
-                        <th class="tac" style="width: 40px;">ID</th>
-                        <th class="tac">Описание</th>
-                        <th class="tac">Исполнитель</th>
-                        <th class="tac lg">Цена</th>
-                        <th class="tac lg">План. время</th>
-                        <th class="tac lg">Время начала</th>
-                        <th class="tac lg">Конечное время</th>
-                        <th class="tac" style="width: 60px;"></th>
+                        <th class="tac" style="width: 60px;">ID</th>
+                        <th class="tac">Общая информация</th>
+                        <th class="tac" style="width: 600px;">Описание / Запчасти / Комментарий</th>
                         <th class="tac" style="width: 60px;"></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <th class="tac">1</th>
-                        <th class="tac"><a class="modal-window-link" title="Полная информация" data-toggle="modal"
-                                           data-target="#infoTaskFormModal" style="cursor: pointer">Замена масла</a></th>
-                        <td class="tac"></td>
-                        <td class="tac"></td>
-                        <td class="tac"></td>
-                        <td class="tac"></td>
-                        <td class="tac"></td>
-                        <td class="tac">
-                            <a class="btn btn-default" title="Редактировать задачу" data-toggle="modal"
-                               data-target="#updateTaskFormModal" style="outline: none;">
+                    {#tasks}
+                    <tr id="idx-task-{id}">
+                        <th class="tac">{id}</th>
+                        <td class="vat">
+                            <p><strong>Имя задачи: </strong> {name}</p>
+                            <p><strong>Исполнитель: </strong></p>
+                            <p><strong>Поручить задачу: </strong>{assignedUserID}</p>
+                            <p><strong>Стоимость: </strong>{cost} грн</p>
+                            <p><strong>Планируемое время: </strong>{estimationTime}</p>
+                            <p><strong>Время начала: </strong>{startTime}</p>
+                            <p><strong>Конечное время: </strong>{endTime}</p>
+                        </td>
+                        <td class="vat">
+                            <p><strong>Описание задачи: </strong>{description}</p>
+                            <p class="bt"><strong>Запчасти: </strong>{parts}</p>
+                            <p><strong>Запчасти клиента: </strong>{customerParts}</p>
+                            <p><strong>Недостающие запчасти: </strong>{needBuyParts}</p>
+                            <p class="bt"><strong>Комментарий: </strong>{comment}</p>
+                        </td>
+                        <td class="tac" style="background-color: #eee;">
+                            <a class="update-task modal-window-link"
+                               title="Редактировать задачу"
+                               data-toggle="modal"
+                               data-id="{id}"
+                               data-task-description="{description}"
+                               data-task-name="{name}"
+                               data-task-assigned-user="{assignedUserID}"
+                               data-task-planed-executor="{planedExecutorID}"
+                               data-task-executor-surname="{executor.userSurname}"
+                               data-task-executor-name="{executor.userName}"
+                               data-task-cost="{cost}"
+                               data-task-estimation-time="{estimationTime}"
+                               data-task-start-time="{startTime}"
+                               data-task-end-time="{endTime}"
+                               data-task-parts="{parts}"
+                               data-task-customer-parts="{customerParts}"
+                               data-task-need-buy-parts="{needBuyParts}"
+                               data-task-comment="{comment}"
+                               data-target="#updateTaskFormModal"
+                               style="font-size: 17px;">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"/>
                             </a>
-                        </td>
-                        <td class="tac">
-                            <a class="btn btn-danger" title="Удалить задачу" data-toggle="modal"
-                               data-target="#deleteTaskFormModal" style="outline: none;">
+                            <a href="#"
+                               class="delete-task modal-window-link"
+                               title="Удалить задачу" data-toggle="modal"
+                               data-current="{typeUser}" data-id="{id}"
+                               data-target="#deleteTaskFormModal"
+                               style="font-size: 19px;">
                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"/>
                             </a>
                         </td>
                     </tr>
-                    <tr>
-                        <td class="text-center" colspan="9">
-                            <a class="btn btn-primary modal-window-link add_task" data-toggle="modal"
-                               data-target="#createTaskFormModal">Добавить задачу</a>
-                        </td>
-                    </tr>
+                    {/tasks}
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+    {/request}
 </div>
 
 {>"modal_windows/create_user"/}
 {>"modal_windows/create_task"/}
 {>"modal_windows/update_task"/}
 {>"modal_windows/delete_task"/}
-{>"modal_windows/info_task"/}
 
 {/body}
