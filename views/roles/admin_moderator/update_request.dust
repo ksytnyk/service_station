@@ -67,7 +67,12 @@
                     <tbody>
                     {#tasks}
                     <tr id="idx-task-{id}">
-                        <th class="tac">{id}</th>
+                        <th class="
+                        {@eq key=status value=1} tac status-bgc-pending{/eq}
+                        {@eq key=status value=2} tac status-bgc-processing{/eq}
+                        {@eq key=status value=3} tac status-bgc-done{/eq}
+                        {@eq key=status value=4} tac status-bgc-hold{/eq}
+                        {@eq key=status value=5} tac status-bgc-canceled{/eq}">{id}</th>
                         <td class="vat">
                             <p><strong>Имя задачи: </strong> {name}</p>
                             <p><strong>Исполнитель: </strong></p>

@@ -24,19 +24,19 @@
                 <th class="tac" style="position: relative;">
                     <span class="requests_id">{id}</span>
                     {@eq key=status value=1}
-                    <span class="glyphicon glyphicon-question-sign" title="Pending" style="color:#f0ad4e; font-size: 18px;" aria-hidden="true"/>
+                    <span class="glyphicon glyphicon-question-sign" style="color:#f0ad4e; font-size: 18px;" aria-hidden="true" data-toggle="popover" data-content="Режим статуса заказа: НЕ АКТИВНЫЙ"></span>
                     {/eq}
                     {@eq key=status value=2}
-                    <span class="glyphicon glyphicon-info-sign" title="Processing" style="color:#0040ff; font-size: 18px;" aria-hidden="true"/>
+                    <span class="glyphicon glyphicon-info-sign" style="color:#0040ff; font-size: 18px;" aria-hidden="true" data-toggle="popover" data-content="Режим статуса заказа: В ПРОЦЕСЕ"></span>
                     {/eq}
                     {@eq key=status value=3}
-                    <span class="glyphicon glyphicon-ok-circle" title="Done" style="color:#00FA9A; font-size: 18px;" aria-hidden="true"/>
+                    <span class="glyphicon glyphicon-ok-circle" style="color:#00FA9A; font-size: 18px;" aria-hidden="true" data-toggle="popover" data-content="Режим статуса заказа: ГОТОВО"></span>
                     {/eq}
                     {@eq key=status value=4}
-                    <span class="glyphicon glyphicon-exclamation-sign" title="Hold" style="color:#ff0000; font-size: 18px;" aria-hidden="true"/>
+                    <span class="glyphicon glyphicon-exclamation-sign" style="color:#ff0000; font-size: 18px;" aria-hidden="true" data-toggle="popover" data-content="Режим статуса заказа: В ОЖИДАНИИ"></span>
                     {/eq}
                     {@eq key=status value=5}
-                    <span class="glyphicon glyphicon-remove-circle" title="Canceled" style=" font-size: 18px;" aria-hidden="true"/>
+                    <span class="glyphicon glyphicon-remove-circle" style=" font-size: 18px;" aria-hidden="true" data-toggle="popover" data-content="Режим статуса заказа: ОТМЕНЕНО"></span>
                     {/eq}
                     <a href="update-request/{id}"
                        class=""
@@ -90,8 +90,13 @@
                         </thead>
                         <tbody>
                         {#tasks}
-                        <tr  id="idx-task-{id}">
-                            <td class="tac bb"><strong>{id}</strong></td>
+                        <tr id="idx-task-{id}">
+                            <td class="
+                        {@eq key=status value=1} tac bb status-bgc-pending{/eq}
+                        {@eq key=status value=2} tac bb status-bgc-processing{/eq}
+                        {@eq key=status value=3} tac bb status-bgc-done{/eq}
+                        {@eq key=status value=4} tac bb status-bgc-hold{/eq}
+                        {@eq key=status value=5} tac bb status-bgc-canceled{/eq}"><strong>{id}</strong></td>
                             <td class="vat bb">
                                 <p><strong>Имя задачи: </strong> {name}</p>
                                 <p><strong>Исполнитель: </strong>{planedExecutor.dataValues.userSurname} {planedExecutor.dataValues.userName}</p>
@@ -125,6 +130,7 @@
                                    data-task-customer-parts="{customerParts}"
                                    data-task-need-buy-parts="{needBuyParts}"
                                    data-task-comment="{comment}"
+                                   data-task-status="{status}"
                                    data-target="#updateTaskFormModal">
                                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"/>
                                 </a>

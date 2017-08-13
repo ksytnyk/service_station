@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+    $('[data-toggle="popover"]').popover();
+
     $('#create_request').on('click', function () {
         $.ajax({
             url: window.location.pathname,

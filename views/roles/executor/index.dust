@@ -44,11 +44,11 @@
                         <button class="status btn btn-danger" type="submit">Остановить</button>
                     </form>
                     <form action="/executor/set-status/{id}" method="POST">
-                        <input type="hidden" value="5" name="status">
+                        <input type="hidden" value="3" name="status">
                         <button class="status btn btn-success" type="submit">Завершить</button>
                     </form>
                 </td>
-                <td class="tac" style="background-color: #eee;">
+                <td class="tac">
                     <a class="update-task modal-window-link"
                        title="Редактировать задачу"
                        data-toggle="modal"

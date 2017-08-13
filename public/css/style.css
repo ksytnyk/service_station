@@ -19,6 +19,31 @@ button:focus {
     text-decoration: none;
 }
 
+.requests .task_table .status-bgc-pending {
+    background-color: rgba(255, 165, 0, 0.4);
+}
+
+.requests .task_table .status-bgc-processing {
+    background-color: rgba(51, 122, 183, 0.6);
+}
+
+.requests .task_table .status-bgc-hold {
+    background-color: rgba(255, 0, 0, 0.4);
+}
+
+.requests .task_table .status-bgc-done {
+    background-color: rgba(0, 128, 0, 0.4);
+}
+
+.requests .task_table .status-bgc-canceled {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.popover-content{
+    width: 185px;
+    font-weight: bold;
+}
+
 .glyphicon, glyphicon:hover {
     margin: 15px 0px;
     cursor: pointer;
