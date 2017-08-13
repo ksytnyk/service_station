@@ -228,7 +228,7 @@ Task.getAllTasksForStore = function (storeID) {
             .findAll({
                 where: {
                     status: status.PENDING,
-                    assignedUserID: storeID
+                    assigned_user_id: storeID
                 }
             })
             .then(tasks => {
@@ -288,6 +288,47 @@ Task.deleteTask = function (taskID) {
                 reject(err);
             });
     });
+};
+
+
+Task.changeTaskStatus = function (idTask, status) {
+    return new Promise((resolve, reject) => {
+        Task
+            .update({
+                    status: status
+                },
+                {
+                    where: {
+                        id: idTask
+                    }
+                })
+            .then(result => {
+                resolve(result);
+            })
+            .catch(err => {
+                reject(err);
+            });
+    })
+};
+
+Task.changeTaskStatusWithPending = function (idTask, status, assigned_user) {
+    return new Promise((resolve, reject) => {
+        Task
+            .update({
+                status: status,
+                assignedUserID: assigned_user
+            }, {
+                where: {
+                    id: idTask
+                }
+            })
+            .then(result => {
+                resolve(result);
+            })
+            .catch(err => {
+                reject(err);
+            });
+    })
 };
 
 module.exports = Task;

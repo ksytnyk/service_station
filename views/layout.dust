@@ -23,6 +23,7 @@
 <script src="/js/libs/bootstrap-formhelpers-phone.js"></script>
 <script src="/js/components/main.js"></script>
 <script src="/js/components/users.js"></script>
+<script src="/js/components/storekeeper/index.js"></script>
 <script src="/js/components/requests.js"></script>
 <script src="/js/components/tasks.js"></script>
 <script src="/js/libs/moment.js"></script>
