@@ -8,6 +8,7 @@ const express = require('express');
 const router = express.Router();
 
 const roles = require('../../constants/roles');
+const statuses = require('../../constants/status');
 const validation = require('../../middleware/validation');
 const formatDate = require('../../helpers/formatDate');
 const requestsFactory = require('../../helpers/requestsFactory');
@@ -359,6 +360,39 @@ router.delete('/delete-task/:id', function (req, res) {
         .catch(errors => {
             console.warn(errors);
             res.status(400).send({errors: errors});
+        })
+});
+
+router.post('/change-request-status-processing', (req, res) => {
+    Request.changeStatus(req.body.requestID, statuses.PROCESSING)
+        .then(()=> {
+                res.redirect(req.baseUrl + '/requests');
+            })
+        .catch(error => {
+            console.warn(error);
+            res.redirect(req.baseUrl + '/requests');
+        })
+});
+
+router.post('/change-request-status-done', (req, res) => {
+    Request.changeStatus(req.body.requestID, statuses.DONE)
+        .then(()=> {
+            res.redirect(req.baseUrl + '/requests');
+        })
+        .catch(error => {
+            console.warn(error);
+            res.redirect(req.baseUrl + '/requests');
+        })
+});
+
+router.post('/change-request-status-canceled', (req, res) => {
+    Request.changeStatus(req.body.requestID, statuses.CANCELED)
+        .then(()=> {
+            res.redirect(req.baseUrl + '/requests');
+        })
+        .catch(error => {
+            console.warn(error);
+            res.redirect(req.baseUrl + '/requests');
         })
 });
 

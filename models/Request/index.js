@@ -163,4 +163,25 @@ Request.deleteRequest = function (idRequest) {
     });
 };
 
+Request.changeStatus = function (idRequest, status) {
+    return new Promise((resolve, reject) => {
+        Request
+            .update({
+                    status: status
+                },
+                {
+                    where: {
+                        id: idRequest
+                    }
+                })
+            .then(result => {
+                resolve(result);
+            })
+            .catch(err => {
+                console.warn(err);
+                reject(err);
+            });
+    })
+}
+
 module.exports = Request;
