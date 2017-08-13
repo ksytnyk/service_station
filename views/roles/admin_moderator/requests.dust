@@ -91,8 +91,8 @@
                         <tbody>
                         {#tasks}
                         <tr  id="idx-task-{id}">
-                            <td class="tac"><strong>{id}</strong></td>
-                            <td class="vat">
+                            <td class="tac bb"><strong>{id}</strong></td>
+                            <td class="vat bb">
                                 <p><strong>Имя задачи: </strong> {name}</p>
                                 <p><strong>Исполнитель: </strong>{planedExecutor.dataValues.userSurname} {planedExecutor.dataValues.userName}</p>
                                 <p><strong>Поручить задачу: </strong>{assignedUser.dataValues.userSurname} {assignedUser.dataValues.userName}</p>
@@ -101,14 +101,14 @@
                                 <p><strong>Время начала: </strong>{startTime}</p>
                                 <p><strong>Конечное время: </strong>{endTime}</p>
                             </td>
-                            <td class="vat">
+                            <td class="vat bb">
                                 <p><strong>Описание задачи: </strong>{description}</p>
                                 <p class="bt"><strong>Запчасти: </strong>{parts}</p>
                                 <p><strong>Запчасти клиента: </strong>{customerParts}</p>
                                 <p><strong>Недостающие запчасти: </strong>{needBuyParts}</p>
                                 <p class="bt"><strong>Комментарий: </strong>{comment}</p>
                             </td>
-                            <td class="tac" style="background-color: #eee;">
+                            <td class="tac bb">
                                 <a class="update-task modal-window-link"
                                    title="Редактировать задачу"
                                    data-toggle="modal"

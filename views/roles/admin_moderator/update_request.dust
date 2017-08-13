@@ -84,7 +84,7 @@
                             <p><strong>Недостающие запчасти: </strong>{needBuyParts}</p>
                             <p class="bt"><strong>Комментарий: </strong>{comment}</p>
                         </td>
-                        <td class="tac" style="background-color: #eee;">
+                        <td class="tac">
                             <a class="update-task modal-window-link"
                                title="Редактировать задачу"
                                data-toggle="modal"

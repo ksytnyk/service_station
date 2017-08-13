@@ -60,7 +60,7 @@ $(document).ready(function () {
                         '</a> '+
                         '<a href="#" class="delete-task modal-window-link" title="Удалить задачу" data-toggle="modal" data-current="' + getIdRole(window.location.pathname) + '" data-id="' + data.result.id + '"' +
                         ' data-target="#deleteTaskFormModal">' +
-                        '<span class="glyphicon glyphicon-remove" aria-hidden="true"  style="margin-top: 25px;"/>' +
+                        '<span class="glyphicon glyphicon-remove" aria-hidden="true"/>' +
                         '</a>' +
                     '</td></tr>');
 
@@ -94,6 +94,8 @@ $(document).ready(function () {
 
         $('#updateTaskFormModal').modal('toggle');
 
+        console.log( $('#update-form-task').serializeArray() ); // TODO console
+
         $.ajax({
             url: getRole(window.location.pathname) + '/update-task/' + $('#update-form-task-id').val(),
             type: 'PUT',
@@ -104,57 +106,80 @@ $(document).ready(function () {
 
                 $(idx).empty();
 
-                var executorNameSurname = $('#option' + $('#update-form-task').serializeArray()[2].value).attr('executorFullName');
-                var assignedNameSurname = $('.optionAE' + $('#update-form-task').serializeArray()[3].value).attr('assignedUserFullName');
+                if (getRole(window.location.pathname) !== "/executor") {
+                    var executorNameSurname = $('#option' + $('#update-form-task').serializeArray()[2].value).attr('executorFullName');
+                    var assignedNameSurname = $('.optionAE' + $('#update-form-task').serializeArray()[3].value).attr('assignedUserFullName');
+                }
 
-                var newTask = '<th class="tac">' + data.task.id + '</th>' +
+                var newTask, newTask1 = '', newTask2;
+
+                newTask = '<th class="tac">' + data.task.id + '</th>' +
                     '<td class="vat">' +
                     '<p><strong>Имя задачи: </strong>' + data.task.name + '</p>' +
-                    '<p><strong>Исполнитель: </strong>'+executorNameSurname+'</p> ' +
-                    '<p><strong>Поручить задачу: </strong>' + assignedNameSurname + '</p>' +
+                    '<p class="executor_name_surname"><strong>Исполнитель: </strong>' + executorNameSurname + '</p> ' +
+                    '<p class="assigned_name_surname"><strong>Поручить задачу: </strong>' + assignedNameSurname + '</p>' +
                     '<p><strong>Стоимость: </strong>' + data.task.cost + 'грн</p>' +
                     '<p><strong>План. время: </strong>' + formatDate(data.task.estimationTime) + '</p>' +
                     '<p><strong>Время начала: </strong>' + formatDate(data.task.startTime) + '</p> ' +
                     '<p><strong>Конечное время: </strong>' + formatDate(data.task.endTime) + '</p> ' +
-                    '</td> ' +
+                    '</td>' +
                     '<td class="vat"> ' +
-                        '<p><strong>Описание задачи: </strong>' + data.task.description + '</p> ' +
-                        '<p class="bt"><strong>Запчасти: </strong>' + data.task.parts + '</p> ' +
-                        '<p><strong>Запчасти клиента: </strong>' + data.task.customerParts + '</p> ' +
-                        '<p><strong>Недостающие запчасти: </strong>' + data.task.needBuyParts + '</p> ' +
-                        '<p class="bt"><strong>Комментарий: </strong>' + data.task.comment + '</p> ' +
-                    '</td> ' +
-                    '<td class="tac" style="background-color: #eee;"> ' +
-                    '<a class="update-task modal-window-link"' +
-                    ' title="Редактировать задачу"' +
-                    ' data-toggle="modal"' +
-                    ' data-id="' + data.task.id + '"' +
-                    ' data-task-description="' + data.task.description + '"' +
-                    ' data-task-name="' + data.task.name + '"' +
-                    ' data-task-assigned-user="' + data.task.assignedUserID + '"' +
-                    ' data-task-planed-executor="' + data.task.planedExecutorID + '"' +
-                    ' data-task-cost="' + data.task.cost + '"' +
-                    ' data-task-estimation-time="' + formatDate(data.task.estimationTime) + '"' +
-                    ' data-task-start-time="' + formatDate(data.task.startTime) + '"' +
-                    ' data-task-end-time="' + formatDate(data.task.endTime) + '"' +
-                    ' data-task-parts="' + data.task.parts + '"' +
-                    ' data-task-customer-parts="' + data.task.customerParts + '"' +
-                    ' data-task-need-buy-parts="' + data.task.needBuyParts + '"' +
-                    ' data-task-comment="' + data.task.comment + '"' +
-                    ' data-target="#updateTaskFormModal"' +
-                    ' style=""> ' +
-                    '<span class="glyphicon glyphicon-pencil" aria-hidden="true"/> ' +
-                    '</a> ' +
-                    '<a href="#"' +
-                    ' class="delete-task modal-window-link"' +
-                    ' title="Удалить задачу" data-toggle="modal"' +
-                    ' data-current="'+getIdRole(window.location.pathname)+'" data-id="' + data.task.id + '"' +
-                    ' data-target="#deleteTaskFormModal"' +
-                    ' style=""> ' +
-                    '<span class="glyphicon glyphicon-remove" aria-hidden="true"/> ' + '</a>'+
-                '</td>';
+                    '<p><strong>Описание задачи: </strong>' + data.task.description + '</p> ' +
+                    '<p class="bt"><strong>Запчасти: </strong>' + data.task.parts + '</p> ' +
+                    '<p><strong>Запчасти клиента: </strong>' + data.task.customerParts + '</p> ' +
+                    '<p><strong>Недостающие запчасти: </strong>' + data.task.needBuyParts + '</p> ' +
+                    '<p class="bt"><strong>Комментарий: </strong>' + data.task.comment + '</p> ' +
+                    '</td>';
 
-                $(idx).append(newTask);
+                if (getRole(window.location.pathname) === "/executor") {
+                    newTask1 = '<td class="tac">' +
+                        '<form action="/executor/set-status/' + data.task.id + '" method="POST">' +
+                            '<input type="hidden" value="2" name="status">' +
+                            '<button class="status btn btn-primary" type="submit">Начать</button>' +
+                        '</form>' +
+                        '<form action="/executor/set-status/' + data.task.id + '" method="POST">' +
+                            '<input type="hidden" value="4" name="status">' +
+                            '<button class="status btn btn-danger" type="submit">Остановить</button>' +
+                        '</form>' +
+                        '<form action="/executor/set-status/' + data.task.id + '" method="POST">' +
+                            '<input type="hidden" value="5" name="status">' +
+                            '<button class="status btn btn-success" type="submit">Завершить</button>' +
+                        '</form>' +
+                        '</td>';
+                    }
+
+                newTask2 = '<td class="tac"> ' +
+                        '<a class="update-task modal-window-link"' +
+                        ' title="Редактировать задачу"' +
+                        ' data-toggle="modal"' +
+                        ' data-id="' + data.task.id + '"' +
+                        ' data-task-description="' + data.task.description + '"' +
+                        ' data-task-name="' + data.task.name + '"' +
+                        ' data-task-assigned-user="' + data.task.assignedUserID + '"' +
+                        ' data-task-planed-executor="' + data.task.planedExecutorID + '"' +
+                        ' data-task-cost="' + data.task.cost + '"' +
+                        ' data-task-estimation-time="' + formatDate(data.task.estimationTime) + '"' +
+                        ' data-task-start-time="' + formatDate(data.task.startTime) + '"' +
+                        ' data-task-end-time="' + formatDate(data.task.endTime) + '"' +
+                        ' data-task-parts="' + data.task.parts + '"' +
+                        ' data-task-customer-parts="' + data.task.customerParts + '"' +
+                        ' data-task-need-buy-parts="' + data.task.needBuyParts + '"' +
+                        ' data-task-comment="' + data.task.comment + '"' +
+                        ' data-target="#updateTaskFormModal"' +
+                        ' style=""> ' +
+                            '<span class="glyphicon glyphicon-pencil" aria-hidden="true"/> ' +
+                        '</a> ' +
+                        '<a href="#"' +
+                        ' class="delete-task modal-window-link"' +
+                        ' title="Удалить задачу" data-toggle="modal"' +
+                        ' data-current="'+getIdRole(window.location.pathname)+'" data-id="' + data.task.id + '"' +
+                        ' data-target="#deleteTaskFormModal"' +
+                        ' style=""> ' +
+                            '<span class="glyphicon glyphicon-remove" aria-hidden="true"/> ' +
+                        '</a>'+
+                    '</td>';
+
+                $(idx).append(newTask + newTask1 + newTask2);
 
                 deleteTaskOnClick();
                 clearModalAddTask();
@@ -252,8 +277,12 @@ function getIdRole(pathname) {
 function getRole(pathname) {
     if (pathname.includes('admin')) {
         return '/admin';
-    } else {
+    }
+    else if (pathname.includes('moderator')) {
         return '/moderator';
+    }
+    else {
+        return '/executor';
     }
 }
 

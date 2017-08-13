@@ -10,6 +10,7 @@
                 </div>
                 <input type="hidden" id="update-form-task-id" name="id">
                 <div class="modal-body clearfix">
+                    {@lt key=typeUser value=3}
                     <div class="form-group col-lg-4">
                         <label>Имя задачи</label>
                         <input type="text" class="form-control create-form-task" name="name" id="update-form-task-name">
@@ -42,6 +43,7 @@
                             {/assignedExecutorUsers}
                         </select>
                     </div>
+                    {/lt}
                     <div class="form-group col-lg-4">
                         <label>Описание задачи</label>
                         <textarea type="text" class="form-control create-form-task" name="description"

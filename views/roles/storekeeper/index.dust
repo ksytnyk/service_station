@@ -45,4 +45,6 @@
     </div>
 </div>
 
+{>"modal_windows/update_task"/}
+
 {/body}

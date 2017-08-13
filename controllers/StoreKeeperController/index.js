@@ -11,7 +11,10 @@ router.get('/', (req, res) => {
         Task
             .getAllTasksForStore()
             .then(tasks => {
-                res.render('roles/storekeeper', {typeUser: req.session.passport.user.userTypeID, tasks: tasks});
+                res.render('roles/storekeeper', {
+                    typeUser: req.session.passport.user.userTypeID,
+                    tasks: tasks
+                });
             })
             .catch(error => {
                 console.warn(error);

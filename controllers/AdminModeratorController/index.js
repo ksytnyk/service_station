@@ -10,7 +10,6 @@ const router = express.Router();
 const roles = require('../../constants/roles');
 const statuses = require('../../constants/status');
 const validation = require('../../middleware/validation');
-const formatDate = require('../../helpers/formatDate');
 const requestsFactory = require('../../helpers/requestsFactory');
 
 router.get('/users', function (req, res) {

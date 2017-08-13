@@ -16,14 +16,8 @@
                     <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/create-request">Добавить заказ</a>
                 </li>
             {/lt}
-            {@eq key=typeUser value=3}
-                <li class="active"><a href="/executor">Задачи</a></li>
-            {/eq}
-            {@eq key=typeUser value=4}
-                <li class="active"><a href="/store-keeper">Недостающие детали</a></li>
-            {/eq}
             <li class="logout pull-right" role="presentation"><a href="/logout" class="last">Выйти</a></li>
-            <li id="headerName" {@eq key=typeUser value=5} style="background-color: #333; float: left;"{/eq}><a>{user.userName} {user.userSurname}</a></li>
+            <li id="headerName" {@gt key=typeUser value=2} style="background-color: #333; float: left;"{/gt}><a>{user.userName} {user.userSurname}</a></li>
         </ul>
     </div>
 </nav>

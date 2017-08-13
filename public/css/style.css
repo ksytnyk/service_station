@@ -48,6 +48,11 @@ select[disabled] {
     opacity: 0.65 !important;
 }
 
+.status {
+    width: 100px;
+    margin: 5px 0;
+}
+
 /* LOGIN */
 .login {
     margin-top: 75px;
@@ -297,6 +302,10 @@ thead {
     vertical-align: top;
 }
 
+.table .bb {
+    border-bottom: 1px solid #cccccc;
+}
+
 .table .buffer {
     background-color: #fff;
     border-left: none;
@@ -335,12 +344,14 @@ thead {
 }
 
 .create_request p,
-.update_request p {
+.update_request p,
+.executor p {
     margin: 0;
 }
 
 .create_request .bt,
-.update_request .bt {
+.update_request .bt,
+.executor .bt {
     margin: 5px 0 0 -8px;
     border-top: 1px solid #ccc;
     padding: 5px 8px 0;
@@ -370,6 +381,10 @@ thead {
 
 .requests a {
     display: block;
+}
+
+.requests .table tr td:last-child {
+    background-color: #eeeeee;
 }
 
 .requests .requests_id {
@@ -407,8 +422,21 @@ thead {
     background-color: #eee;
     font-size: 13px;
 }
+.requests .task_table tr td:last-child {
+    background-color: #eee;
+}
 
 /* CUSTOMER */
 .role5 .bt {
     width: 475px;
+}
+
+/* EXECUTOR */
+.executor .executor_name_surname,
+.executor .assigned_name_surname,
+.executor .delete-task {
+	display: none;
+}
+.executor .bt {
+    width: 581px;
 }
