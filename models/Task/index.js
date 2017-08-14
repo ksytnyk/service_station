@@ -200,6 +200,12 @@ Task.getTaskByExecutorId = function (id) {
     return new Promise((resolve, reject) => {
         Task
             .findAll({
+                include: [
+                    {
+                        model: Request,
+                        where: {status: status.PROCESSING}
+                    }
+                ],
                 where: {
                     planedExecutorID: id,
                     $or: [
@@ -226,6 +232,12 @@ Task.getAllTasksForStore = function (storeID) {
     return new Promise((resolve, reject) => {
         Task
             .findAll({
+                include: [
+                    {
+                        model: Request,
+                        where: {status: status.PROCESSING}
+                    }
+                ],
                 where: {
                     status: status.PENDING,
                     assigned_user_id: storeID
