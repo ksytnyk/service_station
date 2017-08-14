@@ -62,19 +62,16 @@
                     <p><strong>Время начала: </strong>{startTime}</p>
                     <p><strong>План. время: </strong>{estimatedTime}</p>
                     <p><strong>Комментарий: </strong>{comment}</p>
-                    <form style="display: inline-block" action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/change-request-status/{id}" method="POST">
-                    <input type="submit" class="btn btn-primary" id="requestProcessing" value="Начать" class="btn"
-                            style="width: auto; margin: 1px;"/>
+                    <form action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/change-request-status/{id}" method="post">
+                    <input type="submit" class="btn btn-primary status-requests" id="requestProcessing" value="Начать"/>
                         <input type="hidden" value="2" name="statusID">
                     </form>
-                    <form style="display: inline-block" action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/change-request-status/{id}" method="POST">
-                    <input type="submit" class="btn btn-success" id="requestDone" value="Завершить" class="btn"
-                           style="width: auto; margin: 1px;"/>
+                    <form action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/change-request-status/{id}" method="post">
+                    <input type="submit" class="btn btn-success status-requests" id="requestDone" value="Завершить"/>
                         <input type="hidden" value="3" name="statusID">
                     </form>
-                    <form style="display: inline-block" action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/change-request-status/{id}" method="POST">
-                        <input type="submit" class="btn label-default" id="requestCanceled" value="Анулировать" class="btn"
-                           style="width: auto; margin: 1px;"/>
+                    <form action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/change-request-status/{id}" method="post">
+                        <input type="submit" class="btn label-default status-requests-canceled" id="requestCanceled" value="Анулировать"/>
                         <input type="hidden" value="5" name="statusID">
                     </form>
                 </td>

@@ -73,6 +73,21 @@ select[disabled] {
     opacity: 0.65 !important;
 }
 
+.status-requests-canceled:hover{
+    color: white;
+}
+
+.status-requests-canceled{
+    color: white;
+    margin: 5px 0;
+}
+
+.status-requests{
+    width: 110px;
+    margin: 5px 0;
+    display: inline-block;
+}
+
 .status {
     width: 100px;
     margin: 5px 0;

@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <title>Engine Station</title>
     <link rel="shortcut icon" href="/favicon.png" type="image/png">
-    <link rel="stylesheet" href="/css/bootstrap.css">
-    <link rel="stylesheet" href="/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="/css/libs/bootstrap.css">
+    <link rel="stylesheet" href="/css/libs/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="/css/libs/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/bootstrap-datetimepicker.min.css">
 </head>
 <body>
 <div class="container">
@@ -21,15 +21,13 @@
 <script src="/js/libs/jquery.dataTables.min.js"></script>
 <script src="/js/libs/dataTables.bootstrap.min.js"></script>
 <script src="/js/libs/bootstrap-formhelpers-phone.js"></script>
-<script src="/js/components/main.js"></script>
-<script src="/js/components/users.js"></script>
-<script src="/js/components/storekeeper/index.js"></script>
-<script src="/js/components/requests.js"></script>
-<script src="/js/components/tasks.js"></script>
 <script src="/js/libs/moment.js"></script>
 <script src="/js/libs/transition.js"></script>
 <script src="/js/libs/collapse.js"></script>
 <script src="/js/libs/bootstrap-datetimepicker.min.js"></script>
-
+<script src="/js/components/main.js"></script>
+<script src="/js/components/users.js"></script>
+<script src="/js/components/requests.js"></script>
+<script src="/js/components/tasks.js"></script>
 </body>
 </html>
