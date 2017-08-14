@@ -17,7 +17,7 @@ $(document).ready(function () {
 
     setTimeout(function () {
         $('.hide_alert').trigger('click');
-    }, 5000);
+    }, 7500);
 
     $('.dtable').DataTable();
 

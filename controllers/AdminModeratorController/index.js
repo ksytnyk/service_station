@@ -37,13 +37,13 @@ router.post('/create-user', validation.createAndUpdateUser(), function (req, res
         .createUser(req.body)
         .then(() => {
             req.flash('success_alert', true);
-            req.flash('success_msg', 'Добавление прошло успешно.');
+            req.flash('success_msg', 'Добавление пользователя прошло успешно.');
             res.redirect(req.baseUrl + '/users');
         })
         .catch(error => {
             console.warn(error);
             req.flash('error_alert', true);
-            req.flash('error_msg', {msg: 'Возникла ошибка при добавлении.'});
+            req.flash('error_msg', {msg: 'Возникла ошибка при добавлении пользователя.'});
             res.redirect(req.baseUrl + '/users');
         });
 });
@@ -54,13 +54,13 @@ router.put('/update-user/:id', validation.createAndUpdateUser(), function (req, 
         .updateUser(req.params.id, req.body)
         .then(() => {
             req.flash('success_alert', true);
-            req.flash('success_msg', 'Изменение прошло успешно.');
+            req.flash('success_msg', 'Изменение пользователя прошло успешно.');
             res.redirect(req.baseUrl + '/users');
         })
         .catch(error => {
             console.warn(error);
             req.flash('error_alert', true);
-            req.flash('error_msg', {msg: 'Возникла ошибка при изменении.'});
+            req.flash('error_msg', {msg: 'Возникла ошибка при изменении пользователя.'});
             res.redirect(req.baseUrl + '/users');
         });
 });
@@ -70,13 +70,13 @@ router.delete('/delete-user/:id', function (req, res) { //TODO without restart p
         .deleteUser(req.params.id)
         .then(() => {
             req.flash('success_alert', true);
-            req.flash('success_msg', 'Удаление прошло успешно.');
+            req.flash('success_msg', 'Удаление пользователя прошло успешно.');
             res.redirect(req.baseUrl + '/users');
         })
         .catch(error => {
             console.warn(error);
             req.flash('error_alert', true);
-            req.flash('error_msg', {msg: 'Возникла ошибка при удалении.'});
+            req.flash('error_msg', {msg: 'Возникла ошибка при удалении пользователя.'});
             res.redirect(req.baseUrl + '/users');
         });
 });
@@ -127,14 +127,15 @@ router.get('/create-request', function (req, res) {
 router.post('/create-request', function (req, res) {
     let name = req.body.name;
     let customerID = req.body.customerID;
-    let cost = req.body.cost;
+    let cost = +req.body.cost;
     let startTime = req.body.startTime;
     let estimatedTime = req.body.estimatedTime;
     // Validation
 
     req.checkBody('name', '"Имя заказа" - обязательное поле.').notEmpty();
     req.checkBody('customerID', '"Клиент" - обязательное поле.').notEmpty();
-    req.checkBody('cost', '"Стоемость" - обязательное поле.').notEmpty();
+    req.checkBody('cost', '"Стоимость" - обязательное поле.').notEmpty();
+    req.checkBody('cost', 'Неправильный формат цены в поле "Стоимость".').isFloat();
     req.checkBody('startTime', '"Время начала" - обязательное поле.').notEmpty();
     req.checkBody('estimatedTime', '"Планируемове время" - обязательное поле.').notEmpty();
 
@@ -183,14 +184,15 @@ router.get('/update-request/:id', function (req, res) {
 router.put('/update-request/:id', function (req, res) {
     let name = req.body.name;
     let customerID = req.body.customerID;
-    let cost = req.body.cost;
+    let cost = +req.body.cost;
     let startTime = req.body.startTime;
     let estimatedTime = req.body.estimatedTime;
     // Validation
 
     req.checkBody('name', '"Имя заказа" - обязательное поле.').notEmpty();
     req.checkBody('customerID', '"Клиент" - обязательное поле.').notEmpty();
-    req.checkBody('cost', '"Стоемость" - обязательное поле.').notEmpty();
+    req.checkBody('cost', '"Стоимость" - обязательное поле.').notEmpty();
+    req.checkBody('cost', 'Неправильный формат цены в поле "Стоимость".').isFloat();
     req.checkBody('startTime', '"Время начала" - обязательное поле.').notEmpty();
     req.checkBody('estimatedTime', '"Планируемове время" - обязательное поле.').notEmpty();
 
@@ -227,20 +229,20 @@ router.delete('/delete-request/:id', function (req, res) {
                 .deleteRequest(req.params.id)
                 .then(() => {
                     req.flash('success_alert', true);
-                    req.flash('success_msg', 'Удаление прошло успешно.');
+                    req.flash('success_msg', 'Удаление задачи прошло успешно.');
                     res.redirect(req.baseUrl + '/requests');
                 })
                 .catch(error => {
                     console.warn(error);
                     req.flash('error_alert', true);
-                    req.flash('error_msg', {msg: 'Возникла ошибка при удалении.'});
+                    req.flash('error_msg', {msg: 'Возникла ошибка при удалении задачи.'});
                     res.redirect(req.baseUrl + '/requests');
                 });
         })
         .catch(error => {
             console.warn(error);
             req.flash('error_alert', true);
-            req.flash('error_msg', {msg: 'Возникла ошибка при удалении.'});
+            req.flash('error_msg', {msg: 'Возникла ошибка при удалении задачи.'});
             res.redirect(req.baseUrl + '/requests');
         });
 });
@@ -252,7 +254,7 @@ router.post('/create-task', function (req, res) {
     let assignedUserID = req.body.assignedUserID;
     let description = req.body.description;
     let estimationTime = req.body.estimationTime;
-    let cost = req.body.cost;
+    let cost = +req.body.cost;
     let startTime = req.body.startTime;
     let endTime = req.body.endTime;
 
@@ -268,7 +270,8 @@ router.post('/create-task', function (req, res) {
     req.checkBody('assignedUserID', '"Поручить задачу" - обязательное поле.').notEmpty();
     req.checkBody('description', '"Описание задачи" - обязательное поле.').notEmpty();
     req.checkBody('estimationTime', '"Планируемове время" - обязательное поле.').notEmpty();
-    req.checkBody('cost', '"Цена" - обязательное поле.').notEmpty();
+    req.checkBody('cost', '"Стоимость" - обязательное поле .').notEmpty();
+    req.checkBody('cost', 'Неправильный формат цены в поле "Стоимость".').isFloat();
     req.checkBody('startTime', '"Время начала" - обязательное поле.').notEmpty();
     req.checkBody('endTime', '"Конечное время" - обязательное поле.').notEmpty();
     /*
@@ -372,7 +375,7 @@ router.post('/change-request-status/:id', (req, res) => {
         .catch(error => {
             console.warn(error);
             req.flash('error_alert', true);
-            req.flash('error_msg', {msg: 'Возникла ошибка при изменении.'});
+            req.flash('error_msg', {msg: 'Возникла ошибка при изменении Статус.'});
             res.redirect(req.baseUrl + '/requests');
         })
 });

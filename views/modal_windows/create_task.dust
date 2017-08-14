@@ -52,7 +52,7 @@
                         <input type="text" class="form-control create-form-task datetimepickerN" name="estimationTime">
                     </div>
                     <div class="form-group col-lg-4">
-                        <label>Цена</label>
+                        <label>Стоимость</label>
                         <input type="text" class="form-control create-form-task" name="cost">
                     </div>
                     <div class="form-group col-lg-4">

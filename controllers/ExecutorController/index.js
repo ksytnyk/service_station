@@ -75,13 +75,13 @@ router.post('/set-status/:id', function (req, res) {
         .updateTask(req.params.id, req.body)
         .then(() => {
             req.flash('success_alert', true);
-            req.flash('success_msg', 'Изменение прошло успешно.');
+            req.flash('success_msg', 'Изменение статуса прошло успешно.');
             res.redirect(req.baseUrl);
         })
         .catch(error => {
             console.warn(error);
             req.flash('error_alert', true);
-            req.flash('error_msg', {msg: 'Возникла ошибка при изменении.'});
+            req.flash('error_msg', {msg: 'Возникла ошибка при изменении статуса.'});
             res.redirect(req.baseUrl);
         });
 });

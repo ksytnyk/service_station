@@ -70,7 +70,7 @@ $(document).ready(function () {
                     '</a> ' +
                     '<a href="#" class="delete-task modal-window-link" title="Удалить задачу" data-toggle="modal" data-current="' + getIdRole(window.location.pathname) + '" data-id="' + data.result.id + '"' +
                     ' data-target="#deleteTaskFormModal">' +
-                    '<span class="glyphicon glyphicon-remove" aria-hidden="true"  style="margin-top: 25px;"/>' +
+                    '<span class="glyphicon glyphicon-remove" aria-hidden="true"/>' +
                     '</a>' +
                     '</td></tr>');
 
@@ -222,7 +222,7 @@ $(document).ready(function () {
 
                 setTimeout(function () {
                     $('.hide_alert').trigger('click');
-                }, 5000);
+                }, 7500);
             }
         });
     });
@@ -287,7 +287,7 @@ function deleteTaskOnClick() {
 
                 setTimeout(function () {
                     $('.hide_alert').trigger('click');
-                }, 5000);
+                }, 7500);
             }
         });
     });
