@@ -1,6 +1,6 @@
 {
-  "name": "skysoft-sequelize",
-  "version": "0.0.0",
+  "name": "Service station",
+  "version": "3.0.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www",

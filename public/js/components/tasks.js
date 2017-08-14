@@ -12,6 +12,11 @@ $(document).ready(function () {
         $('#update-form-task-status').val(5);
     });
 
+    $('.assign-task-button').on('click', function () {
+        $('.assign-task-button').addClass('hidden');
+        $('.assign-task-select').removeClass("hidden");
+    });
+
     $('#taskAddButton').on('click', function () {
 
         $('#createTaskFormModal').modal('toggle');
@@ -26,7 +31,7 @@ $(document).ready(function () {
                 var assignedNameSurname = $('.optionAE' + $('#createTaskForm').serializeArray()[3].value).attr('assignedUserFullName');
 
                 var classNameForTask = changeClassForStatus(data.result.status);
-                console.log(classNameForTask);
+
                 $("#tasks-table").append('<tr id="idx-task-' + data.result.id + '">' +
                     '<th ' + classNameForTask + '>' +
                     data.result.id +
@@ -102,6 +107,8 @@ $(document).ready(function () {
 
     $('.task-update-button').on('click', function () {
 
+        $('.assign-task-select').addClass("hidden");
+        $('.assign-task-button').removeClass("hidden");
         $('#updateTaskFormModal').modal('toggle');
 
         $.ajax({
@@ -121,7 +128,6 @@ $(document).ready(function () {
 
                 var classNameForTask = changeClassForStatus(data.task.status);
 
-                console.log(classNameForTask);
                 var newTask, newTask1 = '', newTask2;
 
                 newTask = '<th ' + classNameForTask + '>' + data.task.id + '</th>' +
@@ -160,16 +166,16 @@ $(document).ready(function () {
                 }
                 if (getRole(window.location.pathname) === '/store-keeper') {
 
-                newTask1 = '<td class="tac">'
-                        +'<form action="/store-keeper/task-hold" method="POST">'
-                        +'<input class="btn btn-danger status" type="submit" id="taskHold" value="Остановить"/>'
-                        +'<input type="hidden" value="'+ data.task.id +'" name="taskID"/>'
-                        +'</form>'
-                        +'<form action="/store-keeper/task-done" method="POST">'
-                        +'<input class="btn btn-success status" type="submit" id="taskDone" value="Завершить"/>'
-                        +'<input type="hidden" value="'+ data.task.id +'" name="taskID"/>'
-                        +'</form>'
-                        +'</td>'
+                    newTask1 = '<td class="tac">'
+                        + '<form action="/store-keeper/task-hold" method="POST">'
+                        + '<input class="btn btn-danger status" type="submit" id="taskHold" value="Остановить"/>'
+                        + '<input type="hidden" value="' + data.task.id + '" name="taskID"/>'
+                        + '</form>'
+                        + '<form action="/store-keeper/task-done" method="POST">'
+                        + '<input class="btn btn-success status" type="submit" id="taskDone" value="Завершить"/>'
+                        + '<input type="hidden" value="' + data.task.id + '" name="taskID"/>'
+                        + '</form>'
+                        + '</td>'
                 }
                 newTask2 = '<td class="tac"> ' +
                     '<a class="update-task modal-window-link"' +
@@ -201,7 +207,6 @@ $(document).ready(function () {
                     '<span class="glyphicon glyphicon-remove" aria-hidden="true"/> ' +
                     '</a>' +
                     '</td>';
-
 
 
                 $(idx).append(newTask + newTask1 + newTask2);
@@ -340,28 +345,23 @@ function formatDate(date) {
 function changeClassForStatus(data) {
     var newClass = "";
     switch (data) {
-        case 1:
-        {
+        case 1: {
             newClass = 'class="tac bb status-bgc-pending"';
             break;
         }
-        case 2:
-        {
+        case 2: {
             newClass = 'class="tac bb status-bgc-processing"';
             break;
         }
-        case 3:
-        {
+        case 3: {
             newClass = 'class="tac bb status-bgc-done"';
             break;
         }
-        case 4:
-        {
+        case 4: {
             newClass = 'class="tac bb status-bgc-hold"';
             break;
         }
-        case 5:
-        {
+        case 5: {
             newClass = 'class="tac bb status-bgc-canceled"';
             break;
         }
