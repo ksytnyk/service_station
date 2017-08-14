@@ -27,7 +27,7 @@ $(document).ready(function () {
 
                 setTimeout(function () {
                     $('.hide_alert').trigger('click');
-                }, 7500);
+                }, TIME_FOR_FLASH);
             }
         });
     });
@@ -60,7 +60,7 @@ $(document).ready(function () {
 
                 setTimeout(function () {
                     $('.hide_alert').trigger('click');
-                }, 7500);
+                }, TIME_FOR_FLASH);
             }
         });
     });

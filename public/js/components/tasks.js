@@ -96,7 +96,7 @@ $(document).ready(function () {
 
                 setTimeout(function () {
                     $('.hide_alert').trigger('click');
-                }, 5000);
+                }, TIME_FOR_FLASH);
             }
         });
     });
@@ -211,7 +211,6 @@ $(document).ready(function () {
 
                 $(idx).append(newTask + newTask1 + newTask2);
 
-
                 deleteTaskOnClick();
                 clearModalAddTask();
                 updateTaskOnClick();
@@ -227,7 +226,7 @@ $(document).ready(function () {
 
                 setTimeout(function () {
                     $('.hide_alert').trigger('click');
-                }, 7500);
+                }, TIME_FOR_FLASH);
             }
         });
     });
@@ -292,7 +291,7 @@ function deleteTaskOnClick() {
 
                 setTimeout(function () {
                     $('.hide_alert').trigger('click');
-                }, 7500);
+                }, TIME_FOR_FLASH);
             }
         });
     });

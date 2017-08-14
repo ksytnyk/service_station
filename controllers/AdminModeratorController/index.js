@@ -8,12 +8,10 @@ const express = require('express');
 const router = express.Router();
 
 const roles = require('../../constants/roles');
-const statuses = require('../../constants/status');
 const validation = require('../../middleware/validation');
 const requestsFactory = require('../../helpers/requestsFactory');
 
-router.get('/users', function (req, res) {
-
+router.get('/users', (req, res) => {
     User
         .getAllUsers()
         .then(users => {
@@ -28,7 +26,7 @@ router.get('/users', function (req, res) {
         });
 });
 
-router.post('/create-user', validation.createAndUpdateUser(), function (req, res) {
+router.post('/create-user', validation.createAndUpdateUser(), (req, res) => {
     if (req.baseUrl === '/moderator') {
         req.body.userTypeID = roles.CUSTOMER;
     }
@@ -48,8 +46,7 @@ router.post('/create-user', validation.createAndUpdateUser(), function (req, res
         });
 });
 
-router.put('/update-user/:id', validation.createAndUpdateUser(), function (req, res) { //TODO without restart page
-
+router.put('/update-user/:id', validation.createAndUpdateUser(), (req, res) => {
     User
         .updateUser(req.params.id, req.body)
         .then(() => {
@@ -65,7 +62,7 @@ router.put('/update-user/:id', validation.createAndUpdateUser(), function (req, 
         });
 });
 
-router.delete('/delete-user/:id', function (req, res) { //TODO without restart page
+router.delete('/delete-user/:id', (req, res) => {
     User
         .deleteUser(req.params.id)
         .then(() => {
@@ -81,7 +78,7 @@ router.delete('/delete-user/:id', function (req, res) { //TODO without restart p
         });
 });
 
-router.get('/requests', function (req, res) {
+router.get('/requests', (req, res) => {
     Task
         .getAllTasks()
         .then(result => {
@@ -105,58 +102,38 @@ router.get('/requests', function (req, res) {
         });
 });
 
-router.get('/create-request', function (req, res) {
+router.get('/create-request', (req, res) => {
     User
         .getCustomerUsers()
         .then(usersCustomers => {
             User
                 .getAllUsers()
                 .then(users =>
-                    res.render('roles/admin_moderator/create-request', {
+                    res.render('roles/admin_moderator/create_request', {
                         assignedExecutorUsers: users,
                         customers: usersCustomers,
                         typeUser: req.session.passport.user.userTypeID
                     }))
                 .catch(err => {
                     console.warn(err);
-                    res.render('roles/admin_moderator/create-request');
+                    res.render('roles/admin_moderator/create_request');
                 });
         });
 });
 
-router.post('/create-request', function (req, res) {
-    let name = req.body.name;
-    let customerID = req.body.customerID;
-    let cost = +req.body.cost;
-    let startTime = req.body.startTime;
-    let estimatedTime = req.body.estimatedTime;
-    // Validation
-
-    req.checkBody('name', '"Имя заказа" - обязательное поле.').notEmpty();
-    req.checkBody('customerID', '"Клиент" - обязательное поле.').notEmpty();
-    req.checkBody('cost', '"Стоимость" - обязательное поле.').notEmpty();
-    req.checkBody('cost', 'Неправильный формат цены в поле "Стоимость".').isFloat();
-    req.checkBody('startTime', '"Время начала" - обязательное поле.').notEmpty();
-    req.checkBody('estimatedTime', '"Планируемове время" - обязательное поле.').notEmpty();
-
-    let errors = req.validationErrors();
-
-    if (errors) {
-        res.status(400).send({errors: errors});
-    } else {
-        req.body.createdBy = req.session.passport.user.id;
-        Request
-            .createRequest(req.body)
-            .then((result) => {
-                res.status(200).send({result: result});
-            })
-            .catch(errors => {
-                res.status(400).send({errors: errors});
-            });
-    }
+router.post('/create-request', validation.createAndUpdateRequest(), (req, res) => {
+    req.body.createdBy = req.session.passport.user.id;
+    Request
+        .createRequest(req.body)
+        .then((result) => {
+            res.status(200).send({result: result});
+        })
+        .catch(errors => {
+            res.status(400).send({errors: errors});
+        });
 });
 
-router.get('/update-request/:id', function (req, res) {
+router.get('/update-request/:id', (req, res) => {
     User
         .getCustomerUsers()
         .then(usersCustomers => {
@@ -181,43 +158,18 @@ router.get('/update-request/:id', function (req, res) {
         });
 });
 
-router.put('/update-request/:id', function (req, res) {
-    let name = req.body.name;
-    let customerID = req.body.customerID;
-    let cost = +req.body.cost;
-    let startTime = req.body.startTime;
-    let estimatedTime = req.body.estimatedTime;
-    // Validation
-
-    req.checkBody('name', '"Имя заказа" - обязательное поле.').notEmpty();
-    req.checkBody('customerID', '"Клиент" - обязательное поле.').notEmpty();
-    req.checkBody('cost', '"Стоимость" - обязательное поле.').notEmpty();
-    req.checkBody('cost', 'Неправильный формат цены в поле "Стоимость".').isFloat();
-    req.checkBody('startTime', '"Время начала" - обязательное поле.').notEmpty();
-    req.checkBody('estimatedTime', '"Планируемове время" - обязательное поле.').notEmpty();
-
-    let errors = req.validationErrors();
-
-    if (errors) {
-        console.warn(errors);
-        res.status(400).send({errors: errors});
-    } else {
-
-        let requestID = req.params.id;
-        let params = req.body;
-
-        Request
-            .updateRequest(requestID, params)
-            .then((result) => {
-                res.status(200).send({result: result});
-            })
-            .catch(errors => {
-                res.status(400).send({errors: errors});
-            });
-    }
+router.put('/update-request/:id', validation.createAndUpdateRequest(), (req, res) => {
+    Request
+        .updateRequest(req.params.id, req.body)
+        .then((result) => {
+            res.status(200).send({result: result});
+        })
+        .catch(errors => {
+            res.status(400).send({errors: errors});
+        });
 });
 
-router.delete('/delete-request/:id', function (req, res) {
+router.delete('/delete-request/:id', (req, res) => {
     Task
         .destroy({
             where: {
@@ -247,124 +199,6 @@ router.delete('/delete-request/:id', function (req, res) {
         });
 });
 
-router.post('/create-task', function (req, res) {
-
-    let name = req.body.name;
-    let planedExecutorID = req.body.planedExecutorID;
-    let assignedUserID = req.body.assignedUserID;
-    let description = req.body.description;
-    let estimationTime = req.body.estimationTime;
-    let cost = +req.body.cost;
-    let startTime = req.body.startTime;
-    let endTime = req.body.endTime;
-
-    /* let parts = req.body.parts;
-     let customerParts = req.body.customerParts;
-     let needBuyParts = req.body.needBuyParts;
-     let taskComments = req.body.taskComments;*/
-
-    // Validation
-
-    req.checkBody('name', '"Имя задачи" - обязательное поле.').notEmpty();
-    req.checkBody('planedExecutorID', '"Исполнитель" - обязательное поле.').notEmpty();
-    req.checkBody('assignedUserID', '"Поручить задачу" - обязательное поле.').notEmpty();
-    req.checkBody('description', '"Описание задачи" - обязательное поле.').notEmpty();
-    req.checkBody('estimationTime', '"Планируемове время" - обязательное поле.').notEmpty();
-    req.checkBody('cost', '"Стоимость" - обязательное поле .').notEmpty();
-    req.checkBody('cost', 'Неправильный формат цены в поле "Стоимость".').isFloat();
-    req.checkBody('startTime', '"Время начала" - обязательное поле.').notEmpty();
-    req.checkBody('endTime', '"Конечное время" - обязательное поле.').notEmpty();
-    /*
-     req.checkBody('parts', '"Планируемове время" - обязательное поле.').notEmpty();
-     req.checkBody('customerParts', '"Планируемове время" - обязательное поле.').notEmpty();
-     req.checkBody('needBuyParts', '"Планируемове время" - обязательное поле.').notEmpty();
-     req.checkBody('taskComments', '"Планируемове время" - обязательное поле.').notEmpty();
-     */
-
-    let errors = req.validationErrors();
-
-    if (errors) {
-        console.warn(errors);
-        res.status(400).send({errors: errors});
-    } else {
-        Task
-            .createTask(req.body)
-            .then(result => {
-                res.status(200).send({result: result});
-            })
-            .catch(errors => {
-                console.warn(errors);
-                res.status(400).send({errors: errors});
-            });
-    }
-});
-
-//====================== UPDATE TASK ==========================================
-
-router.put('/update-task/:id', function (req, res) {
-
-    let description = req.body.description;
-    let planedExecutorID = req.body.planedExecutorID;
-    let cost = req.body.cost;
-    let estimationTime = req.body.estimationTime;
-    let startTime = req.body.startTime;
-    let endTime = req.body.endTime;
-
-    req.checkBody('description', '"Описание задачи" - обязательное поле.').notEmpty();
-    req.checkBody('planedExecutorID', '"Исполнитель" - обязательное поле.').notEmpty();
-    req.checkBody('cost', '"Цена" - обязательное поле.').notEmpty();
-    req.checkBody('estimationTime', '"Планируемове время" - обязательное поле.').notEmpty();
-    req.checkBody('startTime', '"Время начала" - обязательное поле.').notEmpty();
-    req.checkBody('endTime', '"Конечное время" - обязательное поле.').notEmpty();
-
-    let errors = req.validationErrors();
-
-    if (errors) {
-        console.warn(errors);
-        res.status(400).send({errors: errors});
-    } else {
-
-        let taskID = req.body.id;
-        let params = req.body;
-
-        Task
-            .updateTask(taskID, params)
-            .then(() => {
-                Task
-                    .getTaskById(taskID)
-                    .then(task => {
-                        res.status(200).send({task: task});
-                    })
-                    .catch(errors => {
-                        console.warn(errors);
-                        res.status(400).send({errors: errors});
-                    });
-            })
-            .catch(errors => {
-                console.warn(errors);
-                res.status(400).send({errors: errors});
-            });
-    }
-});
-
-router.delete('/delete-task/:id', function (req, res) {
-
-    let taskID = req.params.id;
-    Task
-        .destroy({
-            where: {
-                id: Number(taskID)
-            }
-        })
-        .then(() => {
-            res.status(200).send({id: taskID});
-        })
-        .catch(errors => {
-            console.warn(errors);
-            res.status(400).send({errors: errors});
-        })
-});
-
 router.post('/change-request-status/:id', (req, res) => {
     Request.changeStatus(req.params.id, req.body.statusID)
         .then(()=> {
@@ -377,6 +211,54 @@ router.post('/change-request-status/:id', (req, res) => {
             req.flash('error_alert', true);
             req.flash('error_msg', {msg: 'Возникла ошибка при изменении Статус.'});
             res.redirect(req.baseUrl + '/requests');
+        })
+});
+
+router.post('/create-task', validation.createAndUpdateTask(), (req, res) => {
+    Task
+        .createTask(req.body)
+        .then(result => {
+            res.status(200).send({result: result});
+        })
+        .catch(errors => {
+            console.warn(errors);
+            res.status(400).send({errors: errors});
+        });
+});
+
+router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
+    Task
+        .updateTask(req.body.id, req.body)
+        .then(() => {
+            Task
+                .getTaskById(req.body.id)
+                .then(task => {
+                    res.status(200).send({task: task});
+                })
+                .catch(errors => {
+                    console.warn(errors);
+                    res.status(400).send({errors: errors});
+                });
+        })
+        .catch(errors => {
+            console.warn(errors);
+            res.status(400).send({errors: errors});
+        });
+});
+
+router.delete('/delete-task/:id', (req, res) => {
+    Task
+        .destroy({
+            where: {
+                id: Number(req.params.id)
+            }
+        })
+        .then(() => {
+            res.status(200).send({id: req.params.id});
+        })
+        .catch(errors => {
+            console.warn(errors);
+            res.status(400).send({errors: errors});
         })
 });
 

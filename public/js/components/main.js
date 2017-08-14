@@ -17,7 +17,7 @@ $(document).ready(function () {
 
     setTimeout(function () {
         $('.hide_alert').trigger('click');
-    }, 7500);
+    }, TIME_FOR_FLASH);
 
     $('.dtable').DataTable();
 
@@ -29,3 +29,5 @@ $(document).ready(function () {
     );
 
 });
+
+const TIME_FOR_FLASH = 7500;
