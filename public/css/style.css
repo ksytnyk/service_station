@@ -370,12 +370,14 @@ thead {
 
 .create_request p,
 .update_request p,
+.store-keeper p,
 .executor p {
     margin: 0;
 }
 
 .create_request .bt,
 .update_request .bt,
+.store-keeper .bt,
 .executor .bt {
     margin: 5px 0 0 -8px;
     border-top: 1px solid #ccc;
@@ -460,10 +462,15 @@ thead {
 /* EXECUTOR */
 .executor .executor_name_surname,
 .executor .assigned_name_surname,
-.executor .delete-task {
+.executor .delete-task,
+.store-keeper .executor_name_surname,
+.store-keeper .assigned_name_surname,
+.store-keeper .delete-task{
     display: none;
 }
 
-.executor .bt {
+
+.executor .bt,
+.store-keeper .bt {
     width: 581px;
 }

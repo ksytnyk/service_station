@@ -158,6 +158,19 @@ $(document).ready(function () {
                         '</form>' +
                         '</td>';
                 }
+                if (getRole(window.location.pathname) === '/store-keeper') {
+
+                newTask1 = '<td class="tac">'
+                        +'<form action="/store-keeper/task-hold" method="POST">'
+                        +'<input class="btn btn-danger status" type="submit" id="taskHold" value="Остановить"/>'
+                        +'<input type="hidden" value="'+ data.task.id +'" name="taskID"/>'
+                        +'</form>'
+                        +'<form action="/store-keeper/task-done" method="POST">'
+                        +'<input class="btn btn-success status" type="submit" id="taskDone" value="Завершить"/>'
+                        +'<input type="hidden" value="'+ data.task.id +'" name="taskID"/>'
+                        +'</form>'
+                        +'</td>'
+                }
                 newTask2 = '<td class="tac"> ' +
                     '<a class="update-task modal-window-link"' +
                     ' title="Редактировать задачу"' +
@@ -190,51 +203,8 @@ $(document).ready(function () {
                     '</td>';
 
 
-                if (getRole(window.location.pathname) === '/store-keeper') {
-                    ;
-                    newTask3 = '<td class="tac"><strong>' + data.task.id + '</strong></td>'
-                        + '<td class="vat">'
-                        + '<p><strong>Имя задачи: </strong> name</p>'
-                        + '<p><strong>Стоимость: </strong>' + data.task.cost + ' грн</p>'
-                        + '</td>'
-                        + '<td class="vat">'
-                        + '<p class="bt"><strong>Запчасти: </strong>' + data.task.parts + '</p>'
-                        + '<p><strong>Запчасти клиента: </strong>' + data.task.customerParts + '</p>'
-                        + '<p><strong>Недостающие запчасти: </strong>' + data.task.needBuyParts + '</p>'
-                        + '<p class="bt"><strong>Комментарий: </strong>' + data.task.comment + '</p>'
-                        + '</td>'
-                        + '<td class="tac" style="background-color: #eee;">'
-                        + '<a class="update-task modal-window-link"'
-                        + 'title="Редактировать задачу"'
-                        + 'data-toggle="modal"'
-                        + 'data-id="' + data.task.id + '"'
-                        + 'data-task-description="' + data.task.description + '"'
-                        + 'data-task-name=" ' + data.task.name + ' "'
-                        + 'data-task-planed-executor="  ' + data.task.planedExecutorID + ' "'
-                        + 'data-task-cost=" ' + data.task.cost + ' "'
-                        + 'data-task-parts=" ' + data.task.parts + ' "'
-                        + 'data-task-customer-parts=" ' + data.task.customerParts + ' "'
-                        + 'data-task-need-buy-parts=" ' + data.task.needBuyParts + ' "'
-                        + 'data-task-comment=" ' + data.task.comment + ' "'
-                        + 'data-target="#updateTaskFormModal">'
-                        + '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>'
-                        + '</a>'
-                        + '<form style="display: inline-block;" class="btn label-default" action="/store-keeper/task-hold"'
-                        + 'method="POST">'
-                        + '<input class="btn label-default" type="submit" id="taskHold" value="Hold"/>'
-                        + '<input type="hidden" value="' + data.task.id + '" name="taskID"/>'
-                        + '</form>'
-                        + '<form style="display: inline-block;  width:97%;" class="btn label-success"'
-                        + 'action="/store-keeper/task-done" method="POST">'
-                        + '<input class="btn label-success" type="submit" id="taskDone" value="Done"/>'
-                        + '<input type="hidden" value="' + data.task.id + '" name="taskID"/>'
-                        + '</form>'
-                        + '</td>';
-                    $(idx).append(newTask3);
-                }
-                else {
-                    $(idx).append(newTask + newTask1 + newTask2);
-                }
+
+                $(idx).append(newTask + newTask1 + newTask2);
 
 
                 deleteTaskOnClick();
