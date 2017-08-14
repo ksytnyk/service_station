@@ -21,22 +21,27 @@ button:focus {
 
 .status-bgc-pending {
     background-color: rgba(255, 165, 0, 0.4) !important;
+        color: #222;
 }
 
 .status-bgc-processing {
-    background-color: rgba(51, 122, 183, 0.6) !important;
+    background-color: rgba(51, 122, 183, 0.4) !important;
+        color: #222;
 }
 
 .status-bgc-hold {
     background-color: rgba(255, 0, 0, 0.4) !important;
+        color: #222;
 }
 
 .status-bgc-done {
     background-color: rgba(0, 128, 0, 0.4) !important;
+    color: #222;
 }
 
 .status-bgc-canceled {
     background-color: rgba(0, 0, 0, 0.4) !important;
+    color: #000;
 }
 
 .popover-content {
@@ -73,24 +78,31 @@ select[disabled] {
     opacity: 0.65 !important;
 }
 
-.status-requests-canceled:hover{
+.status-requests-canceled {
+    background-color: #888;
     color: white;
+    border: 1px solid #666;
 }
 
-.status-requests-canceled{
+.status-requests-canceled:hover {
     color: white;
-    margin: 5px 0;
-}
-
-.status-requests{
-    width: 110px;
-    margin: 5px 0;
-    display: inline-block;
+    background-color: #777;
 }
 
 .status {
     width: 100px;
     margin: 5px 0;
+}
+
+.status-task,
+.status-requests {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 7px 0;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
 }
 
 /* LOGIN */
@@ -383,13 +395,6 @@ thead {
     display: none;
 }
 
-.create_request p,
-.update_request p,
-.store-keeper p,
-.executor p {
-    margin: 0;
-}
-
 .create_request .bt,
 .update_request .bt,
 .store-keeper .bt,
@@ -416,8 +421,12 @@ thead {
 }
 
 /* REQUESTS */
-.requests p {
-    margin: 0;
+.requests p,
+.executor p,
+.update_request p,
+.create_request p,
+.store-keeper p {
+    margin: 3px 0;
     font-size: 13px;
 }
 
@@ -425,8 +434,8 @@ thead {
     display: block;
 }
 
-.requests .table tr td:last-child {
-    background-color: #eeeeee;
+.disable-task p {
+    opacity: 0.5;
 }
 
 .requests .requests_id {
@@ -456,7 +465,7 @@ thead {
 }
 
 .requests .task_table {
-    margin: 0;
+    margin: 0 0 34px;
 }
 
 .requests .task_table th {
@@ -467,6 +476,20 @@ thead {
 
 .requests .task_table tr td:last-child {
     background-color: #eee;
+}
+
+.requests .request-form-status {
+    display: inline-block;
+    margin: 10px 5px 0 0;
+}
+
+.requests input[type=submit] {
+    padding: 5px 7px 4px;
+    font-size: 13px;
+}
+
+.requests .request-form-status:last-child {
+    margin-right: 0;
 }
 
 /* CUSTOMER */
@@ -484,8 +507,13 @@ thead {
     display: none;
 }
 
-
 .executor .bt,
 .store-keeper .bt {
     width: 581px;
+}
+
+.executor .bb,
+.create_request .bb,
+.store-keeper .bb {
+    border-bottom: none;
 }

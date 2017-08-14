@@ -23,21 +23,6 @@
             <tr>
                 <th class="tac" style="position: relative;">
                     <span class="requests_id">{id}</span>
-                    {@eq key=status value=1}
-                    <span class="glyphicon glyphicon-question-sign" style="color:#f0ad4e; font-size: 18px;" aria-hidden="true" data-toggle="popover" data-content="Режим статуса заказа: НЕ АКТИВНЫЙ"></span>
-                    {/eq}
-                    {@eq key=status value=2}
-                    <span class="glyphicon glyphicon-info-sign" style="color:#0040ff; font-size: 18px;" aria-hidden="true" data-toggle="popover" data-content="Режим статуса заказа: В ПРОЦЕСЕ"></span>
-                    {/eq}
-                    {@eq key=status value=3}
-                    <span class="glyphicon glyphicon-ok-circle" style="color:#00FA9A; font-size: 18px;" aria-hidden="true" data-toggle="popover" data-content="Режим статуса заказа: ГОТОВО"></span>
-                    {/eq}
-                    {@eq key=status value=4}
-                    <span class="glyphicon glyphicon-exclamation-sign" style="color:#ff0000; font-size: 18px;" aria-hidden="true" data-toggle="popover" data-content="Режим статуса заказа: В ОЖИДАНИИ"></span>
-                    {/eq}
-                    {@eq key=status value=5}
-                    <span class="glyphicon glyphicon-remove-circle" style=" font-size: 18px;" aria-hidden="true" data-toggle="popover" data-content="Режим статуса заказа: ОТМЕНЕНО"></span>
-                    {/eq}
                     <a href="update-request/{id}"
                        class=""
                        title="Редактировать заказ"
@@ -54,7 +39,19 @@
                         <span class="glyphicon glyphicon-remove icon-margin" aria-hidden="true" style="font-size: 19px;"/>
                     </a>
                 </th>
-                <td class="vat pr">
+                <td class="vat {@eq key=status value=5}disable-task{/eq}" style="position: relative; padding-top: 40px;">
+                    {@eq key=status value=1}
+                    <span class="status-requests status-bgc-pending"><strong>Заказ в ожидании</strong></span>
+                    {/eq}
+                    {@eq key=status value=2}
+                    <span class="status-requests status-bgc-processing"><strong>Заказ выполняется</strong></span>
+                    {/eq}
+                    {@eq key=status value=3}
+                    <span class="status-requests status-bgc-done"><strong>Заказ завершён</strong></span>
+                    {/eq}
+                    {@eq key=status value=5}
+                    <span class="status-requests status-bgc-canceled"><strong>Заказ анулирован</strong></span>
+                    {/eq}
                     <p><strong>Имя заказа: </strong>{name}</p>
                     <p><strong>Описание заказа: </strong>{description}</p>
                     <p><strong>Клиент: </strong>{user.userSurname} {user.userName}</p>
@@ -62,16 +59,16 @@
                     <p><strong>Время начала: </strong>{startTime}</p>
                     <p><strong>План. время: </strong>{estimatedTime}</p>
                     <p><strong>Комментарий: </strong>{comment}</p>
-                    <form action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/change-request-status/{id}" method="post">
-                    <input type="submit" class="btn btn-primary status-requests" id="requestProcessing" value="Начать"/>
+                    <form class="request-form-status" action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/change-request-status/{id}" method="post">
+                        <input class="btn btn-primary" type="submit" id="requestProcessing" value="Начать"/>
                         <input type="hidden" value="2" name="statusID">
                     </form>
-                    <form action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/change-request-status/{id}" method="post">
-                    <input type="submit" class="btn btn-success status-requests" id="requestDone" value="Завершить"/>
+                    <form class="request-form-status" action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/change-request-status/{id}" method="post">
+                        <input class="btn btn-success" type="submit" id="requestDone" value="Завершить"/>
                         <input type="hidden" value="3" name="statusID">
                     </form>
-                    <form action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/change-request-status/{id}" method="post">
-                        <input type="submit" class="btn label-default status-requests-canceled" id="requestCanceled" value="Анулировать"/>
+                    <form class="request-form-status" action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/change-request-status/{id}" method="post">
+                        <input class="btn status-requests-canceled" type="submit" id="requestCanceled" value="Анулировать"/>
                         <input type="hidden" value="5" name="statusID">
                     </form>
                 </td>
@@ -88,13 +85,25 @@
                         <tbody>
                         {#tasks}
                         <tr id="idx-task-{id}">
-                            <td class="
-                        {@eq key=status value=1} tac bb status-bgc-pending{/eq}
-                        {@eq key=status value=2} tac bb status-bgc-processing{/eq}
-                        {@eq key=status value=3} tac bb status-bgc-done{/eq}
-                        {@eq key=status value=4} tac bb status-bgc-hold{/eq}
-                        {@eq key=status value=5} tac bb status-bgc-canceled{/eq}"><strong>{id}</strong></td>
-                            <td class="vat bb">
+                            <td class="tac bb">
+                                <strong>{id}</strong>
+                            </td>
+                            <td class="vat bb {@eq key=status value=5}disable-task{/eq}" style="position: relative; padding-top: 40px;">
+                                {@eq key=status value=1}
+                                <span class="status-task status-bgc-pending"><strong>Задача в ожидании</strong></span>
+                                {/eq}
+                                {@eq key=status value=2}
+                                <span class="status-task status-bgc-processing"><strong>Задача выполняется</strong></span>
+                                {/eq}
+                                {@eq key=status value=3}
+                                <span class="status-task status-bgc-done"><strong>Задача завершёна</strong></span>
+                                {/eq}
+                                {@eq key=status value=4}
+                                <span class="status-task status-bgc-hold"><strong>Задача остановлена</strong></span>
+                                {/eq}
+                                {@eq key=status value=5}
+                                <span class="status-task status-bgc-canceled"><strong>Задача анулирована</strong></span>
+                                {/eq}
                                 <p><strong>Имя задачи: </strong> {name}</p>
                                 <p><strong>Исполнитель: </strong>{planedExecutor.dataValues.userSurname} {planedExecutor.dataValues.userName}</p>
                                 <p><strong>Поручить задачу: </strong>{assignedUser.dataValues.userSurname} {assignedUser.dataValues.userName}</p>
@@ -103,7 +112,7 @@
                                 <p><strong>Время начала: </strong>{startTime}</p>
                                 <p><strong>Конечное время: </strong>{endTime}</p>
                             </td>
-                            <td class="vat bb">
+                            <td class="vat bb {@eq key=status value=5}disable-task{/eq}">
                                 <p><strong>Описание задачи: </strong>{description}</p>
                                 <p class="bt"><strong>Запчасти: </strong>{parts}</p>
                                 <p><strong>Запчасти клиента: </strong>{customerParts}</p>

@@ -67,13 +67,25 @@
                     <tbody>
                     {#tasks}
                     <tr id="idx-task-{id}">
-                        <th class="
-                        {@eq key=status value=1} tac status-bgc-pending{/eq}
-                        {@eq key=status value=2} tac status-bgc-processing{/eq}
-                        {@eq key=status value=3} tac status-bgc-done{/eq}
-                        {@eq key=status value=4} tac status-bgc-hold{/eq}
-                        {@eq key=status value=5} tac status-bgc-canceled{/eq}">{id}</th>
-                        <td class="vat">
+                        <td class="tac bb">
+                            <strong>{id}</strong>
+                        </td>
+                        <td class="vat bb {@eq key=status value=5}disable-task{/eq}" style="position: relative; padding-top: 40px;">
+                            {@eq key=status value=1}
+                            <span class="status-task status-bgc-pending"><strong>Задача в ожидании</strong></span>
+                            {/eq}
+                            {@eq key=status value=2}
+                            <span class="status-task status-bgc-processing"><strong>Задача выполняется</strong></span>
+                            {/eq}
+                            {@eq key=status value=3}
+                            <span class="status-task status-bgc-done"><strong>Задача завершёна</strong></span>
+                            {/eq}
+                            {@eq key=status value=4}
+                            <span class="status-task status-bgc-hold"><strong>Задача остановлена</strong></span>
+                            {/eq}
+                            {@eq key=status value=5}
+                            <span class="status-task status-bgc-canceled"><strong>Задача анулирована</strong></span>
+                            {/eq}
                             <p><strong>Имя задачи: </strong> {name}</p>
                             <p><strong>Исполнитель: </strong></p>
                             <p><strong>Поручить задачу: </strong>{assignedUserID}</p>
