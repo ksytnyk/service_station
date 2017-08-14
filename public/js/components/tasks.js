@@ -114,7 +114,7 @@ $(document).ready(function () {
 
                 $(idx).empty();
 
-                if (getRole(window.location.pathname) !== "/executor" && getRole(window.location.pathname) !== "/store-keeper")  {
+                if (getRole(window.location.pathname) !== "/executor" && getRole(window.location.pathname) !== "/store-keeper") {
                     var executorNameSurname = $('#option' + $('#update-form-task').serializeArray()[2].value).attr('executorFullName');
                     var assignedNameSurname = $('.optionAE' + $('#update-form-task').serializeArray()[3].value).attr('assignedUserFullName');
                 }
@@ -158,52 +158,6 @@ $(document).ready(function () {
                         '</form>' +
                         '</td>';
                 }
-                if (getRole(window.location.pathname) === '/store-keeper'){
-                    ;
-                        newTask3 = '<td class="tac"><strong>'+ data.task.id+ '</strong></td>'
-                            + '<td class="vat">'
-                            + '<p><strong>Имя задачи: </strong> name</p>'
-                            + '<p><strong>Стоимость: </strong>'+ data.task.cost+' грн</p>'
-                            + '</td>'
-                            + '<td class="vat">'
-                            + '<p class="bt"><strong>Запчасти: </strong>'+ data.task.parts +'</p>'
-                            + '<p><strong>Запчасти клиента: </strong>'+ data.task.customerParts +'</p>'
-                            + '<p><strong>Недостающие запчасти: </strong>' + data.task.needBuyParts +'</p>'
-                            + '<p class="bt"><strong>Комментарий: </strong>'+ data.task.comment +'</p>'
-                            + '</td>'
-                            + '<td class="tac" style="background-color: #eee;">'
-                            + '<a class="update-task modal-window-link"'
-                            +'title="Редактировать задачу"'
-                            +'data-toggle="modal"'
-                            +'data-id="'+ data.task.id +'"'
-                            +'data-task-description="'+ data.task.description +'"'
-                            +'data-task-name=" ' + data.task.name + ' "'
-                            +'data-task-planed-executor="  ' + data.task.planedExecutorID + ' "'
-                            +'data-task-cost=" ' + data.task.cost + ' "'
-                            +'data-task-parts=" ' + data.task.parts + ' "'
-                            +'data-task-customer-parts=" ' + data.task.customerParts + ' "'
-                            +'data-task-need-buy-parts=" ' + data.task.needBuyParts + ' "'
-                            +'data-task-comment=" ' + data.task.comment + ' "'
-                            +'data-target="#updateTaskFormModal">'
-                            +'<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>'
-                            +'</a>'
-                            +'<form style="display: inline-block;" class="btn label-default" action="/store-keeper/task-hold"'
-                            +'method="POST">'
-                            +'<input class="btn label-default" type="submit" id="taskHold" value="Hold"/>'
-                            +'<input type="hidden" value="' + data.task.id + '" name="taskID"/>'
-                            +'</form>'
-                            +'<form style="display: inline-block;  width:97%;" class="btn label-success"'
-                            +'action="/store-keeper/task-done" method="POST">'
-                            +'<input class="btn label-success" type="submit" id="taskDone" value="Done"/>'
-                            +'<input type="hidden" value="'+ data.task.id +'" name="taskID"/>'
-                            +'</form>'
-                            +'</td>';
-                        $(idx).append(newTask3);
-                }
-                else {
-                    $(idx).append(newTask + newTask1 + newTask2);
-                }
-
                 newTask2 = '<td class="tac"> ' +
                     '<a class="update-task modal-window-link"' +
                     ' title="Редактировать задачу"' +
@@ -234,6 +188,54 @@ $(document).ready(function () {
                     '<span class="glyphicon glyphicon-remove" aria-hidden="true"/> ' +
                     '</a>' +
                     '</td>';
+
+
+                if (getRole(window.location.pathname) === '/store-keeper') {
+                    ;
+                    newTask3 = '<td class="tac"><strong>' + data.task.id + '</strong></td>'
+                        + '<td class="vat">'
+                        + '<p><strong>Имя задачи: </strong> name</p>'
+                        + '<p><strong>Стоимость: </strong>' + data.task.cost + ' грн</p>'
+                        + '</td>'
+                        + '<td class="vat">'
+                        + '<p class="bt"><strong>Запчасти: </strong>' + data.task.parts + '</p>'
+                        + '<p><strong>Запчасти клиента: </strong>' + data.task.customerParts + '</p>'
+                        + '<p><strong>Недостающие запчасти: </strong>' + data.task.needBuyParts + '</p>'
+                        + '<p class="bt"><strong>Комментарий: </strong>' + data.task.comment + '</p>'
+                        + '</td>'
+                        + '<td class="tac" style="background-color: #eee;">'
+                        + '<a class="update-task modal-window-link"'
+                        + 'title="Редактировать задачу"'
+                        + 'data-toggle="modal"'
+                        + 'data-id="' + data.task.id + '"'
+                        + 'data-task-description="' + data.task.description + '"'
+                        + 'data-task-name=" ' + data.task.name + ' "'
+                        + 'data-task-planed-executor="  ' + data.task.planedExecutorID + ' "'
+                        + 'data-task-cost=" ' + data.task.cost + ' "'
+                        + 'data-task-parts=" ' + data.task.parts + ' "'
+                        + 'data-task-customer-parts=" ' + data.task.customerParts + ' "'
+                        + 'data-task-need-buy-parts=" ' + data.task.needBuyParts + ' "'
+                        + 'data-task-comment=" ' + data.task.comment + ' "'
+                        + 'data-target="#updateTaskFormModal">'
+                        + '<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>'
+                        + '</a>'
+                        + '<form style="display: inline-block;" class="btn label-default" action="/store-keeper/task-hold"'
+                        + 'method="POST">'
+                        + '<input class="btn label-default" type="submit" id="taskHold" value="Hold"/>'
+                        + '<input type="hidden" value="' + data.task.id + '" name="taskID"/>'
+                        + '</form>'
+                        + '<form style="display: inline-block;  width:97%;" class="btn label-success"'
+                        + 'action="/store-keeper/task-done" method="POST">'
+                        + '<input class="btn label-success" type="submit" id="taskDone" value="Done"/>'
+                        + '<input type="hidden" value="' + data.task.id + '" name="taskID"/>'
+                        + '</form>'
+                        + '</td>';
+                    $(idx).append(newTask3);
+                }
+                else {
+                    $(idx).append(newTask + newTask1 + newTask2);
+                }
+
 
                 deleteTaskOnClick();
                 clearModalAddTask();
@@ -336,7 +338,7 @@ function getRole(pathname) {
     else if (pathname.includes('moderator')) {
         return '/moderator';
     }
-    else if(pathname.includes('store-keeper')){
+    else if (pathname.includes('store-keeper')) {
         return '/store-keeper';
     }
     else {
@@ -368,23 +370,28 @@ function formatDate(date) {
 function changeClassForStatus(data) {
     var newClass = "";
     switch (data) {
-        case 1: {
+        case 1:
+        {
             newClass = 'class="tac bb status-bgc-pending"';
             break;
         }
-        case 2: {
+        case 2:
+        {
             newClass = 'class="tac bb status-bgc-processing"';
             break;
         }
-        case 3: {
+        case 3:
+        {
             newClass = 'class="tac bb status-bgc-done"';
             break;
         }
-        case 4: {
+        case 4:
+        {
             newClass = 'class="tac bb status-bgc-hold"';
             break;
         }
-        case 5: {
+        case 5:
+        {
             newClass = 'class="tac bb status-bgc-canceled"';
             break;
         }
