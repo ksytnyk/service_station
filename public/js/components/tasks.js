@@ -19,6 +19,9 @@ $(document).ready(function () {
 
     $('#taskAddButton').on('click', function () {
 
+        $('.assign-task-select').addClass("hidden");
+        $('.assign-task-button').removeClass("hidden");
+
         $('#createTaskFormModal').modal('toggle');
 
         $.ajax({
