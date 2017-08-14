@@ -20,7 +20,7 @@
             </thead>
             <tbody>
             {#requests}
-            <tr>
+            <tr id="idr-request-{id}">
                 <th class="tac" style="position: relative;">
                     <span class="requests_id">{id}</span>
                     <a href="update-request/{id}"
@@ -144,6 +144,7 @@
                                    class="delete-task modal-window-link"
                                    title="Удалить задачу" data-toggle="modal"
                                    data-current="{typeUser}" data-id="{id}"
+                                   data-request-id="{requestID}"
                                    data-target="#deleteTaskFormModal"
                                    style="">
                                     <span class="glyphicon glyphicon-remove" aria-hidden="true"/>

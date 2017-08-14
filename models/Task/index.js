@@ -343,4 +343,25 @@ Task.changeTaskStatusWithPending = function (idTask, status, assigned_user) {
     })
 };
 
+Task.isLast = function (idRequest) {
+    return new Promise((resolve, reject) => {
+        Task
+            .count({
+                where: {
+                    requestID: idRequest
+                }
+            })
+            .then(result => {
+                if (result === 1) {
+                    resolve(true);
+                } else {
+                    resolve(false);
+                }
+            })
+            .catch(err => {
+                reject(err);
+            });
+    })
+};
+
 module.exports = Task;

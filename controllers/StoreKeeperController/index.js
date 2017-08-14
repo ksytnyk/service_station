@@ -42,7 +42,7 @@ router.post('/task-done', (req, res) => {
 });
 
 
-router.put('/update-task/:id',validation.createAndUpdateTask(), (req, res) => {
+router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
     Task
         .updateTask(req.body.id, req.body)
         .then(() => {

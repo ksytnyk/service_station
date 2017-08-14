@@ -248,13 +248,48 @@ router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
 
 router.delete('/delete-task/:id', (req, res) => {
     Task
-        .destroy({
-            where: {
-                id: Number(req.params.id)
+        .isLast(req.body.requestID)
+        .then(result => {
+            if (result) {
+                Task
+                    .destroy({
+                        where: {
+                            id: Number(req.params.id)
+                        }
+                    })
+                    .then(() => {
+                        Request
+                            .deleteRequest(req.body.requestID)
+                            .then(() => {
+                                res.status(200).send({
+                                    id: req.params.id,
+                                    requestID: req.body.requestID
+                                });
+                            })
+                            .catch(errors => {
+                                console.warn(errors);
+                                res.status(400).send({errors: errors});
+                            })
+                    })
+                    .catch(errors => {
+                        console.warn(errors);
+                        res.status(400).send({errors: errors});
+                    })
+            } else {
+                Task
+                    .destroy({
+                        where: {
+                            id: Number(req.params.id)
+                        }
+                    })
+                    .then(() => {
+                        res.status(200).send({id: req.params.id});
+                    })
+                    .catch(errors => {
+                        console.warn(errors);
+                        res.status(400).send({errors: errors});
+                    })
             }
-        })
-        .then(() => {
-            res.status(200).send({id: req.params.id});
         })
         .catch(errors => {
             console.warn(errors);
