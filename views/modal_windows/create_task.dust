@@ -21,26 +21,34 @@
                         <select class="form-control selectpicker" name="planedExecutorID">
                             {#assignedExecutorUsers}
                             {@eq key=userTypeID value=3}
-                            <option value="{id}" executorFullName="{userName} {userSurname}" id="option{id}">{userName} {userSurname}
+                            <option value="{id}" executorFullName="{userName} {userSurname}" id="option{id}">{userName}
+                                {userSurname}
                             </option>
                             {/eq}
                             {/assignedExecutorUsers}
                         </select>
                     </div>
                     <div class="form-group col-lg-4">
-                        <label>Поручить задачу</label>
-                        <select class="form-control selectpicker" name="assignedUserID">
-                            {#assignedExecutorUsers}
-                            {@eq key=userTypeID value=4}
-                            <option value="{id}" assignedUserFullName="{userName} {userSurname}" class="optionAE{id}">Кладовщик {userName} {userSurname}
-                            </option>
-                            {/eq}
-                            {@eq key=userTypeID value=3}
-                            <option value="{id}" assignedUserFullName="{userName} {userSurname}" class="optionAE{id}">Инженер {userName} {userSurname}
-                            </option>
-                            {/eq}
-                            {/assignedExecutorUsers}
-                        </select>
+                        <button type="button" class="btn btn-info form-control assign-task-button"
+                                style="background-color: #2e6da4; margin-top: 25px;">Поручить задачу
+                        </button>
+                        <div class="hidden assign-task-select">
+                            <label>Поручить задачу</label>
+                            <select class="form-control selectpicker" name="assignedUserID">
+                                {#assignedExecutorUsers}
+                                {@eq key=userTypeID value=4}
+                                <option value="{id}" assignedUserFullName="{userName} {userSurname}"
+                                        class="optionAE{id}">Кладовщик {userName} {userSurname}
+                                </option>
+                                {/eq}
+                                {@eq key=userTypeID value=3}
+                                <option value="{id}" assignedUserFullName="{userName} {userSurname}"
+                                        class="optionAE{id}">Инженер {userName} {userSurname}
+                                </option>
+                                {/eq}
+                                {/assignedExecutorUsers}
+                            </select>
+                        </div>
                     </div>
                     <div class="form-group col-lg-4">
                         <label>Описание задачи</label>
