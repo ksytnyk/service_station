@@ -94,6 +94,11 @@ select[disabled] {
     margin: 5px 0;
 }
 
+.status-storekeeper{
+    width: 107px;
+    margin: 5px 0;
+}
+
 .status-task,
 .status-requests {
     position: absolute;

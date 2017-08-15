@@ -207,7 +207,7 @@ Task.getTaskByExecutorId = function (id) {
                     }
                 ],
                 where: {
-                    planedExecutorID: id,
+                    assignedUserID: id,
                     $or: [
                         {
                             status: status.PENDING

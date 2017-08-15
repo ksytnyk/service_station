@@ -29,7 +29,7 @@ router.post('/task-hold', (req, res) => {
 });
 
 
-router.post('/task-done', (req, res) => {
+router.post('/task-confirm', (req, res) => {
     Task
         .getTaskById(req.body.taskID)
         .then(result => {
