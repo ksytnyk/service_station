@@ -32,10 +32,17 @@ router.post('/task-hold', (req, res) => {
     Task
         .changeTaskStatus(req.body.taskID, status.HOLD)
         .then(() => {
+            req.flash('success_alert', true);
+            req.flash('success_msg', 'Изменение статуса прошло успешно.');
             res.redirect('/store-keeper')
         })
+        .catch(error => {
+            console.warn(error);
+            req.flash('error_alert', true);
+            req.flash('error_msg', {msg: 'Возникла ошибка при изменении статуса.'});
+            res.redirect(req.baseUrl);
+        });
 });
-
 
 router.post('/task-confirm', (req, res) => {
     Task
@@ -44,7 +51,15 @@ router.post('/task-confirm', (req, res) => {
             Task
                 .changeTaskStatusWithPending(req.body.taskID, status.PENDING, result.planedExecutorID)
                 .then(() => {
+                    req.flash('success_alert', true);
+                    req.flash('success_msg', 'Изменение статуса прошло успешно.');
                     res.redirect('/store-keeper');
+                })
+                .catch(error => {
+                    console.warn(error);
+                    req.flash('error_alert', true);
+                    req.flash('error_msg', {msg: 'Возникла ошибка при изменении статуса.'});
+                    res.redirect(req.baseUrl);
                 });
         });
 });

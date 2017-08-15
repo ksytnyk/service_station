@@ -182,6 +182,6 @@ Request.changeStatus = function (idRequest, status) {
                 reject(err);
             });
     })
-}
+};
 
 module.exports = Request;

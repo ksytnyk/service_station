@@ -181,13 +181,13 @@ router.delete('/delete-request/:id', (req, res) => {
                 .deleteRequest(req.params.id)
                 .then(() => {
                     req.flash('success_alert', true);
-                    req.flash('success_msg', 'Удаление задачи прошло успешно.');
+                    req.flash('success_msg', 'Удаление заказа прошло успешно.');
                     res.redirect(req.baseUrl + '/requests');
                 })
                 .catch(error => {
                     console.warn(error);
                     req.flash('error_alert', true);
-                    req.flash('error_msg', {msg: 'Возникла ошибка при удалении задачи.'});
+                    req.flash('error_msg', {msg: 'Возникла ошибка при удалении заказа.'});
                     res.redirect(req.baseUrl + '/requests');
                 });
         })

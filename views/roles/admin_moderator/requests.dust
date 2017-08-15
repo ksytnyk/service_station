@@ -5,10 +5,6 @@
 {>"header/index"/}
 
 <div class="col-lg-12 requests">
-    <div class="alert alert-danger clearfix errors-info">
-        <button class="hide_alert">X</button>
-        <div id="errors-block"></div>
-    </div>
     <div class="panel panel-default">
         <table class="table dtable">
             <thead>
@@ -47,7 +43,7 @@
                     <span class="status-requests status-bgc-processing"><strong>Заказ выполняется</strong></span>
                     {/eq}
                     {@eq key=status value=3}
-                    <span class="status-requests status-bgc-done"><strong>Заказ завершён</strong></span>
+                    <span class="status-requests status-bgc-done"><strong>Заказ завершен</strong></span>
                     {/eq}
                     {@eq key=status value=5}
                     <span class="status-requests status-bgc-canceled"><strong>Заказ анулирован</strong></span>
@@ -55,7 +51,7 @@
                     <p><strong>Имя заказа: </strong>{name}</p>
                     <p><strong>Описание заказа: </strong>{description}</p>
                     <p><strong>Клиент: </strong>{user.userSurname} {user.userName}</p>
-                    <p><strong>Стоемость: </strong>{cost} грн</p>
+                    <p><strong>Стоимость: </strong>{cost} грн</p>
                     <p><strong>Время начала: </strong>{startTime}</p>
                     <p><strong>План. время: </strong>{estimatedTime}</p>
                     <p><strong>Комментарий: </strong>{comment}</p>

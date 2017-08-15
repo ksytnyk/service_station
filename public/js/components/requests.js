@@ -8,6 +8,8 @@ $(document).ready(function () {
             type: 'Post',
             data: $('#createRequestForm').serializeArray(),
             success: function (data) {
+                showSuccessAlert('Добавление заказа прошло успешно.');
+
                 $('.disable_input').prop('disabled', true);
                 $('#step').slideDown('slow');
                 $('#requestIDForTask').val(data.result.id);
@@ -16,18 +18,7 @@ $(document).ready(function () {
                 $('#access_update_request').show();
             },
             error: function (err) {
-
-                $('.errors-info').css("display", "block");
-
-                var errorsTemplate = err.responseJSON.errors.map(error => {
-                    return ("<div class='col-lg-4'>" + error.msg + "</div>");
-                });
-
-                $('#errors-block').html(errorsTemplate);
-
-                setTimeout(function () {
-                    $('.hide_alert').trigger('click');
-                }, TIME_FOR_FLASH);
+                showErrorAlert(err);
             }
         });
     });
@@ -44,23 +35,14 @@ $(document).ready(function () {
             type: 'PUT',
             data: $('#createRequestForm').serializeArray(),
             success: function (data) {
+                showSuccessAlert('Обновление заказа прошло успешно.');
+
                 $('.disable_input').prop('disabled', true);
                 $('#update_request').hide();
                 $('#access_update_request').show();
             },
             error: function (err) {
-
-                $('.errors-info').css("display", "block");
-
-                var errorsTemplate = err.responseJSON.errors.map(error => {
-                    return ("<div class='col-lg-4'>" + error.msg + "</div>");
-                });
-
-                $('#errors-block').html(errorsTemplate);
-
-                setTimeout(function () {
-                    $('.hide_alert').trigger('click');
-                }, TIME_FOR_FLASH);
+                showErrorAlert(err);
             }
         });
     });
@@ -74,11 +56,3 @@ $(document).ready(function () {
         $('#delete-request-id').text($(this).data('id'));
     });
 });
-
-function getRole(pathname) {
-    if (pathname.includes('admin')) {
-        return '/admin';
-    } else {
-        return '/moderator';
-    }
-}

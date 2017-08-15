@@ -396,7 +396,8 @@ thead {
     display: none;
 }
 
-.errors-info {
+.alerts-errors-info,
+.alerts-success-info {
     display: none;
 }
 

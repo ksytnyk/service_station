@@ -57,7 +57,7 @@ module.exports = {
             req.checkBody('name', '"Имя заказа" - обязательное поле.').notEmpty();
             req.checkBody('customerID', '"Клиент" - обязательное поле.').notEmpty();
             req.checkBody('cost', '"Стоимость" - обязательное поле.').notEmpty();
-            req.checkBody('cost', 'Неправильный формат цены в поле "Стоимость".').isFloat();
+            req.checkBody('cost', 'Поле "Стоимость" может содержать только цифры.').isFloat();
             req.checkBody('startTime', '"Время начала" - обязательное поле.').notEmpty();
             req.checkBody('estimatedTime', '"Планируемове время" - обязательное поле.').notEmpty();
 
@@ -83,8 +83,8 @@ module.exports = {
                 let endTime = req.body.endTime;
 
                 req.checkBody('description', '"Описание задачи" - обязательное поле.').notEmpty();
-                req.checkBody('cost', '"Цена" - обязательное поле.').notEmpty();
-                req.checkBody('cost', 'Неправильный формат цены в поле "Стоимость".').isFloat();
+                req.checkBody('cost', '"Стоимость" - обязательное поле.').notEmpty();
+                req.checkBody('cost', 'Поле "Стоимость" может содержать только цифры.').isFloat();
                 req.checkBody('estimationTime', '"Планируемове время" - обязательное поле.').notEmpty();
                 req.checkBody('startTime', '"Время начала" - обязательное поле.').notEmpty();
                 req.checkBody('endTime', '"Конечное время" - обязательное поле.').notEmpty();
@@ -103,7 +103,7 @@ module.exports = {
             else if (req.baseUrl==='/store-keeper'){
                 let needBuyParts = req.body.needBuyParts;
 
-                req.checkBody('needBuyParts', 'Недостающие запчасти - обязательное поле.').notEmpty();
+                req.checkBody('needBuyParts', '"Недостающие запчасти" - обязательное поле.').notEmpty();
             }
 
             let errors = req.validationErrors();

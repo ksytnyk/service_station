@@ -5,10 +5,6 @@
 {>"header/index"/}
 
 <div class="col-lg-12 update_request">
-    <div class="alert alert-danger clearfix errors-info">
-        <button class="hide_alert">X</button>
-        <div id="errors-block"></div>
-    </div>
     {#request}
     <form class="clearfix" id="createRequestForm">
         <div class="form-group col-lg-5">

@@ -10,10 +10,20 @@
     {/error_alert}
 
     {#success_alert}
-    <div class="alert alert-success">
+    <div class="alert alert-success clearfix">
         <button class="hide_alert">X</button>
-        {success_msg}
+        <div class="col-lg-4">{success_msg}</div>
     </div>
     {/success_alert}
+
+    <div class="alert alert-danger clearfix alerts-errors-info">
+        <button class="hide_alert">X</button>
+        <div id="errors-block"></div>
+    </div>
+
+    <div class="alert alert-success clearfix alerts-success-info">
+        <button class="hide_alert">X</button>
+        <div id="success-block"></div>
+    </div>
 </div>
 {/errors}

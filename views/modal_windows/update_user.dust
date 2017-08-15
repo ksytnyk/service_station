@@ -55,7 +55,7 @@
                         <label>Пароль</label>
                         <input type="text" class="form-control" id="update-form-password" name="userPassword">
                     </div>
-                    <div class='form-group col-lg-{@eq key=typeUser value=1}6{/eq}{@eq key=typeUser value=2}12{/eq}'>
+                    <div class='form-group col-lg-{@eq key=typeUser value=1}6{/eq}{@eq key=typeUser value=2}12{/eq}' style="margin-top: 25px;">
                         <button type="submit" class="btn btn-success width">Сохранить</button>
                         <button type="button" class="btn btn-danger pull-right width" data-dismiss="modal">
                             Отменить

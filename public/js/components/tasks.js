@@ -29,6 +29,7 @@ $(document).ready(function () {
             type: 'Post',
             data: $('#createTaskForm').serializeArray(),
             success: function (data) {
+                showSuccessAlert('Добавление задачи прошло успешно.');
 
                 var executorNameSurname = $('#option' + $('#createTaskForm').serializeArray()[2].value).attr('executorFullName');
                 var assignedNameSurname = $('.optionAE' + $('#createTaskForm').serializeArray()[3].value).attr('assignedUserFullName');
@@ -89,18 +90,7 @@ $(document).ready(function () {
 
             },
             error: function (err) {
-
-                $('.errors-info').css("display", "block");
-
-                var errorsTemplate = err.responseJSON.errors.map(error => {
-                    return ("<div class='col-lg-4'>" + error.msg + "</div>");
-                });
-
-                $('#errors-block').html(errorsTemplate);
-
-                setTimeout(function () {
-                    $('.hide_alert').trigger('click');
-                }, TIME_FOR_FLASH);
+                showErrorAlert(err);
             }
         });
     });
@@ -120,6 +110,7 @@ $(document).ready(function () {
             type: 'PUT',
             data: $('#update-form-task').serializeArray(),
             success: function (data) {
+                showSuccessAlert('Обновление задачи прошло успешно.');
 
                 var idx = "#idx-task-" + data.task.id;
 
@@ -226,17 +217,7 @@ $(document).ready(function () {
                 updateTaskOnClick();
             },
             error: function (err) {
-                $('.errors-info').css("display", "block");
-
-                var errorsTemplate = err.responseJSON.errors.map(error => {
-                    return ("<div class='col-lg-4'>" + error.msg + "</div>");
-                });
-
-                $('#errors-block').html(errorsTemplate);
-
-                setTimeout(function () {
-                    $('.hide_alert').trigger('click');
-                }, TIME_FOR_FLASH);
+                showErrorAlert(err);
             }
         });
     });
@@ -292,28 +273,18 @@ function deleteTaskOnClick() {
             type: 'DELETE',
             data: data,
             success: function (data) {
-                var idx = "#idx-task-" + data.id;
-                $(idx).remove();
-
                 if (data.requestID) {
-                    var idr = "#idr-request-" + data.requestID;
-                    $(idr).remove();
+                    // var idr = "#idr-request-" + data.requestID;
+                    // $(idr).remove();
                     window.location.replace(window.location.pathname);
+                } else {
+                    showSuccessAlert('Удаление задачи прошло успешно.');
+                    var idx = "#idx-task-" + data.id;
+                    $(idx).remove();
                 }
             },
             error: function (err) {
-
-                $('.errors-info').css("display", "block");
-
-                var errorsTemplate = err.responseJSON.errors.map(error => {
-                    return ("<div class='col-lg-4'>" + error.msg + "</div>");
-                });
-
-                $('#errors-block').html(errorsTemplate);
-
-                setTimeout(function () {
-                    $('.hide_alert').trigger('click');
-                }, TIME_FOR_FLASH);
+                showErrorAlert(err);
             }
         });
     });
@@ -324,21 +295,6 @@ function getIdRole(pathname) {
         return 1;
     } else {
         return 2;
-    }
-}
-
-function getRole(pathname) {
-    if (pathname.includes('admin')) {
-        return '/admin';
-    }
-    else if (pathname.includes('moderator')) {
-        return '/moderator';
-    }
-    else if (pathname.includes('store-keeper')) {
-        return '/store-keeper';
-    }
-    else {
-        return '/executor';
     }
 }
 
