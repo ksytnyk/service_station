@@ -4,7 +4,7 @@
 
 {>"header/index"/}
 
-<div class="col-lg-12 requests role{typeUser}">
+<div class="col-lg-12 customer">
     <div class="alert alert-danger clearfix errors-info">
         <button class="hide_alert">X</button>
         <div id="errors-block"></div>
@@ -13,7 +13,7 @@
         <table class="table dtable">
             <thead>
             <tr>
-                <th class="tac" style="width: 15px;">№</th>
+                <th class="tac" style="width: 15px;">ID</th>
                 <th class="tac" style="width: 225px;">Информация о заказе</th>
                 <th class="tac">Задачи</th>
             </tr>
@@ -23,26 +23,22 @@
             <tr>
                 <th class="tac">
                     {id}
-                    {@eq key=status value=1}
-                    <span class="glyphicon glyphicon-question-sign" style="color:#f0ad4e; font-size: 18px;" aria-hidden="true" data-toggle="popover" data-content="Режим статуса заказа: НЕ АКТИВНЫЙ"></span>
-                    {/eq}
-                    {@eq key=status value=2}
-                    <span class="glyphicon glyphicon-info-sign" style="color:#0040ff; font-size: 18px;" aria-hidden="true" data-toggle="popover" data-content="Режим статуса заказа: В ПРОЦЕСЕ"></span>
-                    {/eq}
-                    {@eq key=status value=3}
-                    <span class="glyphicon glyphicon-ok-circle" style="color:#00FA9A; font-size: 18px;" aria-hidden="true" data-toggle="popover" data-content="Режим статуса заказа: ГОТОВО"></span>
-                    {/eq}
-                    {@eq key=status value=4}
-                    <span class="glyphicon glyphicon-exclamation-sign" style="color:#ff0000; font-size: 18px;" aria-hidden="true" data-toggle="popover" data-content="Режим статуса заказа: В ОЖИДАНИИ"></span>
-                    {/eq}
-                    {@eq key=status value=5}
-                    <span class="glyphicon glyphicon-remove-circle" style=" font-size: 18px;" aria-hidden="true" data-toggle="popover" data-content="Режим статуса заказа: ОТМЕНЕНО"></span>
-                    {/eq}
                 </th>
-                <td class="vat pr">
+                <td class="vat {@eq key=status value=5}disable-task{/eq}" style="position: relative; padding-top: 40px;">
+                {@eq key=status value=1}
+                <span class="status-requests status-bgc-pending"><strong>Заказ в ожидании</strong></span>
+                {/eq}
+                {@eq key=status value=2}
+                <span class="status-requests status-bgc-processing"><strong>Заказ выполняется</strong></span>
+                {/eq}
+                {@eq key=status value=3}
+                <span class="status-requests status-bgc-done"><strong>Заказ завершён</strong></span>
+                {/eq}
+                {@eq key=status value=5}
+                <span class="status-requests status-bgc-canceled"><strong>Заказ анулирован</strong></span>
+                {/eq}
                     <p><strong>Имя заказа: </strong>{name}</p>
                     <p><strong>Описание заказа: </strong>{description}</p>
-                    <p><strong>Клиент: </strong>{user.userSurname} {user.userName}</p>
                     <p><strong>Стоемость: </strong>{cost} грн</p>
                     <p><strong>Время начала: </strong>{startTime}</p>
                     <p><strong>План. время: </strong>{estimatedTime}</p>
@@ -60,24 +56,32 @@
                         <tbody>
                         {#tasks}
                         <tr id="idx-task-{id}">
-                            <td class="
-                                    {@eq key=status value=1} tac bb status-bgc-pending{/eq}
-                                    {@eq key=status value=2} tac bb status-bgc-processing{/eq}
-                                    {@eq key=status value=3} tac bb status-bgc-done{/eq}
-                                    {@eq key=status value=4} tac bb status-bgc-hold{/eq}
-                                    {@eq key=status value=5} tac bb status-bgc-canceled{/eq}">
+                            <td class="tac bb">
                                 <strong>{id}</strong>
                             </td>
-                            <td class="vat">
+                            <td class="vat bb {@eq key=status value=5}disable-task{/eq}" style="position: relative; padding-top: 40px;">
+                                {@eq key=status value=1}
+                                <span class="status-task status-bgc-pending"><strong>Задача в ожидании</strong></span>
+                                {/eq}
+                                {@eq key=status value=2}
+                                <span class="status-task status-bgc-processing"><strong>Задача выполняется</strong></span>
+                                {/eq}
+                                {@eq key=status value=3}
+                                <span class="status-task status-bgc-done"><strong>Задача завершена</strong></span>
+                                {/eq}
+                                {@eq key=status value=4}
+                                <span class="status-task status-bgc-hold"><strong>Задача остановлена</strong></span>
+                                {/eq}
+                                {@eq key=status value=5}
+                                <span class="status-task status-bgc-canceled"><strong>Задача анулирована</strong></span>
+                                {/eq}
                                 <p><strong>Имя задачи: </strong> {name}</p>
-                                <p><strong>Исполнитель: </strong>{user.dataValues.userSurname} {user.dataValues.userName}</p>
-                                <p><strong>Поручить задачу: </strong>{assignedUserID}</p>
                                 <p><strong>Стоимость: </strong>{cost} грн</p>
                                 <p><strong>План. время: </strong>{estimationTime}</p>
                                 <p><strong>Время начала: </strong>{startTime}</p>
                                 <p><strong>Конечное время: </strong>{endTime}</p>
                             </td>
-                            <td class="vat">
+                            <td class="vat bb {@eq key=status value=5}disable-task{/eq}">
                                 <p><strong>Описание задачи: </strong>{description}</p>
                                 <p class="bt"><strong>Запчасти: </strong>{parts}</p>
                                 <p><strong>Запчасти клиента: </strong>{customerParts}</p>

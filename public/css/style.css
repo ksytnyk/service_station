@@ -403,7 +403,8 @@ thead {
 .create_request .bt,
 .update_request .bt,
 .store-keeper .bt,
-.executor .bt {
+.executor .bt,
+.customer .bt {
     margin: 5px 0 0 -8px;
     border-top: 1px solid #ccc;
     padding: 5px 8px 0;
@@ -430,7 +431,8 @@ thead {
 .executor p,
 .update_request p,
 .create_request p,
-.store-keeper p {
+.store-keeper p,
+.customer p {
     margin: 3px 0;
     font-size: 13px;
 }
@@ -457,11 +459,13 @@ thead {
     width: 450px
 }
 
-.requests .table tbody tr:nth-child(2n) {
+.requests .table tbody tr:nth-child(2n),
+.customer .table tbody tr:nth-child(2n) {
     background-color: #fff;
 }
 
-.requests .task_table p {
+.requests .task_table p,
+.customer .task_table p {
     font-size: 13px;
 }
 
@@ -469,11 +473,13 @@ thead {
     padding: 5px;
 }
 
-.requests .task_table {
+.requests .task_table,
+.customer .task_table {
     margin: 0 0 34px;
 }
 
-.requests .task_table th {
+.requests .task_table th,
+.customer .task_table th {
     border-top: none;
     background-color: #eee;
     font-size: 13px;
@@ -498,7 +504,7 @@ thead {
 }
 
 /* CUSTOMER */
-.role5 .bt {
+.customer .bt {
     width: 475px;
 }
 

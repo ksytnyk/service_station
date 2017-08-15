@@ -375,7 +375,7 @@ function changeStatus(data) {
             break;
         }
         case 3: {
-            newStatus = '<span class="status-task status-bgc-done"><strong>Задача завершёна</strong></span>';
+            newStatus = '<span class="status-task status-bgc-done"><strong>Задача завершена</strong></span>';
             break;
         }
         case 4: {
