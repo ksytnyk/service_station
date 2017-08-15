@@ -180,8 +180,8 @@ $(document).ready(function () {
                         '<input class="btn btn-danger status" type="submit" id="taskHold" value="Остановить"/>' +
                         '<input type="hidden" value="' + data.task.id + '" name="taskID"/>' +
                         '</form>' +
-                        '<form action="/store-keeper/task-done" method="POST">' +
-                        '<input class="btn btn-success status" type="submit" id="taskDone" value="Завершить"/>' +
+                        '<form action="/store-keeper/task-confirm" method="POST">' +
+                        '<input class="btn btn-warning status-storekeeper" type="submit" id="taskPending" value="Подтвердить"/>' +
                         '<input type="hidden" value="' + data.task.id + '" name="taskID"/>' +
                         '</form>' +
                         '</td>'

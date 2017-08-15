@@ -4,15 +4,23 @@ const express = require('express');
 const router = express.Router();
 const status = require('../../constants/status');
 const Task = require('../../models/Task');
+const formatDate = require('../../helpers/formatDate');
 const validation = require('../../middleware/validation');
 
 router.get('/', (req, res) => {
     Task
         .getAllTasksForStore(req.session.passport.user.id)
-        .then(tasks => {
+        .then(result => {
+
+            for (var i = 0; i < result.length; i++) {
+                result[i].dataValues.estimationTime = formatDate(result[i].dataValues.estimationTime);
+                result[i].dataValues.startTime = formatDate(result[i].dataValues.startTime);
+                result[i].dataValues.endTime = formatDate(result[i].dataValues.endTime);
+            }
+
             res.render('roles/storekeeper', {
                 typeUser: req.session.passport.user.userTypeID,
-                tasks: tasks
+                tasks: result
             });
         })
         .catch(error => {

@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 const Task = require('../../models/Task');
 const formatDate = require('../../helpers/formatDate');
-const validation = require('../../middleware/validation')
+const validation = require('../../middleware/validation');
 
 router.get('/', (req, res) => {
     Task
