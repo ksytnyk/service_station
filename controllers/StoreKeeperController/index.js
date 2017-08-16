@@ -28,43 +28,6 @@ router.get('/', (req, res) => {
         });
 });
 
-router.post('/task-hold', (req, res) => {
-    Task
-        .changeTaskStatus(req.body.taskID, status.HOLD)
-        .then(() => {
-            req.flash('success_alert', true);
-            req.flash('success_msg', 'Изменение статуса прошло успешно.');
-            res.redirect('/store-keeper')
-        })
-        .catch(error => {
-            console.warn(error);
-            req.flash('error_alert', true);
-            req.flash('error_msg', {msg: 'Возникла ошибка при изменении статуса.'});
-            res.redirect(req.baseUrl);
-        });
-});
-
-router.post('/task-confirm', (req, res) => {
-    Task
-        .getTaskById(req.body.taskID)
-        .then(result => {
-            Task
-                .changeTaskStatusWithPending(req.body.taskID, status.PENDING, result.planedExecutorID)
-                .then(() => {
-                    req.flash('success_alert', true);
-                    req.flash('success_msg', 'Изменение статуса прошло успешно.');
-                    res.redirect('/store-keeper');
-                })
-                .catch(error => {
-                    console.warn(error);
-                    req.flash('error_alert', true);
-                    req.flash('error_msg', {msg: 'Возникла ошибка при изменении статуса.'});
-                    res.redirect(req.baseUrl);
-                });
-        });
-});
-
-
 router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
     Task
         .updateTask(req.body.id, req.body)
@@ -82,6 +45,22 @@ router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
         .catch(errors => {
             console.warn(errors);
             res.status(400).send({errors: errors});
+        });
+});
+
+router.post('/set-status/:id', (req, res) => {
+    Task
+        .updateTask(req.params.id, req.body)
+        .then(() => {
+            req.flash('success_alert', true);
+            req.flash('success_msg', 'Изменение статуса прошло успешно.');
+            res.redirect(req.baseUrl);
+        })
+        .catch(error => {
+            console.warn(error);
+            req.flash('error_alert', true);
+            req.flash('error_msg', {msg: 'Возникла ошибка при изменении статуса.'});
+            res.redirect(req.baseUrl);
         });
 });
 

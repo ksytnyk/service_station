@@ -52,13 +52,17 @@
                     <p class="bt"><strong>Комментарий: </strong>{comment}</p>
                 </td>
                 <td class="tac">
-                    <form action="/store-keeper/task-hold" method="POST">
-                        <input class="btn btn-danger status-storekeeper status" type="submit" id="taskHold" value="Остановить"/>
-                        <input type="hidden" value="{id}" name="taskID"/>
+                    <form action="/store-keeper/set-status/{id}" method="POST">
+                        <input type="hidden" value="4" name="status"/>
+                        <button class="btn btn-danger status" type="submit">Остановить</button>
                     </form>
-                    <form action="/store-keeper/task-confirm" method="POST">
-                        <input class="btn btn-warning status-storekeeper status" type="submit" id="taskPending" value="Подтвердить"/>
-                        <input type="hidden" value="{id}" name="taskID"/>
+                    <form action="/store-keeper/set-status/{id}" method="POST">
+                        <input type="hidden" value="1" name="status"/>
+
+                        <!-- Manager call the customer ? -->
+                        <input type="hidden" value="{planedExecutorID}" name="assignedUserID"/>
+
+                        <button class="btn btn-warning status" type="submit">Подтвердить</button>
                     </form>
                 </td>
                 <td class="tac">

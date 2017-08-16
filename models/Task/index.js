@@ -323,26 +323,6 @@ Task.changeTaskStatus = function (idTask, status) {
     })
 };
 
-Task.changeTaskStatusWithPending = function (idTask, status, assigned_user) {
-    return new Promise((resolve, reject) => {
-        Task
-            .update({
-                status: status,
-                assignedUserID: assigned_user
-            }, {
-                where: {
-                    id: idTask
-                }
-            })
-            .then(result => {
-                resolve(result);
-            })
-            .catch(err => {
-                reject(err);
-            });
-    })
-};
-
 Task.isLast = function (idRequest) {
     return new Promise((resolve, reject) => {
         Task
