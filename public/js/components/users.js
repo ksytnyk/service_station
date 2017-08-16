@@ -23,7 +23,7 @@ $(document).ready(function () {
         } else {
             $('#delete-form-id').attr('action', ('/moderator/delete-user/' + $(this).data('id')));
         }
-        $('#delete-form-login').html($(this).data('login'));
+        $('#delete-form-surname-name').html($(this).data('user-name') + " " + $(this).data('user-surname'));
     });
 
 });

@@ -51,18 +51,7 @@
         </div>
         <div class="form-group col-lg-12">
             <div class="panel panel-default">
-                <table class="table" id="tasks-table">
-                    <thead>
-                    <tr>
-                        <th class="tac" style="width: 60px;">ID</th>
-                        <th class="tac">Общая информация</th>
-                        <th class="tac" style="width: 600px;">Описание / Запчасти / Комментарий</th>
-                        <th class="tac" style="width: 60px;"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
+                {>"task_table/index"/}
             </div>
         </div>
     </div>

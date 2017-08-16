@@ -1,0 +1,128 @@
+{+task_table}
+<table class="table task_table {@eq key=typeUser value=3}dtable{/eq}{@eq key=typeUser value=4}dtable{/eq}" id="tasks-table">
+    <thead>
+    <tr>
+        <th class="tac width-id">ID</th>
+        <th class="tac">Общая информация</th>
+        <th class="tac width-des-par-com">Описание / Запчасти / Комментарий</th>
+        {@eq key=typeUser value=3}
+        <th style="width: 90px"></th>
+        {/eq}
+        {@eq key=typeUser value=4}
+        <th style="width: 90px"></th>
+        {/eq}
+        {@lt key=typeUser value=5}
+        <th class="width-control-buttons"></th>
+        {/lt}
+
+    </tr>
+    </thead>
+    <tbody>
+    {#tasks}
+    <tr id="idx-task-{id}">
+        <td class="tac bb">
+            <strong>{id}</strong>
+        </td>
+        <td class="vat bb {@eq key=status value=5}disable-task{/eq}" style="position: relative; padding-top: 40px;">
+            {@eq key=status value=1}
+            <span class="status-task status-bgc-pending"><strong>Задача в ожидании</strong></span>
+            {/eq}
+            {@eq key=status value=2}
+            <span class="status-task status-bgc-processing"><strong>Задача выполняется</strong></span>
+            {/eq}
+            {@eq key=status value=3}
+            <span class="status-task status-bgc-done"><strong>Задача завершена</strong></span>
+            {/eq}
+            {@eq key=status value=4}
+            <span class="status-task status-bgc-hold"><strong>Задача остановлена</strong></span>
+            {/eq}
+            {@eq key=status value=5}
+            <span class="status-task status-bgc-canceled"><strong>Задача анулирована</strong></span>
+            {/eq}
+            <p><strong>Имя задачи: </strong> {name}</p>
+            {@lt key=typeUser value=3}
+                <p><strong>Исполнитель: </strong>{planedExecutor.dataValues.userSurname} {planedExecutor.dataValues.userName}</p>
+                <p><strong>Поручить задачу: </strong>{assignedUser.dataValues.userSurname} {assignedUser.dataValues.userName}</p>
+            {/lt}
+            <p><strong>Стоимость: </strong>{cost} грн</p>
+            <p><strong>План. время: </strong>{estimationTime}</p>
+            <p><strong>Время начала: </strong>{startTime}</p>
+            <p><strong>Конечное время: </strong>{endTime}</p>
+        </td>
+        <td class="vat bb {@eq key=status value=5}disable-task{/eq}">
+            <p><strong>Описание задачи: </strong>{description}</p>
+            <p class="bt"><strong>Запчасти: </strong>{parts}</p>
+            <p><strong>Запчасти клиента: </strong>{customerParts}</p>
+            <p><strong>Недостающие запчасти: </strong>{needBuyParts}</p>
+            <p class="bt"><strong>Комментарий: </strong>{comment}</p>
+        </td>
+        {@eq key=typeUser value=3}
+        <td class="tac">
+            <form action="/executor/set-status/{id}" method="POST">
+                <input type="hidden" value="2" name="status">
+                <button class="status btn btn-primary" type="submit">Начать</button>
+            </form>
+            <form action="/executor/set-status/{id}" method="POST">
+                <input type="hidden" value="4" name="status">
+                <button class="status btn btn-danger" type="submit">Остановить</button>
+            </form>
+            <form action="/executor/set-status/{id}" method="POST">
+                <input type="hidden" value="3" name="status">
+                <button class="status btn btn-success" type="submit">Завершить</button>
+            </form>
+        </td>
+        {/eq}
+        {@eq key=typeUser value=4}
+        <td class="tac">
+            <form action="/store-keeper/set-status/{id}" method="POST">
+                <input type="hidden" value="4" name="status"/>
+                <button class="btn btn-danger status" type="submit">Остановить</button>
+            </form>
+            <form action="/store-keeper/set-status/{id}" method="POST">
+                <input type="hidden" value="1" name="status"/>
+
+                <!-- Manager call the customer ? -->
+                <input type="hidden" value="{planedExecutorID}" name="assignedUserID"/>
+
+                <button class="btn btn-warning status" type="submit">Подтвердить</button>
+            </form>
+        </td>
+        {/eq}
+        {@lt key=typeUser value=5}
+        <td class="tac bb">
+            <a class="update-task modal-window-link"
+               title="Редактировать задачу"
+               data-toggle="modal"
+               data-id="{id}"
+               data-task-description="{description}"
+               data-task-name="{name}"
+               data-task-assigned-user="{assignedUserID}"
+               data-task-planed-executor="{planedExecutorID}"
+               data-task-cost="{cost}"
+               data-task-estimation-time="{estimationTime}"
+               data-task-start-time="{startTime}"
+               data-task-end-time="{endTime}"
+               data-task-parts="{parts}"
+               data-task-customer-parts="{customerParts}"
+               data-task-need-buy-parts="{needBuyParts}"
+               data-task-comment="{comment}"
+               data-task-status="{status}"
+               data-target="#updateTaskFormModal">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"/>
+            </a>
+            <a href="#"
+               class="delete-task modal-window-link"
+               title="Удалить задачу" data-toggle="modal"
+               data-current="{typeUser}" data-id="{id}"
+               data-request-id="{requestID}"
+               data-target="#deleteTaskFormModal"
+               style="">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"/>
+            </a>
+        </td>
+        {/lt}
+    </tr>
+    {/tasks}
+    </tbody>
+</table>
+{/task_table}

@@ -54,7 +54,8 @@
                        data-toggle="modal"
                        data-target="#deleteUserFormModal"
                        data-id="{id}"
-                       data-login="{userLogin}"
+                       data-user-name="{userName}"
+                       data-user-surname="{userSurname}"
                        title="Удалить">
                         <span class="glyphicon glyphicon-remove" aria-hidden="true" style="margin-top: 15px; font-size: 19px;"/>
                     </a>

@@ -40,54 +40,8 @@
                     <p><strong>План. время: </strong>{estimatedTime}</p>
                     <p><strong>Комментарий: </strong>{comment}</p>
                 </td>
-                <td style="padding: 0; vertical-align: top;">
-                    <table class="table task_table">
-                        <thead>
-                        <tr>
-                            <th class="tac" style="width: 30px;">ID</th>
-                            <th class="tac">Общая информация</th>
-                            <th class="tac" style="width: 475px; box-sizing: border-box;">Описание / Запчасти / Комментарий</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {#tasks}
-                        <tr id="idx-task-{id}">
-                            <td class="tac bb">
-                                <strong>{id}</strong>
-                            </td>
-                            <td class="vat bb {@eq key=status value=5}disable-task{/eq}" style="position: relative; padding-top: 40px;">
-                                {@eq key=status value=1}
-                                <span class="status-task status-bgc-pending"><strong>Задача в ожидании</strong></span>
-                                {/eq}
-                                {@eq key=status value=2}
-                                <span class="status-task status-bgc-processing"><strong>Задача выполняется</strong></span>
-                                {/eq}
-                                {@eq key=status value=3}
-                                <span class="status-task status-bgc-done"><strong>Задача завершена</strong></span>
-                                {/eq}
-                                {@eq key=status value=4}
-                                <span class="status-task status-bgc-hold"><strong>Задача остановлена</strong></span>
-                                {/eq}
-                                {@eq key=status value=5}
-                                <span class="status-task status-bgc-canceled"><strong>Задача анулирована</strong></span>
-                                {/eq}
-                                <p><strong>Имя задачи: </strong> {name}</p>
-                                <p><strong>Стоимость: </strong>{cost} грн</p>
-                                <p><strong>План. время: </strong>{estimationTime}</p>
-                                <p><strong>Время начала: </strong>{startTime}</p>
-                                <p><strong>Конечное время: </strong>{endTime}</p>
-                            </td>
-                            <td class="vat bb {@eq key=status value=5}disable-task{/eq}">
-                                <p><strong>Описание задачи: </strong>{description}</p>
-                                <p class="bt"><strong>Запчасти: </strong>{parts}</p>
-                                <p><strong>Запчасти клиента: </strong>{customerParts}</p>
-                                <p><strong>Недостающие запчасти: </strong>{needBuyParts}</p>
-                                <p class="bt"><strong>Комментарий: </strong>{comment}</p>
-                            </td>
-                        </tr>
-                        {/tasks}
-                        </tbody>
-                    </table>
+                <td style="padding: 0;">
+                    {>"task_table/index"/}
                 </td>
             </tr>
             {/requests}

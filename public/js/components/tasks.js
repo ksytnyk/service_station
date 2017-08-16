@@ -158,7 +158,7 @@ $(document).ready(function () {
                         '<button class="status btn btn-danger" type="submit">Остановить</button>' +
                         '</form>' +
                         '<form action="/executor/set-status/' + data.task.id + '" method="POST">' +
-                        '<input type="hidden" value="5" name="status">' +
+                        '<input type="hidden" value="3" name="status">' +
                         '<button class="status btn btn-success" type="submit">Завершить</button>' +
                         '</form>' +
                         '</td>';
