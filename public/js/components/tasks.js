@@ -84,6 +84,7 @@ $(document).ready(function () {
                     '</td>' +
                     '</tr>');
 
+                headerFix();
                 deleteTaskOnClick();
                 clearModalAddTask();
                 updateTaskOnClick();

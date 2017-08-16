@@ -5,11 +5,7 @@ $(document).ready(function () {
         element.classList.add("active");
     }
 
-    $('.modal-window-link').on('click', function () {
-        if (document.body.offsetHeight > window.innerHeight) {
-            $('.white_block').outerWidth(+window.innerWidth - 17);
-        }
-    });
+    headerFix();
 
     $('.hide_alert').on('click', function () {
         $('.alert').slideUp();
@@ -73,4 +69,14 @@ function hideAlert() {
     setTimeout(function () {
         $('.hide_alert').trigger('click');
     }, TIME_FOR_FLASH);
+}
+
+function headerFix() {
+    $('.modal-window-link').on('click', function () {
+        console.log( document.body.offsetHeight > window.innerHeight );
+
+        if (document.body.offsetHeight > window.innerHeight) {
+            $('.white_block').outerWidth(+window.innerWidth - 17);
+        }
+    });
 }
