@@ -1,0 +1,29 @@
+.store-keeper .bt {
+    margin: 5px 0 0 -8px;
+    border-top: 1px solid #ccc;
+    padding: 5px 8px 0;
+    width: 581px
+}
+.store-keeper p {
+    margin: 3px 0;
+    font-size: 13px;
+}
+.store-keeper .executor_name_surname,
+.store-keeper .assigned_name_surname,
+.store-keeper .delete-task {
+    display: none;
+}
+.store-keeper .bb {
+    border-bottom: none;
+}
+.store-keeper .status {
+    width: 110px;
+}
+.store-keeper .width-id,
+.store-keeper .width-control-buttons {
+    width: 15px;
+}
+.store-keeper .width-des-par-com {
+    width: 600px;
+    box-sizing: border-box;
+}

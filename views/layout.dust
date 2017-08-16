@@ -7,7 +7,12 @@
     <link rel="stylesheet" href="/css/libs/bootstrap.css">
     <link rel="stylesheet" href="/css/libs/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="/css/libs/bootstrap-datetimepicker.min.css">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/request.css">
+    <link rel="stylesheet" href="/css/executor.css">
+    <link rel="stylesheet" href="/css/storekeeper.css">
+    <link rel="stylesheet" href="/css/customer.css">
 </head>
 <body>
 <div class="container">

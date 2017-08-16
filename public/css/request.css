@@ -1,0 +1,67 @@
+.requests p {
+    margin: 3px 0;
+    font-size: 13px;
+}
+.requests a {
+    display: block;
+}
+.requests .requests_id {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    width: 35px;
+}
+.requests .bt {
+    margin: 5px 0 0 -8px;
+    border-top: 1px solid #ccc;
+    padding: 5px 8px 0;
+    width: 450px
+}
+.requests .table tbody tr:nth-child(2n) {
+    background-color: #fff;
+}
+.requests .task_table p {
+    font-size: 13px;
+}
+
+.requests .task_table .btn {
+    padding: 5px;
+}
+
+.requests .task_table {
+    margin: 0 0 34px;
+}
+
+.requests .task_table th {
+    border-top: none;
+    background-color: #eee;
+    font-size: 13px;
+}
+
+.requests .task_table tr td:last-child {
+    background-color: #eee;
+}
+
+.requests .request-form-status {
+    display: inline-block;
+    margin: 10px 5px 0 0;
+}
+
+.requests input[type=submit] {
+    padding: 5px 7px 4px;
+    font-size: 13px;
+}
+
+.requests .request-form-status:last-child {
+    margin-right: 0;
+}
+.requests .width-id {
+    width: 25px;
+}
+.requests .width-des-par-com {
+    width: 450px;
+    box-sizing: border-box;
+}
+.requests .width-control-buttons{
+    width: 15px;
+}

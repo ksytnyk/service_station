@@ -1,0 +1,29 @@
+.executor .bt {
+    margin: 5px 0 0 -8px;
+    border-top: 1px solid #ccc;
+    padding: 5px 8px 0;
+    width: 600px;
+}
+.executor p {
+    margin: 3px 0;
+    font-size: 13px;
+}
+.executor .executor_name_surname,
+.executor .assigned_name_surname,
+.executor .delete-task {
+    display: none;
+}
+.executor .bt {
+    width: 581px;
+}
+.executor .bb {
+    border-bottom: none;
+}
+.executor .width-id,
+.executor .width-control-buttons {
+    width: 15px;
+}
+.executor .width-des-par-com {
+    width: 600px;
+    box-sizing: border-box;
+}

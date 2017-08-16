@@ -1,0 +1,34 @@
+.customer .bt {
+    margin: 5px 0 0 -8px;
+    border-top: 1px solid #ccc;
+    padding: 5px 8px 0;
+    width: 600px;
+}
+.customer p {
+    margin: 3px 0;
+    font-size: 13px;
+}
+.customer .table tbody tr:nth-child(2n) {
+    background-color: #fff;
+}
+.customer .task_table p {
+    font-size: 13px;
+}
+.customer .task_table {
+    margin: 0 0 34px;
+}
+.customer .task_table th {
+    border-top: none;
+    background-color: #eee;
+    font-size: 13px;
+}
+.customer .bt {
+    width: 475px;
+}
+.customer .width-id {
+    width: 30px;
+}
+.customer .width-des-par-com {
+    width: 475px;
+    box-sizing: border-box;
+}
