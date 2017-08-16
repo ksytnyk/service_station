@@ -55,24 +55,19 @@ Request.belongsTo(User, {foreignKey: 'customerID'});
 
 Request.sync();
 
-// Request.getAllRequests = function () {
-//     return new Promise((resolve, reject) => {
-//         Request
-//             .findAll({
-//                 include: [
-//                     {model: User}
-//                 ]
-//             })
-//             .then(requests => {
-//                 resolve(requests);
-//             })
-//             .catch(err => {
-//                 console.warn(err);
-//                 reject(err);
-//             });
-//
-//     });
-// };
+Request.getAllRequests = function () {
+    return new Promise((resolve, reject) => {
+        Request
+            .findAll()
+            .then(requests => {
+                resolve(requests);
+            })
+            .catch(err => {
+                console.warn(err);
+                reject(err);
+            });
+    });
+};
 
 Request.getRequestById = function (id) {
     return new Promise((resolve, reject) => {

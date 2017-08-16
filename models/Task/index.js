@@ -344,4 +344,17 @@ Task.isLast = function (idRequest) {
     })
 };
 
+Task.getAllTasksForChart = function () {
+    return new Promise((resolve, reject) => {
+        Task
+            .findAll()
+            .then(result => {
+                resolve(result);
+            })
+            .catch(err => {
+                reject(err);
+            });
+    })
+};
+
 module.exports = Task;

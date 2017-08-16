@@ -8,8 +8,10 @@ const express = require('express');
 const router = express.Router();
 
 const roles = require('../../constants/roles');
+const dataType = require('../../constants/dataType');
 const validation = require('../../middleware/validation');
 const requestsFactory = require('../../helpers/requestsFactory');
+const countStatuses = require('../../helpers/countStatuses');
 
 router.get('/users', (req, res) => {
     User
@@ -201,7 +203,7 @@ router.delete('/delete-request/:id', (req, res) => {
 
 router.post('/change-request-status/:id', (req, res) => {
     Request.changeStatus(req.params.id, req.body.statusID)
-        .then(()=> {
+        .then(() => {
             req.flash('success_alert', true);
             req.flash('success_msg', 'Статус успешно изменен.');
             res.redirect(req.baseUrl + '/requests');
@@ -295,6 +297,33 @@ router.delete('/delete-task/:id', (req, res) => {
             console.warn(errors);
             res.status(400).send({errors: errors});
         })
+});
+
+router.get('/chart', (req, res) => {
+    res.render('roles/admin_moderator/chart', {typeUser: req.session.passport.user.userTypeID});
+});
+
+router.get('/chart/tasks', (req, res) => {
+    Task
+        .getAllTasksForChart()
+        .then(tasks => {
+            res.status(200).send({tasks: countStatuses(tasks, dataType.TASK)});
+        })
+        .catch(errors => {
+            res.status(400).send({errors: errors});
+        });
+});
+
+
+router.get('/chart/requests', (req, res) => {
+    Request
+        .getAllRequests()
+        .then(requests => {
+            res.status(200).send({requests: countStatuses(requests, dataType.REQUEST)});
+        })
+        .catch(errors => {
+            res.status(400).send({errors: errors});
+        });
 });
 
 module.exports = router;

@@ -1,0 +1,30 @@
+{>"layout" /}
+
+{<body}
+
+{>"header/index"/}
+
+<div class="col-lg-12">
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="btn-group">
+                    <button type=button class="btn btn-default" id="chart-request">Requests</button>
+                    <button type=button class="btn btn-default" id="chart-tasks">Tasks</button>
+                </div>
+                <div id="statistic-table"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <canvas id="myChart" width="400" height="400"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+{>"modal_windows/create_user"/}
+
+{/body}

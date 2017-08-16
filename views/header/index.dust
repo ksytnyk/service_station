@@ -15,6 +15,9 @@
                 <li id="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/create-request">
                     <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/create-request">Добавить заказ</a>
                 </li>
+                <li>
+                    <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/chart">Статистика</a>
+                </li>
             {/lt}
             <li class="logout pull-right" role="presentation"><a href="/logout" class="last">Выйти</a></li>
             <li id="headerName" {@gt key=typeUser value=2} style="background-color: #333; float: left;"{/gt}><a>{user.userName} {user.userSurname}</a></li>
