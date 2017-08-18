@@ -21,7 +21,7 @@
                 <td class="pr">
                     <div class="col-lg-4"><strong>Прізвище Ім'я: </strong>{userSurname} {userName}</div>
                     <div class="col-lg-4"><strong>Адреса: </strong>{userAddress}</div>
-                    <div class="col-lg-4"><strong>Login: </strong>{userLogin}</div>
+                    <div class="col-lg-4"><strong>Логін: </strong>{userLogin}</div>
                     <div class="col-lg-4"><strong>Контактний номер: </strong>{userPhone}</div>
                     <div class="col-lg-4"><strong>Email: </strong>{userEmail}</div>
                     <div class="col-lg-4"><strong>Пароль: </strong>{userPassword}</div>
