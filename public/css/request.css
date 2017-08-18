@@ -65,3 +65,7 @@
 .requests .width-control-buttons{
     width: 15px;
 }
+.requests .overdue {
+    color: #ff0000;
+    font-weight: bold;
+}

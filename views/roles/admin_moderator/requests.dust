@@ -53,7 +53,7 @@
                     <p><strong>Клиент: </strong>{user.userSurname} {user.userName}</p>
                     <p><strong>Стоимость: </strong>{cost} грн</p>
                     <p><strong>Время начала: </strong>{startTime}</p>
-                    <p><strong>План. время: </strong>{estimatedTime}</p>
+                    <p class="{@eq key=overdue value=1}overdue{/eq}"><strong>План. время: </strong>{estimatedTime}</p>
                     <p><strong>Комментарий: </strong>{comment}</p>
                     {@ne key=status value=2}
                         <form class="request-form-status" action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/change-request-status/{id}" method="post">
