@@ -55,10 +55,22 @@ Request.belongsTo(User, {foreignKey: 'customerID'});
 
 Request.sync();
 
-Request.getAllRequests = function () {
+Request.getAllRequests = function (data) {
+
     return new Promise((resolve, reject) => {
+        let query = {};
+        if (data.fromDateChart && data.toDateChart) {
+            query = {
+                where: {
+                    createdAt: {
+                        $between: [data.fromDateChart, data.toDateChart]
+                    }
+                }
+            };
+        }
+
         Request
-            .findAll()
+            .findAll(query)
             .then(requests => {
                 resolve(requests);
             })

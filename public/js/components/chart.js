@@ -27,34 +27,49 @@ var tableData = "<h2>Statistic Table</h2> " +
     "</tbody> " +
     "</table>";
 
+$('#chart-tasks, #chart-request').on('click', function () {
 
-$('#chart-tasks').on('click', function () {
-    var ctx = document.getElementById("myChart").getContext('2d');
-    $.get("/admin/chart/tasks", function (data) {
+    var typeURL = $(this).data('chart-type');
+    var data = $('#between-dates').serializeArray();
 
-        $('#statistic-table').html(tableData);
+    var backgroundColor = [
+        'rgba(255, 165, 0, 0.4)',
+        'rgba(51, 122, 183, 0.4)',
+        'rgba(0, 128, 0, 0.4)',
+        'rgba(255, 0, 0, 0.4)',
+        'rgba(0, 0, 0, 0.4)'
+    ];
 
-        var myChart = new Chart(ctx, {
+    var borderColor = [
+        'rgba(255, 165, 0, 1)',
+        'rgba(51, 122, 183, 1)',
+        'rgba(0, 128, 0, 1)',
+        'rgba(255, 0, 0, 1)',
+        'rgba(0, 0, 0, 0.1)'
+    ];
+
+    var labels = ["Очікування", "Виконується", "Виконано", "Зупинено", "Анульовано"];
+
+    if (typeURL === "requests") {
+        backgroundColor.splice(3, 1);
+        borderColor.splice(3, 1);
+        labels.splice(3, 1);
+    }
+
+    $.post("/admin/chart/" + typeURL, data, function (result) {
+        // $('#statistic-table').html(tableData);
+        $('#div-for-chart').empty();
+        $('#div-for-chart').append('<canvas id="myChart" width="400" height="400"></canvas>');
+        var ctx = document.getElementById("myChart").getContext('2d');
+        new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ["Pending", "Processing", "Done", "Hold", "Canceled"],
+                labels: labels,
                 datasets: [{
-                    label: 'Statuses Tasks',
-                    data: data.tasks,
-                    backgroundColor: [
-                        'rgba(255, 165, 0, 0.4)',
-                        'rgba(51, 122, 183, 0.4)',
-                        'rgba(0, 128, 0, 0.4)',
-                        'rgba(255, 0, 0, 0.4)',
-                        'rgba(0, 0, 0, 0.4)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 165, 0, 1)',
-                        'rgba(51, 122, 183, 1)',
-                        'rgba(0, 128, 0, 1)',
-                        'rgba(255, 0, 0, 1)',
-                        'rgba(0, 0, 0, 0.1)'
-                    ],
+                    label: 'Статус',
+                    data: result.data,
+                    backgroundColor: backgroundColor,
+                    borderColor: borderColor,
                     borderWidth: 1
                 }]
             },
@@ -71,45 +86,6 @@ $('#chart-tasks').on('click', function () {
     });
 });
 
-
-$('#chart-request').on('click', function () {
-    var ctx = document.getElementById("myChart").getContext('2d');
-    $.get("/admin/chart/requests", function (data) {
-        $('#statistic-table').html(tableData);
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ["Pending", "Processing", "Done", "Canceled"],
-                datasets: [{
-                    label: 'Statuses Requests',
-                    data: data.requests,
-                    backgroundColor: [
-                        'rgba(255, 165, 0, 0.4)',
-                        'rgba(51, 122, 183, 0.4)',
-                        'rgba(0, 128, 0, 0.4)',
-                        'rgba(0, 0, 0, 0.4)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 165, 0, 1)',
-                        'rgba(51, 122, 183, 1)',
-                        'rgba(0, 128, 0, 1)',
-                        'rgba(0, 0, 0, 0.1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            fixedStepSize: 1
-                        }
-                    }]
-                }
-            }
-        });
-    });
-});
 
 
 

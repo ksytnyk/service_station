@@ -344,15 +344,26 @@ Task.isLast = function (idRequest) {
     })
 };
 
-Task.getAllTasksForChart = function () {
+Task.getAllTasksForChart = function (data) {
     return new Promise((resolve, reject) => {
+        let query = {};
+        if (data.fromDateChart && data.toDateChart) {
+            query = {
+                where: {
+                    createdAt: {
+                        $between: [data.fromDateChart, data.toDateChart]
+                    }
+                }
+            };
+        }
         Task
-            .findAll()
+            .findAll(query)
             .then(result => {
                 resolve(result);
             })
-            .catch(err => {
-                reject(err);
+            .catch(errors => {
+                console.warn(errors);
+                reject(errors);
             });
     })
 };

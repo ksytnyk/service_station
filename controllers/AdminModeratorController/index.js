@@ -316,25 +316,25 @@ router.get('/chart', (req, res) => {
     res.render('roles/admin_moderator/chart', {typeUser: req.session.passport.user.userTypeID});
 });
 
-router.get('/chart/tasks', (req, res) => {
+router.post('/chart/tasks', (req, res) => {
     Task
-        .getAllTasksForChart()
+        .getAllTasksForChart(req.body)
         .then(tasks => {
-            res.status(200).send({tasks: countStatuses(tasks, dataType.TASK)});
+            res.status(200).send({data: countStatuses(tasks, dataType.TASK)});
         })
         .catch(errors => {
             res.status(400).send({errors: errors});
         });
 });
 
-
-router.get('/chart/requests', (req, res) => {
+router.post('/chart/requests', (req, res) => {
     Request
-        .getAllRequests()
+        .getAllRequests(req.body)
         .then(requests => {
-            res.status(200).send({requests: countStatuses(requests, dataType.REQUEST)});
+            res.status(200).send({data: countStatuses(requests, dataType.REQUEST)});
         })
         .catch(errors => {
+            console.warn(errors);
             res.status(400).send({errors: errors});
         });
 });

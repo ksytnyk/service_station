@@ -8,19 +8,36 @@
     <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-body">
-                <div class="btn-group">
-                    <button type=button class="btn btn-default" id="chart-request">Requests</button>
-                    <button type=button class="btn btn-default" id="chart-tasks">Tasks</button>
-                </div>
+                <form style="border: 1px solid #ccc; padding: 5px; border-radius: 5px;background-color: #666;"
+                      role="form" id="between-dates">
+                    <div class="form-group">
+                        <label for="from-date-for-statistic" style="color: white; font-weight: bold">
+                            Від (число і час)
+                        </label>
+                        <input class="form-control datetimepickerN" id="from-date-for-statistic"
+                               placeholder="Натисніть на поле для обрання дати" name="fromDateChart">
+                    </div>
+                    <div class="form-group">
+                        <label for="to-date-for-statistic" style="color: white; font-weight: bold">
+                            До (число і час)
+                        </label>
+                        <input class="form-control datetimepickerN" id="to-date-for-statistic"
+                               placeholder="Натисніть на поле для обрання дати" name="toDateChart">
+                    </div>
+                    <div class="form-group">
+                        <div class="btn-group">
+                            <button type=button class="btn btn-default" data-chart-type="requests" id="chart-request">Замовлення</button>
+                            <button type=button class="btn btn-default" data-chart-type="tasks" id="chart-tasks">Задачі</button>
+                        </div>
+                    </div>
+                </form>
                 <div id="statistic-table"></div>
             </div>
         </div>
     </div>
     <div class="col-md-6">
         <div class="panel panel-default">
-            <div class="panel-body">
-                <canvas id="myChart" width="400" height="400"></canvas>
-            </div>
+            <div class="panel-body" id="div-for-chart"></div>
         </div>
     </div>
 </div>
