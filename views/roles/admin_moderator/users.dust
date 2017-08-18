@@ -10,7 +10,7 @@
             <thead>
             <tr>
                 <th class="tac" style="width: 15px;">ID</th>
-                <th class="tac">Полная информация</th>
+                <th class="tac">Загальна інформація</th>
                 <th style="width: 10px;"></th>
             </tr>
             </thead>
@@ -19,7 +19,7 @@
             <tr>
                 <th class="tac" scope="row">{id}</th>
                 <td class="pr">
-                    <div class="col-lg-4"><strong>Ім'я Прізвище: </strong>{userName} {userSurname}</div>
+                    <div class="col-lg-4"><strong>Прізвище Ім'я: </strong>{userSurname} {userName}</div>
                     <div class="col-lg-4"><strong>Адреса: </strong>{userAddress}</div>
                     <div class="col-lg-4"><strong>Login: </strong>{userLogin}</div>
                     <div class="col-lg-4"><strong>Контактний номер: </strong>{userPhone}</div>
