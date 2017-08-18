@@ -5,12 +5,12 @@
     <h2 class="logo text-center"><span>Service</span>Station</h2>
     <form action="/" method="POST">
         <div class="form-group">
-            <input type="text" class="form-control" placeholder="Ваш логин" name="login">
+            <input type="text" class="form-control" placeholder="Ваш логін" name="login">
         </div>
         <div class="form-group">
             <input type="password" class="form-control" placeholder="Ваш пароль" name="password">
         </div>
-        <button type="submit" class="btn btn-default btn-block">Войти</button>
+        <button type="submit" class="btn btn-default btn-block">Увійти</button>
     </form>
     {#error}
     <div class="alert alert-danger">

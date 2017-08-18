@@ -19,13 +19,13 @@ $(document).ready(function () {
 
     $('.startTime').datetimepicker({
         defaultDate: new Date(),
-        locale: "ru",
+        locale: "uk",
         format: "YYYY.MM.DD HH:mm:ss"
     })
 
     $('.datetimepickerN').datetimepicker(
         {
-            locale: "ru",
+            locale: "uk",
             format: "YYYY.MM.DD HH:mm:ss"
         }
     );

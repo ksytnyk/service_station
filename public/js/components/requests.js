@@ -8,7 +8,7 @@ $(document).ready(function () {
             type: 'Post',
             data: $('#createRequestForm').serializeArray(),
             success: function (data) {
-                showSuccessAlert('Добавление заказа прошло успешно.');
+                showSuccessAlert('Додавання замовлення пройшло успішно.');
 
                 $('.disable_input').prop('disabled', true);
                 $('#step').slideDown('slow');
@@ -35,7 +35,7 @@ $(document).ready(function () {
             type: 'PUT',
             data: $('#createRequestForm').serializeArray(),
             success: function (data) {
-                showSuccessAlert('Обновление заказа прошло успешно.');
+                showSuccessAlert('Оновлення замовлення пройшло успішно.');
 
                 $('.disable_input').prop('disabled', true);
                 $('#update_request').hide();

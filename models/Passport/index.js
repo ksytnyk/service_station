@@ -13,10 +13,10 @@ passport.use(new LocalStrategy({
                     if (res.userPassword === password) {
                         return done(null, res);
                     } else {
-                        return done(null, false, {message: 'Неверный пароль.'})
+                        return done(null, false, {message: 'Невірний пароль.'})
                     }
                 } else {
-                    return done(null, false, {message: 'Неизвестный пользователь.'})
+                    return done(null, false, {message: 'Невідомий користувач.'})
                 }
             });
     }));

@@ -29,7 +29,7 @@ $(document).ready(function () {
             type: 'Post',
             data: $('#createTaskForm').serializeArray(),
             success: function (data) {
-                showSuccessAlert('Добавление задачи прошло успешно.');
+                showSuccessAlert('Додавання задачі пройшло успішно.');
 
                 var executorNameSurname = $('#option' + $('#createTaskForm').serializeArray()[2].value).attr('executorFullName');
                 var assignedNameSurname = $('.optionAE' + $('#createTaskForm').serializeArray()[3].value).attr('assignedUserFullName');
@@ -41,24 +41,24 @@ $(document).ready(function () {
                     '</th>' +
                     '<td class="vat" style="position: relative; padding-top: 40px;">' +
                     changeStatus(data.result.status) +
-                    '<p><strong>Имя задачи: </strong>' + data.result.name + '</p>' +
-                    '<p><strong>Исполнитель: </strong>' + executorNameSurname + '</p>' +
-                    '<p><strong>Поручить задачу: </strong>' + assignedNameSurname + '</p>' +
-                    '<p><strong>Стоимость: </strong>' + data.result.cost + ' грн</p>' +
-                    '<p><strong>План. время: </strong>' + formatDate(data.result.estimationTime) + '</p>' +
-                    '<p><strong>Время начала: </strong>' + formatDate(data.result.startTime) + '</p>' +
-                    '<p><strong>Конечное время: </strong>' + formatDate(data.result.endTime) + '</p>' +
+                    '<p><strong>Назва задачі: </strong>' + data.result.name + '</p>' +
+                    '<p><strong>Виконавець: </strong>' + executorNameSurname + '</p>' +
+                    '<p><strong>Доручити завдання: </strong>' + assignedNameSurname + '</p>' +
+                    '<p><strong>Вартість: </strong>' + data.result.cost + ' грн</p>' +
+                    '<p><strong>План. час: </strong>' + formatDate(data.result.estimationTime) + '</p>' +
+                    '<p><strong>Час початку: </strong>' + formatDate(data.result.startTime) + '</p>' +
+                    '<p><strong>Час кінця: </strong>' + formatDate(data.result.endTime) + '</p>' +
                     '</td>' +
                     '<td class="vat">' +
-                    '<p><strong>Описание задачи: </strong>' + data.result.description + '</p>' +
-                    '<p class="bt"><strong>Запчасти: </strong>' + data.result.parts + '</p>' +
-                    '<p><strong>Запчасти клиента: </strong>' + data.result.customerParts + '</p>' +
-                    '<p><strong>Недостающие запчасти: </strong>' + data.result.needBuyParts + '</p>' +
-                    '<p class="bt"><strong>Комментарий: </strong>' + data.result.comment + '</p>' +
+                    '<p><strong>Опис задачі: </strong>' + data.result.description + '</p>' +
+                    '<p class="bt"><strong>Запчастини: </strong>' + data.result.parts + '</p>' +
+                    '<p><strong>Запчастини кліента: </strong>' + data.result.customerParts + '</p>' +
+                    '<p><strong>Відсутні запчастини: </strong>' + data.result.needBuyParts + '</p>' +
+                    '<p class="bt"><strong>Коментар: </strong>' + data.result.comment + '</p>' +
                     '</td>' +
                     '<td class="tac">' +
                     '<a class="update-task modal-window-link"' +
-                    ' title="Редактировать задачу"' +
+                    ' title="Редагувати задачу"' +
                     ' data-toggle="modal"' +
                     ' data-id="' + data.result.id + '"' +
                     ' data-task-description="' + data.result.description + '"' +
@@ -77,7 +77,7 @@ $(document).ready(function () {
                     ' style=""> ' +
                     '<span class="glyphicon glyphicon-pencil" aria-hidden="true"/> ' +
                     '</a> ' +
-                    '<a href="#" class="delete-task modal-window-link" title="Удалить задачу" data-toggle="modal" data-current="' + getIdRole(window.location.pathname) + '" data-id="' + data.result.id + '"' +
+                    '<a href="#" class="delete-task modal-window-link" title="Видалити задачу" data-toggle="modal" data-current="' + getIdRole(window.location.pathname) + '" data-id="' + data.result.id + '"' +
                     ' data-target="#deleteTaskFormModal">' +
                     '<span class="glyphicon glyphicon-remove" aria-hidden="true"/>' +
                     '</a>' +
@@ -111,7 +111,7 @@ $(document).ready(function () {
             type: 'PUT',
             data: $('#update-form-task').serializeArray(),
             success: function (data) {
-                showSuccessAlert('Обновление задачи прошло успешно.');
+                showSuccessAlert('Оновлення задачі пройшло успішно.');
 
                 var idx = "#idx-task-" + data.task.id;
 
@@ -131,20 +131,20 @@ $(document).ready(function () {
                     '</th>' +
                     '<td class="vat bb' + disableFields(data.task.status) + '" style="position: relative; padding-top: 40px;">' +
                     changeStatus(data.task.status) +
-                    '<p><strong>Имя задачи: </strong>' + data.task.name + '</p>' +
-                    '<p class="executor_name_surname"><strong>Исполнитель: </strong>' + executorNameSurname + '</p> ' +
-                    '<p class="assigned_name_surname"><strong>Поручить задачу: </strong>' + assignedNameSurname + '</p>' +
-                    '<p><strong>Стоимость: </strong>' + data.task.cost + ' грн</p>' +
-                    '<p><strong>План. время: </strong>' + formatDate(data.task.estimationTime) + '</p>' +
-                    '<p><strong>Время начала: </strong>' + formatDate(data.task.startTime) + '</p> ' +
-                    '<p><strong>Конечное время: </strong>' + formatDate(data.task.endTime) + '</p> ' +
+                    '<p><strong>Назва задачі: </strong>' + data.task.name + '</p>' +
+                    '<p class="executor_name_surname"><strong>Виконавець: </strong>' + executorNameSurname + '</p> ' +
+                    '<p class="assigned_name_surname"><strong>Доручити задачу: </strong>' + assignedNameSurname + '</p>' +
+                    '<p><strong>Вартість: </strong>' + data.task.cost + ' грн</p>' +
+                    '<p><strong>План. час: </strong>' + formatDate(data.task.estimationTime) + '</p>' +
+                    '<p><strong>Час початку: </strong>' + formatDate(data.task.startTime) + '</p> ' +
+                    '<p><strong>Час кінця: </strong>' + formatDate(data.task.endTime) + '</p> ' +
                     '</td>' +
                     '<td class="vat bb' + disableFields(data.task.status) + '"> ' +
-                    '<p><strong>Описание задачи: </strong>' + data.task.description + '</p> ' +
-                    '<p class="bt"><strong>Запчасти: </strong>' + data.task.parts + '</p> ' +
-                    '<p><strong>Запчасти клиента: </strong>' + data.task.customerParts + '</p> ' +
-                    '<p><strong>Недостающие запчасти: </strong>' + data.task.needBuyParts + '</p> ' +
-                    '<p class="bt"><strong>Комментарий: </strong>' + data.task.comment + '</p> ' +
+                    '<p><strong>Опис задачі: </strong>' + data.task.description + '</p> ' +
+                    '<p class="bt"><strong>Запчастини: </strong>' + data.task.parts + '</p> ' +
+                    '<p><strong>Запчастини клієнта: </strong>' + data.task.customerParts + '</p> ' +
+                    '<p><strong>Відсутні запчастини: </strong>' + data.task.needBuyParts + '</p> ' +
+                    '<p class="bt"><strong>Коментар: </strong>' + data.task.comment + '</p> ' +
                     '</td>';
 
                 if (getRole(window.location.pathname) === "/executor") {
@@ -152,15 +152,15 @@ $(document).ready(function () {
                         '<td class="tac">' +
                         '<form action="/executor/set-status/' + data.task.id + '" method="POST">' +
                         '<input type="hidden" value="2" name="status">' +
-                        '<button class="status btn btn-primary" type="submit">Начать</button>' +
+                        '<button class="status btn btn-primary" type="submit">Почати</button>' +
                         '</form>' +
                         '<form action="/executor/set-status/' + data.task.id + '" method="POST">' +
                         '<input type="hidden" value="4" name="status">' +
-                        '<button class="status btn btn-danger" type="submit">Остановить</button>' +
+                        '<button class="status btn btn-danger" type="submit">Зупинити</button>' +
                         '</form>' +
                         '<form action="/executor/set-status/' + data.task.id + '" method="POST">' +
                         '<input type="hidden" value="3" name="status">' +
-                        '<button class="status btn btn-success" type="submit">Завершить</button>' +
+                        '<button class="status btn btn-success" type="submit">Закінчити</button>' +
                         '</form>' +
                         '</td>';
                 }
@@ -169,11 +169,11 @@ $(document).ready(function () {
                     newTask1 = '' +
                         '<td class="tac">' +
                         '<form action="/store-keeper/task-hold" method="POST">' +
-                        '<input class="btn btn-danger status" type="submit" id="taskHold" value="Остановить"/>' +
+                        '<input class="btn btn-danger status" type="submit" id="taskHold" value="Зупинити"/>' +
                         '<input type="hidden" value="' + data.task.id + '" name="taskID"/>' +
                         '</form>' +
                         '<form action="/store-keeper/task-confirm" method="POST">' +
-                        '<input class="btn btn-warning status-storekeeper" type="submit" id="taskPending" value="Подтвердить"/>' +
+                        '<input class="btn btn-warning status-storekeeper" type="submit" id="taskPending" value="Підтвердити"/>' +
                         '<input type="hidden" value="' + data.task.id + '" name="taskID"/>' +
                         '</form>' +
                         '</td>'
@@ -181,7 +181,7 @@ $(document).ready(function () {
                 newTask2 = '' +
                     '<td class="tac bb"> ' +
                     '<a class="update-task modal-window-link"' +
-                    ' title="Редактировать задачу"' +
+                    ' title="Редагувати задачу"' +
                     ' data-toggle="modal"' +
                     ' data-id="' + data.task.id + '"' +
                     ' data-task-description="' + data.task.description + '"' +
@@ -202,7 +202,7 @@ $(document).ready(function () {
                     '</a> ' +
                     '<a href="#"' +
                     ' class="delete-task modal-window-link"' +
-                    ' title="Удалить задачу" data-toggle="modal"' +
+                    ' title="Видалити задачу" data-toggle="modal"' +
                     ' data-current="' + getIdRole(window.location.pathname) + '" data-id="' + data.task.id + '"' +
                     ' data-target="#deleteTaskFormModal"' +
                     ' style=""> ' +
@@ -275,11 +275,9 @@ function deleteTaskOnClick() {
             data: data,
             success: function (data) {
                 if (data.requestID) {
-                    // var idr = "#idr-request-" + data.requestID;
-                    // $(idr).remove();
                     window.location.replace(window.location.pathname);
                 } else {
-                    showSuccessAlert('Удаление задачи прошло успешно.');
+                    showSuccessAlert('Видалення задачі пройшло успішно.');
                     var idx = "#idx-task-" + data.id;
                     $(idx).remove();
                 }
@@ -324,23 +322,23 @@ function changeStatus(data) {
     var newStatus = "";
     switch (data) {
         case 1: {
-            newStatus = '<span class="status-task status-bgc-pending"><strong>Задача в ожидании</strong></span>';
+            newStatus = '<span class="status-task status-bgc-pending"><strong>Задача в очікуванні</strong></span>';
             break;
         }
         case 2: {
-            newStatus = '<span class="status-task status-bgc-processing"><strong>Задача выполняется</strong></span>';
+            newStatus = '<span class="status-task status-bgc-processing"><strong>Задача виконується</strong></span>';
             break;
         }
         case 3: {
-            newStatus = '<span class="status-task status-bgc-done"><strong>Задача завершена</strong></span>';
+            newStatus = '<span class="status-task status-bgc-done"><strong>Задачу виконано</strong></span>';
             break;
         }
         case 4: {
-            newStatus = '<span class="status-task status-bgc-hold"><strong>Задача остановлена</strong></span>';
+            newStatus = '<span class="status-task status-bgc-hold"><strong>Задачу зупинено</strong></span>';
             break;
         }
         case 5: {
-            newStatus = '<span class="status-task status-bgc-canceled"><strong>Задача анулирована</strong></span>';
+            newStatus = '<span class="status-task status-bgc-canceled"><strong>Задачу анульовано</strong></span>';
             break;
         }
     }

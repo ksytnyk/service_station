@@ -20,18 +20,18 @@ module.exports = {
 
             if (role === '/admin') {
                 let userTypeID = req.body.userTypeID;
-                req.checkBody('userTypeID', '"Роль" - обязательное поле.').notEmpty();
+                req.checkBody('userTypeID', '"Роль" - обов\'язкове поле.').notEmpty();
             }
 
-            req.checkBody('userName', '"Имя" - обязательное поле.').notEmpty();
-            req.checkBody('userSurname', '"Фамилия" - обязательное поле.').notEmpty();
-            req.checkBody('userCompanyName', '"Компания" - обязательное поле.').notEmpty();
-            req.checkBody('userAddress', '"Адрес" - обязательное поле.').notEmpty();
-            req.checkBody('userPhone', '"Контактный номер" - обязательное поле.').notEmpty();
-            req.checkBody('userLogin', '"Логин" - обязательное поле.').notEmpty();
-            req.checkBody('userEmail', '"Email" - обязательное поле.').notEmpty();
-            req.checkBody('userEmail', '"Email" - некорректное поле.').isEmail();
-            req.checkBody('userPassword', '"Пароль" - обязательное поле.').notEmpty();
+            req.checkBody('userName', '"Ім\'я" - обов\'язкове поле.').notEmpty();
+            req.checkBody('userSurname', '"Прізвище" - обов\'язкове поле.').notEmpty();
+            req.checkBody('userCompanyName', '"Компанія" - обов\'язкове поле.').notEmpty();
+            req.checkBody('userAddress', '"Адреса" - обов\'язкове поле.').notEmpty();
+            req.checkBody('userPhone', '"Контактний номер" - обов\'язкове поле.').notEmpty();
+            req.checkBody('userLogin', '"Логін" - обов\'язкове поле.').notEmpty();
+            req.checkBody('userEmail', '"Email" - обов\'язкове поле.').notEmpty();
+            req.checkBody('userEmail', '"Email" - обов\'язкове поле.').isEmail();
+            req.checkBody('userPassword', '"Пароль" - обов\'язкове поле.').notEmpty();
 
             let errors = req.validationErrors();
 
@@ -54,12 +54,12 @@ module.exports = {
             let startTime = req.body.startTime;
             let estimatedTime = req.body.estimatedTime;
 
-            req.checkBody('name', '"Имя заказа" - обязательное поле.').notEmpty();
-            req.checkBody('customerID', '"Клиент" - обязательное поле.').notEmpty();
-            req.checkBody('cost', '"Стоимость" - обязательное поле.').notEmpty();
-            req.checkBody('cost', 'Поле "Стоимость" может содержать только цифры.').isFloat();
-            req.checkBody('startTime', '"Время начала" - обязательное поле.').notEmpty();
-            req.checkBody('estimatedTime', '"Планируемове время" - обязательное поле.').notEmpty();
+            req.checkBody('name', '"Назва замовлення" - обов\'язкове поле.').notEmpty();
+            req.checkBody('customerID', '"Клієнт" - обов\'язкове поле.').notEmpty();
+            req.checkBody('cost', '"Вартість" - обов\'язкове поле.').notEmpty();
+            req.checkBody('cost', 'Поле "Вартість" може вміщати тільки цифри.').isFloat();
+            req.checkBody('startTime', '"Час початку" - обов\'язкове поле.').notEmpty();
+            req.checkBody('estimatedTime', '"Планований час" - обов\'язкове поле.').notEmpty();
 
             let errors = req.validationErrors();
 
@@ -82,12 +82,12 @@ module.exports = {
                 let startTime = req.body.startTime;
                 let endTime = req.body.endTime;
 
-                req.checkBody('description', '"Описание задачи" - обязательное поле.').notEmpty();
-                req.checkBody('cost', '"Стоимость" - обязательное поле.').notEmpty();
-                req.checkBody('cost', 'Поле "Стоимость" может содержать только цифры.').isFloat();
-                req.checkBody('estimationTime', '"Планируемове время" - обязательное поле.').notEmpty();
-                req.checkBody('startTime', '"Время начала" - обязательное поле.').notEmpty();
-                req.checkBody('endTime', '"Конечное время" - обязательное поле.').notEmpty();
+                req.checkBody('description', '"Опис задачі" - обов\'язкове поле.').notEmpty();
+                req.checkBody('cost', '"Вартість" - обов\'язкове поле.').notEmpty();
+                req.checkBody('cost', 'Поле "Вартість" може вміщати тільки цифри.').isFloat();
+                req.checkBody('estimationTime', '"Запланований час" - обов\'язкове поле.').notEmpty();
+                req.checkBody('startTime', '"Час початку" - обов\'язкове поле.').notEmpty();
+                req.checkBody('endTime', '"Час кінця" - обов\'язкове поле.').notEmpty();
             }
 
             if(req.baseUrl==='/admin' || req.baseUrl==='/moderator') {
@@ -95,15 +95,15 @@ module.exports = {
                 let planedExecutorID = req.body.planedExecutorID;
                 let assignedUserID = req.body.assignedUserID;
 
-                req.checkBody('name', '"Имя задачи" - обязательное поле.').notEmpty();
-                req.checkBody('planedExecutorID', '"Исполнитель" - обязательное поле.').notEmpty();
-                req.checkBody('assignedUserID', '"Поручить задачу" - обязательное поле.').notEmpty();
+                req.checkBody('name', '"Ім\'я" - обов\'язкове поле.').notEmpty();
+                req.checkBody('planedExecutorID', '"Виконавець" - обов\'язкове поле.').notEmpty();
+                req.checkBody('assignedUserID', '"Доручити задачу" - обов\'язкове поле.').notEmpty();
             }
 
             else if (req.baseUrl==='/store-keeper'){
                 let needBuyParts = req.body.needBuyParts;
 
-                req.checkBody('needBuyParts', '"Недостающие запчасти" - обязательное поле.').notEmpty();
+                req.checkBody('needBuyParts', '"Відсутні запчастини" - обов\'язкове поле.').notEmpty();
             }
 
             let errors = req.validationErrors();

@@ -39,13 +39,13 @@ router.post('/create-user', validation.createAndUpdateUser(), (req, res) => {
         .createUser(req.body)
         .then(() => {
             req.flash('success_alert', true);
-            req.flash('success_msg', 'Добавление пользователя прошло успешно.');
+            req.flash('success_msg', 'Додавання користувача пройшло успішно.');
             res.redirect(req.baseUrl + '/users');
         })
         .catch(error => {
             console.warn(error);
             req.flash('error_alert', true);
-            req.flash('error_msg', {msg: 'Возникла ошибка при добавлении пользователя.'});
+            req.flash('error_msg', {msg: 'Виникла помилка при додаванні користувача.'});
             res.redirect(req.baseUrl + '/users');
         });
 });
@@ -55,13 +55,13 @@ router.put('/update-user/:id', validation.createAndUpdateUser(), (req, res) => {
         .updateUser(req.params.id, req.body)
         .then(() => {
             req.flash('success_alert', true);
-            req.flash('success_msg', 'Изменение пользователя прошло успешно.');
+            req.flash('success_msg', 'Редагування користувача пройшло успішно.');
             res.redirect(req.baseUrl + '/users');
         })
         .catch(error => {
             console.warn(error);
             req.flash('error_alert', true);
-            req.flash('error_msg', {msg: 'Возникла ошибка при изменении пользователя.'});
+            req.flash('error_msg', {msg: 'Виникла помилка при редагуванні користувача.'});
             res.redirect(req.baseUrl + '/users');
         });
 });
@@ -71,13 +71,13 @@ router.delete('/delete-user/:id', (req, res) => {
         .deleteUser(req.params.id)
         .then(() => {
             req.flash('success_alert', true);
-            req.flash('success_msg', 'Удаление пользователя прошло успешно.');
+            req.flash('success_msg', 'Видалення користувача прийшло успішно.');
             res.redirect(req.baseUrl + '/users');
         })
         .catch(error => {
             console.warn(error);
             req.flash('error_alert', true);
-            req.flash('error_msg', {msg: 'Возникла ошибка при удалении пользователя.'});
+            req.flash('error_msg', {msg: 'Виникла помилка при видаленні користувача.'});
             res.redirect(req.baseUrl + '/users');
         });
 });
@@ -185,20 +185,20 @@ router.delete('/delete-request/:id', (req, res) => {
                 .deleteRequest(req.params.id)
                 .then(() => {
                     req.flash('success_alert', true);
-                    req.flash('success_msg', 'Удаление заказа прошло успешно.');
+                    req.flash('success_msg', 'Видалення замовлення пройшло успішно.');
                     res.redirect(req.baseUrl + '/requests');
                 })
                 .catch(error => {
                     console.warn(error);
                     req.flash('error_alert', true);
-                    req.flash('error_msg', {msg: 'Возникла ошибка при удалении заказа.'});
+                    req.flash('error_msg', {msg: 'Виникла помилка при видаленні замовлення.'});
                     res.redirect(req.baseUrl + '/requests');
                 });
         })
         .catch(error => {
             console.warn(error);
             req.flash('error_alert', true);
-            req.flash('error_msg', {msg: 'Возникла ошибка при удалении задачи.'});
+            req.flash('error_msg', {msg: 'Виникла помилка при видаленні задачі.'});
             res.redirect(req.baseUrl + '/requests');
         });
 });
@@ -218,13 +218,13 @@ router.post('/change-request-status/:id', (req, res) => {
             }
 
             req.flash('success_alert', true);
-            req.flash('success_msg', 'Статус успешно изменен.');
+            req.flash('success_msg', 'Статус успішно змінений.');
             res.redirect(req.baseUrl + '/requests');
         })
         .catch(error => {
             console.warn(error);
             req.flash('error_alert', true);
-            req.flash('error_msg', {msg: 'Возникла ошибка при изменении Статус.'});
+            req.flash('error_msg', {msg: 'Виникла помилка при зміні статусу.'});
             res.redirect(req.baseUrl + '/requests');
         })
 });

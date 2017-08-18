@@ -3,12 +3,12 @@
     <div class="modal-dialog delete_form" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title text-center">Удалить задачу №<span id="delete-task-id"></span> ?</h4>
+                <h4 class="modal-title text-center">Видалити задачу №<span id="delete-task-id"></span> ?</h4>
             </div>
             <div class="modal-body">
-                <button id="delete-button" type="button" class="btn btn-success width">Подтвердить</button>
+                <button id="delete-button" type="button" class="btn btn-success width">Підтвердити</button>
                 <button type="button" class="btn btn-danger pull-right width" data-dismiss="modal">
-                    Отменить
+                    Відмінити
                 </button>
             </div>
         </div>

@@ -7,17 +7,17 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title text-center">Добавить задачу</h4>
+                    <h4 class="modal-title text-center">Додати задачу</h4>
                 </div>
                 <div class="modal-body clearfix">
                     <input type="hidden" name="requestID" id="requestIDForTask">
 
                     <div class="form-group col-lg-4">
-                        <label>Имя задачи</label>
+                        <label>Назва задачі</label>
                         <input type="text" class="form-control create-form-task" name="name">
                     </div>
                     <div class="form-group col-lg-4">
-                        <label>Исполнитель</label>
+                        <label>Виконавець</label>
                         <select class="form-control selectpicker" name="planedExecutorID">
                             {#assignedExecutorUsers}
                             {@eq key=userTypeID value=3}
@@ -28,20 +28,20 @@
                     </div>
                     <div class="form-group col-lg-4">
                         <button type="button" class="btn btn-primary assign-task-button col-lg-12"
-                                style="margin-top: 25px;">Поручить задачу
+                                style="margin-top: 25px;">Доручити задачу
                         </button>
                         <div class="hidden assign-task-select">
-                            <label>Поручить задачу</label>
+                            <label>Доручити задачу</label>
                             <select class="form-control selectpicker" name="assignedUserID">
                                 {#assignedExecutorUsers}
                                 {@eq key=userTypeID value=4}
                                 <option value="{id}" assignedUserFullName="{userName} {userSurname}"
-                                        class="optionAE{id}">Кладовщик {userName} {userSurname}
+                                        class="optionAE{id}">(Зав. складом) {userName} {userSurname}
                                 </option>
                                 {/eq}
                                 {@eq key=userTypeID value=3}
                                 <option value="{id}" assignedUserFullName="{userName} {userSurname}"
-                                        class="optionAE{id}">Инженер {userName} {userSurname}
+                                        class="optionAE{id}">(Інженер) {userName} {userSurname}
                                 </option>
                                 {/eq}
                                 {/assignedExecutorUsers}
@@ -49,49 +49,49 @@
                         </div>
                     </div>
                     <div class="form-group col-lg-4">
-                        <label>Описание задачи</label>
+                        <label>Опис задачі</label>
                         <textarea type="text" class="form-control create-form-task" name="description" rows="3"
                                   style="height: 108px;"></textarea>
                     </div>
                     <div class="form-group col-lg-4">
-                        <label>Планируемое время</label>
+                        <label>Запланований час</label>
                         <input type="text" class="form-control create-form-task datetimepickerN" name="estimationTime">
                     </div>
                     <div class="form-group col-lg-4">
-                        <label>Стоимость</label>
+                        <label>Вартість</label>
                         <input type="text" class="form-control create-form-task" name="cost">
                     </div>
                     <div class="form-group col-lg-4">
-                        <label>Время начала</label>
+                        <label>Час початку</label>
                         <input type="text" class="form-control create-form-task datetimepickerN startTime" name="startTime">
                     </div>
                     <div class="form-group col-lg-4">
-                        <label>Конечное время</label>
+                        <label>Час кінця</label>
                         <input type="text" class="form-control create-form-task datetimepickerN" name="endTime">
                     </div>
                     <div class="form-group col-lg-6">
-                        <label>Запчасти</label>
+                        <label>Запчастини</label>
                         <textarea class="form-control create-form-task" name="parts" rows="3"></textarea>
                     </div>
                     <div class="form-group col-lg-6">
-                        <label>Запчасти клиента</label>
+                        <label>Запчастини клієнта</label>
                         <textarea class="form-control create-form-task" name="customerParts" rows="3"></textarea>
                     </div>
                     <div class="form-group col-lg-6">
-                        <label>Недостающие запчасти</label>
+                        <label>Відсутні запчастини</label>
                         <textarea class="form-control create-form-task" name="needBuyParts" rows="3"></textarea>
                     </div>
                     <div class="form-group col-lg-6">
-                        <label>Комментарий</label>
+                        <label>Коментар</label>
                         <textarea class="form-control create-form-task" name="comment" rows="3"></textarea>
                     </div>
                     <div class='form-group col-lg-6 col-lg-offset-6'>
                         <button type="button" id="taskAddButton" class="btn btn-success width">
-                            Добавить
+                            Додати
                         </button>
                         <button type="button" class="btn btn-danger pull-right width" data-dismiss="modal"
                                 id="taskCancelAddButton">
-                            Отменить
+                            Відмінити
                         </button>
                     </div>
                 </div>

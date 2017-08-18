@@ -1,18 +1,18 @@
-var express = require('express');
-var methodOverride = require('method-override');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var session = require('express-session');
-var passport = require('passport');
-var consolidate = require('consolidate');
-var dust = require('dustjs-helpers');
-var expressValidator = require('express-validator');
-var flash = require('connect-flash');
+const express = require('express');
+const methodOverride = require('method-override');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const passport = require('passport');
+const consolidate = require('consolidate');
+const dust = require('dustjs-helpers');
+const expressValidator = require('express-validator');
+const flash = require('connect-flash');
 
-var app = express();
+const app = express();
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(methodOverride((req, res) => {
@@ -40,10 +40,10 @@ app.use(session({
 
 // Express Validator
 app.use(expressValidator({
-    errorFormatter: function(param, msg, value) {
-        var namespace = param.split('.');
-        var root = namespace.shift();
-        var formParam = root;
+    errorFormatter: (param, msg, value) => {
+        let namespace = param.split('.');
+        let root = namespace.shift();
+        let formParam = root;
 
         while(namespace.length) {
             formParam += '[' + namespace.shift() + ']';
@@ -70,7 +70,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //========== ROUTES ==========
 
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
     res.locals.success_msg = req.flash('success_msg');
     res.locals.success_alert = req.flash('success_alert');
     res.locals.error_msg = req.flash('error_msg');
@@ -85,14 +85,14 @@ require("./router/routes")(app);
 //============================
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
-    var err = new Error('Not Found');
+app.use((req, res, next) => {
+    let err = new Error('Not Found');
     err.status = 404;
     next(err);
 });
 
 // error handler
-app.use(function (err, req, res, next) {
+app.use((err, req, res, next) => {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -100,7 +100,6 @@ app.use(function (err, req, res, next) {
     // render the error page
     res.status(err.status || 500);
     res.redirect('/');
-    //res.render('errors/index');
 });
 
 module.exports = app;
