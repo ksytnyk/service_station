@@ -12,6 +12,7 @@ const dataType = require('../../constants/dataType');
 const validation = require('../../middleware/validation');
 const requestsFactory = require('../../helpers/requestsFactory');
 const countStatuses = require('../../helpers/countStatuses');
+const nodemailer = require('../../helpers/nodemailer');
 
 router.get('/users', (req, res) => {
     User
@@ -204,6 +205,17 @@ router.delete('/delete-request/:id', (req, res) => {
 router.post('/change-request-status/:id', (req, res) => {
     Request.changeStatus(req.params.id, req.body.statusID)
         .then(() => {
+            if (req.body.statusID === "3") {
+                Request
+                    .getRequestById(req.params.id)
+                    .then((result) => {
+                        nodemailer(result[0].user.dataValues);
+                    })
+                    .catch(error => {
+                        console.warn(error);
+                    })
+            }
+
             req.flash('success_alert', true);
             req.flash('success_msg', 'Статус успешно изменен.');
             res.redirect(req.baseUrl + '/requests');

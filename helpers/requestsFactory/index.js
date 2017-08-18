@@ -35,8 +35,5 @@ module.exports = function (result) {
     for (let key in requests) {
         newArray.push(requests[key]);
     }
-
-    console.log( newArray[0] );
-
     return newArray;
 };
