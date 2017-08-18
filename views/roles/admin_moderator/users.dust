@@ -19,13 +19,13 @@
             <tr>
                 <th class="tac" scope="row">{id}</th>
                 <td class="pr">
-                    <div class="col-lg-4"><strong>Имя Фамилия: </strong>{userName} {userSurname}</div>
-                    <div class="col-lg-4"><strong>Адрес: </strong>{userAddress}</div>
-                    <div class="col-lg-4"><strong>Логин: </strong>{userLogin}</div>
-                    <div class="col-lg-4"><strong>Контактный номер: </strong>{userPhone}</div>
+                    <div class="col-lg-4"><strong>Ім'я Прізвище: </strong>{userName} {userSurname}</div>
+                    <div class="col-lg-4"><strong>Адреса: </strong>{userAddress}</div>
+                    <div class="col-lg-4"><strong>Login: </strong>{userLogin}</div>
+                    <div class="col-lg-4"><strong>Контактний номер: </strong>{userPhone}</div>
                     <div class="col-lg-4"><strong>Email: </strong>{userEmail}</div>
                     <div class="col-lg-4"><strong>Пароль: </strong>{userPassword}</div>
-                    <div class="col-lg-4"><strong>Компания: </strong>{userCompanyName}</div>
+                    <div class="col-lg-4"><strong>Компанія: </strong>{userCompanyName}</div>
                     {@eq key=typeUser value=1}
                     <div class="col-lg-4"><strong>Роль: </strong>{user_type.dataValues.userTypeName}</div>
                     {/eq}
@@ -45,7 +45,7 @@
                        data-email="{userEmail}"
                        data-role="{userTypeID}"
                        data-password="{userPassword}"
-                       title="Редактировать">
+                       title="Редагувати користувача">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true" style="font-size: 17px;"/>
                     </a>
                     <a href="#"
@@ -56,7 +56,7 @@
                        data-id="{id}"
                        data-user-name="{userName}"
                        data-user-surname="{userSurname}"
-                       title="Удалить">
+                       title="Видалити користувача">
                         <span class="glyphicon glyphicon-remove" aria-hidden="true" style="margin-top: 15px; font-size: 19px;"/>
                     </a>
                 </td>

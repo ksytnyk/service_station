@@ -3,8 +3,8 @@
     <thead>
     <tr>
         <th class="tac width-id">ID</th>
-        <th class="tac">Общая информация</th>
-        <th class="tac width-des-par-com">Описание / Запчасти / Комментарий</th>
+        <th class="tac">Загальна інформація</th>
+        <th class="tac width-des-par-com">Опис / Запчастини / Коментар</th>
         {@eq key=typeUser value=3}
         <th style="width: 90px"></th>
         {/eq}
@@ -25,50 +25,50 @@
         </td>
         <td class="vat bb {@eq key=status value=5}disable-task{/eq}" style="position: relative; padding-top: 40px;">
             {@eq key=status value=1}
-            <span class="status-task status-bgc-pending"><strong>Задача в ожидании</strong></span>
+            <span class="status-task status-bgc-pending"><strong>Задача в очікувані</strong></span>
             {/eq}
             {@eq key=status value=2}
-            <span class="status-task status-bgc-processing"><strong>Задача выполняется</strong></span>
+            <span class="status-task status-bgc-processing"><strong>Задача виконується</strong></span>
             {/eq}
             {@eq key=status value=3}
-            <span class="status-task status-bgc-done"><strong>Задача завершена</strong></span>
+            <span class="status-task status-bgc-done"><strong>Задачу виконано</strong></span>
             {/eq}
             {@eq key=status value=4}
-            <span class="status-task status-bgc-hold"><strong>Задача остановлена</strong></span>
+            <span class="status-task status-bgc-hold"><strong>Задача зупинено</strong></span>
             {/eq}
             {@eq key=status value=5}
-            <span class="status-task status-bgc-canceled"><strong>Задача анулирована</strong></span>
+            <span class="status-task status-bgc-canceled"><strong>Задача анульовано</strong></span>
             {/eq}
-            <p><strong>Имя задачи: </strong> {name}</p>
+            <p><strong>Назва задачі: </strong> {name}</p>
             {@lt key=typeUser value=3}
-                <p><strong>Исполнитель: </strong>{planedExecutor.dataValues.userSurname} {planedExecutor.dataValues.userName}</p>
-                <p><strong>Поручить задачу: </strong>{assignedUser.dataValues.userSurname} {assignedUser.dataValues.userName}</p>
+                <p><strong>Виконавець: </strong>{planedExecutor.dataValues.userSurname} {planedExecutor.dataValues.userName}</p>
+                <p><strong>Доручити задачу: </strong>{assignedUser.dataValues.userSurname} {assignedUser.dataValues.userName}</p>
             {/lt}
-            <p><strong>Стоимость: </strong>{cost} грн</p>
-            <p><strong>План. время: </strong>{estimationTime}</p>
-            <p><strong>Время начала: </strong>{startTime}</p>
-            <p><strong>Конечное время: </strong>{endTime}</p>
+            <p><strong>Вартість: </strong>{cost} грн</p>
+            <p><strong>Залан. час: </strong>{estimationTime}</p>
+            <p><strong>Час початку: </strong>{startTime}</p>
+            <p><strong>Кінцевий час: </strong>{endTime}</p>
         </td>
         <td class="vat bb {@eq key=status value=5}disable-task{/eq}">
-            <p><strong>Описание задачи: </strong>{description}</p>
-            <p class="bt"><strong>Запчасти: </strong>{parts}</p>
-            <p><strong>Запчасти клиента: </strong>{customerParts}</p>
-            <p><strong>Недостающие запчасти: </strong>{needBuyParts}</p>
-            <p class="bt"><strong>Комментарий: </strong>{comment}</p>
+            <p><strong>Опис задачі: </strong>{description}</p>
+            <p class="bt"><strong>Запчастини: </strong>{parts}</p>
+            <p><strong>Запчастини клієнта: </strong>{customerParts}</p>
+            <p><strong>Відсутні запчастини: </strong>{needBuyParts}</p>
+            <p class="bt"><strong>Коментар: </strong>{comment}</p>
         </td>
         {@eq key=typeUser value=3}
         <td class="tac">
             <form action="/executor/set-status/{id}" method="POST">
                 <input type="hidden" value="2" name="status">
-                <button class="status btn btn-primary" type="submit">Начать</button>
+                <button class="status btn btn-primary" type="submit">Почати</button>
             </form>
             <form action="/executor/set-status/{id}" method="POST">
                 <input type="hidden" value="4" name="status">
-                <button class="status btn btn-danger" type="submit">Остановить</button>
+                <button class="status btn btn-danger" type="submit">Зупинити</button>
             </form>
             <form action="/executor/set-status/{id}" method="POST">
                 <input type="hidden" value="3" name="status">
-                <button class="status btn btn-success" type="submit">Завершить</button>
+                <button class="status btn btn-success" type="submit">Закінчити</button>
             </form>
         </td>
         {/eq}
@@ -76,22 +76,19 @@
         <td class="tac">
             <form action="/store-keeper/set-status/{id}" method="POST">
                 <input type="hidden" value="4" name="status"/>
-                <button class="btn btn-danger status" type="submit">Остановить</button>
+                <button class="btn btn-danger status" type="submit">Зупинити</button>
             </form>
             <form action="/store-keeper/set-status/{id}" method="POST">
                 <input type="hidden" value="1" name="status"/>
-
-                <!-- Manager call the customer ? -->
                 <input type="hidden" value="{planedExecutorID}" name="assignedUserID"/>
-
-                <button class="btn btn-warning status" type="submit">Подтвердить</button>
+                <button class="btn btn-warning status" type="submit">Підтвердити</button>
             </form>
         </td>
         {/eq}
         {@lt key=typeUser value=5}
         <td class="tac bb">
             <a class="update-task modal-window-link"
-               title="Редактировать задачу"
+               title="Редагувати задачу"
                data-toggle="modal"
                data-id="{id}"
                data-task-description="{description}"
@@ -112,7 +109,7 @@
             </a>
             <a href="#"
                class="delete-task modal-window-link"
-               title="Удалить задачу" data-toggle="modal"
+               title="Видалити задачу" data-toggle="modal"
                data-current="{typeUser}" data-id="{id}"
                data-request-id="{requestID}"
                data-target="#deleteTaskFormModal"

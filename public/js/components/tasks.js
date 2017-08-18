@@ -43,11 +43,11 @@ $(document).ready(function () {
                     changeStatus(data.result.status) +
                     '<p><strong>Назва задачі: </strong>' + data.result.name + '</p>' +
                     '<p><strong>Виконавець: </strong>' + executorNameSurname + '</p>' +
-                    '<p><strong>Доручити завдання: </strong>' + assignedNameSurname + '</p>' +
+                    '<p><strong>Доручити задачу: </strong>' + assignedNameSurname + '</p>' +
                     '<p><strong>Вартість: </strong>' + data.result.cost + ' грн</p>' +
-                    '<p><strong>План. час: </strong>' + formatDate(data.result.estimationTime) + '</p>' +
+                    '<p><strong>Заплан. час: </strong>' + formatDate(data.result.estimationTime) + '</p>' +
                     '<p><strong>Час початку: </strong>' + formatDate(data.result.startTime) + '</p>' +
-                    '<p><strong>Час кінця: </strong>' + formatDate(data.result.endTime) + '</p>' +
+                    '<p><strong>Кінцевий час: </strong>' + formatDate(data.result.endTime) + '</p>' +
                     '</td>' +
                     '<td class="vat">' +
                     '<p><strong>Опис задачі: </strong>' + data.result.description + '</p>' +
@@ -135,9 +135,9 @@ $(document).ready(function () {
                     '<p class="executor_name_surname"><strong>Виконавець: </strong>' + executorNameSurname + '</p> ' +
                     '<p class="assigned_name_surname"><strong>Доручити задачу: </strong>' + assignedNameSurname + '</p>' +
                     '<p><strong>Вартість: </strong>' + data.task.cost + ' грн</p>' +
-                    '<p><strong>План. час: </strong>' + formatDate(data.task.estimationTime) + '</p>' +
+                    '<p><strong>Заплан. час: </strong>' + formatDate(data.task.estimationTime) + '</p>' +
                     '<p><strong>Час початку: </strong>' + formatDate(data.task.startTime) + '</p> ' +
-                    '<p><strong>Час кінця: </strong>' + formatDate(data.task.endTime) + '</p> ' +
+                    '<p><strong>Кінцевий час: </strong>' + formatDate(data.task.endTime) + '</p> ' +
                     '</td>' +
                     '<td class="vat bb' + disableFields(data.task.status) + '"> ' +
                     '<p><strong>Опис задачі: </strong>' + data.task.description + '</p> ' +

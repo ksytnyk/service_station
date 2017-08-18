@@ -7,11 +7,11 @@
 <div class="col-lg-12 create_request">
     <form class="clearfix" id="createRequestForm">
         <div class="form-group col-lg-5">
-            <label>Имя заказа</label>
+            <label>Назва замовлення</label>
             <input type="text" class="form-control disable_input" name="name">
         </div>
         <div class="form-group col-lg-4">
-            <label>Клиент</label>
+            <label>Клієнт</label>
             <select class="form-control selectpicker disable_input" name="customerID">
                 {#customers}
                 <option value="{id}">{userName} {userSurname}</option>
@@ -19,35 +19,35 @@
             </select>
         </div>
         <div class="form-group col-lg-5">
-            <label>Описание заказа</label>
+            <label>Опис замовлення</label>
             <textarea class="form-control disable_input" name="description" rows="4" style="height: 137px;"></textarea>
         </div>
         <div class="form-group col-lg-4">
-            <label>Комментарий</label>
+            <label>Коментар</label>
             <textarea class="form-control disable_input" name="comment" rows="4" style="height: 137px;"></textarea>
         </div>
         <div class="form-group col-lg-3" style="margin-top: -74px;">
-            <label>Время начала</label>
+            <label>Час початку</label>
             <input type="text" class="form-control datetimepickerN startTime disable_input" name="startTime" style="margin-bottom: 5px;">
-            <label>Планируемое время</label>
+            <label>Запланований час</label>
             <input type="text" class="form-control datetimepickerN disable_input" name="estimatedTime" style="margin-bottom: 5px;">
-            <label>Стоимость</label>
+            <label>Вартість</label>
             <input type="text" class="form-control disable_input" name="cost" style="margin-bottom: 15px;">
-            <input type="button" id="create_request" value="Добавить заказ"
+            <input type="button" id="create_request" value="Додати замовлення"
                    class="btn btn-success col-lg-12 disable_input"/>
-            <input type="button" id="access_update_request" value="Редактировать заказ"
+            <input type="button" id="access_update_request" value="Редагувати замовлення"
                    class="btn btn-warning col-lg-12"/>
-            <input type="button" id="update_request" value="Сохранить изменения"
+            <input type="button" id="update_request" value="Зберегти зміни"
                    class="btn btn-success col-lg-12"/>
         </div>
     </form>
     <div id="step" class="clearfix">
         <div class="form-group col-lg-12" style="margin: 50px 0 -25px;">
-            <input type="button" id="create_task" value="Добавить задачу" class="btn btn-primary modal-window-link"
+            <input type="button" id="create_task" value="Додати замовлення" class="btn btn-primary modal-window-link"
                    data-toggle="modal" data-target="#createTaskFormModal" style="width: 255px; float: right; position: relative; z-index: 1;"/>
         </div>
         <div class="form-group col-lg-12" style="margin: 0;">
-            <h4>Список задач</h4>
+            <h4>Список завдань</h4>
         </div>
         <div class="form-group col-lg-12">
             <div class="panel panel-default">

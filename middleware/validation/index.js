@@ -87,7 +87,7 @@ module.exports = {
                 req.checkBody('cost', 'Поле "Вартість" може вміщати тільки цифри.').isFloat();
                 req.checkBody('estimationTime', '"Запланований час" - обов\'язкове поле.').notEmpty();
                 req.checkBody('startTime', '"Час початку" - обов\'язкове поле.').notEmpty();
-                req.checkBody('endTime', '"Час кінця" - обов\'язкове поле.').notEmpty();
+                req.checkBody('endTime', '"Кінцевий час" - обов\'язкове поле.').notEmpty();
             }
 
             if(req.baseUrl==='/admin' || req.baseUrl==='/moderator') {
