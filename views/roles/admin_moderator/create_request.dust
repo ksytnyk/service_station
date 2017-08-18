@@ -28,7 +28,7 @@
         </div>
         <div class="form-group col-lg-3" style="margin-top: -74px;">
             <label>Время начала</label>
-            <input type="text" class="form-control datetimepickerN disable_input" name="startTime" style="margin-bottom: 5px;">
+            <input type="text" class="form-control datetimepickerN startTime disable_input" name="startTime" style="margin-bottom: 5px;">
             <label>Планируемое время</label>
             <input type="text" class="form-control datetimepickerN disable_input" name="estimatedTime" style="margin-bottom: 5px;">
             <label>Стоимость</label>

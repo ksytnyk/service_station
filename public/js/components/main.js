@@ -17,6 +17,12 @@ $(document).ready(function () {
 
     $('.dtable').DataTable();
 
+    $('.startTime').datetimepicker({
+        defaultDate: new Date(),
+        locale: "ru",
+        format: "YYYY.MM.DD HH:mm:ss"
+    })
+
     $('.datetimepickerN').datetimepicker(
         {
             locale: "ru",
