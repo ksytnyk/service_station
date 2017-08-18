@@ -13,6 +13,7 @@ const validation = require('../../middleware/validation');
 const requestsFactory = require('../../helpers/requestsFactory');
 const countStatuses = require('../../helpers/countStatuses');
 const nodemailer = require('../../helpers/nodemailer');
+const status = require('../../constants/status');
 
 router.get('/users', (req, res) => {
     User
@@ -205,7 +206,7 @@ router.delete('/delete-request/:id', (req, res) => {
 router.post('/change-request-status/:id', (req, res) => {
     Request.changeStatus(req.params.id, req.body.statusID)
         .then(() => {
-            if (req.body.statusID === "3") {
+            if (+req.body.statusID === status.DONE) {
                 Request
                     .getRequestById(req.params.id)
                     .then((result) => {
