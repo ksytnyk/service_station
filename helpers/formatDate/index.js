@@ -1,7 +1,8 @@
 "use strict";
 
 module.exports = function formatDate(date) {
-    let array = [
+    var date = new Date(date);
+    var array = [
         date.getFullYear(),
         date.getMonth() + 1,
         date.getDate(),
@@ -10,7 +11,7 @@ module.exports = function formatDate(date) {
         date.getSeconds()
     ];
 
-    let res = array.map(item => {
+    var res = array.map(item => {
         if (item < 10) item = "0" + item;
         return item;
     });

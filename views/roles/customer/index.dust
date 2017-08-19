@@ -40,7 +40,7 @@
                     <p><strong>Заплан. час: </strong>{estimatedTime}</p>
                     <p><strong>Коментар: </strong>{comment}</p>
                 </td>
-                <td style="padding: 0;">
+                <td style="padding: 0; vertical-align: top;">
                     {>"task_table/index"/}
                 </td>
             </tr>

@@ -2,38 +2,40 @@
 
 const formatDate = require('../formatDate/index');
 
-module.exports = function (result) {
+module.exports = function (requests, tasks) {
 
-    let requests = {};
+    let requestsObj = {};
 
-    result.map(item => {
-        if (requests[item.request.id] === undefined) {
-            requests[item.request.id] = item.request.dataValues;
-            requests[item.request.id].user = item.request.dataValues.user.dataValues;
-            requests[item.request.id].executor = item.planedExecutor.dataValues;
-            requests[item.request.id].assigned = item.assignedUser.dataValues;
-            requests[item.request.id].startTime = formatDate(requests[item.request.id].startTime);
-            requests[item.request.id].estimatedTime = formatDate(requests[item.request.id].estimatedTime);
-            requests[item.request.id].tasks = [];
-            if (new Date(requests[item.request.id].estimatedTime) - new Date() > 0) {
-                requests[item.request.id].overdue = 0;
+    requests.map(item => {
+        if (requestsObj[item.id] === undefined) {
+            requestsObj[item.id] = item.dataValues;
+            requestsObj[item.id].startTime = formatDate(requestsObj[item.id].startTime);
+            requestsObj[item.id].estimatedTime = formatDate(requestsObj[item.id].estimatedTime);
+            requestsObj[item.id].user = item.dataValues.user.dataValues;
+            requestsObj[item.id].tasks = [];
+            if (new Date(item.estimatedTime) - new Date() > 0) {
+                requestsObj[item.id].overdue = 0;
             } else {
-                requests[item.request.id].overdue = 1;
+                requestsObj[item.id].overdue = 1;
             }
         }
-
-        let task = item.dataValues;
-        task.estimationTime = formatDate(task.estimationTime);
-        task.startTime = formatDate(task.startTime);
-        task.endTime = formatDate(task.endTime);
-        delete task.request;
-
-        requests[item.request.id].tasks.push(task);
     });
 
-    let newArray = [];
-    for (let key in requests) {
-        newArray.push(requests[key]);
+    if (tasks) {
+        tasks.map(item => {
+            if (requestsObj[item.requestID] !== undefined) {
+                item.dataValues.estimationTime = formatDate(item.dataValues.estimationTime);
+                item.dataValues.startTime = formatDate(item.dataValues.startTime);
+                item.dataValues.endTime = formatDate(item.dataValues.endTime);
+                requestsObj[item.requestID].tasks.push(item.dataValues);
+            }
+        });
     }
-    return newArray;
+
+    let requestsArr = [];
+    for (let key in requestsObj) {
+        requestsArr.push(requestsObj[key]);
+    }
+
+    return requestsArr;
 };

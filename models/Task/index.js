@@ -91,12 +91,6 @@ Task.getAllTasks = function () {
             .findAll({
                 include: [
                     {
-                        model: Request,
-                        include: {
-                            model: User
-                        }
-                    },
-                    {
                         model: User,
                         as: 'planedExecutor'
                     },
@@ -124,46 +118,6 @@ Task.getAllTasksOfRequest = function (id) {
                     requestID: id
                 },
                 include: [
-                    {
-                        model: Request,
-                        include: {
-                            model: User
-                        }
-                    },
-                    {
-                        model: User,
-                        as: 'planedExecutor'
-                    },
-                    {
-                        model: User,
-                        as: 'assignedUser'
-                    }
-                ]
-            })
-            .then(tasks => {
-                resolve(tasks);
-            })
-            .catch(error => {
-                console.warn(error);
-                reject(error);
-            });
-    });
-};
-
-Task.getAllTasksForCustomer = function (id) {
-    return new Promise((resolve, reject) => {
-        Task
-            .findAll({
-                include: [
-                    {
-                        model: Request,
-                        where: {
-                            customerID: id
-                        },
-                        include: {
-                            model: User
-                        },
-                    },
                     {
                         model: User,
                         as: 'planedExecutor'
@@ -316,27 +270,6 @@ Task.changeTaskStatus = function (idTask, status) {
                 })
             .then(result => {
                 resolve(result);
-            })
-            .catch(err => {
-                reject(err);
-            });
-    })
-};
-
-Task.isLast = function (idRequest) {
-    return new Promise((resolve, reject) => {
-        Task
-            .count({
-                where: {
-                    requestID: idRequest
-                }
-            })
-            .then(result => {
-                if (result === 1) {
-                    resolve(true);
-                } else {
-                    resolve(false);
-                }
             })
             .catch(err => {
                 reject(err);

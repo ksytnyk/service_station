@@ -59,18 +59,46 @@ Request.getAllRequests = function (data) {
 
     return new Promise((resolve, reject) => {
         let query = {};
-        if (data.fromDateChart && data.toDateChart) {
-            query = {
-                where: {
-                    createdAt: {
-                        $between: [data.fromDateChart, data.toDateChart]
+        if (data) {
+            if (data.fromDateChart && data.toDateChart) {
+                query = {
+                    where: {
+                        createdAt: {
+                            $between: [data.fromDateChart, data.toDateChart]
+                        }
                     }
-                }
-            };
+                };
+            }
         }
 
         Request
-            .findAll(query)
+            .findAll({
+                query,
+                include: {
+                    model: User
+                }
+            })
+            .then(requests => {
+                resolve(requests);
+            })
+            .catch(err => {
+                console.warn(err);
+                reject(err);
+            });
+    });
+};
+
+Request.getAllRequestsByCustomerId = function (customerID) {
+    return new Promise((resolve, reject) => {
+        Request
+            .findAll({
+                where: {
+                    customerID: customerID
+                },
+                include: {
+                    model: User
+                }
+            })
             .then(requests => {
                 resolve(requests);
             })
@@ -88,11 +116,9 @@ Request.getRequestById = function (id) {
                 where: {
                     id: id
                 },
-                include: [
-                    {
-                        model: User
-                    }
-                ]
+                include: {
+                    model: User
+                }
             })
             .then(request => {
                 resolve(request);

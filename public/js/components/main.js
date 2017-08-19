@@ -21,7 +21,7 @@ $(document).ready(function () {
         defaultDate: new Date(),
         locale: "uk",
         format: "YYYY.MM.DD HH:mm:ss"
-    })
+    });
 
     $('.datetimepickerN').datetimepicker(
         {
@@ -79,8 +79,6 @@ function hideAlert() {
 
 function headerFix() {
     $('.modal-window-link').on('click', function () {
-        console.log( document.body.offsetHeight > window.innerHeight );
-
         if (document.body.offsetHeight > window.innerHeight) {
             $('.white_block').outerWidth(+window.innerWidth - 17);
         }

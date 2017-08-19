@@ -34,10 +34,10 @@
             <span class="status-task status-bgc-done"><strong>Задачу виконано</strong></span>
             {/eq}
             {@eq key=status value=4}
-            <span class="status-task status-bgc-hold"><strong>Задача зупинено</strong></span>
+            <span class="status-task status-bgc-hold"><strong>Задачу зупинено</strong></span>
             {/eq}
             {@eq key=status value=5}
-            <span class="status-task status-bgc-canceled"><strong>Задача анульовано</strong></span>
+            <span class="status-task status-bgc-canceled"><strong>Задачу анульовано</strong></span>
             {/eq}
             <p><strong>Назва задачі: </strong> {name}</p>
             {@lt key=typeUser value=3}

@@ -83,17 +83,25 @@ router.delete('/delete-user/:id', (req, res) => {
 });
 
 router.get('/requests', (req, res) => {
-    Task
-        .getAllTasks()
-        .then(result => {
-            User
-                .getAllUsers()
-                .then(users => {
-                    res.render('roles/admin_moderator/requests', {
-                        assignedExecutorUsers: users,
-                        requests: requestsFactory(result),
-                        typeUser: req.session.passport.user.userTypeID
-                    });
+    Request
+        .getAllRequests()
+        .then(requests => {
+            Task
+                .getAllTasks()
+                .then(tasks => {
+                    User
+                        .getAllUsers()
+                        .then(users => {
+                            res.render('roles/admin_moderator/requests', {
+                                assignedExecutorUsers: users,
+                                requests: requestsFactory(requests, tasks),
+                                typeUser: req.session.passport.user.userTypeID
+                            });
+                        })
+                        .catch(error => {
+                            console.warn(error);
+                            res.render('roles/admin_moderator/requests');
+                        });
                 })
                 .catch(error => {
                     console.warn(error);
@@ -144,19 +152,23 @@ router.get('/update-request/:id', (req, res) => {
             User
                 .getAllUsers()
                 .then(users => {
-                    Task
-                        .getAllTasksOfRequest(req.params.id)
-                        .then(result => {
-                            res.render('roles/admin_moderator/update_request', {
-                                assignedExecutorUsers: users,
-                                customers: usersCustomers,
-                                typeUser: req.session.passport.user.userTypeID,
-                                request: requestsFactory(result)
-                            });
-                        })
-                        .catch(error => {
-                            console.warn(error);
-                            res.render('roles/admin_moderator/update_request');
+                    Request
+                        .getRequestById(req.params.id)
+                        .then(request => {
+                            Task
+                                .getAllTasksOfRequest(req.params.id)
+                                .then(task => {
+                                    res.render('roles/admin_moderator/update_request', {
+                                        assignedExecutorUsers: users,
+                                        customers: usersCustomers,
+                                        typeUser: req.session.passport.user.userTypeID,
+                                        request: requestsFactory(request, task)
+                                    });
+                                })
+                                .catch(error => {
+                                    console.warn(error);
+                                    res.render('roles/admin_moderator/update_request');
+                                });
                         });
                 });
         });
@@ -263,53 +275,18 @@ router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
 
 router.delete('/delete-task/:id', (req, res) => {
     Task
-        .isLast(req.body.requestID)
-        .then(result => {
-            if (result) {
-                Task
-                    .destroy({
-                        where: {
-                            id: Number(req.params.id)
-                        }
-                    })
-                    .then(() => {
-                        Request
-                            .deleteRequest(req.body.requestID)
-                            .then(() => {
-                                res.status(200).send({
-                                    id: req.params.id,
-                                    requestID: req.body.requestID
-                                });
-                            })
-                            .catch(errors => {
-                                console.warn(errors);
-                                res.status(400).send({errors: errors});
-                            })
-                    })
-                    .catch(errors => {
-                        console.warn(errors);
-                        res.status(400).send({errors: errors});
-                    })
-            } else {
-                Task
-                    .destroy({
-                        where: {
-                            id: Number(req.params.id)
-                        }
-                    })
-                    .then(() => {
-                        res.status(200).send({id: req.params.id});
-                    })
-                    .catch(errors => {
-                        console.warn(errors);
-                        res.status(400).send({errors: errors});
-                    })
+        .destroy({
+            where: {
+                id: Number(req.params.id)
             }
+        })
+        .then(() => {
+            res.status(200).send({id: req.params.id});
         })
         .catch(errors => {
             console.warn(errors);
             res.status(400).send({errors: errors});
-        })
+        });
 });
 
 router.get('/chart', (req, res) => {

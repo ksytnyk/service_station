@@ -35,7 +35,7 @@
                         <span class="glyphicon glyphicon-remove icon-margin" aria-hidden="true" style="font-size: 19px;"/>
                     </a>
                 </th>
-                <td class="vat {@eq key=status value=5}disable-task{/eq}" style="position: relative; padding-top: 40px;">
+                <td class="vat {@eq key=status value=5}disable-task{/eq}" style="position: relative; padding-top: 40px; padding-bottom: 34px;">
                     {@eq key=status value=1}
                     <span class="status-requests status-bgc-pending"><strong>Замовлення в очікувані</strong></span>
                     {/eq}
