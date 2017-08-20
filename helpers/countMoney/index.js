@@ -18,11 +18,7 @@ module.exports = function (dates, requests) {
     }
 
     requests.map(item => {
-        if (requestsObj[formatDate(item.createdAt, true)] === 0) {
-            requestsObj[formatDate(item.createdAt, true)] = item.cost;
-        } else {
-            requestsObj[formatDate(item.createdAt, true)] += item.cost;
-        }
+        requestsObj[formatDate(item.createdAt, true)] += item.cost;
     });
 
     var datesArr = [];
