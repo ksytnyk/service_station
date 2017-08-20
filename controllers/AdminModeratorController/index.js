@@ -8,10 +8,10 @@ const express = require('express');
 const router = express.Router();
 
 const roles = require('../../constants/roles');
-const dataType = require('../../constants/dataType');
 const validation = require('../../middleware/validation');
 const requestsFactory = require('../../helpers/requestsFactory');
 const countStatuses = require('../../helpers/countStatuses');
+const countMoney = require('../../helpers/countMoney');
 const nodemailer = require('../../helpers/nodemailer');
 const status = require('../../constants/status');
 
@@ -290,25 +290,32 @@ router.delete('/delete-task/:id', (req, res) => {
 });
 
 router.get('/chart', (req, res) => {
-    res.render('roles/admin_moderator/chart', {typeUser: req.session.passport.user.userTypeID});
-});
-
-router.post('/chart/tasks', (req, res) => {
-    Task
-        .getAllTasksForChart(req.body)
-        .then(tasks => {
-            res.status(200).send({data: countStatuses(tasks, dataType.TASK)});
-        })
-        .catch(errors => {
-            res.status(400).send({errors: errors});
-        });
+    res.render('roles/admin_moderator/chart', {
+        typeUser: req.session.passport.user.userTypeID
+    });
 });
 
 router.post('/chart/requests', (req, res) => {
     Request
-        .getAllRequests(req.body)
+        .getAllRequestsForChart(req.body)
         .then(requests => {
-            res.status(200).send({data: countStatuses(requests, dataType.REQUEST)});
+            res.status(200).send({
+                data: countStatuses(requests)
+            });
+        })
+        .catch(errors => {
+            console.warn(errors);
+            res.status(400).send({errors: errors});
+        });
+});
+
+router.post('/chart/finances', (req, res) => {
+    Request
+        .getAllRequestsForChart(req.body)
+        .then(requests => {
+            res.status(200).send({
+                data: countMoney(req.body, requests)
+            });
         })
         .catch(errors => {
             console.warn(errors);

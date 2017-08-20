@@ -15,7 +15,7 @@
                 <li id="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/create-request">
                     <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/create-request">Додати замовлення</a>
                 </li>
-                <li>
+                <li id="/admin/chart">
                     <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/chart">Статистика</a>
                 </li>
             {/lt}

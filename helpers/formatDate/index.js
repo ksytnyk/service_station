@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = function formatDate(date) {
+module.exports = function formatDate(date, money) {
     var date = new Date(date);
     var array = [
         date.getFullYear(),
@@ -15,6 +15,10 @@ module.exports = function formatDate(date) {
         if (item < 10) item = "0" + item;
         return item;
     });
+
+    if (money) {
+        return res[0] + '.' + res[1] + '.' + res[2];
+    }
 
     return res[0] + '.' + res[1] + '.' + res[2] + ' ' + res[3] + ':' + res[4] + ':' + res[5];
 };

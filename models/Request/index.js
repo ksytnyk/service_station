@@ -55,25 +55,10 @@ Request.belongsTo(User, {foreignKey: 'customerID'});
 
 Request.sync();
 
-Request.getAllRequests = function (data) {
-
+Request.getAllRequests = function () {
     return new Promise((resolve, reject) => {
-        let query = {};
-        if (data) {
-            if (data.fromDateChart && data.toDateChart) {
-                query = {
-                    where: {
-                        createdAt: {
-                            $between: [data.fromDateChart, data.toDateChart]
-                        }
-                    }
-                };
-            }
-        }
-
         Request
             .findAll({
-                query,
                 include: {
                     model: User
                 }
@@ -215,6 +200,27 @@ Request.changeStatus = function (idRequest, status) {
                 reject(err);
             });
     })
+};
+
+Request.getAllRequestsForChart = function (data) {
+    return new Promise((resolve, reject) => {
+        Request
+            .findAll({
+                attributes: ['cost', 'createdAt', 'status'],
+                where: {
+                    createdAt: {
+                        $between: [new Date(data.fromDateChart), new Date(data.toDateChart)]
+                    }
+                }
+            })
+            .then(requests => {
+                resolve(requests);
+            })
+            .catch(err => {
+                console.warn(err);
+                reject(err);
+            });
+    });
 };
 
 module.exports = Request;

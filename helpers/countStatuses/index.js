@@ -1,10 +1,7 @@
 const status = require('../../constants/status');
-const dataType = require('../../constants/dataType');
 
-module.exports = function (data, type) {
-
+module.exports = function (data) {
     let processing = 0,
-        hold = 0,
         canceled = 0,
         done = 0,
         pending = 0;
@@ -24,10 +21,6 @@ module.exports = function (data, type) {
                 done++;
                 break;
             }
-            case status.HOLD: {
-                hold++;
-                break;
-            }
             case status.CANCELED: {
                 canceled++;
                 break;
@@ -35,9 +28,5 @@ module.exports = function (data, type) {
         }
     });
 
-    if (type === dataType.TASK) {
-        return [pending, processing, done, hold, canceled];
-    } else if (type === dataType.REQUEST) {
-        return [pending, processing, done, canceled];
-    }
+    return [pending, processing, done, canceled];
 };
