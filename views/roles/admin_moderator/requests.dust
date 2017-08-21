@@ -6,7 +6,7 @@
 
 <div class="col-lg-12 requests">
     <div class="panel panel-default">
-        <table class="table dtable">
+        <table class="table dtable-requests">
             <thead>
             <tr>
                 <th class="tac" style="width: 15px;">№</th>

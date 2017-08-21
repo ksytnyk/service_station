@@ -17,6 +17,10 @@ $(document).ready(function () {
 
     $('.dtable').DataTable();
 
+    $('.dtable-requests').DataTable({
+        "order": [[0, "desc"]]
+    });
+
     $('.startTime').datetimepicker({
         defaultDate: new Date(),
         locale: "uk",
