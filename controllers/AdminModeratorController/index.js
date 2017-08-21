@@ -321,7 +321,29 @@ router.delete('/delete-task/:id', (req, res) => {
             }
         })
         .then(() => {
-            res.status(200).send({id: req.params.id});
+            Request
+                .getRequestById(req.body.requestID)
+                .then(request => {
+                    var newCost = +request[0].dataValues.cost - +req.body.taskOldCost;
+
+                    Request
+                        .updateRequest(req.body.requestID, {cost: newCost})
+                        .then(() => {
+                            res.status(200).send({
+                                id: req.params.id,
+                                requestID: req.body.requestID,
+                                newCost: newCost
+                            });
+                        })
+                        .catch(errors => {
+                            console.warn(errors);
+                            res.status(400).send({errors: errors});
+                        });
+                })
+                .catch(errors => {
+                    console.warn(errors);
+                    res.status(400).send({errors: errors});
+                });
         })
         .catch(errors => {
             console.warn(errors);

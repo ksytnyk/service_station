@@ -209,6 +209,8 @@ $(document).ready(function () {
                     ' class="delete-task modal-window-link"' +
                     ' title="Видалити задачу" data-toggle="modal"' +
                     ' data-current="' + getIdRole(window.location.pathname) + '" data-id="' + data.task.id + '"' +
+                    ' data-request-id="' + data.task.requestID + '"' +
+                    ' data-task-old-cost="' + data.task.cost + '"' +
                     ' data-target="#deleteTaskFormModal"' +
                     ' style=""> ' +
                     '<span class="glyphicon glyphicon-remove" aria-hidden="true"/> ' +
@@ -223,6 +225,40 @@ $(document).ready(function () {
                 deleteTaskOnClick();
                 clearModalAddTask();
                 updateTaskOnClick();
+            },
+            error: function (err) {
+                showErrorAlert(err);
+            }
+        });
+    });
+
+    $('#delete-button').on('click', function () {
+
+        var taskID = $(this).attr('task-id');
+
+        var data = {
+            requestID: $(this).attr('request-id'),
+            taskOldCost: $(this).attr('task-old-cost')
+        };
+
+        $('#deleteTaskFormModal').modal('hide');
+
+        $.ajax({
+            url: getRole(window.location.pathname) + '/delete-task/' + taskID,
+            type: 'DELETE',
+            data: data,
+            success: function (data) {
+                showSuccessAlert('Видалення задачі пройшло успішно.');
+
+                var idx = "#idx-task-" + data.id;
+                var idr = "#idr-cost-" + data.requestID;
+
+                $(idx).remove();
+                $(idr).empty();
+
+                var newCost = '<strong>Вартість: </strong>' + data.newCost + ' грн';
+
+                $(idr).append(newCost);
             },
             error: function (err) {
                 showErrorAlert(err);
@@ -260,41 +296,11 @@ function updateTaskOnClick() {
 }
 
 function deleteTaskOnClick() {
-
     $('.delete-task').on('click', function () {
         $('#delete-button').attr('task-id', ($(this).data('id')));
         $('#delete-button').attr('request-id', ($(this).data('request-id')));
+        $('#delete-button').attr('task-old-cost', ($(this).data('task-old-cost')));
         $('#delete-task-id').html($(this).data('id'));
-
-    });
-
-    $('#delete-button').on('click', function () {
-
-        var taskID = $(this).attr('task-id');
-
-        var data = {
-            requestID: $(this).attr('request-id')
-        };
-
-        $('#deleteTaskFormModal').modal('hide');
-
-        $.ajax({
-            url: getRole(window.location.pathname) + '/delete-task/' + taskID,
-            type: 'DELETE',
-            data: data,
-            success: function (data) {
-                if (data.requestID) {
-                    window.location.replace(window.location.pathname);
-                } else {
-                    showSuccessAlert('Видалення задачі пройшло успішно.');
-                    var idx = "#idx-task-" + data.id;
-                    $(idx).remove();
-                }
-            },
-            error: function (err) {
-                showErrorAlert(err);
-            }
-        });
     });
 }
 

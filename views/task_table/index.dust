@@ -115,6 +115,7 @@
                data-current="{typeUser}"
                data-id="{id}"
                data-request-id="{requestID}"
+               data-task-old-cost="{cost}"
                data-target="#deleteTaskFormModal"
                style="">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"/>
