@@ -61,6 +61,7 @@ $(document).ready(function () {
                     ' title="Редагувати задачу"' +
                     ' data-toggle="modal"' +
                     ' data-id="' + data.result.id + '"' +
+                    ' data-request-id="' + data.result.requestID + '"' +
                     ' data-task-description="' + data.result.description + '"' +
                     ' data-task-name="' + data.result.name + '"' +
                     ' data-task-assigned-user="' + data.result.assignedUserID + '"' +
@@ -102,8 +103,6 @@ $(document).ready(function () {
 
     $('.task-update-button').on('click', function () {
 
-        $('.assign-task-select').addClass("hidden");
-        $('.assign-task-button').removeClass("hidden");
         $('#updateTaskFormModal').modal('toggle');
 
         $.ajax({
@@ -113,17 +112,22 @@ $(document).ready(function () {
             success: function (data) {
                 showSuccessAlert('Оновлення задачі пройшло успішно.');
 
+                $('.assign-task-select').addClass("hidden");
+                $('.assign-task-button').removeClass("hidden");
+
                 var idx = "#idx-task-" + data.task.id;
+                var idr = "#idr-cost-" + data.requestID;
 
                 $(idx).empty();
+                $(idr).empty();
 
                 if (getRole(window.location.pathname) !== "/executor" && getRole(window.location.pathname) !== "/store-keeper") {
-                    var executorNameSurname = $('#option' + $('#update-form-task').serializeArray()[2].value).attr('executorFullName');
-                    var assignedNameSurname = $('.optionAE' + $('#update-form-task').serializeArray()[3].value).attr('assignedUserFullName');
+                    var executorNameSurname = $('#option' + $('#update-form-task').serializeArray()[4].value).attr('executorFullName');
+                    var assignedNameSurname = $('.optionAE' + $('#update-form-task').serializeArray()[5].value).attr('assignedUserFullName');
                 }
 
 
-                var newTask, newTask1 = '', newTask2;
+                var newTask, newTask1 = '', newTask2, newCost;
 
                 newTask = '' +
                     '<th class="tac bb" style="background-color:#fff;">' +
@@ -184,6 +188,7 @@ $(document).ready(function () {
                     ' title="Редагувати задачу"' +
                     ' data-toggle="modal"' +
                     ' data-id="' + data.task.id + '"' +
+                    ' data-request-id="' + data.task.requestID + '"' +
                     ' data-task-description="' + data.task.description + '"' +
                     ' data-task-name="' + data.task.name + '"' +
                     ' data-task-assigned-user="' + data.task.assignedUserID + '"' +
@@ -210,8 +215,10 @@ $(document).ready(function () {
                     '</a>' +
                     '</td>';
 
+                newCost = '<strong>Вартість: </strong>' + data.newCost + ' грн';
 
                 $(idx).append(newTask + newTask1 + newTask2);
+                $(idr).append(newCost);
 
                 deleteTaskOnClick();
                 clearModalAddTask();
@@ -234,6 +241,8 @@ function clearModalAddTask() {
 function updateTaskOnClick() {
     $('.update-task').on('click', function () {
         $('#update-form-task-id').val($(this).data('id'));
+        $('#update-form-request-id').val($(this).data('request-id'));
+        $('#update-form-task-old-cost').val($(this).data('task-cost'));
         $('#update-form-task-name').val($(this).data('task-name'));
         $('#update-form-task-assigned-user').val($(this).data('task-assigned-user'));
         $('#update-form-task-description').val($(this).data('task-description'));

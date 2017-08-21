@@ -51,7 +51,7 @@
                     <p><strong>Назва замовлення: </strong>{name}</p>
                     <p><strong>Опис замовлення: </strong>{description}</p>
                     <p><strong>Клієнт: </strong>{user.userSurname} {user.userName}</p>
-                    <p><strong>Вартість: </strong>{cost} грн</p>
+                    <p id="idr-cost-{id}"><strong>Вартість: </strong>{cost} грн</p>
                     <p><strong>Час початку: </strong>{startTime}</p>
                     <p class="{@eq key=overdue value=1}overdue{/eq}"><strong>Заплан. час: </strong>{estimatedTime}</p>
                     <p><strong>Коментар: </strong>{comment}</p>

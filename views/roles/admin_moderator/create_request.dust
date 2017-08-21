@@ -31,8 +31,6 @@
             <input type="text" class="form-control datetimepickerN startTime disable_input" name="startTime" style="margin-bottom: 5px;">
             <label>Запланований час</label>
             <input type="text" class="form-control datetimepickerN disable_input" name="estimatedTime" style="margin-bottom: 5px;">
-            <label>Вартість</label>
-            <input type="text" class="form-control disable_input" name="cost" style="margin-bottom: 15px;">
             <input type="button" id="create_request" value="Додати замовлення"
                    class="btn btn-success col-lg-12 disable_input"/>
             <input type="button" id="access_update_request" value="Редагувати замовлення"

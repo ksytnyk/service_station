@@ -9,6 +9,8 @@
                     <h4 class="modal-title text-center">Редагувати задачу</h4>
                 </div>
                 <input type="hidden" id="update-form-task-id" name="id">
+                <input type="hidden" id="update-form-request-id" name="requestID">
+                <input type="hidden" id="update-form-task-old-cost" name="oldCost">
                 <div class="modal-body clearfix">
                     {@lt key=typeUser value=4}
                     {@lt key=typeUser value=3}

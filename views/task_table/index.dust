@@ -91,6 +91,7 @@
                title="Редагувати задачу"
                data-toggle="modal"
                data-id="{id}"
+               data-request-id="{requestID}"
                data-task-description="{description}"
                data-task-name="{name}"
                data-task-assigned-user="{assignedUserID}"
@@ -109,8 +110,10 @@
             </a>
             <a href="#"
                class="delete-task modal-window-link"
-               title="Видалити задачу" data-toggle="modal"
-               data-current="{typeUser}" data-id="{id}"
+               title="Видалити задачу"
+               data-toggle="modal"
+               data-current="{typeUser}"
+               data-id="{id}"
                data-request-id="{requestID}"
                data-target="#deleteTaskFormModal"
                style="">

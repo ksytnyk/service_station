@@ -50,14 +50,11 @@ module.exports = {
 
             let name = req.body.name;
             let customerID = req.body.customerID;
-            let cost = +req.body.cost;
             let startTime = req.body.startTime;
             let estimatedTime = req.body.estimatedTime;
 
             req.checkBody('name', '"Назва замовлення" - обов\'язкове поле.').notEmpty();
             req.checkBody('customerID', '"Клієнт" - обов\'язкове поле.').notEmpty();
-            req.checkBody('cost', '"Вартість" - обов\'язкове поле.').notEmpty();
-            req.checkBody('cost', 'Поле "Вартість" може вміщати тільки цифри.').isFloat();
             req.checkBody('startTime', '"Час початку" - обов\'язкове поле.').notEmpty();
             req.checkBody('estimatedTime', '"Планований час" - обов\'язкове поле.').notEmpty();
 

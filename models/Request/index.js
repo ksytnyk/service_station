@@ -37,7 +37,8 @@ const describeRequestTable = {
     },
     cost: {
         type: Sequelize.FLOAT,
-        field: 'cost'
+        field: 'cost',
+        defaultValue: 0
     },
     createdBy: {
         type: Sequelize.INTEGER,
