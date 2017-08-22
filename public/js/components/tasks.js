@@ -45,7 +45,7 @@ $(document).ready(function () {
                     '<p><strong>Виконавець: </strong>' + executorNameSurname + '</p>' +
                     '<p><strong>Доручити задачу: </strong>' + assignedNameSurname + '</p>' +
                     '<p><strong>Вартість: </strong>' + data.result.cost + ' грн</p>' +
-                    '<p><strong>Заплан. час: </strong>' + formatDate(data.result.estimationTime) + '</p>' +
+                    '<p><strong>Час виконання: </strong>' + data.result.estimationTime + ' год</p>' +
                     '<p><strong>Час початку: </strong>' + formatDate(data.result.startTime) + '</p>' +
                     '<p><strong>Кінцевий час: </strong>' + formatDate(data.result.endTime) + '</p>' +
                     '</td>' +
@@ -67,7 +67,7 @@ $(document).ready(function () {
                     ' data-task-assigned-user="' + data.result.assignedUserID + '"' +
                     ' data-task-planed-executor="' + data.result.planedExecutorID + '"' +
                     ' data-task-cost="' + data.result.cost + '"' +
-                    ' data-task-estimation-time="' + formatDate(data.result.estimationTime) + '"' +
+                    ' data-task-estimation-time="' + data.result.estimationTime + '"' +
                     ' data-task-start-time="' + formatDate(data.result.startTime) + '"' +
                     ' data-task-end-time="' + formatDate(data.result.endTime) + '"' +
                     ' data-task-parts="' + data.result.parts + '"' +
@@ -139,7 +139,7 @@ $(document).ready(function () {
                     '<p class="executor_name_surname"><strong>Виконавець: </strong>' + executorNameSurname + '</p> ' +
                     '<p class="assigned_name_surname"><strong>Доручити задачу: </strong>' + assignedNameSurname + '</p>' +
                     '<p><strong>Вартість: </strong>' + data.task.cost + ' грн</p>' +
-                    '<p><strong>Заплан. час: </strong>' + formatDate(data.task.estimationTime) + '</p>' +
+                    '<p><strong>Час виконання: </strong>' + data.task.estimationTime + ' год</p>' +
                     '<p><strong>Час початку: </strong>' + formatDate(data.task.startTime) + '</p> ' +
                     '<p><strong>Кінцевий час: </strong>' + formatDate(data.task.endTime) + '</p> ' +
                     '</td>' +
@@ -194,7 +194,7 @@ $(document).ready(function () {
                     ' data-task-assigned-user="' + data.task.assignedUserID + '"' +
                     ' data-task-planed-executor="' + data.task.planedExecutorID + '"' +
                     ' data-task-cost="' + data.task.cost + '"' +
-                    ' data-task-estimation-time="' + formatDate(data.task.estimationTime) + '"' +
+                    ' data-task-estimation-time="' + data.task.estimationTime + '"' +
                     ' data-task-start-time="' + formatDate(data.task.startTime) + '"' +
                     ' data-task-end-time="' + formatDate(data.task.endTime) + '"' +
                     ' data-task-parts="' + data.task.parts + '"' +

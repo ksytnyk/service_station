@@ -30,7 +30,7 @@ const describeTaskTable = {
         field: 'cost'
     },
     estimationTime: {
-        type: Sequelize.DATE,
+        type: Sequelize.FLOAT,
         field: 'estimation_time'
     },
     startTime: {

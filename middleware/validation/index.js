@@ -77,14 +77,13 @@ module.exports = {
                 let cost = req.body.cost;
                 let estimationTime = req.body.estimationTime;
                 let startTime = req.body.startTime;
-                let endTime = req.body.endTime;
 
                 req.checkBody('description', '"Опис задачі" - обов\'язкове поле.').notEmpty();
                 req.checkBody('cost', '"Вартість" - обов\'язкове поле.').notEmpty();
-                req.checkBody('cost', 'Поле "Вартість" може вміщати тільки цифри.').isFloat();
-                req.checkBody('estimationTime', '"Запланований час" - обов\'язкове поле.').notEmpty();
+                req.checkBody('cost', 'Поле "Вартість" може містити лише цифри.').isFloat();
+                req.checkBody('estimationTime', '"Час виконання" - обов\'язкове поле.').notEmpty();
+                req.checkBody('estimationTime', 'Поле "Час виконання" може містити лише цифри.').isFloat();
                 req.checkBody('startTime', '"Час початку" - обов\'язкове поле.').notEmpty();
-                req.checkBody('endTime', '"Кінцевий час" - обов\'язкове поле.').notEmpty();
             }
 
             if(req.baseUrl==='/admin' || req.baseUrl==='/moderator') {

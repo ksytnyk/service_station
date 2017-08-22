@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 const Task = require('../../models/Task');
 const formatDate = require('../../helpers/formatDate');
+const countEndTime = require('../../helpers/countEndTime');
 const validation = require('../../middleware/validation');
 
 router.get('/', (req, res) => {
@@ -12,7 +13,6 @@ router.get('/', (req, res) => {
         .then(result => {
 
             for (var i = 0; i < result.length; i++) {
-                result[i].dataValues.estimationTime = formatDate(result[i].dataValues.estimationTime);
                 result[i].dataValues.startTime = formatDate(result[i].dataValues.startTime);
                 result[i].dataValues.endTime = formatDate(result[i].dataValues.endTime);
             }
@@ -24,6 +24,8 @@ router.get('/', (req, res) => {
 });
 
 router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
+    req.body.endTime = countEndTime(req.body.startTime, +req.body.estimationTime);
+
     Task
         .updateTask(req.body.id, req.body)
         .then(() => {

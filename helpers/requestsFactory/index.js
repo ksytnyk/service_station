@@ -24,7 +24,6 @@ module.exports = function (requests, tasks) {
     if (tasks) {
         tasks.map(item => {
             if (requestsObj[item.requestID] !== undefined) {
-                item.dataValues.estimationTime = formatDate(item.dataValues.estimationTime);
                 item.dataValues.startTime = formatDate(item.dataValues.startTime);
                 item.dataValues.endTime = formatDate(item.dataValues.endTime);
                 requestsObj[item.requestID].tasks.push(item.dataValues);

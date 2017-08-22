@@ -59,27 +59,28 @@
                     {/lt}
                     <div class="form-group col-lg-4">
                         <label>Опис задачі</label>
-                        <textarea type="text" class="form-control create-form-task" name="description"
-                                  id="update-form-task-description" rows="3" style="height: 108px;"></textarea>
-                    </div>
-                    <div class="form-group col-lg-4">
-                        <label>Запланований час</label>
-                        <input type="text" class="form-control create-form-task datetimepickerN" name="estimationTime"
-                               id="update-form-task-estimation-time">
-                    </div>
-                    <div class="form-group col-lg-4">
-                        <label>Вартість</label>
-                        <input type="text" class="form-control create-form-task" name="cost" id="update-form-task-cost">
+                        <input type="text" class="form-control create-form-task" name="description"
+                                  id="update-form-task-description">
                     </div>
                     <div class="form-group col-lg-4">
                         <label>Час початку</label>
                         <input type="text" class="form-control create-form-task datetimepickerN" name="startTime"
                                id="update-form-task-start-time">
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label>Кінцевий час</label>
-                        <input type="text" class="form-control create-form-task datetimepickerN" name="endTime"
-                               id="update-form-task-end-time">
+                    <div class="form-group col-lg-2">
+                        <label>Час виконання</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control create-form-task" name="estimationTime"
+                               id="update-form-task-estimation-time">
+                            <span class="input-group-addon">год</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-2">
+                        <label>Вартість</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control create-form-task" name="cost" id="update-form-task-cost">
+                            <span class="input-group-addon">грн</span>
+                        </div>
                     </div>
                     <div class="form-group col-lg-6">
                         <label>Запчастини</label>

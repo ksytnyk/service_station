@@ -13,6 +13,7 @@ const requestsFactory = require('../../helpers/requestsFactory');
 const countStatuses = require('../../helpers/countStatuses');
 const countMoney = require('../../helpers/countMoney');
 const nodemailer = require('../../helpers/nodemailer');
+const countEndTime = require('../../helpers/countEndTime');
 const status = require('../../constants/status');
 
 router.get('/users', (req, res) => {
@@ -242,6 +243,8 @@ router.post('/change-request-status/:id', (req, res) => {
 });
 
 router.post('/create-task', validation.createAndUpdateTask(), (req, res) => {
+    req.body.endTime = countEndTime(req.body.startTime, +req.body.estimationTime);
+
     Task
         .createTask(req.body)
         .then(result => {
@@ -272,6 +275,8 @@ router.post('/create-task', validation.createAndUpdateTask(), (req, res) => {
 });
 
 router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
+    req.body.endTime = countEndTime(req.body.startTime, +req.body.estimationTime);
+
     Task
         .updateTask(req.body.id, req.body)
         .then(() => {
