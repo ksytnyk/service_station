@@ -2,6 +2,7 @@ $(document).ready(function () {
 
     $('#create_task').on('click', function () {
         $('#requestIDForTask').val($("#update_request").attr("request-id"));
+        $('.task-type-select').val('');
     });
 
     $('#change-status-update-task').on('click', function () {
