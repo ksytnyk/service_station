@@ -19,20 +19,29 @@ $(document).ready(function () {
 
     $('#taskAddButton').on('click', function () {
 
-        $('.assign-task-select').addClass("hidden");
-        $('.assign-task-button').removeClass("hidden");
-
         $('#createTaskFormModal').modal('toggle');
+
+        var dataArr = $('#createTaskForm').serializeArray();
+
+        if(dataArr[1].value===''){
+            dataArr[1].value = dataArr[2].value;
+        }
 
         $.ajax({
             url: getRole(window.location.pathname) + '/create-task',
             type: 'Post',
-            data: $('#createTaskForm').serializeArray(),
+            data: dataArr,
             success: function (data) {
                 showSuccessAlert('Додавання задачі пройшло успішно.');
 
-                var executorNameSurname = $('#option' + $('#createTaskForm').serializeArray()[2].value).attr('executorFullName');
-                var assignedNameSurname = $('.optionAE' + $('#createTaskForm').serializeArray()[3].value).attr('assignedUserFullName');
+                $('.assign-task-select').addClass("hidden");
+                $('.assign-task-button').removeClass("hidden");
+                $('.task-type-select').removeClass("hidden");
+                $('.task-type-select').val('');
+                $('.task-type-input').addClass("hidden");
+
+                var executorNameSurname = $('#option' + $('#createTaskForm').serializeArray()[3].value).attr('executorFullName');
+                var assignedNameSurname = $('.optionAE' + $('#createTaskForm').serializeArray()[4].value).attr('assignedUserFullName');
 
                 $("#tasks-table").append('' +
                     '<tr id="idx-task-' + data.result.id + '">' +
@@ -105,10 +114,19 @@ $(document).ready(function () {
 
         $('#updateTaskFormModal').modal('toggle');
 
+        var dataArr = $('#update-form-task').serializeArray();
+
+        console.log('lol', dataArr);
+
+        if(dataArr[3].value===''){
+            dataArr[3].value = dataArr[4].value;
+        }
+        console.log('lal', dataArr);
+
         $.ajax({
             url: getRole(window.location.pathname) + '/update-task/' + $('#update-form-task-id').val(),
             type: 'PUT',
-            data: $('#update-form-task').serializeArray(),
+            data: dataArr,
             success: function (data) {
                 showSuccessAlert('Оновлення задачі пройшло успішно.');
 
@@ -122,8 +140,10 @@ $(document).ready(function () {
                 $(idr).empty();
 
                 if (getRole(window.location.pathname) !== "/executor" && getRole(window.location.pathname) !== "/store-keeper") {
-                    var executorNameSurname = $('#option' + $('#update-form-task').serializeArray()[4].value).attr('executorFullName');
-                    var assignedNameSurname = $('.optionAE' + $('#update-form-task').serializeArray()[5].value).attr('assignedUserFullName');
+                    var executorNameSurname = $('#option' + $('#update-form-task').serializeArray()[5].value).attr('executorFullName');
+                    var assignedNameSurname = $('.optionAE' + $('#update-form-task').serializeArray()[6].value).attr('assignedUserFullName');
+
+                    console.log("доручити", assignedNameSurname, "екзекютор", executorNameSurname);
                 }
 
 
@@ -279,7 +299,7 @@ function updateTaskOnClick() {
         $('#update-form-task-id').val($(this).data('id'));
         $('#update-form-request-id').val($(this).data('request-id'));
         $('#update-form-task-old-cost').val($(this).data('task-cost'));
-        $('#update-form-task-name').val($(this).data('task-name'));
+        $('#update-form-task-type-select').val($(this).data('task-name')).change();
         $('#update-form-task-assigned-user').val($(this).data('task-assigned-user'));
         $('#update-form-task-description').val($(this).data('task-description'));
         $('#update-form-task-planed-executor').val($(this).data('task-planed-executor'));

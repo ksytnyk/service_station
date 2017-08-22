@@ -3,6 +3,7 @@
 const User = require('../../models/User');
 const Task = require('../../models/Task');
 const Request = require('../../models/Request');
+const TaskType = require('../../models/TaskType');
 
 const express = require('express');
 const router = express.Router();
@@ -121,26 +122,40 @@ router.get('/create-request', (req, res) => {
         .then(usersCustomers => {
             User
                 .getAllUsers()
-                .then(users =>
+                .then(users => {
+
                     res.render('roles/admin_moderator/create_request', {
                         assignedExecutorUsers: users,
                         customers: usersCustomers,
                         typeUser: req.session.passport.user.userTypeID
-                    }))
+                    })
+
+                })
                 .catch(err => {
                     console.warn(err);
                     res.render('roles/admin_moderator/create_request');
-                });
-        });
+                })
+        })
 });
 
 router.post('/create-request', validation.createAndUpdateRequest(), (req, res) => {
-    console.log(req.body);
     req.body.createdBy = req.session.passport.user.id;
     Request
         .createRequest(req.body)
         .then((result) => {
-            res.status(200).send({result: result});
+            TaskType
+                .getTaskTypesByCar(req.body.carMarkk, req.body.carModel)
+                .then(taskTypes => {
+                    console.log("TASK TYPES", taskTypes);
+                    res.status(200).send({
+                        taskTypes: taskTypes,
+                        result: result
+                    });
+                })
+                .catch(errors => {
+                    console.log('second');
+                    res.status(400).send({errors: errors});
+                })
         })
         .catch(errors => {
             res.status(400).send({errors: errors});
@@ -160,12 +175,24 @@ router.get('/update-request/:id', (req, res) => {
                             Task
                                 .getAllTasksOfRequest(req.params.id)
                                 .then(task => {
-                                    res.render('roles/admin_moderator/update_request', {
-                                        assignedExecutorUsers: users,
-                                        customers: usersCustomers,
-                                        typeUser: req.session.passport.user.userTypeID,
-                                        request: requestsFactory(request, task)
-                                    });
+                                    console.log('laaaal', request[0].dataValues.carMarkk);
+                                    console.log('laaaal', request[0].dataValues.carModel);
+                                    TaskType
+                                        .getTaskTypesByCar(request[0].dataValues.carMarkk, request[0].dataValues.carModel)
+                                        .then(taskTypes => {
+                                            console.log("TASKKKKKKKTYPES", taskTypes);
+                                            res.render('roles/admin_moderator/update_request', {
+                                                taskTypes: taskTypes,
+                                                assignedExecutorUsers: users,
+                                                customers: usersCustomers,
+                                                typeUser: req.session.passport.user.userTypeID,
+                                                request: requestsFactory(request, task)
+                                            })
+                                        })
+                                        .catch(error => {
+                                            console.warn(error);
+                                            res.render('roles/admin_moderator/update_request');
+                                        });
                                 })
                                 .catch(error => {
                                     console.warn(error);
@@ -244,9 +271,6 @@ router.post('/change-request-status/:id', (req, res) => {
 });
 
 router.post('/create-task', validation.createAndUpdateTask(), (req, res) => {
-    
-    console.log(req.body);
-    
     req.body.endTime = countEndTime(req.body.startTime, +req.body.estimationTime);
 
     Task
@@ -256,11 +280,24 @@ router.post('/create-task', validation.createAndUpdateTask(), (req, res) => {
                 .getRequestById(req.body.requestID)
                 .then(request => {
                     var newCost = +request[0].dataValues.cost + +req.body.cost;
-    
+
                     Request
                         .updateRequest(req.body.requestID, {cost: newCost})
                         .then(() => {
-                            res.status(200).send({result: result});
+                            TaskType
+                                .createTaskType({
+                                    typeName: req.body.name,
+                                    carMarkk: request[0].dataValues.carMarkk,
+                                    carModel: request[0].dataValues.carModel,
+                                    cost: req.body.cost
+                                })
+                                .then(() => {
+                                    res.status(200).send({result: result});
+                                })
+                                .catch(errors => {
+                                    console.warn(errors);
+                                    res.status(400).send({errors: errors});
+                                });
                         })
                         .catch(errors => {
                             console.warn(errors);
@@ -386,6 +423,21 @@ router.post('/chart/finances', (req, res) => {
         .then(requests => {
             res.status(200).send({
                 data: countMoney(req.body, requests)
+            });
+        })
+        .catch(errors => {
+            console.warn(errors);
+            res.status(400).send({errors: errors});
+        });
+});
+
+router.post('/get-task-prise/:id', (req, res) => {
+    TaskType
+        .getTaskTypeByID(req.params.id)
+        .then(taskType => {
+            console.log(taskType.dataValues.cost);
+            res.status(200).send({
+                taskTypeCost: taskType.dataValues.cost
             });
         })
         .catch(errors => {

@@ -14,7 +14,14 @@
 
                     <div class="form-group col-lg-4">
                         <label>Назва задачі</label>
-                        <input type="text" class="form-control create-form-task" name="name">
+
+                        <input type="text" class="form-control create-form-task hidden create-form-task task-type-input" id="task-type-input" name="name">
+                        <select class="form-control selectpicker create-form-task task-type-select" id="task-type-select" data-live-search="true" name="name2">
+                            <option value="new task">Додати нову задачу</option>
+                            {#taskTypes}
+                            <option value="{typeName}" updateTaskTypeID="{id}" id="updateTaskTypeID{typeName}">{typeName}</option>
+                            {/taskTypes}
+                        </select>
                     </div>
                     <div class="form-group col-lg-4">
                         <label>Виконавець</label>
@@ -66,7 +73,7 @@
                     <div class="form-group col-lg-2">
                         <label>Вартість</label>
                         <div class="input-group">
-                            <input type="text" class="form-control create-form-task" name="cost">
+                            <input type="text" class="form-control create-form-task task-cost" name="cost">
                             <span class="input-group-addon">грн</span>
                         </div>
                     </div>
