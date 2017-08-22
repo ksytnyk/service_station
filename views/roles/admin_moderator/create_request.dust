@@ -31,6 +31,17 @@
             <input type="text" class="form-control datetimepickerN startTime disable_input" name="startTime" style="margin-bottom: 5px;">
             <label>Запланований час</label>
             <input type="text" class="form-control datetimepickerN disable_input" name="estimatedTime" style="margin-bottom: 5px;">
+            <form>
+                <label> Тип транспорта </label>
+                <select class="form-control disable_input" name="typeOfCar" id="typeOfCar">
+                    <option>Выберите тип</option>
+                </select>
+                <label>Марка автомобиля</label>
+                <select class="form-control disable_input" name="carMarkk" id="markk"></select>
+                <!--<input type="search" id="markka">-->
+                <label>Модель автомобиля</label>
+                <select class="form-control disable_input" name="carModel" id="model"></select>
+            </form>
             <input type="button" id="create_request" value="Додати замовлення"
                    class="btn btn-success col-lg-12 disable_input"/>
             <input type="button" id="access_update_request" value="Редагувати замовлення"

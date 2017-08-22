@@ -55,6 +55,8 @@
                     <p><strong>Час початку: </strong>{startTime}</p>
                     <p class="{@eq key=overdue value=1}overdue{/eq}"><strong>Заплан. час: </strong>{estimatedTime}</p>
                     <p><strong>Коментар: </strong>{comment}</p>
+                    <p><strong>Марка: </strong>{carMarkk}</p>
+                    <p><strong>Модель: </strong>{carModel}</p>
                     {@ne key=status value=2}
                         <form class="request-form-status" action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/change-request-status/{id}" method="post">
                             <input class="btn btn-primary" type="submit" id="requestProcessing" value="Почати"/>

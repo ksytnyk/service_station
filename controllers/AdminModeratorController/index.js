@@ -135,6 +135,7 @@ router.get('/create-request', (req, res) => {
 });
 
 router.post('/create-request', validation.createAndUpdateRequest(), (req, res) => {
+    console.log(req.body);
     req.body.createdBy = req.session.passport.user.id;
     Request
         .createRequest(req.body)
@@ -243,6 +244,9 @@ router.post('/change-request-status/:id', (req, res) => {
 });
 
 router.post('/create-task', validation.createAndUpdateTask(), (req, res) => {
+    
+    console.log(req.body);
+    
     req.body.endTime = countEndTime(req.body.startTime, +req.body.estimationTime);
 
     Task
@@ -252,7 +256,7 @@ router.post('/create-task', validation.createAndUpdateTask(), (req, res) => {
                 .getRequestById(req.body.requestID)
                 .then(request => {
                     var newCost = +request[0].dataValues.cost + +req.body.cost;
-
+    
                     Request
                         .updateRequest(req.body.requestID, {cost: newCost})
                         .then(() => {

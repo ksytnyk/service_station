@@ -43,6 +43,14 @@ const describeRequestTable = {
     createdBy: {
         type: Sequelize.INTEGER,
         field: 'created_by'
+    },
+    carMarkk: {
+        type: Sequelize.STRING,
+        field: 'car_markk'
+    },
+    carModel: {
+        type: Sequelize.STRING,
+        field: 'car_model'
     }
 };
 

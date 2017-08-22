@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/css/libs/bootstrap.css">
     <link rel="stylesheet" href="/css/libs/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="/css/libs/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="/css/libs/select2.min.css">
     <link rel="stylesheet" href="/css/login.css">
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/request.css">
@@ -31,10 +32,12 @@
 <script src="/js/libs/collapse.js"></script>
 <script src="/js/libs/bootstrap-datetimepicker.min.js"></script>
 <script src="/js/libs/Chart.min.js"></script>
+<script src="/js/libs/select2.min.js"></script>
 <script src="/js/components/main.js"></script>
 <script src="/js/components/users.js"></script>
 <script src="/js/components/requests.js"></script>
 <script src="/js/components/tasks.js"></script>
 <script src="/js/components/chart.js"></script>
+<script src="/js/components/cars.js"></script>
 </body>
 </html>
