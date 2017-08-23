@@ -41,8 +41,8 @@ $(document).ready(function () {
                 $('.task-type-select').val('');
                 $('.task-type-input').addClass("hidden");
 
-                var executorNameSurname = $('#option' + $('#createTaskForm').serializeArray()[3].value).attr('executorFullName');
-                var assignedNameSurname = $('.optionAE' + $('#createTaskForm').serializeArray()[4].value).attr('assignedUserFullName');
+                var executorNameSurname = $('#option' + dataArr[3].value).attr('executorFullName');
+                var assignedNameSurname = $('#optionAE' + dataArr[4].value).attr('assignedUserFullName');
 
                 $("#tasks-table").append('' +
                     '<tr id="idx-task-' + data.result.id + '">' +
@@ -117,12 +117,9 @@ $(document).ready(function () {
 
         var dataArr = $('#update-form-task').serializeArray();
 
-        console.log('lol', dataArr);
-
         if(dataArr[3].value===''){
             dataArr[3].value = dataArr[4].value;
         }
-        console.log('lal', dataArr);
 
         $.ajax({
             url: getRole(window.location.pathname) + '/update-task/' + $('#update-form-task-id').val(),
@@ -131,6 +128,8 @@ $(document).ready(function () {
             success: function (data) {
                 showSuccessAlert('Оновлення задачі пройшло успішно.');
 
+                $('.task-type-select').removeClass("hidden");
+                $('.task-type-input').addClass("hidden");
                 $('.assign-task-select').addClass("hidden");
                 $('.assign-task-button').removeClass("hidden");
 
@@ -140,13 +139,12 @@ $(document).ready(function () {
                 $(idx).empty();
                 $(idr).empty();
 
+                console.log(dataArr);
+
                 if (getRole(window.location.pathname) !== "/executor" && getRole(window.location.pathname) !== "/store-keeper") {
-                    var executorNameSurname = $('#option' + $('#update-form-task').serializeArray()[5].value).attr('executorFullName');
-                    var assignedNameSurname = $('.optionAE' + $('#update-form-task').serializeArray()[6].value).attr('assignedUserFullName');
-
-                    console.log("доручити", assignedNameSurname, "екзекютор", executorNameSurname);
+                    var executorNameSurname = $('#option' + dataArr[5].value).attr('executorFullName');
+                    var assignedNameSurname = $('#optionAE' + dataArr[6].value).attr('assignedUserFullName');
                 }
-
 
                 var newTask, newTask1 = '', newTask2, newCost;
 

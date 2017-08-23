@@ -19,7 +19,7 @@
                         <select class="form-control selectpicker create-form-task task-type-select" id="task-type-select" data-live-search="true" name="name2">
                             <option value="new task">Додати нову задачу</option>
                             {#taskTypes}
-                            <option value="{typeName}" updateTaskTypeID="{id}" id="updateTaskTypeID{typeName}">{typeName}</option>
+                            <option value="{typeName}" taskTypeID="{id}" id="taskTypeID{typeName}">{typeName}</option>
                             {/taskTypes}
                         </select>
                     </div>
@@ -43,12 +43,12 @@
                                 {#assignedExecutorUsers}
                                 {@eq key=userTypeID value=4}
                                 <option value="{id}" assignedUserFullName="{userName} {userSurname}"
-                                        class="optionAE{id}">(Зав. складом) {userName} {userSurname}
+                                        id="optionAE{id}">(Зав. складом) {userName} {userSurname}
                                 </option>
                                 {/eq}
                                 {@eq key=userTypeID value=3}
                                 <option value="{id}" assignedUserFullName="{userName} {userSurname}"
-                                        class="optionAE{id}">(Інженер) {userName} {userSurname}
+                                        id="optionAE{id}">(Інженер) {userName} {userSurname}
                                 </option>
                                 {/eq}
                                 {/assignedExecutorUsers}
