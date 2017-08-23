@@ -29,8 +29,16 @@ $(document).ready(() => {
     }
 
     function renderTypes(Types) {
-        for (let i in Types){
-            $("#typeOfCar").append("<option id='"+ Types[i].name +"' value='"+ Types[i].name +"' data-id='" + Types[i].value + "'>"+ Types[i].name +"</option>")
+        var newTypes = [];
+        newTypes.push(Types[0], Types[1], Types[5], Types[6]);
+
+        newTypes[0].nameUK = "Легкові автомобілі";
+        newTypes[1].nameUK = "Мотоцикли";
+        newTypes[2].nameUK = "Вантажні автомобілі";
+        newTypes[3].nameUK = "Автобуси";
+
+        for (let i in newTypes){
+            $("#typeOfCar").append("<option id='"+ newTypes[i].name +"' value='"+ newTypes[i].name +"' data-id='" + newTypes[i].value + "'>"+ newTypes[i].nameUK +"</option>")
         }
     }
 
