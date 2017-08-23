@@ -1,10 +1,8 @@
 $(document).ready(function () {
 
-
     $('[data-toggle="popover"]').popover();
 
     $('#create_request').on('click', function () {
-        console.log($('#createRequestForm').serializeArray());
         $.ajax({
             url: window.location.pathname,
             type: 'Post',
@@ -27,6 +25,7 @@ $(document).ready(function () {
 
     $('#access_update_request').on('click', function () {
         $('.disable_input').prop('disabled', false);
+        $('.select2').removeClass('select2-container--disabled');
         $('#access_update_request').hide();
         $('#update_request').show();
     });

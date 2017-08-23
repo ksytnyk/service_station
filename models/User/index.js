@@ -202,4 +202,23 @@ User.deleteUser = function (idUser) {
     });
 };
 
+User.getAllExecutors = function () {
+    return new Promise((resolve, reject) => {
+        User
+            .findAll({
+                where: {
+                    user_type_id: [3]
+                },
+                attributes: ['id', 'userName', 'userSurname']
+            })
+            .then(users => {
+                resolve(users);
+            })
+            .catch(err => {
+                console.warn(err);
+                reject(err);
+            });
+    })
+};
+
 module.exports = User;

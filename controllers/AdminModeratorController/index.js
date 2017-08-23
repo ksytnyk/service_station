@@ -13,6 +13,7 @@ const validation = require('../../middleware/validation');
 const requestsFactory = require('../../helpers/requestsFactory');
 const countStatuses = require('../../helpers/countStatuses');
 const countMoney = require('../../helpers/countMoney');
+const countTasks = require('../../helpers/countTasks');
 const nodemailer = require('../../helpers/nodemailer');
 const countEndTime = require('../../helpers/countEndTime');
 const status = require('../../constants/status');
@@ -424,6 +425,28 @@ router.post('/chart/finances', (req, res) => {
             res.status(200).send({
                 data: countMoney(req.body, requests)
             });
+        })
+        .catch(errors => {
+            console.warn(errors);
+            res.status(400).send({errors: errors});
+        });
+});
+
+router.post('/chart/tasks', (req, res) => {
+    User
+        .getAllExecutors()
+        .then(users => {
+            Task
+                .getAllTasksForChart(req.body)
+                .then(tasks => {
+                    res.status(200).send({
+                        data: countTasks(users, tasks)
+                    });
+                })
+                .catch(errors => {
+                    console.warn(errors);
+                    res.status(400).send({errors: errors});
+                });
         })
         .catch(errors => {
             console.warn(errors);

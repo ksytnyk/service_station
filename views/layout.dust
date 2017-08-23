@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/css/executor.css">
     <link rel="stylesheet" href="/css/storekeeper.css">
     <link rel="stylesheet" href="/css/customer.css">
+    <link rel="stylesheet" href="/css/chart.css">
 </head>
 <body>
 <div class="container">

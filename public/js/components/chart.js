@@ -1,32 +1,17 @@
 $(document).ready(function () {
-// var tableData = "<h2>Statistic Table</h2> " +
-//     "<p>The statistic table help for your business:</p> " +
-//     "<table class='table table-bordered'> " +
-//     "<thead> " +
-//     "<tr> " +
-//     "<th>Statistic</th> " +
-//     "<th>Statistic</th> " +
-//     "<th>Statistic</th> " +
-//     "</tr> " +
-//     "</thead> " +
-//     "<tbody> " +
-//     "<tr> " +
-//     "<td>Data</td> " +
-//     "<td>Data</td> " +
-//     "<td>Data</td> " +
-//     "</tr> " +
-//     "<tr> " +
-//     "<td>Data</td> " +
-//     "<td>Data</td> " +
-//     "<td>Data</td> " +
-//     "</tr> " +
-//     "<tr> " +
-//     "<td>Data</td> " +
-//     "<td>Data</td> " +
-//     "<td>Data</td> " +
-//     "</tr> " +
-//     "</tbody> " +
-//     "</table>";
+
+    if (window.location.pathname.includes('chart')) {
+        var toDate = new Date();
+        var fromDate = new Date();
+
+        fromDate.setDate(toDate.getDate() - 30);
+        $('#from-date-for-statistic').val(formatDate(fromDate));
+        $('#to-date-for-statistic').val(formatDate(toDate));
+        setTimeout(() => {
+            $('#chart-finances').click();
+        }, 1);
+    }
+
 
     $('#chart-request').on('click', function () {
 
@@ -86,10 +71,54 @@ $(document).ready(function () {
                         fontSize: 16,
                         padding: 25,
                         fontColor: '#333',
-                        text: "Замовлення за вказаний діапазон часу"
+                        text: "Статистика замовлень"
                     }
                 }
             });
+        });
+    });
+
+    $('#chart-tasks').on('click', function () {
+        var data = $('#between-dates').serializeArray();
+
+        $.post("/admin/chart/tasks", data, function (result) {
+
+            var template = '' +
+                '<h4>Статистика виконання задач</h4>' +
+                '<div class="panel panel-default">' +
+                '<table class="table">' +
+                '<thead>' +
+                '<tr>' +
+                '<th class="md tac">ID</th>' +
+                '<th class="tac">Прізвище та ім\'я</th>' +
+                '<th class="tac">Виконано задач</th>' +
+                '<th class="tac">Прибуток</th>' +
+                '</tr>' +
+                '</thead>' +
+                '<tbody>';
+
+            var templateArr = result.data.map(item => {
+                return (
+                    '<tr>' +
+                    '<th class="tac">' + item.id + '</th>' +
+                    '<td class="tac" class="tac">' + item.userSurname + ' ' + item.userName + '</td>' +
+                    '<td class="tac">' + item.task.ready + '</td>' +
+                    '<td class="tac">' + item.task.cost + '</td>' +
+                    '</tr>'
+                );
+            });
+
+            var template1 = '';
+            for (var i = 0; i < templateArr.length; i++) {
+                template1 += templateArr[i];
+            }
+
+            var template2 = '' +
+                '</tbody>' +
+                '</table>' +
+                '</div>';
+
+            $('#div-for-chart').empty().append( template + template1 + template2 );
         });
     });
 
@@ -142,7 +171,7 @@ $(document).ready(function () {
                         fontSize: 16,
                         padding: 25,
                         fontColor: '#333',
-                        text: "Фінансова статистика за вказаний діапазон часу"
+                        text: "Фінансова статистика"
                     },
                     elements: {
                         line: {

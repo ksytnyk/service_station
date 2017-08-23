@@ -1,0 +1,13 @@
+.chart .panel {
+    border: 1px solid #ccc;
+}
+.chart h4 {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 15.5px;
+    line-height: 1.42857143;
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 22px;
+    margin-bottom: 22px;
+}

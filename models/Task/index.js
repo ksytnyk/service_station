@@ -279,26 +279,23 @@ Task.changeTaskStatus = function (idTask, status) {
 
 Task.getAllTasksForChart = function (data) {
     return new Promise((resolve, reject) => {
-        let query = {};
-        if (data.fromDateChart && data.toDateChart) {
-            query = {
+        Task
+            .findAll({
                 where: {
                     createdAt: {
-                        $between: [data.fromDateChart, data.toDateChart]
+                        $between: [new Date(data.fromDateChart), new Date(data.toDateChart)]
                     }
-                }
-            };
-        }
-        Task
-            .findAll(query)
-            .then(result => {
-                resolve(result);
+                },
+                attributes: ['planedExecutorID', 'status', 'cost'],
             })
-            .catch(errors => {
-                console.warn(errors);
-                reject(errors);
+            .then(tasks => {
+                resolve(tasks);
+            })
+            .catch(err => {
+                console.warn(err);
+                reject(err);
             });
-    })
+    });
 };
 
 module.exports = Task;
