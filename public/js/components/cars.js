@@ -6,13 +6,16 @@
 
 $(document).ready(() => {
     if(window.location.pathname == "/admin/create-request"){
-        getTypes()
+        getTypes();
     }
 
     $('#typeOfCar').on('change', function () {
-        getMarkks(this)
+        $("#markk option").remove();
+        $("#model option").remove();
+        getMarkks(this);
     });
     $('#markk').on('change', function () {
+        $("#model option").remove();
         getModels(this);
     });
 
@@ -21,7 +24,7 @@ $(document).ready(() => {
         $.ajax({
             url: "http://api.auto.ria.com/categories"
         }).done((result) => {
-            renderTypes(result)
+            renderTypes(result);
         })
     }
 
@@ -43,10 +46,8 @@ $(document).ready(() => {
 
 
     function renderMarkks(Markk) {
-        
-        $("#markk option").remove();
+        $("#markk").append("<option>Оберіть марку транспорту</option>");
         for (let i in Markk){
-
             $("#markk").append("<option id='"+ Markk[i].name +"' value='"+ Markk[i].name +"' data-id='" + Markk[i].value + "'>"+ Markk[i].name +"</option>")
         }
         $("#markk").select2();
@@ -54,15 +55,13 @@ $(document).ready(() => {
 
 
     function getModels(Model) {
-        link += "/" +  $('#' + Model.value).data('id') + "/models"
         $.ajax({
-            url: link
+            url: link + "/" +  $('#' + Model.value).data('id') + "/models"
         }).done((result) => {
             renderModels(result)
         })
     }
     function renderModels(Models) {
-        $("#model option").remove();
         for (let i in Models){
             $("#model").append("<option value='"+ Models[i].name +"' attr-id='" + Models[i].value + "' >"+ Models[i].name +"</option>")
         }
