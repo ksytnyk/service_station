@@ -1,10 +1,11 @@
 const status = require('../../constants/status');
 
-module.exports = function (data) {
-    let processing = 0,
-        canceled = 0,
+module.exports = function (data, countTasks) {
+    let pending = 0,
+        processing = 0,
         done = 0,
-        pending = 0;
+        hold = 0,
+        canceled = 0;
 
     data.forEach(item => {
 
@@ -21,12 +22,20 @@ module.exports = function (data) {
                 done++;
                 break;
             }
+            case status.HOLD: {
+                hold++;
+                break;
+            }
             case status.CANCELED: {
                 canceled++;
                 break;
             }
         }
     });
+
+    if (countTasks) {
+        return [pending, processing, done, hold , canceled];
+    }
 
     return [pending, processing, done, canceled];
 };

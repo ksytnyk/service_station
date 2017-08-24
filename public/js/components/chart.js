@@ -91,8 +91,12 @@ $(document).ready(function () {
                 '<tr>' +
                 '<th class="md tac">ID</th>' +
                 '<th class="tac">Прізвище та ім\'я</th>' +
-                '<th class="tac">Виконано задач</th>' +
-                '<th class="tac">Прибуток</th>' +
+                '<th class="tac status status-bgc-pending">Очікується</th>' +
+                '<th class="tac status status-bgc-processing">Виконується</th>' +
+                '<th class="tac status status-bgc-done">Виконано</th>' +
+                '<th class="tac status status-bgc-hold">Зупинено</th>' +
+                '<th class="tac status status-bgc-canceled">Анульовано</th>' +
+                '<th class="tac status">Прибуток</th>' +
                 '</tr>' +
                 '</thead>' +
                 '<tbody>';
@@ -102,8 +106,12 @@ $(document).ready(function () {
                     '<tr>' +
                     '<th class="tac">' + item.id + '</th>' +
                     '<td class="tac" class="tac">' + item.userSurname + ' ' + item.userName + '</td>' +
-                    '<td class="tac">' + item.task.ready + '</td>' +
-                    '<td class="tac">' + item.task.cost + '</td>' +
+                    '<td class="tac status-bgc-pending">' + item.task.statuses[0] + '</td>' +
+                    '<td class="tac status-bgc-processing">' + item.task.statuses[1] + '</td>' +
+                    '<td class="tac status-bgc-done">' + item.task.statuses[2] + '</td>' +
+                    '<td class="tac status-bgc-hold">' + item.task.statuses[3] + '</td>' +
+                    '<td class="tac status-bgc-canceled">' + item.task.statuses[4] + '</td>' +
+                    '<td class="tac">' + item.task.cost + ' грн</td>' +
                     '</tr>'
                 );
             });

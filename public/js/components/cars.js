@@ -6,13 +6,17 @@
 
 $(document).ready(() => {
     if(window.location.pathname == "/admin/create-request"){
+        $('#customers').select2();
         getTypes();
     }
 
     $('#typeOfCar').on('change', function () {
         $("#markk option").remove();
         $("#model option").remove();
-        getMarkks(this);
+
+        if (this.value !== "default") {
+            getMarkks(this);
+        }
     });
     $('#markk').on('change', function () {
         $("#model option").remove();
@@ -37,9 +41,11 @@ $(document).ready(() => {
         newTypes[2].nameUK = "Вантажні автомобілі";
         newTypes[3].nameUK = "Автобуси";
 
-        for (let i in newTypes){
-            $("#typeOfCar").append("<option id='"+ newTypes[i].name +"' value='"+ newTypes[i].name +"' data-id='" + newTypes[i].value + "'>"+ newTypes[i].nameUK +"</option>")
-        }
+        newTypes.forEach(item => {
+            $("#typeOfCar").append("<option id='"+ item.name +"' value='"+ item.name +"' data-id='" + item.value + "'>"+ item.nameUK +"</option>")
+        });
+
+        $("#typeOfCar").select2();
     }
 
     let link;
@@ -70,6 +76,7 @@ $(document).ready(() => {
         })
     }
     function renderModels(Models) {
+        $("#model").append("<option>Оберіть модель транспорту</option>");
         for (let i in Models){
             $("#model").append("<option value='"+ Models[i].name +"' attr-id='" + Models[i].value + "' >"+ Models[i].name +"</option>")
         }

@@ -118,6 +118,10 @@ select[disabled] {
     margin-top: -3px;
     border-color: #555 transparent transparent transparent;
 }
+.select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
+    border-color: transparent transparent #555 transparent;
+    border-width: 0 3px 6px 3px;
+}
 
 /* LAYOUT + HEADER */
 .white_block {

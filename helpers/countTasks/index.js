@@ -1,3 +1,5 @@
+const countStatuses = require('../../helpers/countStatuses');
+
 module.exports = function (users, tasks) {
 
     var usersObj = {};
@@ -6,7 +8,7 @@ module.exports = function (users, tasks) {
             usersObj[item.id] = item.dataValues;
             usersObj[item.id].task = {
                 cost: 0,
-                ready: 0
+                statuses: [0, 0, 0, 0, 0]
             };
         }
     });
@@ -16,15 +18,13 @@ module.exports = function (users, tasks) {
         if (tasksObj[item.dataValues.planedExecutorID] === undefined) {
             tasksObj[item.dataValues.planedExecutorID] = {};
             tasksObj[item.dataValues.planedExecutorID].cost = item.dataValues.cost;
-            if (item.dataValues.status === 3) {
-                tasksObj[item.dataValues.planedExecutorID].ready = 1;
-            } else {
-                tasksObj[item.dataValues.planedExecutorID].ready = 0;
-            }
+            tasksObj[item.dataValues.planedExecutorID].statuses = countStatuses([item.dataValues], true);
         } else {
             tasksObj[item.dataValues.planedExecutorID].cost += item.dataValues.cost;
-            if (item.dataValues.status === 3) {
-                tasksObj[item.dataValues.planedExecutorID].ready += 1;
+            var statuses = countStatuses([item.dataValues], true);
+
+            for (var i = 0; i < statuses.length; i++) {
+                tasksObj[item.dataValues.planedExecutorID].statuses[i] += statuses[i];
             }
         }
     });

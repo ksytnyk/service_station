@@ -12,7 +12,7 @@
         </div>
         <div class="form-group col-lg-3">
             <label>Клієнт</label>
-            <select class="form-control disable_input" name="customerID">
+            <select class="form-control disable_input" name="customerID" id="customers">
                 {#customers}
                 <option value="{id}">{userName} {userSurname}</option>
                 {/customers}
@@ -39,7 +39,7 @@
         <div class="form-group col-lg-3">
             <label> Тип транспорта </label>
             <select class="form-control disable_input" name="typeOfCar" id="typeOfCar">
-                <option>Оберіть тип транспорту</option>
+                <option value="default">Оберіть тип транспорту</option>
             </select>
         </div>
         <div class="form-group col-lg-3">
