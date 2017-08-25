@@ -56,7 +56,7 @@ function getRole(pathname) {
 function showSuccessAlert(message) {
     $('.alerts-success-info').css("display", "block");
 
-    var successTemplate = "<div class='col-lg-4'>" + message + "</div>";
+    var successTemplate = "<div class='col-lg-12'>" + message + "</div>";
 
     $('#success-block').html(successTemplate);
 
@@ -67,7 +67,7 @@ function showErrorAlert(err) {
     $('.alerts-errors-info').css("display", "block");
 
     var errorsTemplate = err.responseJSON.errors.map(error => {
-        return ("<div class='col-lg-4'>" + error.msg + "</div>");
+        return ("<div class='col-lg-12'>" + error.msg + "</div>");
     });
 
     $('#errors-block').html(errorsTemplate);

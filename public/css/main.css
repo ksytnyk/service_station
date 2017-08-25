@@ -9,24 +9,11 @@ body {
 .form-control {
     background-color: #f5f5f5;
 }
-.select2-container--default .select2-selection--single .select2-selection__rendered {
-    background-color: #f5f5f5;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    height: 34px;
-    padding: 6px 12px;
-    font-size: 14px;
-    line-height: 1.42857143;
-    color: #555;
+.required label:after {
+    content:"*";
+    color: #F44336;
+    margin-left: 2px;
 }
-.select2-container--default,
-.select2-container--default .select2-selection--single {
-    height: 34px;
-}
-.select2-container--default .select2-selection--single {
-    border: none;
-}
-
 
 a:hover,
 a:focus,
@@ -109,19 +96,6 @@ select[disabled] {
 .select2-container--disabled span:focus {
     outline: none;
 }
-.select2-container--default .select2-selection--single .select2-selection__arrow {
-    height: 32px;
-}
-.select2-container--default .select2-selection--single .select2-selection__arrow b {
-    border-width: 6px 3px 0 3px;
-    margin-left: -1px;
-    margin-top: -3px;
-    border-color: #555 transparent transparent transparent;
-}
-.select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
-    border-color: transparent transparent #555 transparent;
-    border-width: 0 3px 6px 3px;
-}
 
 /* LAYOUT + HEADER */
 .white_block {
@@ -144,6 +118,24 @@ select[disabled] {
 .navbar > li > a:hover {
     color: #fff;
     background-color: #333 !important;
+}
+.nav .open > a,
+.nav .open > a:hover,
+.nav .open > a:focus {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-right: 1px solid #666;
+}
+.nav .dropdown-menu {
+    padding: 0;
+}
+.nav .dropdown-menu > li > a {
+    padding: 10px;
+}
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+    background-color: #eee;
 }
 .nav {
     padding: 0;

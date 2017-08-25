@@ -470,4 +470,56 @@ router.post('/get-task-prise/:id', (req, res) => {
         });
 });
 
+router.get('/create-global-request', (req, res) => {
+    User
+        .getCustomerUsers()
+        .then(usersCustomers => {
+            User
+                .getAllUsers()
+                .then(users => {
+
+                    res.render('roles/admin_moderator/create_global_request', {
+                        assignedExecutorUsers: users,
+                        customers: usersCustomers,
+                        typeUser: req.session.passport.user.userTypeID
+                    })
+
+                })
+                .catch(err => {
+                    console.warn(err);
+                    res.render('roles/admin_moderator/create_global_request');
+                })
+        })
+});
+
+router.post('/create-global-request', validation.createTaskRequest(), (req, res) => {
+    req.body.createdBy = req.session.passport.user.id;
+
+    Request
+        .createRequest(req.body)
+        .then((request) => {
+            req.body.endTime = req.body.estimatedTime;
+            req.body.estimationTime = parseInt((new Date(req.body.endTime) - new Date(req.body.startTime))/(1000 * 60 * 60)) + 1;
+            req.body.requestID = request.id;
+
+            Task
+                .createTask(req.body)
+                .then(() => {
+                    res.status(200).send();
+                })
+                .catch(errors => {
+                    console.warn(err);
+                    res.status(400).send({errors: errors});
+                });
+
+            res.status(200).send({
+                result: result
+            });
+        })
+        .catch(errors => {
+            console.warn(err);
+            res.status(400).send({errors: errors});
+        });
+});
+
 module.exports = router;

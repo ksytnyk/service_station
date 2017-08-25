@@ -6,17 +6,27 @@
                 <li id="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/users">
                     <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/users">Користувачі</a>
                 </li>
-                <li>
-                    <a href="#" class="modal-window-link" data-toggle="modal" data-target="#createUserFormModal">Додати користувача</a>
-                </li>
                 <li id="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests">
                     <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests">Замовлення</a>
                 </li>
-                <li id="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/create-request">
-                    <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/create-request">Додати замовлення</a>
-                </li>
                 <li id="/admin/chart">
                     <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/chart">Статистика</a>
+                </li>
+                <li>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        Додати <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#" class="modal-window-link" data-toggle="modal" data-target="#createUserFormModal">Користувача</a>
+                        </li>
+                        <li>
+                            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/create-request">Замовлення</a>
+                        </li>
+                        <li>
+                            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/create-global-request">Глобальне замовлення</a>
+                        </li>
+                    </ul>
                 </li>
             {/lt}
             <li class="logout pull-right" role="presentation"><a href="/logout" class="last">Вийти</a></li>

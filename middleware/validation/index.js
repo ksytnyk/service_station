@@ -52,11 +52,15 @@ module.exports = {
             let customerID = req.body.customerID;
             let startTime = req.body.startTime;
             let estimatedTime = req.body.estimatedTime;
+            let carMarkk = req.body.carMarkk;
+            let carModel = req.body.carModel;
 
             req.checkBody('name', '"Назва замовлення" - обов\'язкове поле.').notEmpty();
             req.checkBody('customerID', '"Клієнт" - обов\'язкове поле.').notEmpty();
             req.checkBody('startTime', '"Час початку" - обов\'язкове поле.').notEmpty();
-            req.checkBody('estimatedTime', '"Планований час" - обов\'язкове поле.').notEmpty();
+            req.checkBody('estimatedTime', '"Запланований час" - обов\'язкове поле.').notEmpty();
+            req.checkBody('carMarkk', '"Марка автомобіля" - обов\'язкове поле.').notEmpty();
+            req.checkBody('carModel', '"Модель автомобіля" - обов\'язкове поле.').notEmpty();
 
             let errors = req.validationErrors();
 
@@ -72,13 +76,11 @@ module.exports = {
     createAndUpdateTask: function () {
         return function (req, res, next) {
 
-            if(req.baseUrl==='/executor' || req.baseUrl==='/admin' || req.baseUrl==='/moderator'){
-                let description = req.body.description;
+            if(req.baseUrl === '/executor' || req.baseUrl === '/admin' || req.baseUrl === '/moderator'){
                 let cost = req.body.cost;
                 let estimationTime = req.body.estimationTime;
                 let startTime = req.body.startTime;
 
-                req.checkBody('description', '"Опис задачі" - обов\'язкове поле.').notEmpty();
                 req.checkBody('cost', '"Вартість" - обов\'язкове поле.').notEmpty();
                 req.checkBody('cost', 'Поле "Вартість" може містити лише цифри.').isFloat();
                 req.checkBody('estimationTime', '"Час виконання" - обов\'язкове поле.').notEmpty();
@@ -86,7 +88,7 @@ module.exports = {
                 req.checkBody('startTime', '"Час початку" - обов\'язкове поле.').notEmpty();
             }
 
-            if(req.baseUrl==='/admin' || req.baseUrl==='/moderator') {
+            if(req.baseUrl === '/admin' || req.baseUrl === '/moderator') {
                 let name = req.body.name;
                 let planedExecutorID = req.body.planedExecutorID;
                 let assignedUserID = req.body.assignedUserID;
@@ -96,11 +98,43 @@ module.exports = {
                 req.checkBody('assignedUserID', '"Доручити задачу" - обов\'язкове поле.').notEmpty();
             }
 
-            else if (req.baseUrl==='/store-keeper'){
+            else if (req.baseUrl === '/store-keeper'){
                 let needBuyParts = req.body.needBuyParts;
 
                 req.checkBody('needBuyParts', '"Відсутні запчастини" - обов\'язкове поле.').notEmpty();
             }
+
+            let errors = req.validationErrors();
+
+            if (errors) {
+                console.warn(errors);
+                res.status(400).send({errors: errors});
+            } else {
+                next();
+            }
+        }
+    },
+
+    createTaskRequest: function () {
+        return function (req, res, next) {
+            let name = req.body.name;
+            let startTime = req.body.startTime;
+            let estimatedTime = req.body.estimatedTime;
+            let carMarkk = req.body.carMarkk;
+            let carModel = req.body.carModel;
+            let cost = req.body.cost;
+            let planedExecutorID = req.body.planedExecutorID;
+            let assignedUserID = req.body.assignedUserID;
+
+            req.checkBody('name', '"Назва замовлення" - обов\'язкове поле.').notEmpty();
+            req.checkBody('startTime', '"Час початку" - обов\'язкове поле.').notEmpty();
+            req.checkBody('estimatedTime', '"Запланований час" - обов\'язкове поле.').notEmpty();
+            req.checkBody('carMarkk', '"Марка автомобіля" - обов\'язкове поле.').notEmpty();
+            req.checkBody('carModel', '"Модель автомобіля" - обов\'язкове поле.').notEmpty();
+            req.checkBody('cost', '"Вартість" - обов\'язкове поле.').notEmpty();
+            req.checkBody('cost', 'Поле "Вартість" може містити лише цифри.').isFloat();
+            req.checkBody('planedExecutorID', '"Виконавець" - обов\'язкове поле.').notEmpty();
+            req.checkBody('assignedUserID', '"Доручити задачу" - обов\'язкове поле.').notEmpty();
 
             let errors = req.validationErrors();
 
