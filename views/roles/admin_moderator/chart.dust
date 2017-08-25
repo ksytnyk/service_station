@@ -38,6 +38,8 @@
 </div>
 <div class="col-lg-12 chart">
     <div id="div-for-chart"></div>
+    <div id="div-for-chart1"></div>
+    <div id="div-for-chart2"></div>
 </div>
 
 {>"modal_windows/create_user"/}

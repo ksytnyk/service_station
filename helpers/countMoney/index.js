@@ -4,16 +4,9 @@ module.exports = function (dates, requests) {
     var fromDateChart = new Date(dates.fromDateChart);
     var toDateChart = new Date(dates.toDateChart);
 
-    if (fromDateChart > toDateChart) {
-        console.warn("Error");
-        return;
-    }
-
     var requestsObj = {};
     while (fromDateChart <= toDateChart) {
-        if (requestsObj[formatDate(fromDateChart, true)] === undefined) {
-            requestsObj[formatDate(fromDateChart, true)] = 0;
-        }
+        requestsObj[formatDate(fromDateChart, true)] = 0;
         fromDateChart.setDate(fromDateChart.getDate() + 1);
     }
 

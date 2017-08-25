@@ -4,6 +4,7 @@ const User = require('../../models/User');
 const Task = require('../../models/Task');
 const Request = require('../../models/Request');
 const TaskType = require('../../models/TaskType');
+const RequestHistory = require('../../models/RequestHistory');
 
 const express = require('express');
 const router = express.Router();
@@ -11,7 +12,7 @@ const router = express.Router();
 const roles = require('../../constants/roles');
 const validation = require('../../middleware/validation');
 const requestsFactory = require('../../helpers/requestsFactory');
-const countStatuses = require('../../helpers/countStatuses');
+const countRequestHistory = require('../../helpers/countRequestHistory');
 const countMoney = require('../../helpers/countMoney');
 const countTasks = require('../../helpers/countTasks');
 const nodemailer = require('../../helpers/nodemailer');
@@ -405,11 +406,11 @@ router.get('/chart', (req, res) => {
 });
 
 router.post('/chart/requests', (req, res) => {
-    Request
-        .getAllRequestsForChart(req.body)
-        .then(requests => {
+    RequestHistory
+        .getAllRequestHistory(req.body)
+        .then(requestHistory => {
             res.status(200).send({
-                data: countStatuses(requests)
+                data: countRequestHistory(req.body, requestHistory)
             });
         })
         .catch(errors => {

@@ -17,180 +17,189 @@ $(document).ready(function () {
 
         var data = $('#between-dates').serializeArray();
 
-        var backgroundColor = [
-            'rgba(255, 165, 0, 0.4)',
-            'rgba(51, 122, 183, 0.4)',
-            'rgba(0, 128, 0, 0.4)',
-            'rgba(0, 0, 0, 0.25)'
-        ];
+        if (checkSequence(data)) {
 
-        var borderColor = [
-            'rgba(255, 165, 0, 1)',
-            'rgba(51, 122, 183, 1)',
-            'rgba(0, 128, 0, 1)',
-            'rgba(0, 0, 0, 0.4)'
-        ];
+            var pointBackgroundColor = [
+                '#ffc927',
+                '#43c743',
+                '#bbbbbb'
+            ];
 
-        var labels = ["Очікується", "Виконується", "Виконано", "Анульовано"];
+            var borderColor = [
+                '#eca323',
+                '#398439',
+                '#777777'
+            ];
 
-        $.post("/admin/chart/requests", data, function (result) {
-            // $('#statistic-table').html(tableData);
-            $('#div-for-chart').empty();
-            $('#div-for-chart').append('<canvas id="myChart" height="125"></canvas>');
-            var ctx = document.getElementById("myChart").getContext('2d');
+            var title = ["Нові замовлення", "Виконані замовлення", "Анульовані замовлення"];
 
-            Chart.defaults.global.defaultFontColor = '#333';
-            Chart.defaults.global.defaultFontSize = 14;
+            $.post("/admin/chart/requests", data, function (result) {
+                $('#div-for-chart').empty().append('<canvas id="myChart" height="42"></canvas>');
+                $('#div-for-chart1').empty().append('<canvas id="myChart1" height="42"></canvas>');
+                $('#div-for-chart2').empty().append('<canvas id="myChart2" height="42"></canvas>');
 
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Статус',
-                        data: result.data,
-                        backgroundColor: backgroundColor,
-                        borderColor: borderColor,
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                fixedStepSize: 1,
-                                beginAtZero: true
-                            }
-                        }]
-                    },
-                    legend: {
-                        display: false
-                    },
-                    title: {
-                        display: true,
-                        fontSize: 16,
-                        padding: 25,
-                        fontColor: '#333',
-                        text: "Статистика замовлень"
-                    }
+                var ctx = document.getElementById("myChart").getContext('2d');
+                var ctx1 = document.getElementById("myChart1").getContext('2d');
+                var ctx2 = document.getElementById("myChart2").getContext('2d');
+
+                Chart.defaults.global.defaultFontColor = '#333';
+                Chart.defaults.global.defaultFontSize = 14;
+
+                new Chart(ctx, setChart(result.data.dates, result.data.newRequests, borderColor[0], pointBackgroundColor[0], title[0], title[0], 2));
+                new Chart(ctx1, setChart(result.data.dates, result.data.doneRequests, borderColor[1], pointBackgroundColor[1], title[1], title[1], 2));
+                new Chart(ctx2, setChart(result.data.dates, result.data.canceledRequests, borderColor[2], pointBackgroundColor[2], title[2], title[2], 2));
+            });
+        } else {
+            showErrorAlert({
+                responseJSON: {
+                    errors: [{msg: 'Неправильний порядок дат.'}]
                 }
             });
-        });
+            $('#div-for-chart').empty();
+        }
     });
 
     $('#chart-tasks').on('click', function () {
         var data = $('#between-dates').serializeArray();
 
-        $.post("/admin/chart/tasks", data, function (result) {
+        if (checkSequence(data)) {
+            $.post("/admin/chart/tasks", data, function (result) {
 
-            var template = '' +
-                '<h4>Статистика виконання задач</h4>' +
-                '<div class="panel panel-default">' +
-                '<table class="table">' +
-                '<thead>' +
-                '<tr>' +
-                '<th class="md tac">ID</th>' +
-                '<th class="tac">Прізвище та ім\'я</th>' +
-                '<th class="tac status status-bgc-pending">Очікується</th>' +
-                '<th class="tac status status-bgc-processing">Виконується</th>' +
-                '<th class="tac status status-bgc-done">Виконано</th>' +
-                '<th class="tac status status-bgc-hold">Зупинено</th>' +
-                '<th class="tac status status-bgc-canceled">Анульовано</th>' +
-                '<th class="tac status">Прибуток</th>' +
-                '</tr>' +
-                '</thead>' +
-                '<tbody>';
-
-            var templateArr = result.data.map(item => {
-                return (
+                var template = '' +
+                    '<h4>Статистика виконання задач</h4>' +
+                    '<div class="panel panel-default">' +
+                    '<table class="table">' +
+                    '<thead>' +
                     '<tr>' +
-                    '<th class="tac">' + item.id + '</th>' +
-                    '<td class="tac" class="tac">' + item.userSurname + ' ' + item.userName + '</td>' +
-                    '<td class="tac status-bgc-pending">' + item.task.statuses[0] + '</td>' +
-                    '<td class="tac status-bgc-processing">' + item.task.statuses[1] + '</td>' +
-                    '<td class="tac status-bgc-done">' + item.task.statuses[2] + '</td>' +
-                    '<td class="tac status-bgc-hold">' + item.task.statuses[3] + '</td>' +
-                    '<td class="tac status-bgc-canceled">' + item.task.statuses[4] + '</td>' +
-                    '<td class="tac">' + item.task.cost + ' грн</td>' +
-                    '</tr>'
-                );
+                    '<th class="md tac">ID</th>' +
+                    '<th class="tac">Прізвище та ім\'я</th>' +
+                    '<th class="tac status status-bgc-pending">Очікується</th>' +
+                    '<th class="tac status status-bgc-processing">Виконується</th>' +
+                    '<th class="tac status status-bgc-done">Виконано</th>' +
+                    '<th class="tac status status-bgc-hold">Зупинено</th>' +
+                    '<th class="tac status status-bgc-canceled">Анульовано</th>' +
+                    '<th class="tac status">Прибуток</th>' +
+                    '</tr>' +
+                    '</thead>' +
+                    '<tbody>';
+
+                var templateArr = result.data.map(item => {
+                    return (
+                        '<tr>' +
+                        '<th class="tac">' + item.id + '</th>' +
+                        '<td class="tac" class="tac">' + item.userSurname + ' ' + item.userName + '</td>' +
+                        '<td class="tac status-bgc-pending">' + item.task.statuses[0] + '</td>' +
+                        '<td class="tac status-bgc-processing">' + item.task.statuses[1] + '</td>' +
+                        '<td class="tac status-bgc-done">' + item.task.statuses[2] + '</td>' +
+                        '<td class="tac status-bgc-hold">' + item.task.statuses[3] + '</td>' +
+                        '<td class="tac status-bgc-canceled">' + item.task.statuses[4] + '</td>' +
+                        '<td class="tac">' + item.task.cost + ' грн</td>' +
+                        '</tr>'
+                    );
+                });
+
+                var template1 = '';
+                for (var i = 0; i < templateArr.length; i++) {
+                    template1 += templateArr[i];
+                }
+
+                var template2 = '' +
+                    '</tbody>' +
+                    '</table>' +
+                    '</div>';
+
+                $('#div-for-chart1').empty();
+                $('#div-for-chart2').empty();
+                $('#div-for-chart').empty().append(template + template1 + template2);
+            });
+        } else {
+            showErrorAlert({
+                responseJSON: {
+                    errors: [{msg: 'Неправильний порядок дат.'}]
+                }
             });
 
-            var template1 = '';
-            for (var i = 0; i < templateArr.length; i++) {
-                template1 += templateArr[i];
-            }
-
-            var template2 = '' +
-                '</tbody>' +
-                '</table>' +
-                '</div>';
-
-            $('#div-for-chart').empty().append( template + template1 + template2 );
-        });
+            $('#div-for-chart1').empty();
+            $('#div-for-chart2').empty();
+            $('#div-for-chart').empty();
+        }
     });
 
     $('#chart-finances').on('click', function () {
-
         var data = $('#between-dates').serializeArray();
 
-        $.post("/admin/chart/finances", data, function (result) {
-            if (result.data === undefined ) {
-                showErrorAlert({responseJSON: {
-                        errors: [{msg: 'Неправильний порядок дат.'}]
-                    }});
-                return;
-            }
+        if (checkSequence(data)) {
+            $.post("/admin/chart/finances", data, function (result) {
+                $('#div-for-chart1').empty();
+                $('#div-for-chart2').empty();
+                $('#div-for-chart').empty().append('<canvas id="myChart" height="125"></canvas>');
+
+                var ctx = document.getElementById("myChart").getContext('2d');
+
+                Chart.defaults.global.defaultFontColor = '#333';
+                Chart.defaults.global.defaultFontSize = 14;
+
+                new Chart(ctx, setChart(result.data.dates, result.data.money, '#398439', '#5dd65d', "Фінансова статистика", "Всього", 100));
+            });
+        } else {
+            showErrorAlert({responseJSON: {
+                errors: [{msg: 'Неправильний порядок дат.'}]
+            }});
 
             $('#div-for-chart').empty();
-            $('#div-for-chart').append('<canvas id="myChart" height="125"></canvas>');
-            var ctx = document.getElementById("myChart").getContext('2d');
-
-            Chart.defaults.global.defaultFontColor = '#333';
-            Chart.defaults.global.defaultFontSize = 14;
-
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: result.data.dates,
-                    datasets: [{
-                        label: 'Всього',
-                        data: result.data.money,
-                        backgroundColor: 'transparent',
-                        borderColor: '#398439',
-                        pointRadius: 4,
-                        pointBackgroundColor: '#5dd65d'
-                    }]
-                },
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                fixedStepSize: 100,
-                                beginAtZero: true
-                            }
-                        }]
-                    },
-                    legend: {
-                        display: false
-                    },
-                    title: {
-                        display: true,
-                        fontSize: 16,
-                        padding: 25,
-                        fontColor: '#333',
-                        text: "Фінансова статистика"
-                    },
-                    elements: {
-                        line: {
-                            tension: 0
-                        }
-                    }
-                }
-            });
-        });
+            $('#div-for-chart1').empty();
+            $('#div-for-chart2').empty();
+        }
     });
 });
+
+function checkSequence(data) {
+    return data[1].value > data[0].value;
+}
+
+function setChart(labels, data, borderColor, pointBgc, title, label, fixedStepSize) {
+    return {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: label,
+                    data: data,
+                    backgroundColor: "transparent",
+                    borderColor: borderColor,
+                    pointRadius: 4,
+                    pointBackgroundColor: pointBgc
+                }
+            ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        fixedStepSize: fixedStepSize,
+                        beginAtZero: true
+                    }
+                }]
+            },
+            legend: {
+                display: false
+            },
+            title: {
+                display: true,
+                fontSize: 16,
+                padding: 10,
+                fontColor: '#333',
+                text: title
+            },
+            elements: {
+                line: {
+                    tension: 0
+                }
+            }
+        }
+    };
+}
 
 
 

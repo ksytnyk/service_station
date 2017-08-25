@@ -37,5 +37,5 @@ module.exports = function (data, countTasks) {
         return [pending, processing, done, hold , canceled];
     }
 
-    return [pending, processing, done, canceled];
+    return [pending, done, canceled];
 };

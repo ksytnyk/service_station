@@ -4,6 +4,8 @@ const Sequelize = require('sequelize');
 const sequelize = require('../connection');
 const User = require('../User');
 const Task = require('../Task');
+const RequestHistory = require('../RequestHistory');
+const status = require('../../constants/status');
 
 const describeRequestTable = {
     customerID: {
@@ -129,7 +131,20 @@ Request.createRequest = function (request) {
             .build(request)
             .save()
             .then(result => {
-                resolve(result);
+                var data = {
+                    requestID: result.id,
+                    status: result.status
+                };
+
+                RequestHistory
+                    .createRequestHistory(data)
+                    .then(() => {
+                        resolve(result);
+                    })
+                    .catch(err => {
+                        console.warn(err);
+                        reject(err);
+                    });
             })
             .catch(error => {
                 console.warn(error);
@@ -190,11 +205,11 @@ Request.deleteRequest = function (idRequest) {
     });
 };
 
-Request.changeStatus = function (idRequest, status) {
+Request.changeStatus = function (idRequest, requestStatus) {
     return new Promise((resolve, reject) => {
         Request
             .update({
-                    status: status
+                    status: requestStatus
                 },
                 {
                     where: {
@@ -202,7 +217,24 @@ Request.changeStatus = function (idRequest, status) {
                     }
                 })
             .then(result => {
-                resolve(result);
+                if (+requestStatus !== status.HOLD && +requestStatus !== status.PROCESSING ) {
+                    var data = {
+                        requestID: idRequest,
+                        status: requestStatus
+                    };
+
+                    RequestHistory
+                        .createRequestHistory(data)
+                        .then(() => {
+                            resolve(result);
+                        })
+                        .catch(err => {
+                            console.warn(err);
+                            reject(err);
+                        });
+                } else {
+                    resolve(result);
+                }
             })
             .catch(err => {
                 console.warn(err);
