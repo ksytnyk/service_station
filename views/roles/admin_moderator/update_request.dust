@@ -7,44 +7,54 @@
 <div class="col-lg-12 update_request">
     {#request}
     <form class="clearfix" id="createRequestForm">
-        <div class="form-group col-lg-5">
+        <div class="form-group required col-lg-3">
             <label>Назва замовлення</label>
             <input type="text" class="form-control disable_input" name="name" value="{name}" disabled>
         </div>
-        <div class="form-group col-lg-4">
+        <div class="form-group required col-lg-3">
             <label>Клієнт</label>
-            <select class="form-control disable_input" name="customerID" disabled>
+            <select class="form-control disable_input" name="customerID" id="customers" disabled>
                 {#customers}
-                <option value="{id}" {@eq key=customerID value=id}selected{/eq}>{userName} {userSurname}</option>
+                <option value="{id}">{userName} {userSurname}</option>
                 {/customers}
             </select>
         </div>
-        <div class="form-group col-lg-5">
+        <div class="form-group required col-lg-3">
+            <label>Час початку</label>
+            <input type="text" class="form-control datetimepickerN startTime disable_input" name="startTime" style="margin-bottom: 5px;" value="{startTime}" disabled>
+        </div>
+        <div class="form-group required col-lg-3">
+            <label>Запланований час</label>
+            <input type="text" class="form-control datetimepickerN disable_input" name="estimatedTime"
+                   style="margin-bottom: 5px;" value="{estimatedTime}" disabled>
+        </div>
+        <div class="form-group col-lg-3">
             <label>Опис замовлення</label>
-            <textarea class="form-control disable_input" name="description" rows="4" style="height: 137px;" disabled>{description}</textarea>
+            <textarea class="form-control disable_input" name="description" rows="4" style="height: 108px;" disabled>{description}</textarea>
         </div>
-
-        <div class="form-group col-lg-4">
+        <div class="form-group col-lg-3">
             <label>Коментар</label>
-            <textarea class="form-control disable_input" name="comment" rows="4" style="height: 137px;" disabled>{comment}</textarea>
+            <textarea class="form-control disable_input" name="comment" rows="4" style="height: 108px;" disabled>{comment}</textarea>
         </div>
-        <div class="form-group col-lg-3" style="margin-top: -74px;">
-            <label> Тип транспорта </label>
+        <div class="form-group required col-lg-3">
+            <label>Тип транспорту</label>
             <select class="form-control disable_input" name="typeOfCar" id="typeOfCar" disabled>
                 <option value="default">Оберіть тип транспорту</option>
             </select>
+        </div>
+        <div class="form-group required col-lg-3">
             <label>Марка автомобіля</label>
             <select class="form-control disable_input" name="carMarkk" id="markk" disabled>
                 <option value="{carMarkk}">{carMarkk}</option>
             </select>
+        </div>
+        <div class="form-group required col-lg-3">
             <label>Модель автомобіля</label>
             <select class="form-control disable_input" name="carModel" id="model" disabled>
                 <option value="{carModel}">{carModel}</option>
             </select>
-            <label>Час початку</label>
-            <input type="text" class="form-control datetimepickerN disable_input" value="{startTime}" name="startTime" style="margin-bottom: 5px;" disabled>
-            <label>Запланований час</label>
-            <input type="text" class="form-control datetimepickerN disable_input" value="{estimatedTime}" name="estimatedTime" style="margin-bottom: 5px;" disabled>
+        </div>
+        <div class="form-group col-lg-3" style="margin-top: 25px;">
             <input type="button" id="access_update_request" value="Редагувати замовлення"
                    class="btn btn-warning col-lg-12"/>
             <input type="button" id="update_request" value="Зберегти зміни" request-id="{id}"
