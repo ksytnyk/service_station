@@ -58,7 +58,7 @@ $(document).ready(function () {
 
         $.ajax({
             url: getRole(window.location.pathname) + '/create-task',
-            type: 'Post',
+            type: 'post',
             data: dataArr,
             success: function (data) {
                 showSuccessAlert('Додавання задачі пройшло успішно.');
@@ -151,7 +151,7 @@ $(document).ready(function () {
 
         $.ajax({
             url: getRole(window.location.pathname) + '/update-task/' + $('#update-form-task-id').val(),
-            type: 'PUT',
+            type: 'put',
             data: dataArr,
             success: function (data) {
                 showSuccessAlert('Оновлення задачі пройшло успішно.');
@@ -290,7 +290,7 @@ $(document).ready(function () {
 
         $.ajax({
             url: getRole(window.location.pathname) + '/delete-task/' + taskID,
-            type: 'DELETE',
+            type: 'delete',
             data: data,
             success: function (data) {
                 showSuccessAlert('Видалення задачі пройшло успішно.');

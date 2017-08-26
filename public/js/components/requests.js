@@ -5,7 +5,7 @@ $(document).ready(function () {
     $('#create_request').on('click', function () {
         $.ajax({
             url: window.location.pathname,
-            type: 'Post',
+            type: 'post',
             data: $('#createRequestForm').serializeArray(),
             success: function (data) {
                 showSuccessAlert('Додавання замовлення пройшло успішно.');
@@ -33,7 +33,7 @@ $(document).ready(function () {
     $('#update_request').on('click', function () {
         $.ajax({
             url: getRole(window.location.pathname) + '/update-request/' + $(this).attr("request-id"),
-            type: 'PUT',
+            type: 'put',
             data: $('#createRequestForm').serializeArray(),
             success: function (data) {
                 showSuccessAlert('Оновлення замовлення пройшло успішно.');

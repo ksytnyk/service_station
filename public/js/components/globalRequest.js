@@ -15,7 +15,7 @@ $(document).ready(function () {
         $.ajax({
 
             url: window.location.pathname,
-            type: 'Post',
+            type: 'post',
             data: dataArr,
             success: function () {
                 window.location.replace('/admin/requests');
@@ -66,7 +66,7 @@ $(document).ready(function () {
 
             $.ajax({
                 url: getRole(window.location.pathname) + '/get-task-prise/' + taskTypeID,
-                type: 'POST',
+                type: 'post',
                 data: $('.global-task-type-select').serializeArray(),
                 success: function (data) {
                     $('.task-cost').val(data.taskTypeCost);

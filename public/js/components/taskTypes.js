@@ -12,7 +12,7 @@ $(document).ready(function () {
 
             $.ajax({
                 url: getRole(window.location.pathname) + '/get-task-prise/' + taskTypeID,
-                type: 'POST',
+                type: 'post',
                 data: $('.task-type-select').serializeArray(),
                 success: function (data) {
                     $('.task-cost').val(data.taskTypeCost);
@@ -34,7 +34,7 @@ $(document).ready(function () {
 
             $.ajax({
                 url: getRole(window.location.pathname) + '/get-task-prise/' + taskTypeID,
-                type: 'POST',
+                type: 'post',
                 data: $('.update-form-task-type-select').serializeArray(),
                 success: function (data) {
                     $('#update-form-task-cost').val(data.taskTypeCost);

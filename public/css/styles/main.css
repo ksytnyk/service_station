@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Spiderman-Homecoming';
-    src: url('../fonts/Spiderman-Homecoming.otf');
+    src: url('../../fonts/Spiderman-Homecoming.otf');
 }
 body {
     margin: 90px 0 0;

@@ -5,17 +5,46 @@
     <title>Service Station</title>
     <link rel="shortcut icon" href="/favicon.png" type="image/png">
     <link rel="stylesheet" href="/css/libs/bootstrap.css">
-    <link rel="stylesheet" href="/css/libs/dataTables.bootstrap.min.css">
-    <link rel="stylesheet" href="/css/libs/bootstrap-datetimepicker.min.css">
-    <link rel="stylesheet" href="/css/libs/bootstrap-select.min.css">
-    <link rel="stylesheet" href="/css/libs/select2.min.css">
-    <link rel="stylesheet" href="/css/login.css">
-    <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="/css/request.css">
-    <link rel="stylesheet" href="/css/executor.css">
-    <link rel="stylesheet" href="/css/storekeeper.css">
-    <link rel="stylesheet" href="/css/customer.css">
-    <link rel="stylesheet" href="/css/chart.css">
+    <link rel="stylesheet" href="/css/styles/main.css">
+
+    {@eq key=typeUser value=5}
+        <link rel="stylesheet" href="/css/libs/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="/css/styles/customer.css">
+    {/eq}
+
+    {@eq key=typeUser value=4}
+        <link rel="stylesheet" href="/css/libs/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="/css/styles/storekeeper.css">
+    {/eq}
+
+    {@eq key=typeUser value=3}
+        <link rel="stylesheet" href="/css/libs/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="/css/libs/bootstrap-datetimepicker.min.css">
+        <link rel="stylesheet" href="/css/styles/executor.css">
+    {/eq}
+
+    {@eq key=typeUser value=2}
+        <link rel="stylesheet" href="/css/libs/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="/css/libs/bootstrap-datetimepicker.min.css">
+        <link rel="stylesheet" href="/css/libs/bootstrap-select.min.css">
+        <link rel="stylesheet" href="/css/libs/select2.min.css">
+        <link rel="stylesheet" href="/css/styles/request.css">
+        <link rel="stylesheet" href="/css/styles/chart.css">
+    {/eq}
+
+    {@eq key=typeUser value=1}
+        <link rel="stylesheet" href="/css/libs/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="/css/libs/bootstrap-datetimepicker.min.css">
+        <link rel="stylesheet" href="/css/libs/bootstrap-select.min.css">
+        <link rel="stylesheet" href="/css/libs/select2.min.css">
+        <link rel="stylesheet" href="/css/styles/request.css">
+        <link rel="stylesheet" href="/css/styles/chart.css">
+    {/eq}
+
+    {@eq key=typeUser value=undefined}
+        <link rel="stylesheet" href="/css/styles/login.css">
+    {/eq}
+
 </head>
 <body>
 <div class="container">
@@ -24,25 +53,64 @@
         {+body /}
     </div>
 </div>
+
 <script src="/js/libs/jquery-3.2.1.min.js"></script>
 <script src="/js/libs/bootstrap.min.js"></script>
 <script src="/js/libs/jquery.dataTables.min.js"></script>
-<script src="/js/libs/dataTables.bootstrap.min.js"></script>
-<script src="/js/libs/bootstrap-formhelpers-phone.js"></script>
 <script src="/js/libs/moment.js"></script>
-<script src="/js/libs/transition.js"></script>
-<script src="/js/libs/collapse.js"></script>
 <script src="/js/libs/bootstrap-datetimepicker.min.js"></script>
-<script src="/js/libs/Chart.min.js"></script>
-<script src="/js/libs/select2.min.js"></script>
-<script src="/js/libs/bootstrap-select.min.js"></script>
+
+{@eq key=typeUser value=5}
+    <script src="/js/libs/dataTables.bootstrap.min.js"></script>
+{/eq}
+
+{@eq key=typeUser value=4}
+    <script src="/js/libs/dataTables.bootstrap.min.js"></script>
+    <script src="/js/components/tasks.js"></script>
+{/eq}
+
+{@eq key=typeUser value=3}
+    <script src="/js/libs/dataTables.bootstrap.min.js"></script>
+    <script src="/js/libs/transition.js"></script>
+    <script src="/js/libs/collapse.js"></script>
+    <script src="/js/libs/bootstrap-datetimepicker.min.js"></script>
+    <script src="/js/components/tasks.js"></script>
+{/eq}
+
+{@eq key=typeUser value=2}
+    <script src="/js/libs/dataTables.bootstrap.min.js"></script>
+    <script src="/js/libs/transition.js"></script>
+    <script src="/js/libs/collapse.js"></script>
+    <script src="/js/libs/bootstrap-formhelpers-phone.js"></script>
+    <script src="/js/libs/select2.min.js"></script>
+    <script src="/js/libs/Chart.min.js"></script>
+    <script src="/js/libs/bootstrap-select.min.js"></script>
+    <script src="/js/components/users.js"></script>
+    <script src="/js/components/requests.js"></script>
+    <script src="/js/components/tasks.js"></script>
+    <script src="/js/components/taskTypes.js"></script>
+    <script src="/js/components/chart.js"></script>
+    <script src="/js/components/cars.js"></script>
+    <script src="/js/components/globalRequest.js"></script>
+{/eq}
+
+{@eq key=typeUser value=1}
+    <script src="/js/libs/dataTables.bootstrap.min.js"></script>
+    <script src="/js/libs/transition.js"></script>
+    <script src="/js/libs/collapse.js"></script>
+    <script src="/js/libs/bootstrap-formhelpers-phone.js"></script>
+    <script src="/js/libs/select2.min.js"></script>
+    <script src="/js/libs/Chart.min.js"></script>
+    <script src="/js/libs/bootstrap-select.min.js"></script>
+    <script src="/js/components/users.js"></script>
+    <script src="/js/components/requests.js"></script>
+    <script src="/js/components/tasks.js"></script>
+    <script src="/js/components/taskTypes.js"></script>
+    <script src="/js/components/chart.js"></script>
+    <script src="/js/components/cars.js"></script>
+    <script src="/js/components/globalRequest.js"></script>
+{/eq}
+
 <script src="/js/components/main.js"></script>
-<script src="/js/components/users.js"></script>
-<script src="/js/components/requests.js"></script>
-<script src="/js/components/tasks.js"></script>
-<script src="/js/components/taskTypes.js"></script>
-<script src="/js/components/chart.js"></script>
-<script src="/js/components/cars.js"></script>
-<script src="/js/components/globalRequest.js"></script>
 </body>
 </html>
