@@ -5,10 +5,11 @@
 
 
 $(document).ready(() => {
-    if(window.location.pathname === "/admin/create-request" || window.location.pathname === "/admin/create-global-request"){
+    let linkForCars = window.location.pathname,
+        createLink = "/admin/create-request",
+        updateLink = "/admin/update-request";
+    if(linkForCars == createLink || (linkForCars.indexOf(updateLink)+1)) {
         $('#customers').select2();
-        $('#planedExecutor').select2();
-        $('#assignedUser').select2();
         getTypes();
     }
 
@@ -35,7 +36,8 @@ $(document).ready(() => {
     }
 
     function renderTypes(Types) {
-        var newTypes = [Types[0], Types[1], Types[5], Types[6]];
+        var newTypes = [];
+        newTypes.push(Types[0], Types[1], Types[5], Types[6]);
 
         newTypes[0].nameUK = "Легкові автомобілі";
         newTypes[1].nameUK = "Мотоцикли";
@@ -52,7 +54,6 @@ $(document).ready(() => {
     let link;
     function getMarkks(markk) {
         link = "http://api.auto.ria.com/categories/"+ $('#' + markk.value).data('id') +"/marks";
-
         $.ajax({
             url: link
         }).done((result) => {
@@ -60,29 +61,28 @@ $(document).ready(() => {
         })
     }
 
-    function renderMarkks(Markk) {
-        $("#markk").append("<option>Оберіть марку транспорту</option>").select2();
 
-        Markk.forEach(item => {
-            $("#markk").append("<option id='"+ item.name.replace(/\s+/g,'-') +"' value='"+ item.name.replace(/\s+/g,'-') +"' data-id='" + item.value + "'>"+ item.name +"</option>")
-        });
+    function renderMarkks(Markk) {
+        $("#markk").append("<option>Оберіть марку транспорту</option>");
+        for (let i in Markk){
+            $("#markk").append("<option id='"+ Markk[i].name +"' value='"+ Markk[i].name +"' data-id='" + Markk[i].value + "'>"+ Markk[i].name +"</option>")
+        }
+        $("#markk").select2();
     }
 
-    function getModels(Model) {
-        var model = $('#' + Model.value).data('id');
 
+    function getModels(Model) {
         $.ajax({
-            url: link + "/" +  model + "/models"
+            url: link + "/" +  $('#' + Model.value).data('id') + "/models"
         }).done((result) => {
             renderModels(result)
         })
     }
-
     function renderModels(Models) {
-        $("#model").append("<option>Оберіть модель транспорту</option>").select2();
-
-        Models.forEach(item => {
-            $("#model").append("<option value='"+ item.name +"' attr-id='" + item.value + "' >"+ item.name +"</option>")
-        });
+        $("#model").append("<option>Оберіть модель транспорту</option>");
+        for (let i in Models){
+            $("#model").append("<option value='"+ Models[i].name +"' attr-id='" + Models[i].value + "' >"+ Models[i].name +"</option>")
+        }
+        $("#model").select2();
     }
 });
