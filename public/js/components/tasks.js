@@ -3,6 +3,34 @@ $(document).ready(function () {
     $('#create_task').on('click', function () {
         $('#requestIDForTask').val($("#update_request").attr("request-id"));
         $('.task-type-select').val('');
+
+        if (window.location.pathname.includes('create-request')) {
+
+            $.ajax({
+                url: getRole(window.location.pathname) + '/get-task-types',
+                type: 'post',
+                data: {
+                    carMarkk: $('#markk').val(),
+                    carModel: $('#model').val()
+                },
+                success: function (data) {
+
+                    $('#task-type-select').find('option:not(:first)').remove();
+
+                    $.each(data.taskTypes, function (i, item) {
+
+                        $('#task-type-select').append($('<option>', {
+                            value: item.typeName,
+                            text: item.typeName,
+                            taskTypeID: item.id,
+                            id: 'taskTypeID' + item.typeName
+                        }));
+                    });
+                    $("#task-type-select").selectpicker("refresh");
+                    $('.task-type-select').val('');
+                }
+            });
+        }
     });
 
     $('#change-status-update-task').on('click', function () {
@@ -24,7 +52,7 @@ $(document).ready(function () {
 
         var dataArr = $('#createTaskForm').serializeArray();
 
-        if(dataArr[1].value===''){
+        if (dataArr[1].value === '') {
             dataArr[1].value = dataArr[2].value;
         }
 
@@ -117,7 +145,7 @@ $(document).ready(function () {
 
         var dataArr = $('#update-form-task').serializeArray();
 
-        if(dataArr[3].value===''){
+        if (dataArr[3].value === '') {
             dataArr[3].value = dataArr[4].value;
         }
 
@@ -128,8 +156,8 @@ $(document).ready(function () {
             success: function (data) {
                 showSuccessAlert('Оновлення задачі пройшло успішно.');
 
-                $('.task-type-select').removeClass("hidden");
-                $('.task-type-input').addClass("hidden");
+                $('.update-form-task-type-select').removeClass("hidden");
+                $('.update-form-task-type-input').addClass("hidden");
                 $('.assign-task-select').addClass("hidden");
                 $('.assign-task-button').removeClass("hidden");
 
@@ -138,8 +166,6 @@ $(document).ready(function () {
 
                 $(idx).empty();
                 $(idr).empty();
-
-                console.log(dataArr);
 
                 if (getRole(window.location.pathname) !== "/executor" && getRole(window.location.pathname) !== "/store-keeper") {
                     var executorNameSurname = $('#option' + dataArr[5].value).attr('executorFullName');
@@ -295,10 +321,41 @@ function clearModalAddTask() {
 
 function updateTaskOnClick() {
     $('.update-task').on('click', function () {
+
+        if (window.location.pathname.includes('create-request')) {
+
+            $.ajax({
+                url: getRole(window.location.pathname) + '/get-task-types',
+                type: 'post',
+                data: {
+                    carMarkk: $('#markk').val(),
+                    carModel: $('#model').val()
+                },
+                success: function (data) {
+
+                    $('#update-form-task-type-select').find('option:not(:first)').remove();
+
+                    $.each(data.taskTypes, function (i, item) {
+                        $('#update-form-task-type-select').append($('<option>', {
+                            value: item.typeName,
+                            text: item.typeName,
+                            updateTaskTypeID: item.id,
+                            id: 'updateTaskTypeID' + item.typeName
+                        }));
+                    });
+                    $("#update-form-task-type-select").selectpicker("refresh");
+                    $('.task-type-select').val('');
+                    $('#update-form-task-type-select').val($('.update-task').data('task-name')).change();
+                }
+            });
+
+        } else {
+            $('#update-form-task-type-select').val($(this).data('task-name')).change();
+        }
+
         $('#update-form-task-id').val($(this).data('id'));
         $('#update-form-request-id').val($(this).data('request-id'));
         $('#update-form-task-old-cost').val($(this).data('task-cost'));
-        $('#update-form-task-type-select').val($(this).data('task-name')).change();
         $('#update-form-task-assigned-user').val($(this).data('task-assigned-user'));
         $('#update-form-task-description').val($(this).data('task-description'));
         $('#update-form-task-planed-executor').val($(this).data('task-planed-executor'));

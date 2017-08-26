@@ -125,13 +125,11 @@ router.get('/create-request', (req, res) => {
             User
                 .getAllUsers()
                 .then(users => {
-
                     res.render('roles/admin_moderator/create_request', {
                         assignedExecutorUsers: users,
                         customers: usersCustomers,
                         typeUser: req.session.passport.user.userTypeID
                     })
-
                 })
                 .catch(err => {
                     console.warn(err);
@@ -145,19 +143,9 @@ router.post('/create-request', validation.createAndUpdateRequest(), (req, res) =
     Request
         .createRequest(req.body)
         .then((result) => {
-            TaskType
-                .getTaskTypesByCar(req.body.carMarkk, req.body.carModel)
-                .then(taskTypes => {
-                    console.log("TASK TYPES", taskTypes);
-                    res.status(200).send({
-                        taskTypes: taskTypes,
-                        result: result
-                    });
-                })
-                .catch(errors => {
-                    console.log('second');
-                    res.status(400).send({errors: errors});
-                })
+            res.status(200).send({
+                result: result
+            });
         })
         .catch(errors => {
             res.status(400).send({errors: errors});
@@ -272,6 +260,18 @@ router.post('/change-request-status/:id', (req, res) => {
         })
 });
 
+router.post('/get-task-types', (req, res) => {
+    TaskType
+        .getTaskTypesByCar(req.body.carMarkk, req.body.carModel)
+        .then(taskTypes => {
+            res.status(200).send({taskTypes: taskTypes});
+        })
+        .catch(errors => {
+            console.warn(errors);
+            res.status(400).send({errors: errors});
+        });
+});
+
 router.post('/create-task', validation.createAndUpdateTask(), (req, res) => {
     req.body.endTime = countEndTime(req.body.startTime, +req.body.estimationTime);
 
@@ -334,16 +334,32 @@ router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
                             Task
                                 .getTaskById(req.body.id)
                                 .then(task => {
-                                    res.status(200).send({
-                                        task: task,
-                                        requestID: req.body.requestID,
-                                        newCost: newCost
-                                    });
+
+                                    TaskType
+                                        .createTaskType({
+                                            typeName: req.body.name,
+                                            carMarkk: request[0].dataValues.carMarkk,
+                                            carModel: request[0].dataValues.carModel,
+                                            cost: req.body.cost
+                                        })
+                                        .then(() => {
+                                            res.status(200).send({
+                                                task: task,
+                                                requestID: req.body.requestID,
+                                                newCost: newCost
+                                            });
+                                        })
+                                        .catch(errors => {
+                                            console.warn(errors);
+                                            res.status(400).send({errors: errors});
+                                        })
+
                                 })
                                 .catch(errors => {
                                     console.warn(errors);
                                     res.status(400).send({errors: errors});
                                 });
+
                         })
                         .catch(errors => {
                             console.warn(errors);
@@ -499,7 +515,7 @@ router.post('/create-global-request', validation.createTaskRequest(), (req, res)
         .createRequest(req.body)
         .then((request) => {
             req.body.endTime = req.body.estimatedTime;
-            req.body.estimationTime = parseInt((new Date(req.body.endTime) - new Date(req.body.startTime))/(1000 * 60 * 60)) + 1;
+            req.body.estimationTime = parseInt((new Date(req.body.endTime) - new Date(req.body.startTime)) / (1000 * 60 * 60)) + 1;
             req.body.requestID = request.id;
 
             Task

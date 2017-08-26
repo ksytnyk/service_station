@@ -27,6 +27,7 @@ $(document).ready(function () {
             $('.update-form-task-cost').val('');
             $('.update-form-task-type-select').addClass("hidden");
             $('.update-form-task-type-input').removeClass("hidden");
+        } else if ($(this).val() === null) {
         } else {
 
             var taskTypeID = $('#updateTaskTypeID' + $('.update-form-task-type-select').serializeArray()[0].value).attr('updateTaskTypeID');
