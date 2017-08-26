@@ -140,16 +140,13 @@ $(document).ready(function () {
     });
 
     $('.task-update-button').on('click', function () {
-
-        console.log('lal');
-
         $('#updateTaskFormModal').modal('toggle');
 
         var dataArr = $('#update-form-task').serializeArray();
 
-        if (dataArr[3].value === '') {
-            dataArr[3].value = dataArr[4].value;
-        }
+        // if (dataArr[3].value === '') {
+        //     dataArr[3].value = dataArr[4].value;
+        // }
 
         $.ajax({
             url: getRole(window.location.pathname) + '/update-task/' + $('#update-form-task-id').val(),
@@ -248,8 +245,7 @@ $(document).ready(function () {
                     ' data-task-customer-parts="' + data.task.customerParts + '"' +
                     ' data-task-need-buy-parts="' + data.task.needBuyParts + '"' +
                     ' data-task-comment="' + data.task.comment + '"' +
-                    ' data-target="#updateTaskFormModal"' +
-                    ' style=""> ' +
+                    ' data-target="#updateTaskFormModal"> ' +
                     '<span class="glyphicon glyphicon-pencil" aria-hidden="true"/> ' +
                     '</a> ' +
                     '<a href="#"' +
@@ -258,8 +254,7 @@ $(document).ready(function () {
                     ' data-current="' + getIdRole(window.location.pathname) + '" data-id="' + data.task.id + '"' +
                     ' data-request-id="' + data.task.requestID + '"' +
                     ' data-task-old-cost="' + data.task.cost + '"' +
-                    ' data-target="#deleteTaskFormModal"' +
-                    ' style=""> ' +
+                    ' data-target="#deleteTaskFormModal"> ' +
                     '<span class="glyphicon glyphicon-remove" aria-hidden="true"/> ' +
                     '</a>' +
                     '</td>';

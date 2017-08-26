@@ -1,5 +1,7 @@
 module.exports = function (startTime, estimationTime) {
     var endTime = new Date(startTime);
 
-    return endTime.setHours(endTime.getHours() + estimationTime);
+    endTime.setHours(endTime.getHours() + estimationTime);
+
+    return endTime;
 };

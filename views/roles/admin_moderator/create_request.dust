@@ -37,7 +37,7 @@
             <textarea class="form-control disable_input" name="comment" rows="4" style="height: 108px;"></textarea>
         </div>
         <div class="form-group required col-lg-3">
-            <label> Тип транспорту </label>
+            <label>Тип транспорту</label>
             <select class="form-control disable_input" name="typeOfCar" id="typeOfCar">
                 <option value="default">Оберіть тип транспорту</option>
             </select>

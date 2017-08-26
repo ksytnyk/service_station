@@ -64,7 +64,7 @@ $(document).ready(() => {
         $("#markk").append("<option>Оберіть марку транспорту</option>").select2();
 
         Markk.forEach(item => {
-            $("#markk").append("<option id='"+ item.name +"' value='"+ item.name +"' data-id='" + item.value + "'>"+ item.name +"</option>")
+            $("#markk").append("<option id='"+ item.name.replace(/\s+/g,'-') +"' value='"+ item.name.replace(/\s+/g,'-') +"' data-id='" + item.value + "'>"+ item.name +"</option>")
         });
     }
 

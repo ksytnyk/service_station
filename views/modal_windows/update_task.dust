@@ -2,7 +2,7 @@
 <div class="modal fade" id="updateTaskFormModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel">
     <div class="modal-dialog update_task" role="document">
         <div class="modal-content">
-            <form id="update-form-task" action="" class="create">
+            <form id="update-form-task" class="create">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
@@ -14,7 +14,7 @@
                 <div class="modal-body clearfix">
                     {@lt key=typeUser value=4}
                     {@lt key=typeUser value=3}
-                    <div class="form-group col-lg-4">
+                    <div class="form-group required col-lg-4">
                         <label>Назва задачі</label>
                         <input type="text" class="form-control hidden update-form-task-type-input" id="update-form-task-type-input" name="name">
                         <select class="form-control selectpicker update-form-task-type-select" id="update-form-task-type-select" data-live-search="true" name="name2">
@@ -24,7 +24,7 @@
                             {/taskTypes}
                         </select>
                     </div>
-                    <div class="form-group col-lg-4">
+                    <div class="form-group required col-lg-4">
                         <label>Виконавець</label>
                         <select class="form-control create-form-task selectpicker" name="planedExecutorID"
                                 id="update-form-task-planed-executor">
@@ -37,7 +37,7 @@
                             {/assignedExecutorUsers}
                         </select>
                     </div>
-                    <div class="form-group col-lg-4">
+                    <div class="form-group required col-lg-4">
                         <button type="button" class="btn btn-primary assign-task-button col-lg-12"
                                 style="margin-top: 25px;">Доручити задачу
                         </button>
@@ -65,15 +65,14 @@
                     {/lt}
                     <div class="form-group col-lg-4">
                         <label>Опис задачі</label>
-                        <input type="text" class="form-control create-form-task" name="description"
-                                  id="update-form-task-description">
+                        <input type="text" class="form-control create-form-task" name="description" id="update-form-task-description">
                     </div>
-                    <div class="form-group col-lg-4">
+                    <div class="form-group required col-lg-4">
                         <label>Час початку</label>
                         <input type="text" class="form-control create-form-task datetimepickerN" name="startTime"
                                id="update-form-task-start-time">
                     </div>
-                    <div class="form-group col-lg-2">
+                    <div class="form-group required col-lg-2">
                         <label>Час виконання</label>
                         <div class="input-group">
                             <input type="text" class="form-control create-form-task" name="estimationTime"
@@ -81,7 +80,7 @@
                             <span class="input-group-addon">год</span>
                         </div>
                     </div>
-                    <div class="form-group col-lg-2">
+                    <div class="form-group required col-lg-2">
                         <label>Вартість</label>
                         <div class="input-group">
                             <input type="text" class="form-control create-form-task" name="cost" id="update-form-task-cost">
@@ -99,7 +98,7 @@
                                   id="update-form-task-customer-parts"></textarea>
                     </div>
                     {/lt}
-                    <div class="form-group col-lg-6">
+                    <div class="form-group {@eq key=typeUser value=4}required{/eq} col-lg-6">
                         <label>Відсутні запчастини</label>
                         <textarea class="form-control create-form-task" name="needBuyParts" rows="3"
                                   id="update-form-task-need-buy-parts"></textarea>
