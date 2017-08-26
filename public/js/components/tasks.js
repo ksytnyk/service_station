@@ -141,6 +141,8 @@ $(document).ready(function () {
 
     $('.task-update-button').on('click', function () {
 
+        console.log('lal');
+
         $('#updateTaskFormModal').modal('toggle');
 
         var dataArr = $('#update-form-task').serializeArray();
@@ -322,15 +324,26 @@ function clearModalAddTask() {
 function updateTaskOnClick() {
     $('.update-task').on('click', function () {
 
-        if (window.location.pathname.includes('create-request')) {
+        if (window.location.pathname.includes('create-request') || window.location.pathname.includes('requests')) {
+
+            var dataArr;
+
+            if (window.location.pathname.includes('create-request')) {
+                dataArr = {
+                    carMarkk: $('#markk').val(),
+                    carModel: $('#model').val()
+                };
+            } else if (window.location.pathname.includes('requests')) {
+                dataArr = {
+                    carMarkk: $('#markk').attr('attr-name'),
+                    carModel: $('#model').attr('attr-name')
+                };
+            }
 
             $.ajax({
                 url: getRole(window.location.pathname) + '/get-task-types',
                 type: 'post',
-                data: {
-                    carMarkk: $('#markk').val(),
-                    carModel: $('#model').val()
-                },
+                data: dataArr,
                 success: function (data) {
 
                     $('#update-form-task-type-select').find('option:not(:first)').remove();
