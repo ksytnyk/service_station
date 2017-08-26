@@ -15,7 +15,7 @@
                     <div class="form-group required col-lg-4">
                         <label>Назва задачі</label>
 
-                        <input type="text" class="form-control create-form-task hidden create-form-task task-type-input" id="task-type-input" name="name">
+                        <input type="text" class="form-control create-form-task hidden task-type-input" id="task-type-input" name="name">
                         <select class="form-control selectpicker create-form-task task-type-select" id="task-type-select" data-live-search="true" name="name2">
                             <option value="new task">Додати нову задачу</option>
                             {#taskTypes}

@@ -521,7 +521,20 @@ router.post('/create-global-request', validation.createTaskRequest(), (req, res)
             Task
                 .createTask(req.body)
                 .then(() => {
-                    res.status(200).send();
+                    TaskType
+                        .createTaskType({
+                            typeName: req.body.name,
+                            carMarkk: req.body.carMarkk,
+                            carModel: req.body.carModel,
+                            cost: req.body.cost
+                        })
+                        .then(() => {
+                            res.status(200).send();
+                        })
+                        .catch(errors => {
+                            console.warn(err);
+                            res.status(400).send({errors: errors});
+                        })
                 })
                 .catch(errors => {
                     console.warn(err);
