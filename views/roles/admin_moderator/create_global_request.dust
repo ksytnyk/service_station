@@ -36,18 +36,18 @@
             <textarea class="form-control" name="description" rows="4" style="height: 108px;"></textarea>
         </div>
         <div class="form-group required col-lg-3">
-            <label>Тип транспорту</label>
-            <select class="form-control" name="typeOfCar" id="typeOfCar">
+            <label> Тип транспорту </label>
+            <select class="form-control disable_input" name="typeOfCar" id="typeOfCar">
                 <option value="default">Оберіть тип транспорту</option>
             </select>
         </div>
         <div class="form-group required col-lg-3">
             <label>Марка автомобіля</label>
-            <select class="form-control" name="carMarkk" id="markk"></select>
+            <select class="form-control disable_input" name="carMarkk" id="markk"></select>
         </div>
         <div class="form-group required col-lg-3">
             <label>Модель автомобіля</label>
-            <select class="form-control" name="carModel" id="model"></select>
+            <select class="form-control disable_input" name="carModel" id="model"></select>
         </div>
         <div class="form-group required col-lg-3">
             <label>Вартість</label>

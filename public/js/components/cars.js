@@ -7,8 +7,9 @@
 $(document).ready(() => {
     let linkForCars = window.location.pathname,
         createLink = "/admin/create-request",
+        createGlobalReq = "/admin/create-global-request",
         updateLink = "/admin/update-request";
-    if(linkForCars == createLink || (linkForCars.indexOf(updateLink)+1)) {
+    if(linkForCars == createLink || (linkForCars.indexOf(updateLink)+1) || linkForCars == createGlobalReq) {
         $('#customers').select2();
         getTypes();
     }
