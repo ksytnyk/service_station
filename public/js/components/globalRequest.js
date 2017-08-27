@@ -6,7 +6,10 @@ $(document).ready(function () {
 
     $('#create_task_request').on('click', function () {
 
+        var taskTypeID = $('#global-task-type-select').serializeArray()[0].value;
         var dataArr = $('#createRequestForm').serializeArray();
+        var taskTypeName = $('#globalTaskTypeID' + taskTypeID).attr('globalTaskTypeID');
+        dataArr[1].value = taskTypeName;
 
         if (dataArr[0].value === '') {
             dataArr[0].value = dataArr[1].value;
@@ -40,11 +43,13 @@ $(document).ready(function () {
 
                 $.each(data.taskTypes, function (i, item) {
 
+                    console.log(item.id);
+
                     $('#global-task-type-select').append($('<option>', {
-                        value: item.typeName,
+                        value: item.id,
                         text: item.typeName,
-                        globalTaskTypeID: item.id,
-                        id: 'globalTaskTypeID' + item.typeName
+                        globalTaskTypeID: item.typeName,
+                        id: 'globalTaskTypeID' + item.id
                     }));
                 });
                 $("#global-task-type-select").selectpicker("refresh");
@@ -62,17 +67,18 @@ $(document).ready(function () {
             $('.global-task-type-input').removeClass("hidden");
         } else {
 
-            var taskTypeID = $('#globalTaskTypeID' + $('.global-task-type-select').serializeArray()[0].value).attr('globalTaskTypeID');
+            var dataArr = $('#global-task-type-select').serializeArray();
+            var taskTypeName = $('#globalTaskTypeID' + dataArr[0].value).attr('globalTaskTypeID');
+            dataArr[0].value = taskTypeName;
 
             $.ajax({
-                url: getRole(window.location.pathname) + '/get-task-prise/' + taskTypeID,
+                url: getRole(window.location.pathname) + '/get-task-prise/' + $('#global-task-type-select').serializeArray()[0].value,
                 type: 'post',
-                data: $('.global-task-type-select').serializeArray(),
+                data: dataArr,
                 success: function (data) {
                     $('.task-cost').val(data.taskTypeCost);
                 }
             })
         }
-
     });
 });

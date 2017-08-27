@@ -20,10 +20,10 @@ $(document).ready(function () {
                     $.each(data.taskTypes, function (i, item) {
 
                         $('#task-type-select').append($('<option>', {
-                            value: item.typeName,
+                            value: item.id,
                             text: item.typeName,
-                            taskTypeID: item.id,
-                            id: 'taskTypeID' + item.typeName
+                            taskTypeID: item.typeName,
+                            id: 'taskTypeID' + item.id
                         }));
                     });
                     $("#task-type-select").selectpicker("refresh");
@@ -51,6 +51,8 @@ $(document).ready(function () {
         $('#createTaskFormModal').modal('toggle');
 
         var dataArr = $('#createTaskForm').serializeArray();
+        var taskTypeID = $('#taskTypeID' + $('.task-type-select').serializeArray()[0].value).attr('taskTypeID');
+        dataArr[2].value = taskTypeID;
 
         if (dataArr[1].value === '') {
             dataArr[1].value = dataArr[2].value;
@@ -140,13 +142,21 @@ $(document).ready(function () {
     });
 
     $('.task-update-button').on('click', function () {
+
         $('#updateTaskFormModal').modal('toggle');
+
 
         var dataArr = $('#update-form-task').serializeArray();
 
-        // if (dataArr[3].value === '') {
-        //     dataArr[3].value = dataArr[4].value;
-        // }
+        if (getRole(window.location.pathname) !== '/executor') {
+
+            var taskTypeID = $('#updateTaskTypeID' + $('.update-form-task-type-select').serializeArray()[0].value).attr('updateTaskTypeID');
+            dataArr[4].value = taskTypeID;
+
+            if (dataArr[3].value === '') {
+                dataArr[3].value = dataArr[4].value;
+            }
+        }
 
         $.ajax({
             url: getRole(window.location.pathname) + '/update-task/' + $('#update-form-task-id').val(),
@@ -245,7 +255,8 @@ $(document).ready(function () {
                     ' data-task-customer-parts="' + data.task.customerParts + '"' +
                     ' data-task-need-buy-parts="' + data.task.needBuyParts + '"' +
                     ' data-task-comment="' + data.task.comment + '"' +
-                    ' data-target="#updateTaskFormModal"> ' +
+                    ' data-target="#updateTaskFormModal"' +
+                    ' style=""> ' +
                     '<span class="glyphicon glyphicon-pencil" aria-hidden="true"/> ' +
                     '</a> ' +
                     '<a href="#"' +
@@ -254,7 +265,8 @@ $(document).ready(function () {
                     ' data-current="' + getIdRole(window.location.pathname) + '" data-id="' + data.task.id + '"' +
                     ' data-request-id="' + data.task.requestID + '"' +
                     ' data-task-old-cost="' + data.task.cost + '"' +
-                    ' data-target="#deleteTaskFormModal"> ' +
+                    ' data-target="#deleteTaskFormModal"' +
+                    ' style=""> ' +
                     '<span class="glyphicon glyphicon-remove" aria-hidden="true"/> ' +
                     '</a>' +
                     '</td>';
@@ -319,6 +331,8 @@ function clearModalAddTask() {
 function updateTaskOnClick() {
     $('.update-task').on('click', function () {
 
+        var This = this;
+
         if (window.location.pathname.includes('create-request') || window.location.pathname.includes('requests')) {
 
             var dataArr;
@@ -345,29 +359,42 @@ function updateTaskOnClick() {
 
                     $.each(data.taskTypes, function (i, item) {
                         $('#update-form-task-type-select').append($('<option>', {
-                            value: item.typeName,
+                            value: item.id,
                             text: item.typeName,
-                            updateTaskTypeID: item.id,
-                            id: 'updateTaskTypeID' + item.typeName
+                            updateTaskTypeID: item.typeName,
+                            id: 'updateTaskTypeID' + item.id
                         }));
                     });
                     $("#update-form-task-type-select").selectpicker("refresh");
-                    $('.task-type-select').val('');
-                    $('#update-form-task-type-select').val($('.update-task').data('task-name')).change();
+                    $('#update-form-task-type-select').val('');
+                    isFirstUpdateClick = true;
+                    var taskName = $(This).data('task-name');
+                    var taskTypeID = $("option[updateTaskTypeID='" + taskName + "']").val();
+
+                    $('#update-form-task-type-select').val(taskTypeID).change();
+                    $('#update-form-task-old-cost').val($(This).data('task-cost'));
+                    $('#update-form-task-cost').val($(This).data('task-cost'));
+
                 }
             });
 
         } else {
-            $('#update-form-task-type-select').val($(this).data('task-name')).change();
+            isFirstUpdateClick = true;
+            var taskName = $(this).data('task-name');
+            var taskTypeID = $("option[updateTaskTypeID='" + taskName + "']").val();
+
+            $('#update-form-task-type-select').val(taskTypeID).change();
+            $('#update-form-task-old-cost').val($(this).data('task-cost'));
+            $('#update-form-task-cost').val($(this).data('task-cost'));
         }
 
         $('#update-form-task-id').val($(this).data('id'));
         $('#update-form-request-id').val($(this).data('request-id'));
-        $('#update-form-task-old-cost').val($(this).data('task-cost'));
+
         $('#update-form-task-assigned-user').val($(this).data('task-assigned-user'));
         $('#update-form-task-description').val($(this).data('task-description'));
         $('#update-form-task-planed-executor').val($(this).data('task-planed-executor'));
-        $('#update-form-task-cost').val($(this).data('task-cost'));
+
         $('#update-form-task-estimation-time').val($(this).data('task-estimation-time'));
         $('#update-form-task-start-time').val($(this).data('task-start-time'));
         $('#update-form-task-end-time').val($(this).data('task-end-time'));

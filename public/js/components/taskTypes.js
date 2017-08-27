@@ -8,12 +8,14 @@ $(document).ready(function () {
             $('.task-type-input').removeClass("hidden");
         } else {
 
-            var taskTypeID = $('#taskTypeID' + $('.task-type-select').serializeArray()[0].value).attr('taskTypeID');
+            var dataArr = $('.task-type-select').serializeArray();
+            var taskTypeName = $('#taskTypeID' + dataArr[0].value).attr('taskTypeID');
+            dataArr[0].value = taskTypeName;
 
             $.ajax({
-                url: getRole(window.location.pathname) + '/get-task-prise/' + taskTypeID,
+                url: getRole(window.location.pathname) + '/get-task-prise/' + $('.task-type-select').serializeArray()[0].value,
                 type: 'post',
-                data: $('.task-type-select').serializeArray(),
+                data: dataArr,
                 success: function (data) {
                     $('.task-cost').val(data.taskTypeCost);
                 }
@@ -30,17 +32,25 @@ $(document).ready(function () {
         } else if ($(this).val() === null) {
         } else {
 
-            var taskTypeID = $('#updateTaskTypeID' + $('.update-form-task-type-select').serializeArray()[0].value).attr('updateTaskTypeID');
+            var dataArr = $('.update-form-task-type-select').serializeArray();
+            var taskTypeName = $('#updateTaskTypeID' + dataArr[0].value).attr('updateTaskTypeID');
+            dataArr[0].value = taskTypeName;
 
             $.ajax({
-                url: getRole(window.location.pathname) + '/get-task-prise/' + taskTypeID,
+                url: getRole(window.location.pathname) + '/get-task-prise/' + $('.update-form-task-type-select').serializeArray()[0].value,
                 type: 'post',
-                data: $('.update-form-task-type-select').serializeArray(),
+                data: dataArr,
                 success: function (data) {
-                    $('#update-form-task-cost').val(data.taskTypeCost);
+                    if (!isFirstUpdateClick) {
+                        $('#update-form-task-cost').val(data.taskTypeCost);
+                    } else {
+                        isFirstUpdateClick = false;
+                    }
                 }
             })
         }
     });
 
 });
+
+var isFirstUpdateClick = false;

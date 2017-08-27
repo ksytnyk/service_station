@@ -20,7 +20,7 @@
                         <select class="form-control selectpicker update-form-task-type-select" id="update-form-task-type-select" data-live-search="true" name="name2">
                             <option value="new task">Додати нову задачу</option>
                             {#taskTypes}
-                            <option value="{typeName}" updateTaskTypeID="{id}" id="updateTaskTypeID{typeName}">{typeName}</option>
+                            <option value="{id}" updateTaskTypeID="{typeName}" id="updateTaskTypeID{id}">{typeName}</option>
                             {/taskTypes}
                         </select>
                     </div>

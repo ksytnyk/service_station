@@ -19,7 +19,7 @@
                         <select class="form-control selectpicker create-form-task task-type-select" id="task-type-select" data-live-search="true" name="name2">
                             <option value="new task">Додати нову задачу</option>
                             {#taskTypes}
-                            <option value="{typeName}" taskTypeID="{id}" id="taskTypeID{typeName}">{typeName}</option>
+                            <option value="{id}" taskTypeID="{typeName}" id="taskTypeID{id}">{typeName}</option>
                             {/taskTypes}
                         </select>
                     </div>
