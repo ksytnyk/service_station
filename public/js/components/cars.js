@@ -7,7 +7,6 @@ $(document).ready(() => {
         updateLink = "/admin/update-request";
 
     if(linkForCars == createLink || (linkForCars.indexOf(updateLink)+1) || linkForCars == createGlobalReq) {
-        $('#customers').select2();
         getTypes();
     }
 

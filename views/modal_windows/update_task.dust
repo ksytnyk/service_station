@@ -1,5 +1,5 @@
 {+update_task}
-<div class="modal fade" id="updateTaskFormModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel">
+<div class="modal fade" id="updateTaskFormModal" role="dialog" aria-labelledby="formModalLabel">
     <div class="modal-dialog update_task" role="document">
         <div class="modal-content">
             <form id="update-form-task" class="create">
@@ -14,10 +14,10 @@
                 <div class="modal-body clearfix">
                     {@lt key=typeUser value=4}
                     {@lt key=typeUser value=3}
-                    <div class="form-group required col-lg-4">
+                    <div class="form-group required col-lg-4" id="update_new_task">
                         <label>Назва задачі</label>
                         <input type="text" class="form-control hidden update-form-task-type-input" id="update-form-task-type-input" name="name">
-                        <select class="form-control selectpicker update-form-task-type-select" id="update-form-task-type-select" data-live-search="true" name="name2">
+                        <select class="form-control add_select2 update-form-task-type-select" id="update-form-task-type-select" name="name2">
                             <option value="new task">Додати нову задачу</option>
                             {#taskTypes}
                             <option value="{id}" updateTaskTypeID="{typeName}" id="updateTaskTypeID{id}">{typeName}</option>
@@ -26,7 +26,7 @@
                     </div>
                     <div class="form-group required col-lg-4">
                         <label>Виконавець</label>
-                        <select class="form-control create-form-task selectpicker" name="planedExecutorID"
+                        <select class="form-control add_select2 create-form-task" name="planedExecutorID"
                                 id="update-form-task-planed-executor">
                             {#assignedExecutorUsers}
                             {@eq key=userTypeID value=3}
@@ -38,12 +38,12 @@
                         </select>
                     </div>
                     <div class="form-group required col-lg-4">
-                        <button type="button" class="btn btn-primary assign-task-button col-lg-12"
+                        <button type="button" class="btn btn-primary update-assign-task-button col-lg-12"
                                 style="margin-top: 25px;">Доручити задачу
                         </button>
-                        <div class="hidden assign-task-select">
+                        <div class="hidden update-assign-task-select">
                             <label>Доручити задачу</label>
-                            <select class="form-control create-form-task selectpicker" name="assignedUserID"
+                            <select class="form-control add_select2 create-form-task" name="assignedUserID"
                                     id="update-form-task-assigned-user">
                                 {#assignedExecutorUsers}
                                 {@eq key=userTypeID value=4}

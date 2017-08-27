@@ -34,7 +34,9 @@ router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
             Task
                 .getTaskById(req.body.id)
                 .then(task => {
-                    res.status(200).send({task: task});
+                    res.status(200).send({
+                        task: task
+                    });
                 })
                 .catch(errors => {
                     console.warn(errors);

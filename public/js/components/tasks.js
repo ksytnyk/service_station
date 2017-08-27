@@ -41,9 +41,9 @@ $(document).ready(function () {
         $('#update-form-task-status').val(5);
     });
 
-    $('.assign-task-button').on('click', function () {
-        $('.assign-task-button').addClass('hidden');
-        $('.assign-task-select').removeClass("hidden");
+    $('.create-assign-task-button').on('click', function () {
+        $('.create-assign-task-button').addClass('hidden');
+        $('.create-assign-task-select').removeClass("hidden");
     });
 
     $('#taskAddButton').on('click', function () {
@@ -66,9 +66,9 @@ $(document).ready(function () {
                 showSuccessAlert('Додавання задачі пройшло успішно.');
 
                 $('.assign-task-select').addClass("hidden");
-                $('.assign-task-button').removeClass("hidden");
-                $('.task-type-select').removeClass("hidden");
-                $('.task-type-select').val('');
+                $('.create-assign-task-button').removeClass("hidden");
+                $('#create_new_task .select2').removeClass("hidden").val('');
+                $('.create-task-type-select').removeClass("hidden").val('');
                 $('.task-type-input').addClass("hidden");
 
                 var executorNameSurname = $('#option' + dataArr[3].value).attr('executorFullName');
@@ -141,6 +141,11 @@ $(document).ready(function () {
         clearModalAddTask();
     });
 
+    $('.update-assign-task-button').on('click', function () {
+        $('.update-assign-task-button').addClass('hidden');
+        $('.update-assign-task-select').removeClass("hidden");
+    });
+
     $('.task-update-button').on('click', function () {
 
         $('#updateTaskFormModal').modal('toggle');
@@ -148,7 +153,7 @@ $(document).ready(function () {
 
         var dataArr = $('#update-form-task').serializeArray();
 
-        if (getRole(window.location.pathname) !== '/executor') {
+        if (getRole(window.location.pathname) !== '/executor' && getRole(window.location.pathname) !== '/store-keeper') {
 
             var taskTypeID = $('#updateTaskTypeID' + $('.update-form-task-type-select').serializeArray()[0].value).attr('updateTaskTypeID');
             dataArr[4].value = taskTypeID;
@@ -167,8 +172,9 @@ $(document).ready(function () {
 
                 $('.update-form-task-type-select').removeClass("hidden");
                 $('.update-form-task-type-input').addClass("hidden");
-                $('.assign-task-select').addClass("hidden");
-                $('.assign-task-button').removeClass("hidden");
+                $('#update_new_task .select2').removeClass("hidden");
+                $('.update-assign-task-select').addClass("hidden");
+                $('.update-assign-task-button').removeClass("hidden");
 
                 var idx = "#idx-task-" + data.task.id;
                 var idr = "#idr-cost-" + data.requestID;
@@ -223,17 +229,17 @@ $(document).ready(function () {
                         '</td>';
                 }
                 if (getRole(window.location.pathname) === '/store-keeper') {
-
                     newTask1 = '' +
                         '<td class="tac">' +
-                        '<form action="/store-keeper/task-hold" method="POST">' +
-                        '<input class="btn btn-danger status" type="submit" id="taskHold" value="Зупинити"/>' +
-                        '<input type="hidden" value="' + data.task.id + '" name="taskID"/>' +
-                        '</form>' +
-                        '<form action="/store-keeper/task-confirm" method="POST">' +
-                        '<input class="btn btn-warning status-storekeeper" type="submit" id="taskPending" value="Підтвердити"/>' +
-                        '<input type="hidden" value="' + data.task.id + '" name="taskID"/>' +
-                        '</form>' +
+                            '<form action="/store-keeper/set-status/' + data.task.id + '" method="POST">' +
+                                '<input type="hidden" value="4" name="status"/>' +
+                                '<button class="btn btn-danger status" type="submit">Зупинити</button>' +
+                            '</form>' +
+                            '<form action="/store-keeper/set-status/' + data.task.id + '" method="POST">' +
+                                '<input type="hidden" value="1" name="status"/>' +
+                                '<input type="hidden" value="' + data.task.planedExecutorID + '" name="assignedUserID"/>' +
+                                '<button class="btn btn-warning status" type="submit">Підтвердити</button>' +
+                            '</form>' +
                         '</td>'
                 }
                 newTask2 = '' +
@@ -354,10 +360,9 @@ function updateTaskOnClick() {
                 type: 'post',
                 data: dataArr,
                 success: function (data) {
-
                     $('#update-form-task-type-select').find('option:not(:first)').remove();
 
-                    $.each(data.taskTypes, function (i, item) {
+                    data.taskTypes.forEach(item => {
                         $('#update-form-task-type-select').append($('<option>', {
                             value: item.id,
                             text: item.typeName,
@@ -365,8 +370,9 @@ function updateTaskOnClick() {
                             id: 'updateTaskTypeID' + item.id
                         }));
                     });
-                    $("#update-form-task-type-select").selectpicker("refresh");
+
                     $('#update-form-task-type-select').val('');
+
                     isFirstUpdateClick = true;
                     var taskName = $(This).data('task-name');
                     var taskTypeID = $("option[updateTaskTypeID='" + taskName + "']").val();

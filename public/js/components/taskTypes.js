@@ -5,6 +5,7 @@ $(document).ready(function () {
         if ($(this).val() === 'new task') {
             $('.task-cost').val('');
             $('.task-type-select').addClass("hidden");
+            $('#create_new_task .select2').addClass("hidden");
             $('.task-type-input').removeClass("hidden");
         } else {
 
@@ -28,6 +29,7 @@ $(document).ready(function () {
         if ($(this).val() === 'new task') {
             $('.update-form-task-cost').val('');
             $('.update-form-task-type-select').addClass("hidden");
+            $('#update_new_task .select2').addClass("hidden");
             $('.update-form-task-type-input').removeClass("hidden");
         } else if ($(this).val() === null) {
         } else {

@@ -26,7 +26,6 @@
     {@eq key=typeUser value=2}
         <link rel="stylesheet" href="/css/libs/dataTables.bootstrap.min.css">
         <link rel="stylesheet" href="/css/libs/bootstrap-datetimepicker.min.css">
-        <link rel="stylesheet" href="/css/libs/bootstrap-select.min.css">
         <link rel="stylesheet" href="/css/libs/select2.min.css">
         <link rel="stylesheet" href="/css/styles/request.css">
         <link rel="stylesheet" href="/css/styles/chart.css">
@@ -35,7 +34,6 @@
     {@eq key=typeUser value=1}
         <link rel="stylesheet" href="/css/libs/dataTables.bootstrap.min.css">
         <link rel="stylesheet" href="/css/libs/bootstrap-datetimepicker.min.css">
-        <link rel="stylesheet" href="/css/libs/bootstrap-select.min.css">
         <link rel="stylesheet" href="/css/libs/select2.min.css">
         <link rel="stylesheet" href="/css/styles/request.css">
         <link rel="stylesheet" href="/css/styles/chart.css">
@@ -84,7 +82,6 @@
     <script src="/js/libs/bootstrap-formhelpers-phone.js"></script>
     <script src="/js/libs/select2.min.js"></script>
     <script src="/js/libs/Chart.min.js"></script>
-    <script src="/js/libs/bootstrap-select.min.js"></script>
     <script src="/js/components/users.js"></script>
     <script src="/js/components/requests.js"></script>
     <script src="/js/components/tasks.js"></script>
@@ -101,7 +98,6 @@
     <script src="/js/libs/bootstrap-formhelpers-phone.js"></script>
     <script src="/js/libs/select2.min.js"></script>
     <script src="/js/libs/Chart.min.js"></script>
-    <script src="/js/libs/bootstrap-select.min.js"></script>
     <script src="/js/components/users.js"></script>
     <script src="/js/components/requests.js"></script>
     <script src="/js/components/tasks.js"></script>
