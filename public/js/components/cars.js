@@ -26,7 +26,7 @@ $(document).ready(() => {
 
     function getTypes() {
         $.ajax({
-            url: "http://api.auto.ria.com/categories"
+            url: "https://api.auto.ria.com/categories"
         }).done((result) => {
             renderTypes(result);
         })
@@ -49,7 +49,7 @@ $(document).ready(() => {
 
     let link;
     function getMarkks(markk) {
-        link = "http://api.auto.ria.com/categories/"+ $('#' + markk.value).data('id') +"/marks";
+        link = "https://api.auto.ria.com/categories/"+ $('#' + markk.value).data('id') +"/marks";
 
         $.ajax({
             url: link
