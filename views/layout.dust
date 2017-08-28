@@ -5,7 +5,6 @@
     <title>Service Station</title>
     <link rel="shortcut icon" href="/favicon.png" type="image/png">
     <link rel="stylesheet" href="/css/libs/bootstrap.css">
-    <link rel="stylesheet" href="/css/styles/main.css">
 
     {@eq key=typeUser value=5}
         <link rel="stylesheet" href="/css/libs/dataTables.bootstrap.min.css">
@@ -43,6 +42,8 @@
         <link rel="stylesheet" href="/css/styles/login.css">
     {/eq}
 
+    <link rel="stylesheet" href="/css/styles/main.css">
+
 </head>
 <body>
 <div class="container">
@@ -60,6 +61,7 @@
 
 {@eq key=typeUser value=5}
     <script src="/js/libs/dataTables.bootstrap.min.js"></script>
+    <script src="/js/libs/select2.min.js"></script>
 {/eq}
 
 {@eq key=typeUser value=4}
