@@ -52,7 +52,6 @@ $(document).ready(function () {
                         id: 'globalTaskTypeID' + item.id
                     }));
                 });
-                $("#global-task-type-select").selectpicker("refresh");
                 $('.global-task-type-select').val('');
             }
         });
