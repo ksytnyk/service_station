@@ -64,6 +64,7 @@
 
 {@eq key=typeUser value=4}
     <script src="/js/libs/dataTables.bootstrap.min.js"></script>
+    <script src="/js/libs/select2.min.js"></script>
     <script src="/js/components/tasks.js"></script>
 {/eq}
 
@@ -72,6 +73,7 @@
     <script src="/js/libs/transition.js"></script>
     <script src="/js/libs/collapse.js"></script>
     <script src="/js/libs/bootstrap-datetimepicker.min.js"></script>
+    <script src="/js/libs/select2.min.js"></script>
     <script src="/js/components/tasks.js"></script>
 {/eq}
 
