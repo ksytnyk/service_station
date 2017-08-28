@@ -111,6 +111,10 @@
     <script src="/js/components/globalRequest.js"></script>
 {/eq}
 
+{@eq key=typeUser value=undefined}
+    <script src="/js/libs/select2.min.js"></script>
+{/eq}
+
 <script src="/js/components/main.js"></script>
 </body>
 </html>

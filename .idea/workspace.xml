@@ -78,8 +78,8 @@
       <file leaf-file-name="layout.dust" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/views/layout.dust">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="63" column="4" selection-start-line="63" selection-start-column="4" selection-end-line="63" selection-end-column="4" />
+            <state relative-caret-position="366">
+              <caret line="113" column="34" selection-start-line="113" selection-start-column="34" selection-end-line="113" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -816,7 +816,7 @@
       <workItem from="1503934949215" duration="685000" />
       <workItem from="1503936041905" duration="564000" />
       <workItem from="1503936672067" duration="476000" />
-      <workItem from="1503937781303" duration="3350000" />
+      <workItem from="1503937781303" duration="3528000" />
     </task>
     <task id="LOCAL-00001" summary="Improve add 'requests', divide 'main.js' on components">
       <created>1502346942336</created>
@@ -1039,7 +1039,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="271801000" />
+    <option name="totallyTimeSpent" value="271979000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -1462,8 +1462,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/views/layout.dust">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="63" column="4" selection-start-line="63" selection-start-column="4" selection-end-line="63" selection-end-column="4" />
+        <state relative-caret-position="366">
+          <caret line="113" column="34" selection-start-line="113" selection-start-column="34" selection-end-line="113" selection-end-column="34" />
           <folding />
         </state>
       </provider>
