@@ -24,7 +24,7 @@
                        style="margin-bottom: 5px;">
         </div>
         <div class="form-group required col-lg-3">
-            <label>Запланований час</label>
+            <label>Орієнтовний час виконання</label>
             <input type="text" class="form-control datetimepickerN disable_input" name="estimatedTime"
                    style="margin-bottom: 5px;">
         </div>

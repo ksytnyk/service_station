@@ -64,10 +64,14 @@
                         </form>
                     {/ne}
                     {@ne key=status value=3}
+                    {@ne key=status value=1}
+                    {@ne key=status value=5}
                         <form class="request-form-status" action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/change-request-status/{id}" method="post">
                             <input class="btn btn-success" type="submit" id="requestDone" value="Завершити"/>
                             <input type="hidden" value="3" name="statusID">
                         </form>
+                    {/ne}
+                    {/ne}
                     {/ne}
                     {@ne key=status value=5}
                         <form class="request-form-status" action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/change-request-status/{id}" method="post">
