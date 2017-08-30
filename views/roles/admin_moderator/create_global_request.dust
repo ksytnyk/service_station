@@ -22,6 +22,7 @@
         </div>
         <div class="form-group required col-lg-3" id="global_request_name">
             <label>Назва замовлення</label>
+            <a class="new-global-task-type"><span class="glyphicon glyphicon-plus" aria-hidden="true"/></a>
             <input type="text" class="form-control hidden global-task-type-input" id="global-task-type-input" name="name">
             <select class="form-control global-task-type-select" id="global-task-type-select" name="name2"></select>
         </div>

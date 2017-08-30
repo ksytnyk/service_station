@@ -4,7 +4,7 @@ $(document).ready(function () {
     $('[data-toggle="popover"]').popover();
 
     $('#create_task_request').on('click', function () {
-        if ( $('#global-task-type-select').serializeArray()[0] ) {
+        if ($('#global-task-type-select').serializeArray()[0]) {
             var taskTypeID = $('#global-task-type-select').serializeArray()[0].value;
         }
 
@@ -47,7 +47,6 @@ $(document).ready(function () {
                 carModel: $('#model').val()
             },
             success: function (data) {
-                $('#global-task-type-select').append('<option value="new task">Додати нове замовлення</option>');
 
                 $.each(data.taskTypes, function (i, item) {
                     $('#global-task-type-select').append($('<option>', {
@@ -64,24 +63,26 @@ $(document).ready(function () {
 
     $('#global-task-type-select').on('change', function () {
 
-        if ($(this).val() === 'new task') {
-            $('.task-cost').val('');
-            $('#global_request_name .select2').addClass("hidden");
-            $('.global-task-type-input').removeClass("hidden");
-        } else {
+        var dataArr = $('#global-task-type-select').serializeArray();
+        var taskTypeName = $('#globalTaskTypeID' + dataArr[0].value).attr('globalTaskTypeID');
+        dataArr[0].value = taskTypeName;
 
-            var dataArr = $('#global-task-type-select').serializeArray();
-            var taskTypeName = $('#globalTaskTypeID' + dataArr[0].value).attr('globalTaskTypeID');
-            dataArr[0].value = taskTypeName;
+        $.ajax({
+            url: getRole(window.location.pathname) + '/get-task-prise/' + $('#global-task-type-select').serializeArray()[0].value,
+            type: 'post',
+            data: dataArr,
+            success: function (data) {
+                $('.task-cost').val(data.taskTypeCost);
+            }
+        })
+    });
 
-            $.ajax({
-                url: getRole(window.location.pathname) + '/get-task-prise/' + $('#global-task-type-select').serializeArray()[0].value,
-                type: 'post',
-                data: dataArr,
-                success: function (data) {
-                    $('.task-cost').val(data.taskTypeCost);
-                }
-            })
-        }
+    $('.new-global-task-type').on('click', function () {
+        $('#global_request_name .select2').addClass("hidden");
+        $('.global-task-type-input').removeClass("hidden");
+    });
+
+    $('#global-task-type-select').on('select2:closing', function () {
+        $('.global-task-type-input').val($('.select2-search__field')[0].value);
     });
 });
