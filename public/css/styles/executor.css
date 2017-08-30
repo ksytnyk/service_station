@@ -14,9 +14,9 @@
     display: none;
 }
 .executor .bt {
-    width: 581px;
+    width: 530px;
 }
-.executor .bb {
+.executor .table .bb {
     border-bottom: none;
 }
 .executor .width-id,
@@ -24,6 +24,9 @@
     width: 15px;
 }
 .executor .width-des-par-com {
-    width: 600px;
+    width: 550px;
     box-sizing: border-box;
+}
+.executor .status {
+    width: 100%;
 }
