@@ -96,7 +96,7 @@
                         <textarea class="form-control create-form-task" name="comment" rows="3"></textarea>
                     </div>
                     <div class='form-group col-lg-6 col-lg-offset-6'>
-                        <button type="button" id="taskAddButton" class="btn btn-success width">
+                        <button type="button" id="taskAddButton" class="btn btn-success width agree">
                             Додати
                         </button>
                         <button type="button" class="btn btn-danger pull-right width" data-dismiss="modal"

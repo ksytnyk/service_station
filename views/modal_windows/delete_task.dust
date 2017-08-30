@@ -1,13 +1,13 @@
 {+delete_task}
-<div class="modal fade" id="deleteTaskFormModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel">
+<div class="modal fade" id="deleteTaskFormModal" role="dialog" aria-labelledby="formModalLabel">
     <div class="modal-dialog delete_form" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title text-center">Видалити задачу №<span id="delete-task-id"></span> ?</h4>
             </div>
             <div class="modal-body">
-                <button id="delete-button" type="button" class="btn btn-success width">Підтвердити</button>
-                <button type="button" class="btn btn-danger pull-right width" data-dismiss="modal">
+                <button id="delete-button" class="btn btn-success width agree">Підтвердити</button>
+                <button class="btn btn-danger pull-right width" data-dismiss="modal">
                     Відмінити
                 </button>
             </div>

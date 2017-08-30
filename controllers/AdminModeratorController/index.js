@@ -319,7 +319,7 @@ router.post('/create-task', validation.createAndUpdateTask(), (req, res) => {
 
 router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
     req.body.endTime = countEndTime(req.body.startTime, +req.body.estimationTime);
-    console.log(req.body); 
+
     Task
         .updateTask(req.body.id, req.body)
         .then(() => {

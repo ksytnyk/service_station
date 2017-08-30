@@ -116,7 +116,7 @@
                     <div class='form-group col-lg-6 col-lg-offset-6'>
                         {@lt key=typeUser value=3}
                         <input type="hidden" name="status" id="update-form-task-status">
-                        <button type="button" class="btn btn-warning width task-update-button"
+                        <button type="button" class="btn btn-warning width task-update-button agree"
                                 id="change-status-update-task" data-dismiss="modal">
                             Оновити задачу
                         </button>
@@ -126,10 +126,10 @@
                         </button>
                         {/lt}
                         {@gt key=typeUser value=2}
-                        <button type="button" class="btn btn-success width task-update-button">
+                        <button class="btn btn-success width task-update-button agree">
                             Оновити
                         </button>
-                        <button type="button" class="btn btn-danger pull-right width" data-dismiss="modal">
+                        <button class="btn btn-danger pull-right width" data-dismiss="modal">
                             Відмінити
                         </button>
                         {/gt}
