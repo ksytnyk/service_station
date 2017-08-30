@@ -31,6 +31,9 @@
                     {/eq}
                 </td>
                 <td class="tac">
+
+                    {@ne key=typeUser value=1}
+                    {@ne key=userTypeID value=1}
                     <a href="#"
                        class="update-user modal-window-link"
                        data-current="{user.userTypeID}"
@@ -48,6 +51,28 @@
                        title="Редагувати користувача">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true" style="font-size: 17px;"/>
                     </a>
+                    {/ne}
+                    {:else}
+                    <a href="#"
+                       class="update-user modal-window-link"
+                       data-current="{user.userTypeID}"
+                       data-toggle="modal"
+                       data-target="#updateUserFormModal" data-id="{id}"
+                       data-name="{userName}"
+                       data-surname="{userSurname}"
+                       data-company="{userCompanyName}"
+                       data-address="{userAddress}"
+                       data-phone="{userPhone}"
+                       data-login="{userLogin}"
+                       data-email="{userEmail}"
+                       data-role="{userTypeID}"
+                       data-password="{userPassword}"
+                       title="Редагувати користувача">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true" style="font-size: 17px;"/>
+                    </a>
+                    {/ne}
+                    {@eq key=typeUser value=1}
+                    {@ne key=userTypeID value=1}
                     <a href="#"
                        class="delete-user modal-window-link"
                        data-current="{user.userTypeID}"
@@ -59,6 +84,8 @@
                        title="Видалити користувача">
                         <span class="glyphicon glyphicon-remove" aria-hidden="true" style="margin-top: 15px; font-size: 19px;"/>
                     </a>
+                    {/ne}
+                    {/eq}
                 </td>
             </tr>
             {/users}

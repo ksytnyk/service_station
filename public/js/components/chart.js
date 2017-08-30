@@ -12,9 +12,28 @@ $(document).ready(function () {
         }, 1);
     }
 
+    var lastChart = '';
+
+    $(".datetimepickerN").on("dp.change", function() {
+        $(lastChart).click();
+    });
 
     $('#chart-request').on('click', function () {
+        chartRequest();
+        lastChart = '#chart-request';
+    });
 
+    $('#chart-tasks').on('click', function () {
+        chartTasks();
+        lastChart = '#chart-tasks';
+    });
+
+    $('#chart-finances').on('click', function () {
+        chartFinances();
+        lastChart = '#chart-finances';
+    });
+
+    function chartRequest() {
         var data = $('#between-dates').serializeArray();
 
         if (checkSequence(data)) {
@@ -45,9 +64,9 @@ $(document).ready(function () {
                 Chart.defaults.global.defaultFontColor = '#333';
                 Chart.defaults.global.defaultFontSize = 14;
 
-                new Chart(ctx, setChart(result.data.dates, result.data.newRequests, borderColor[0], pointBackgroundColor[0], title[0], title[0], 2));
-                new Chart(ctx1, setChart(result.data.dates, result.data.doneRequests, borderColor[1], pointBackgroundColor[1], title[1], title[1], 2));
-                new Chart(ctx2, setChart(result.data.dates, result.data.canceledRequests, borderColor[2], pointBackgroundColor[2], title[2], title[2], 2));
+                new Chart(ctx, setChart(result.data.dates, result.data.newRequests, borderColor[0], pointBackgroundColor[0], title[0], title[0]));
+                new Chart(ctx1, setChart(result.data.dates, result.data.doneRequests, borderColor[1], pointBackgroundColor[1], title[1], title[1]));
+                new Chart(ctx2, setChart(result.data.dates, result.data.canceledRequests, borderColor[2], pointBackgroundColor[2], title[2], title[2]));
             });
         } else {
             showErrorAlert({
@@ -57,9 +76,9 @@ $(document).ready(function () {
             });
             $('#div-for-chart').empty();
         }
-    });
+    }
 
-    $('#chart-tasks').on('click', function () {
+    function chartTasks() {
         var data = $('#between-dates').serializeArray();
 
         if (checkSequence(data)) {
@@ -123,9 +142,9 @@ $(document).ready(function () {
             $('#div-for-chart2').empty();
             $('#div-for-chart').empty();
         }
-    });
+    }
 
-    $('#chart-finances').on('click', function () {
+    function chartFinances() {
         var data = $('#between-dates').serializeArray();
 
         if (checkSequence(data)) {
@@ -139,7 +158,7 @@ $(document).ready(function () {
                 Chart.defaults.global.defaultFontColor = '#333';
                 Chart.defaults.global.defaultFontSize = 14;
 
-                new Chart(ctx, setChart(result.data.dates, result.data.money, '#398439', '#5dd65d', "Фінансова статистика", "Всього", 100));
+                new Chart(ctx, setChart(result.data.dates, result.data.money, '#398439', '#5dd65d', "Фінансова статистика", "Всього"));
             });
         } else {
             showErrorAlert({responseJSON: {
@@ -150,14 +169,14 @@ $(document).ready(function () {
             $('#div-for-chart1').empty();
             $('#div-for-chart2').empty();
         }
-    });
+    }
 });
 
 function checkSequence(data) {
     return data[1].value > data[0].value;
 }
 
-function setChart(labels, data, borderColor, pointBgc, title, label, fixedStepSize) {
+function setChart(labels, data, borderColor, pointBgc, title, label) {
     return {
         type: 'line',
         data: {
@@ -177,7 +196,6 @@ function setChart(labels, data, borderColor, pointBgc, title, label, fixedStepSi
             scales: {
                 yAxes: [{
                     ticks: {
-                        fixedStepSize: fixedStepSize,
                         beginAtZero: true
                     }
                 }]

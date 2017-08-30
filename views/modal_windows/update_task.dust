@@ -16,9 +16,9 @@
                     {@lt key=typeUser value=3}
                     <div class="form-group required col-lg-4" id="update_new_task">
                         <label>Назва задачі</label>
+                        <a class="update-add-new-task-type-button"><span class="glyphicon glyphicon-plus" aria-hidden="true"/></a>
                         <input type="text" class="form-control hidden update-form-task-type-input" id="update-form-task-type-input" name="name">
                         <select class="form-control add_select2 update-form-task-type-select" id="update-form-task-type-select" name="name2">
-                            <option value="new task">Додати нову задачу</option>
                             {#taskTypes}
                             <option value="{id}" updateTaskTypeID="{typeName}" id="updateTaskTypeID{id}">{typeName}</option>
                             {/taskTypes}

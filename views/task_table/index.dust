@@ -6,7 +6,7 @@
         <th class="tac">Загальна інформація</th>
         <th class="tac width-des-par-com">Опис / Запчастини / Коментар</th>
         {@eq key=typeUser value=3}
-        <th style="width: 90px"></th>
+        <th style="width: 130px"></th>
         {/eq}
         {@eq key=typeUser value=4}
         <th style="width: 90px"></th>
@@ -57,20 +57,26 @@
             <p class="bt"><strong>Коментар: </strong>{comment}</p>
         </td>
         {@eq key=typeUser value=3}
+        {@eq key=status value=1}
         <td class="tac">
             <form action="/executor/set-status/{id}" method="POST">
                 <input type="hidden" value="2" name="status">
-                <button class="status btn btn-primary" type="submit">Почати</button>
+                <button class="status btn btn-primary" type="submit">Почати задачу</button>
             </form>
+        </td>
+        {/eq}
+        {@eq key=status value=2}
+        <td class="tac">
             <form action="/executor/set-status/{id}" method="POST">
                 <input type="hidden" value="4" name="status">
-                <button class="status btn btn-danger" type="submit">Зупинити</button>
+                <button class="status btn btn-danger" type="submit">Відсутні запчастини</button>
             </form>
             <form action="/executor/set-status/{id}" method="POST">
                 <input type="hidden" value="3" name="status">
-                <button class="status btn btn-success" type="submit">Закінчити</button>
+                <button class="status btn btn-success" type="submit">Завершити задачу</button>
             </form>
         </td>
+        {/eq}
         {/eq}
         {@eq key=typeUser value=4}
         <td class="tac">
