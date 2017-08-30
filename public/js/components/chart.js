@@ -12,9 +12,28 @@ $(document).ready(function () {
         }, 1);
     }
 
+    var lastChart = '';
+
+    $(".datetimepickerN").on("dp.change", function() {
+        $(lastChart).click();
+    });
 
     $('#chart-request').on('click', function () {
+        chartRequest();
+        lastChart = '#chart-request';
+    });
 
+    $('#chart-tasks').on('click', function () {
+        chartTasks();
+        lastChart = '#chart-tasks';
+    });
+
+    $('#chart-finances').on('click', function () {
+        chartFinances();
+        lastChart = '#chart-finances';
+    });
+
+    function chartRequest() {
         var data = $('#between-dates').serializeArray();
 
         if (checkSequence(data)) {
@@ -57,9 +76,9 @@ $(document).ready(function () {
             });
             $('#div-for-chart').empty();
         }
-    });
+    }
 
-    $('#chart-tasks').on('click', function () {
+    function chartTasks() {
         var data = $('#between-dates').serializeArray();
 
         if (checkSequence(data)) {
@@ -123,9 +142,9 @@ $(document).ready(function () {
             $('#div-for-chart2').empty();
             $('#div-for-chart').empty();
         }
-    });
+    }
 
-    $('#chart-finances').on('click', function () {
+    function chartFinances() {
         var data = $('#between-dates').serializeArray();
 
         if (checkSequence(data)) {
@@ -150,7 +169,7 @@ $(document).ready(function () {
             $('#div-for-chart1').empty();
             $('#div-for-chart2').empty();
         }
-    });
+    }
 });
 
 function checkSequence(data) {
