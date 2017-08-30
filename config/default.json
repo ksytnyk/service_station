@@ -4,11 +4,11 @@
   },
   "postgreSQL": {
     "dialect": "postgres",
-    "username": "postgres",
-    "password": "1111",
-    "host": "127.0.0.1",
+    "username": "gxylozenljlqhw",
+    "password": "0cb7323bb4b7893ae6d521d6fccb9de4f21a1e897f4de521d723562c651ea046",
+    "host": "ec2-54-228-255-234.eu-west-1.compute.amazonaws.com",
     "port": "5432",
-    "database": "postgres",
+    "database": "d8em29n6ettu5l",
     "pool": {
       "max": 5,
       "min": 0,
