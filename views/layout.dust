@@ -61,12 +61,10 @@
 
 {@eq key=typeUser value=5}
     <script src="/js/libs/dataTables.bootstrap.min.js"></script>
-    <script src="/js/libs/select2.min.js"></script>
 {/eq}
 
 {@eq key=typeUser value=4}
     <script src="/js/libs/dataTables.bootstrap.min.js"></script>
-    <script src="/js/libs/select2.min.js"></script>
     <script src="/js/components/tasks.js"></script>
 {/eq}
 
@@ -75,7 +73,6 @@
     <script src="/js/libs/transition.js"></script>
     <script src="/js/libs/collapse.js"></script>
     <script src="/js/libs/bootstrap-datetimepicker.min.js"></script>
-    <script src="/js/libs/select2.min.js"></script>
     <script src="/js/components/tasks.js"></script>
 {/eq}
 
@@ -93,6 +90,7 @@
     <script src="/js/components/chart.js"></script>
     <script src="/js/components/cars.js"></script>
     <script src="/js/components/globalRequest.js"></script>
+    <script src="/js/components/setSelect2.js"></script>
 {/eq}
 
 {@eq key=typeUser value=1}
@@ -109,10 +107,7 @@
     <script src="/js/components/chart.js"></script>
     <script src="/js/components/cars.js"></script>
     <script src="/js/components/globalRequest.js"></script>
-{/eq}
-
-{@eq key=typeUser value=undefined}
-    <script src="/js/libs/select2.min.js"></script>
+    <script src="/js/components/setSelect2.js"></script>
 {/eq}
 
 <script src="/js/components/main.js"></script>

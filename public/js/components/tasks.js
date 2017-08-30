@@ -2,7 +2,6 @@ $(document).ready(function () {
 
     $('#create_task').on('click', function () {
         $('#requestIDForTask').val($("#update_request").attr("request-id"));
-        $('.task-type-select').val('');
 
         if (window.location.pathname.includes('create-request')) {
 
@@ -26,10 +25,13 @@ $(document).ready(function () {
                             id: 'taskTypeID' + item.id
                         }));
                     });
-                    $("#task-type-select").selectpicker("refresh");
-                    $('.task-type-select').val('');
+                    setDefaultTaskNameOnCreateTask();
+                    setDefaultAssignedUserOnCreateTask();
                 }
             });
+        } else {
+            setDefaultTaskNameOnCreateTask();
+            setDefaultAssignedUserOnCreateTask();
         }
     });
 
@@ -65,11 +67,8 @@ $(document).ready(function () {
             success: function (data) {
                 showSuccessAlert('Додавання задачі пройшло успішно.');
 
-                $('.assign-task-select').addClass("hidden");
-                $('.create-assign-task-button').removeClass("hidden");
-                $('#create_new_task .select2').removeClass("hidden").val('');
-                $('.create-task-type-select').removeClass("hidden").val('');
-                $('.task-type-input').addClass("hidden");
+                setDefaultAssignedUserOnCreateTask();
+                setDefaultTaskNameOnCreateTask();
 
                 var executorNameSurname = $('#option' + dataArr[3].value).attr('executorFullName');
                 var assignedNameSurname = $('#optionAE' + dataArr[4].value).attr('assignedUserFullName');
@@ -142,8 +141,7 @@ $(document).ready(function () {
     });
 
     $('.update-assign-task-button').on('click', function () {
-        $('.update-assign-task-button').addClass('hidden');
-        $('.update-assign-task-select').removeClass("hidden");
+        setOpenTaskNameOnUpdateTask();
     });
 
     $('.task-update-button').on('click', function () {
@@ -170,11 +168,8 @@ $(document).ready(function () {
             success: function (data) {
                 showSuccessAlert('Оновлення задачі пройшло успішно.');
 
-                $('.update-form-task-type-select').removeClass("hidden");
                 $('.update-form-task-type-input').addClass("hidden");
                 $('#update_new_task .select2').removeClass("hidden");
-                $('.update-assign-task-select').addClass("hidden");
-                $('.update-assign-task-button').removeClass("hidden");
 
                 var idx = "#idx-task-" + data.task.id;
                 var idr = "#idr-cost-" + data.requestID;
@@ -337,11 +332,12 @@ function clearModalAddTask() {
 function updateTaskOnClick() {
     $('.update-task').on('click', function () {
 
-        var This = this;
+        setOpenTaskNameOnUpdateTask();
 
         if (window.location.pathname.includes('create-request') || window.location.pathname.includes('requests')) {
 
             var dataArr;
+            var This = this;
 
             if (window.location.pathname.includes('create-request')) {
                 dataArr = {
@@ -396,11 +392,9 @@ function updateTaskOnClick() {
 
         $('#update-form-task-id').val($(this).data('id'));
         $('#update-form-request-id').val($(this).data('request-id'));
-
-        $('#update-form-task-assigned-user').val($(this).data('task-assigned-user'));
+        $('#update-form-task-assigned-user').val($(this).data('task-assigned-user')).change();
         $('#update-form-task-description').val($(this).data('task-description'));
-        $('#update-form-task-planed-executor').val($(this).data('task-planed-executor'));
-
+        $('#update-form-task-planed-executor').val($(this).data('task-planed-executor')).change();
         $('#update-form-task-estimation-time').val($(this).data('task-estimation-time'));
         $('#update-form-task-start-time').val($(this).data('task-start-time'));
         $('#update-form-task-end-time').val($(this).data('task-end-time'));
@@ -482,4 +476,21 @@ function disableFields(data) {
         return ' disable-task';
     }
     return '';
+}
+
+function setDefaultTaskNameOnCreateTask() {
+    $('.task-type-select').val('').change();
+    $('#create_new_task .select2').removeClass("hidden");
+    $('.task-type-input').addClass("hidden");
+}
+
+function setDefaultAssignedUserOnCreateTask() {
+    $('.create-assign-task-button').removeClass('hidden');
+    $('.create-assign-task-select').addClass("hidden");
+
+}
+
+function setOpenTaskNameOnUpdateTask () {
+    $('.update-assign-task-button').addClass('hidden');
+    $('.update-assign-task-select').removeClass("hidden");
 }

@@ -74,10 +74,12 @@
                     {/ne}
                     {/ne}
                     {@ne key=status value=5}
+                    {@ne key=status value=1}
                         <form class="request-form-status" action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/change-request-status/{id}" method="post">
                             <input class="btn status-requests-canceled" type="submit" id="requestCanceled" value="Анулювати"/>
                             <input type="hidden" value="5" name="statusID">
                         </form>
+                    {/ne}
                     {/ne}
                 </td>
                 <td style="padding: 0; vertical-align: top;">

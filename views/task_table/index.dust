@@ -57,11 +57,16 @@
             <p class="bt"><strong>Коментар: </strong>{comment}</p>
         </td>
         {@eq key=typeUser value=3}
+        {@eq key=status value=1}
         <td class="tac">
             <form action="/executor/set-status/{id}" method="POST">
                 <input type="hidden" value="2" name="status">
                 <button class="status btn btn-primary" type="submit">Почати</button>
             </form>
+        </td>
+        {/eq}
+        {@eq key=status value=2}
+        <td class="tac">
             <form action="/executor/set-status/{id}" method="POST">
                 <input type="hidden" value="4" name="status">
                 <button class="status btn btn-danger" type="submit">Зупинити</button>
@@ -71,6 +76,7 @@
                 <button class="status btn btn-success" type="submit">Закінчити</button>
             </form>
         </td>
+        {/eq}
         {/eq}
         {@eq key=typeUser value=4}
         <td class="tac">

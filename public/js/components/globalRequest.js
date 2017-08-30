@@ -43,8 +43,6 @@ $(document).ready(function () {
 
                 $.each(data.taskTypes, function (i, item) {
 
-                    console.log(item.id);
-
                     $('#global-task-type-select').append($('<option>', {
                         value: item.id,
                         text: item.typeName,

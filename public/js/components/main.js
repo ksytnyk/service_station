@@ -5,9 +5,6 @@ $(document).ready(function () {
         element.classList.add("active");
     }
 
-    $('.add_select2').select2();
-    $('.select2').css('width', '100%');
-
     headerFix();
 
     $('.hide_alert').on('click', function () {

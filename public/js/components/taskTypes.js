@@ -7,6 +7,7 @@ $(document).ready(function () {
             $('.task-type-select').addClass("hidden");
             $('#create_new_task .select2').addClass("hidden");
             $('.task-type-input').removeClass("hidden");
+        } else if ($(this).val() === null) {
         } else {
 
             var dataArr = $('.task-type-select').serializeArray();
