@@ -29,6 +29,10 @@ const describeRequestTable = {
         defaultValue: 1,
         field: 'status'
     },
+    hadStarted:{
+        type: Sequelize.BOOLEAN,
+        field: 'had_started'
+    },
     startTime: {
         type: Sequelize.DATE,
         field: 'start_time'
@@ -207,9 +211,14 @@ Request.deleteRequest = function (idRequest) {
 
 Request.changeStatus = function (idRequest, requestStatus) {
     return new Promise((resolve, reject) => {
+        let hadStarted;
+        if (requestStatus == status.PROCESSING) {
+            hadStarted = true;
+        }
         Request
             .update({
-                    status: requestStatus
+                    status: requestStatus,
+                    hadStarted: hadStarted
                 },
                 {
                     where: {
