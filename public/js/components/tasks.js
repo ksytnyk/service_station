@@ -70,8 +70,8 @@ $(document).ready(function () {
                 setDefaultAssignedUserOnCreateTask();
                 setDefaultTaskNameOnCreateTask();
 
-                var executorNameSurname = $('#option' + dataArr[3].value).attr('executorFullName');
-                var assignedNameSurname = $('#optionAE' + dataArr[4].value).attr('assignedUserFullName');
+                var executorNameSurname = $('#option' + data.result.planedExecutorID).attr('executorFullName');
+                var assignedNameSurname = $('#optionAE' + data.result.assignedUserID).attr('assignedUserFullName');
 
                 $("#tasks-table").append('' +
                     '<tr id="idx-task-' + data.result.id + '">' +
@@ -206,21 +206,26 @@ $(document).ready(function () {
                     '</td>';
 
                 if (getRole(window.location.pathname) === "/executor") {
-                    newTask1 = '' +
-                        '<td class="tac">' +
-                        '<form action="/executor/set-status/' + data.task.id + '" method="POST">' +
-                        '<input type="hidden" value="2" name="status">' +
-                        '<button class="status btn btn-primary" type="submit">Почати</button>' +
-                        '</form>' +
-                        '<form action="/executor/set-status/' + data.task.id + '" method="POST">' +
-                        '<input type="hidden" value="4" name="status">' +
-                        '<button class="status btn btn-danger" type="submit">Зупинити</button>' +
-                        '</form>' +
-                        '<form action="/executor/set-status/' + data.task.id + '" method="POST">' +
-                        '<input type="hidden" value="3" name="status">' +
-                        '<button class="status btn btn-success" type="submit">Закінчити</button>' +
-                        '</form>' +
-                        '</td>';
+                    if (data.task.status === 1) {
+                        newTask1 = '' +
+                            '<td class="tac">' +
+                            '<form action="/executor/set-status/' + data.task.id + '" method="POST">' +
+                            '<input type="hidden" value="2" name="status">' +
+                            '<button class="status btn btn-primary" type="submit">Почати задачу</button>' +
+                            '</td>';
+                    } else {
+                        newTask1 = '' +
+                            '<td class="tac">' +
+                            '<form action="/executor/set-status/' + data.task.id + '" method="POST">' +
+                            '<input type="hidden" value="4" name="status">' +
+                            '<button class="status btn btn-danger" type="submit">Відсутні запчастини</button>' +
+                            '</form>' +
+                            '<form action="/executor/set-status/' + data.task.id + '" method="POST">' +
+                            '<input type="hidden" value="3" name="status">' +
+                            '<button class="status btn btn-success" type="submit">Закінчити задачу</button>' +
+                            '</form>' +
+                            '</td>';
+                    }
                 }
                 if (getRole(window.location.pathname) === '/store-keeper') {
                     newTask1 = '' +
@@ -481,15 +486,18 @@ function setDefaultTaskNameOnCreateTask() {
     $('.task-type-select').val('').change();
     $('#create_new_task .select2').removeClass("hidden");
     $('.task-type-input').addClass("hidden");
+    $('#create_new_task .input-group').removeClass("hidden");
 }
 
 function setDefaultAssignedUserOnCreateTask() {
     $('.create-assign-task-button').removeClass('hidden');
     $('.create-assign-task-select').addClass("hidden");
-
 }
 
 function setOpenTaskNameOnUpdateTask () {
+    $('#update-form-task-type-input').addClass("hidden");
+    $('#update_new_task .select2').removeClass("hidden");
+    $('#update_new_task .input-group').removeClass("hidden");
     $('.update-assign-task-button').addClass('hidden');
     $('.update-assign-task-select').removeClass("hidden");
 }

@@ -87,7 +87,7 @@
             <form action="/store-keeper/set-status/{id}" method="POST">
                 <input type="hidden" value="1" name="status"/>
                 <input type="hidden" value="{planedExecutorID}" name="assignedUserID"/>
-                <button class="btn btn-warning status" type="submit">Підтвердити</button>
+                <button class="btn btn-success status" type="submit">Підтвердити</button>
             </form>
         </td>
         {/eq}

@@ -200,6 +200,14 @@ select[disabled] {
         width: 1000px;
     }
 }
+.add-new-task-type-button,
+.update-add-new-task-type-button,
+.new-global-task-type {
+    padding: 0 7px 1px 9px;
+    color: #337ab7;
+    border-radius: 4px !important;
+    border: 1px solid #ccc !important;
+}
 
 /* ADMIN  MODERATOR  CUSTOMER  STOREKEEPER  EXECUTOR */
 .panel {
@@ -348,6 +356,10 @@ thead {
 }
 .disable-task p {
     opacity: 0.5;
+}
+.create_request .global-task-type-select {
+    width: 99%;
+    border-radius: 4px !important;
 }
 
 /* ALERTS */
