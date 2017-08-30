@@ -8,26 +8,19 @@ module.exports = {
 
         return function (req, res, next) {
 
-            let role = req.baseUrl;
-            let userName = req.body.userName;
-            let userSurname = req.body.userSurname;
-            let userCompanyName = req.body.userCompanyName;
-            let userAddress = req.body.userAddress;
-            let userPhone = req.body.userPhone;
-            let userLogin = req.body.userLogin;
-            let userEmail = req.body.userEmail;
-            let userPassword = req.body.userPassword;
+            function spaceCleaner(value) {
+                return value.replace(/\s+/g, '');
+            }
 
-            if (role === '/admin') {
-                let userTypeID = req.body.userTypeID;
-                req.checkBody('userTypeID', '"Роль" - обов\'язкове поле.').notEmpty();
+            for (let key in req.body) {
+                req.body[key] = spaceCleaner(req.body[key]);
             }
 
             req.checkBody('userName', '"Ім\'я" - обов\'язкове поле.').notEmpty();
             req.checkBody('userSurname', '"Прізвище" - обов\'язкове поле.').notEmpty();
             req.checkBody('userCompanyName', '"Компанія" - обов\'язкове поле.').notEmpty();
             req.checkBody('userAddress', '"Адреса" - обов\'язкове поле.').notEmpty();
-            req.checkBody('userPhone', '"Контактний номер" - обов\'язкове поле.').notEmpty();
+            req.checkBody('userPhone', '"Контактний номер" - обов\'язкове поле.').isLength({ min: 13 });
             req.checkBody('userLogin', '"Логін" - обов\'язкове поле.').notEmpty();
             req.checkBody('userEmail', '"Email" - обов\'язкове поле.').notEmpty();
             req.checkBody('userEmail', '"Email" - обов\'язкове поле.').isEmail();
@@ -93,7 +86,7 @@ module.exports = {
                 let planedExecutorID = req.body.planedExecutorID;
                 let assignedUserID = req.body.assignedUserID;
 
-                req.checkBody('name', '"Ім\'я" - обов\'язкове поле.').notEmpty();
+                req.checkBody('name', '"Назва задачі" - обов\'язкове поле.').notEmpty();
                 req.checkBody('planedExecutorID', '"Виконавець" - обов\'язкове поле.').notEmpty();
                 req.checkBody('assignedUserID', '"Доручити задачу" - обов\'язкове поле.').notEmpty();
             }
@@ -115,22 +108,14 @@ module.exports = {
         }
     },
 
-    createTaskRequest: function () {
+    createGlobalRequest: function () {
         return function (req, res, next) {
-            let name = req.body.name;
-            let startTime = req.body.startTime;
-            let estimatedTime = req.body.estimatedTime;
-            let carMarkk = req.body.carMarkk;
-            let carModel = req.body.carModel;
-            let cost = req.body.cost;
-            let planedExecutorID = req.body.planedExecutorID;
-            let assignedUserID = req.body.assignedUserID;
 
+            req.checkBody('carMarkk', '"Марка автомобіля" - обов\'язкове поле.').notEmpty();
+            req.checkBody('carModel', '"Модель автомобіля" - обов\'язкове поле.').notEmpty();
             req.checkBody('name', '"Назва замовлення" - обов\'язкове поле.').notEmpty();
             req.checkBody('startTime', '"Час початку" - обов\'язкове поле.').notEmpty();
             req.checkBody('estimatedTime', '"Запланований час" - обов\'язкове поле.').notEmpty();
-            req.checkBody('carMarkk', '"Марка автомобіля" - обов\'язкове поле.').notEmpty();
-            req.checkBody('carModel', '"Модель автомобіля" - обов\'язкове поле.').notEmpty();
             req.checkBody('cost', '"Вартість" - обов\'язкове поле.').notEmpty();
             req.checkBody('cost', 'Поле "Вартість" може містити лише цифри.').isFloat();
             req.checkBody('planedExecutorID', '"Виконавець" - обов\'язкове поле.').notEmpty();
