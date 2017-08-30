@@ -14,7 +14,7 @@ $(document).ready(function () {
                 },
                 success: function (data) {
 
-                    $('#task-type-select').find('option:not(:first)').remove();
+                    $('#task-type-select').find('option').remove();
 
                     $.each(data.taskTypes, function (i, item) {
 
@@ -53,10 +53,10 @@ $(document).ready(function () {
         $('#createTaskFormModal').modal('toggle');
 
         var dataArr = $('#createTaskForm').serializeArray();
-        var taskTypeID = $('#taskTypeID' + $('.task-type-select').serializeArray()[0].value).attr('taskTypeID');
-        dataArr[2].value = taskTypeID;
 
         if (dataArr[1].value === '') {
+        var taskTypeID = $('#taskTypeID' + $('.task-type-select').serializeArray()[0].value).attr('taskTypeID');
+        dataArr[2].value = taskTypeID;
             dataArr[1].value = dataArr[2].value;
         }
 
@@ -153,10 +153,9 @@ $(document).ready(function () {
 
         if (getRole(window.location.pathname) !== '/executor' && getRole(window.location.pathname) !== '/store-keeper') {
 
+            if (dataArr[3].value === '') {
             var taskTypeID = $('#updateTaskTypeID' + $('.update-form-task-type-select').serializeArray()[0].value).attr('updateTaskTypeID');
             dataArr[4].value = taskTypeID;
-
-            if (dataArr[3].value === '') {
                 dataArr[3].value = dataArr[4].value;
             }
         }
@@ -356,7 +355,7 @@ function updateTaskOnClick() {
                 type: 'post',
                 data: dataArr,
                 success: function (data) {
-                    $('#update-form-task-type-select').find('option:not(:first)').remove();
+                    $('#update-form-task-type-select').find('option').remove();
 
                     data.taskTypes.forEach(item => {
                         $('#update-form-task-type-select').append($('<option>', {
