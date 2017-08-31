@@ -6,7 +6,7 @@
                 <h4 class="modal-title text-center">Видалити задачу №<span id="delete-task-id"></span> ?</h4>
             </div>
             <div class="modal-body">
-                <button id="delete-button" class="btn btn-success width agree">Підтвердити</button>
+                <button id="delete-button" class="btn btn-success width agree" data-dismiss="modal">Підтвердити</button>
                 <button class="btn btn-danger pull-right width" data-dismiss="modal">
                     Відмінити
                 </button>

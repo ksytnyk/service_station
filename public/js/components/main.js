@@ -23,10 +23,13 @@ $(document).ready(function () {
         $('.hide_alert').trigger('click');
     }, TIME_FOR_FLASH);
 
-    $('.dtable').DataTable();
+    $('.dtable').DataTable({
+        "bPaginate": false
+    });
 
     $('.dtable-requests').DataTable({
-        "order": [[0, "desc"]]
+        "order": [[0, "desc"]],
+        "bPaginate": false
     });
 
     $('.startTime').datetimepicker({

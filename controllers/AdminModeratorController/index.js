@@ -165,12 +165,9 @@ router.get('/update-request/:id', (req, res) => {
                             Task
                                 .getAllTasksOfRequest(req.params.id)
                                 .then(task => {
-                                    console.log('laaaal', request[0].dataValues.carMarkk);
-                                    console.log('laaaal', request[0].dataValues.carModel);
                                     TaskType
                                         .getTaskTypesByCar(request[0].dataValues.carMarkk, request[0].dataValues.carModel)
                                         .then(taskTypes => {
-                                            console.log("TASKKKKKKKTYPES", taskTypes);
                                             res.render('roles/admin_moderator/update_request', {
                                                 taskTypes: taskTypes,
                                                 assignedExecutorUsers: users,
@@ -215,28 +212,22 @@ router.delete('/delete-request/:id', (req, res) => {
             Request
                 .deleteRequest(req.params.id)
                 .then(() => {
-                    req.flash('success_alert', true);
-                    req.flash('success_msg', 'Видалення замовлення пройшло успішно.');
-                    res.redirect(req.baseUrl + '/requests');
+                    res.status(200).send({result:'ok'});
                 })
                 .catch(error => {
                     console.warn(error);
-                    req.flash('error_alert', true);
-                    req.flash('error_msg', {msg: 'Виникла помилка при видаленні замовлення.'});
-                    res.redirect(req.baseUrl + '/requests');
+                    res.status(400).send({errors: errors});
                 });
         })
         .catch(error => {
             console.warn(error);
-            req.flash('error_alert', true);
-            req.flash('error_msg', {msg: 'Виникла помилка при видаленні задачі.'});
-            res.redirect(req.baseUrl + '/requests');
+            res.status(400).send({errors: errors});
         });
 });
 
-router.post('/change-request-status/:id', (req, res) => {
+router.put('/change-request-status/:id', (req, res) => {
     Request.changeStatus(req.params.id, req.body.statusID)
-        .then(() => {
+        .then((requests) => {
             if (+req.body.statusID === status.DONE) {
                 Request
                     .getRequestById(req.params.id)
@@ -247,17 +238,12 @@ router.post('/change-request-status/:id', (req, res) => {
                         console.warn(error);
                     })
             }
-
-            req.flash('success_alert', true);
-            req.flash('success_msg', 'Статус успішно змінений.');
-            res.redirect(req.baseUrl + '/requests');
+            res.status(200).send({requests: requests});
         })
-        .catch(error => {
-            console.warn(error);
-            req.flash('error_alert', true);
-            req.flash('error_msg', {msg: 'Виникла помилка при зміні статусу.'});
-            res.redirect(req.baseUrl + '/requests');
-        })
+        .catch(errors => {
+            console.warn(errors);
+            res.status(400).send({errors: errors});
+        });
 });
 
 router.post('/get-task-types', (req, res) => {

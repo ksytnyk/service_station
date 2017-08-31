@@ -57,36 +57,41 @@
                     <p id="markk{id}" attr-name="{carMarkk}"><strong>Марка: </strong>{carMarkk}</p>
                     <p id="model{id}" attr-name="{carModel}"><strong>Модель: </strong>{carModel}</p>
                     <p><strong>Коментар: </strong>{comment}</p>
-                    {@ne key=status value=2}
-                    <form class="request-form-status" action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/change-request-status/{id}" method="post">
-                        {@eq key=hadStarted value="true" type="boolean"}
-                        <input class="btn btn-primary" type="submit" id="requestProcessing"
-                               value="Доопрацювати"/>
-                        {:else}
-                        <input class="btn btn-primary" type="submit" id="requestProcessing"
-                               value="Почати"/>
-                        {/eq}
-                        <input type="hidden" value="2" name="statusID">
-                    </form>
-                    {/ne}
-                    {@ne key=status value=3}
-                    {@ne key=status value=1}
-                    {@ne key=status value=5}
-                        <form class="request-form-status" action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/change-request-status/{id}" method="post">
-                            <input class="btn btn-success" type="submit" id="requestDone" value="Завершити"/>
-                            <input type="hidden" value="3" name="statusID">
-                        </form>
-                    {/ne}
-                    {/ne}
-                    {/ne}
-                    {@ne key=status value=5}
-                    {@ne key=status value=1}
-                        <form class="request-form-status" action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/change-request-status/{id}" method="post">
-                            <input class="btn status-requests-canceled" type="submit" id="requestCanceled" value="Анулювати"/>
-                            <input type="hidden" value="5" name="statusID">
-                        </form>
-                    {/ne}
-                    {/ne}
+                    <div class="requests-status-form">
+                        {@ne key=status value=2}
+                        <input class="btn btn-primary request-form-status request-status-button"
+                               id="requestProcessing"
+                               type="button"
+                               value='{@eq key=hadStarted value="true" type="boolean"}Доопрацювати{:else}Почати{/eq}'
+                               data-request-id="{id}"
+                               data-status="2"
+                        />
+                        {/ne}
+                        {@ne key=status value=3}
+                        {@ne key=status value=1}
+                        {@ne key=status value=5}
+                        <input class="btn btn-success request-form-status request-status-button"
+                               id="requestDone"
+                               type="button"
+                               value="Завершити"
+                               data-request-id="{id}"
+                               data-status="3"
+                        />
+                        {/ne}
+                        {/ne}
+                        {/ne}
+                        {@ne key=status value=5}
+                        {@ne key=status value=1}
+                        <input class="btn request-form-status status-requests-canceled request-status-button"
+                               id="requestCanceled"
+                               type="button"
+                               value="Анулювати"
+                               data-request-id="{id}"
+                               data-status="5"
+                        />
+                        {/ne}
+                        {/ne}
+                    </div>
                 </td>
                 <td style="padding: 0; vertical-align: top;">
                     {>"task_table/index"/}
