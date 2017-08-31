@@ -18,12 +18,20 @@ $(document).ready(function () {
     });
 
     $('.delete-user').on('click', function () {
-        if ($(this).data('current') === 1) {
-            $('#delete-form-id').attr('action', ('/admin/delete-user/' + $(this).data('id')));
-        } else {
-            $('#delete-form-id').attr('action', ('/moderator/delete-user/' + $(this).data('id')));
-        }
+        $('.submit-delete-user').attr('data-user-id', $(this).data('id'));
         $('#delete-form-surname-name').html($(this).data('user-name') + " " + $(this).data('user-surname'));
     });
+
+    $('.submit-delete-user').on('click', function () {
+        var userID = $(this).data('user-id');
+
+        $.ajax({
+            url: getRole(window.location.pathname) + '/delete-user/' + userID,
+            type: 'delete',
+            success: function (data) {
+                window.location.reload();
+            }
+        })
+    })
 
 });

@@ -74,15 +74,11 @@ router.delete('/delete-user/:id', (req, res) => {
     User
         .deleteUser(req.params.id)
         .then(() => {
-            req.flash('success_alert', true);
-            req.flash('success_msg', 'Видалення користувача прийшло успішно.');
-            res.redirect(req.baseUrl + '/users');
+            res.status(200).send({result: 'ok'});
         })
         .catch(error => {
             console.warn(error);
-            req.flash('error_alert', true);
-            req.flash('error_msg', {msg: 'Виникла помилка при видаленні користувача.'});
-            res.redirect(req.baseUrl + '/users');
+            res.status(400).send({errors: errors});
         });
 });
 

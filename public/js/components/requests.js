@@ -49,11 +49,6 @@ $(document).ready(function () {
     });
 
     $('.delete-request').on('click', function () {
-        /*if ($(this).data('current') === 1) {
-            $('#delete-request-form-id').attr('action', ('/admin/delete-request/' + $(this).data('id')));
-        } else {
-            $('#delete-request-form-id').attr('action', ('/moderator/delete-request/' + $(this).data('id')));
-        }*/
         $('#delete-request-id').text($(this).data('id'));
         $('.submit-delete-request').attr('data-request-id', $(this).data('id'));
     });
