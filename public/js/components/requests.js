@@ -49,11 +49,36 @@ $(document).ready(function () {
     });
 
     $('.delete-request').on('click', function () {
-        if ($(this).data('current') === 1) {
-            $('#delete-request-form-id').attr('action', ('/admin/delete-request/' + $(this).data('id')));
-        } else {
-            $('#delete-request-form-id').attr('action', ('/moderator/delete-request/' + $(this).data('id')));
-        }
         $('#delete-request-id').text($(this).data('id'));
+        $('.submit-delete-request').attr('data-request-id', $(this).data('id'));
     });
+
+    $('.submit-delete-request').on('click',function () {
+        var requestID = $(this).data('request-id');
+
+        $.ajax({
+            url: getRole(window.location.pathname) + '/delete-request/' + requestID,
+            type: 'delete',
+            success: function (data) {
+                showSuccessAlert('Видалення замовлення пройшло успішно.');
+                window.location.reload();
+            }
+        })
+
+    });
+    
+    $('.request-status-button').on('click', function () {
+        var requestID = $(this).data('request-id');
+        var statusID = $(this).data('status');
+
+        $.ajax({
+            url: getRole(window.location.pathname) + '/change-request-status/' + requestID,
+            type: 'put',
+            data: {statusID: statusID},
+            success: function (data) {
+                showSuccessAlert('Статус успішно змінено.');
+                window.location.reload();
+            }
+        })
+    })
 });

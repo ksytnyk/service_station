@@ -1,20 +1,21 @@
 {+delete_request}
-<div class="modal fade" id="deleteRequestFormModal" role="dialog" aria-labelledby="formModalLabel">
+<div class="modal fade" id="deleteRequestFormModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel">
     <div class="modal-dialog delete_form" role="document">
         <div class="modal-content">
 
-            <form id="delete-request-form-id" method="POST" enctype="application/x-www-form-urlencoded" class="delete">
-                <input type="hidden" name="_method" value="DELETE">
+            <div id="delete-request-form-id" class="delete">
                 <div class="modal-header">
                     <h4 class="modal-title text-center">Видалити замовлення №<span id="delete-request-id"></span> ?</h4>
                 </div>
                 <div class="modal-body">
-                    <button type="submit" class="btn btn-success width agree">Підтвердити</button>
+                    <button class="btn btn-success width agree submit-delete-request" data-dismiss="modal">
+                        Підтвердити
+                    </button>
                     <button class="btn btn-danger pull-right width" data-dismiss="modal">
                         Відмінити
                     </button>
                 </div>
-            </form>
+            </div>
 
         </div>
     </div>

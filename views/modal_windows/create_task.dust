@@ -99,8 +99,7 @@
                         <button type="button" id="taskAddButton" class="btn btn-success width agree">
                             Додати
                         </button>
-                        <button type="button" class="btn btn-danger pull-right width" data-dismiss="modal"
-                                id="taskCancelAddButton">
+                        <button type="button" class="btn btn-danger pull-right width" id="taskCancelAddButton">
                             Відмінити
                         </button>
                     </div>
