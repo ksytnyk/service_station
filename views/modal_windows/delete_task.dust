@@ -1,5 +1,5 @@
 {+delete_task}
-<div class="modal fade" id="deleteTaskFormModal" role="dialog" aria-labelledby="formModalLabel">
+<div class="modal fade" id="deleteTaskFormModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel">
     <div class="modal-dialog delete_form" role="document">
         <div class="modal-content">
             <div class="modal-header">
