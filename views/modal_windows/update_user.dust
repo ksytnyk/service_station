@@ -1,5 +1,5 @@
 {+update_user}
-<div class="modal fade" id="updateUserFormModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel">
+<div class="modal fade" id="updateUserFormModal" role="dialog" aria-labelledby="formModalLabel">
     <div class="modal-dialog update_form" role="document">
         <div class="modal-content">
 
@@ -56,8 +56,8 @@
                         <input type="text" class="form-control" id="update-form-password" name="userPassword">
                     </div>
                     <div class='form-group col-lg-{@eq key=typeUser value=1}6{/eq}{@eq key=typeUser value=2}12{/eq}' style="margin-top: 25px;">
-                        <button type="submit" class="btn btn-success width">Зберегти</button>
-                        <button type="button" class="btn btn-danger pull-right width" data-dismiss="modal">
+                        <button type="submit" class="btn btn-success width agree">Зберегти</button>
+                        <button class="btn btn-danger pull-right width" data-dismiss="modal">
                             Відмінити
                         </button>
                     </div>

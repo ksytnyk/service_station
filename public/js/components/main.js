@@ -1,5 +1,13 @@
 $(document).ready(function () {
 
+    $(document).keydown(function(event) {
+        if (event.keyCode === 13) {
+            $('.in .agree').click();
+        }
+
+        if (event.keyCode === 27) $('.in .close').click();
+    });
+
     var element = document.getElementById(window.location.pathname);
     if (element !== null) {
         element.classList.add("active");
@@ -83,7 +91,7 @@ function hideAlert() {
 
 function headerFix() {
     $('.modal-window-link').on('click', function () {
-        if (document.body.offsetHeight > window.innerHeight) {
+        if (document.body.offsetHeight !== window.innerHeight ) {
             $('.white_block').outerWidth(+window.innerWidth - 17);
         }
     });

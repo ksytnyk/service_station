@@ -1,5 +1,5 @@
 {+create_user}
-<div class="modal fade" id="createUserFormModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel">
+<div class="modal fade" id="createUserFormModal" role="dialog" aria-labelledby="formModalLabel">
     <div class="modal-dialog create_form" role="document">
         <div class="modal-content">
 
@@ -55,8 +55,8 @@
                         <input type="text" class="form-control" name="userPassword">
                     </div>
                     <div class='form-group col-lg-{@eq key=typeUser value=1}6{/eq}{@eq key=typeUser value=2}12{/eq}' style="margin-top: 25px;">
-                        <button type="submit" class="btn btn-success width">Додати</button>
-                        <button type="button" class="btn btn-danger pull-right width" data-dismiss="modal">
+                        <button type="submit" class="btn btn-success width agree">Додати</button>
+                        <button class="btn btn-danger pull-right width" data-dismiss="modal">
                             Відмінити
                         </button>
                     </div>

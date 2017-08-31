@@ -16,13 +16,17 @@
                     {@lt key=typeUser value=3}
                     <div class="form-group required col-lg-4" id="update_new_task">
                         <label>Назва задачі</label>
-                        <a class="update-add-new-task-type-button"><span class="glyphicon glyphicon-plus" aria-hidden="true"/></a>
                         <input type="text" class="form-control hidden update-form-task-type-input" id="update-form-task-type-input" name="name">
-                        <select class="form-control add_select2 update-form-task-type-select" id="update-form-task-type-select" name="name2">
-                            {#taskTypes}
-                            <option value="{id}" updateTaskTypeID="{typeName}" id="updateTaskTypeID{id}">{typeName}</option>
-                            {/taskTypes}
-                        </select>
+                        <div class="input-group">
+                            <select class="form-control add_select2 update-form-task-type-select" id="update-form-task-type-select" name="name2">
+                                {#taskTypes}
+                                <option value="{id}" updateTaskTypeID="{typeName}" id="updateTaskTypeID{id}">{typeName}</option>
+                                {/taskTypes}
+                            </select>
+                            <span class="input-group-addon update-add-new-task-type-button">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true" style="margin: 0;" title="Додати нову задачу"/>
+                            </span>
+                        </div>
                     </div>
                     <div class="form-group required col-lg-4">
                         <label>Виконавець</label>
@@ -112,7 +116,7 @@
                     <div class='form-group col-lg-6 col-lg-offset-6'>
                         {@lt key=typeUser value=3}
                         <input type="hidden" name="status" id="update-form-task-status">
-                        <button type="button" class="btn btn-warning width task-update-button"
+                        <button type="button" class="btn btn-warning width task-update-button agree"
                                 id="change-status-update-task" data-dismiss="modal">
                             Оновити задачу
                         </button>
@@ -122,10 +126,10 @@
                         </button>
                         {/lt}
                         {@gt key=typeUser value=2}
-                        <button type="button" class="btn btn-success width task-update-button">
+                        <button class="btn btn-success width task-update-button agree">
                             Оновити
                         </button>
-                        <button type="button" class="btn btn-danger pull-right width" data-dismiss="modal">
+                        <button class="btn btn-danger pull-right width" data-dismiss="modal">
                             Відмінити
                         </button>
                         {/gt}

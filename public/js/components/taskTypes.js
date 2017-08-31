@@ -42,6 +42,7 @@ $(document).ready(function () {
 
     $('.add-new-task-type-button').on('click', function () {
         $('#create_new_task .select2').addClass("hidden");
+        $('#create_new_task .input-group').addClass("hidden");
         $('.task-type-input').removeClass("hidden");
     });
 
@@ -51,6 +52,7 @@ $(document).ready(function () {
 
     $('.update-add-new-task-type-button').on('click', function () {
         $('#update_new_task .select2').addClass("hidden");
+        $('#update_new_task .input-group').addClass("hidden");
         $('.update-form-task-type-input').removeClass("hidden");
     });
 

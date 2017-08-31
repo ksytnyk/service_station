@@ -319,7 +319,7 @@ router.post('/create-task', validation.createAndUpdateTask(), (req, res) => {
 
 router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
     req.body.endTime = countEndTime(req.body.startTime, +req.body.estimationTime);
-    console.log(req.body); 
+
     Task
         .updateTask(req.body.id, req.body)
         .then(() => {
@@ -510,12 +510,13 @@ router.get('/create-global-request', (req, res) => {
 
 router.post('/create-global-request', validation.createGlobalRequest(), (req, res) => {
     req.body.createdBy = req.session.passport.user.id;
+    req.body.estimationTime = req.body.estimatedTime;
+    req.body.estimatedTime = countEndTime(req.body.startTime, +req.body.estimationTime);
 
     Request
         .createRequest(req.body)
         .then((request) => {
             req.body.endTime = req.body.estimatedTime;
-            req.body.estimationTime = parseInt((new Date(req.body.endTime) - new Date(req.body.startTime)) / (1000 * 60 * 60));
             req.body.requestID = request.id;
 
             Task

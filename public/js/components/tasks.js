@@ -49,14 +49,11 @@ $(document).ready(function () {
     });
 
     $('#taskAddButton').on('click', function () {
-
-        $('#createTaskFormModal').modal('toggle');
-
         var dataArr = $('#createTaskForm').serializeArray();
 
-        if (dataArr[1].value === '') {
-        var taskTypeID = $('#taskTypeID' + $('.task-type-select').serializeArray()[0].value).attr('taskTypeID');
-        dataArr[2].value = taskTypeID;
+        if (dataArr[1].value === '' && $('.task-type-select').serializeArray()[0]) {
+            var taskTypeID = $('#taskTypeID' + $('.task-type-select').serializeArray()[0].value).attr('taskTypeID');
+            dataArr[2].value = taskTypeID;
             dataArr[1].value = dataArr[2].value;
         }
 
@@ -65,13 +62,14 @@ $(document).ready(function () {
             type: 'post',
             data: dataArr,
             success: function (data) {
-                showSuccessAlert('Додавання задачі пройшло успішно.');
+                $('.in .close').click();
 
+                showSuccessAlert('Додавання задачі пройшло успішно.');
                 setDefaultAssignedUserOnCreateTask();
                 setDefaultTaskNameOnCreateTask();
 
-                var executorNameSurname = $('#option' + dataArr[3].value).attr('executorFullName');
-                var assignedNameSurname = $('#optionAE' + dataArr[4].value).attr('assignedUserFullName');
+                var executorNameSurname = $('#option' + data.result.planedExecutorID).attr('executorFullName');
+                var assignedNameSurname = $('#optionAE' + data.result.assignedUserID).attr('assignedUserFullName');
 
                 $("#tasks-table").append('' +
                     '<tr id="idx-task-' + data.result.id + '">' +
@@ -131,6 +129,7 @@ $(document).ready(function () {
 
             },
             error: function (err) {
+                $('.in .close').click();
                 showErrorAlert(err);
             }
         });
@@ -145,17 +144,13 @@ $(document).ready(function () {
     });
 
     $('.task-update-button').on('click', function () {
-
-        $('#updateTaskFormModal').modal('toggle');
-
-
         var dataArr = $('#update-form-task').serializeArray();
 
         if (getRole(window.location.pathname) !== '/executor' && getRole(window.location.pathname) !== '/store-keeper') {
 
             if (dataArr[3].value === '') {
-            var taskTypeID = $('#updateTaskTypeID' + $('.update-form-task-type-select').serializeArray()[0].value).attr('updateTaskTypeID');
-            dataArr[4].value = taskTypeID;
+                var taskTypeID = $('#updateTaskTypeID' + $('.update-form-task-type-select').serializeArray()[0].value).attr('updateTaskTypeID');
+                dataArr[4].value = taskTypeID;
                 dataArr[3].value = dataArr[4].value;
             }
         }
@@ -165,6 +160,7 @@ $(document).ready(function () {
             type: 'put',
             data: dataArr,
             success: function (data) {
+                $('.in .close').click();
                 showSuccessAlert('Оновлення задачі пройшло успішно.');
 
                 $('.update-form-task-type-input').addClass("hidden");
@@ -206,21 +202,26 @@ $(document).ready(function () {
                     '</td>';
 
                 if (getRole(window.location.pathname) === "/executor") {
-                    newTask1 = '' +
-                        '<td class="tac">' +
-                        '<form action="/executor/set-status/' + data.task.id + '" method="POST">' +
-                        '<input type="hidden" value="2" name="status">' +
-                        '<button class="status btn btn-primary" type="submit">Почати</button>' +
-                        '</form>' +
-                        '<form action="/executor/set-status/' + data.task.id + '" method="POST">' +
-                        '<input type="hidden" value="4" name="status">' +
-                        '<button class="status btn btn-danger" type="submit">Зупинити</button>' +
-                        '</form>' +
-                        '<form action="/executor/set-status/' + data.task.id + '" method="POST">' +
-                        '<input type="hidden" value="3" name="status">' +
-                        '<button class="status btn btn-success" type="submit">Закінчити</button>' +
-                        '</form>' +
-                        '</td>';
+                    if (data.task.status === 1) {
+                        newTask1 = '' +
+                            '<td class="tac">' +
+                            '<form action="/executor/set-status/' + data.task.id + '" method="POST">' +
+                            '<input type="hidden" value="2" name="status">' +
+                            '<button class="status btn btn-primary" type="submit">Почати задачу</button>' +
+                            '</td>';
+                    } else {
+                        newTask1 = '' +
+                            '<td class="tac">' +
+                            '<form action="/executor/set-status/' + data.task.id + '" method="POST">' +
+                            '<input type="hidden" value="4" name="status">' +
+                            '<button class="status btn btn-danger" type="submit">Відсутні запчастини</button>' +
+                            '</form>' +
+                            '<form action="/executor/set-status/' + data.task.id + '" method="POST">' +
+                            '<input type="hidden" value="3" name="status">' +
+                            '<button class="status btn btn-success" type="submit">Закінчити задачу</button>' +
+                            '</form>' +
+                            '</td>';
+                    }
                 }
                 if (getRole(window.location.pathname) === '/store-keeper') {
                     newTask1 = '' +
@@ -281,6 +282,7 @@ $(document).ready(function () {
                 updateTaskOnClick();
             },
             error: function (err) {
+                $('.in .close').click();
                 showErrorAlert(err);
             }
         });
@@ -295,13 +297,12 @@ $(document).ready(function () {
             taskOldCost: $(this).attr('task-old-cost')
         };
 
-        $('#deleteTaskFormModal').modal('hide');
-
         $.ajax({
             url: getRole(window.location.pathname) + '/delete-task/' + taskID,
             type: 'delete',
             data: data,
             success: function (data) {
+                $('.in .close').click();
                 showSuccessAlert('Видалення задачі пройшло успішно.');
 
                 var idx = "#idx-task-" + data.id;
@@ -315,6 +316,7 @@ $(document).ready(function () {
                 $(idr).append(newCost);
             },
             error: function (err) {
+                $('.in .close').click();
                 showErrorAlert(err);
             }
         });
@@ -345,8 +347,8 @@ function updateTaskOnClick() {
                 };
             } else if (window.location.pathname.includes('requests')) {
                 dataArr = {
-                    carMarkk: $('#markk').attr('attr-name'),
-                    carModel: $('#model').attr('attr-name')
+                    carMarkk: $('#markk' + $(this).data('request-id')).attr('attr-name'),
+                    carModel: $('#model' + $(this).data('request-id')).attr('attr-name')
                 };
             }
 
@@ -481,15 +483,18 @@ function setDefaultTaskNameOnCreateTask() {
     $('.task-type-select').val('').change();
     $('#create_new_task .select2').removeClass("hidden");
     $('.task-type-input').addClass("hidden");
+    $('#create_new_task .input-group').removeClass("hidden");
 }
 
 function setDefaultAssignedUserOnCreateTask() {
     $('.create-assign-task-button').removeClass('hidden');
     $('.create-assign-task-select').addClass("hidden");
-
 }
 
 function setOpenTaskNameOnUpdateTask () {
+    $('#update-form-task-type-input').addClass("hidden");
+    $('#update_new_task .select2').removeClass("hidden");
+    $('#update_new_task .input-group').removeClass("hidden");
     $('.update-assign-task-button').addClass('hidden');
     $('.update-assign-task-select').removeClass("hidden");
 }

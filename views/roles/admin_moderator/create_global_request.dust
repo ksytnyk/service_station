@@ -22,9 +22,13 @@
         </div>
         <div class="form-group required col-lg-3" id="global_request_name">
             <label>Назва замовлення</label>
-            <a class="new-global-task-type"><span class="glyphicon glyphicon-plus" aria-hidden="true"/></a>
             <input type="text" class="form-control hidden global-task-type-input" id="global-task-type-input" name="name">
-            <select class="form-control global-task-type-select" id="global-task-type-select" name="name2"></select>
+            <div class="input-group">
+                <select class="form-control global-task-type-select" id="global-task-type-select" name="name2"></select>
+                <span class="input-group-addon new-global-task-type">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true" style="margin: 0;" title="Додати нову задачу"></span>
+                </span>
+            </div>
         </div>
         <div class="form-group required col-lg-3">
             <label>Клієнт</label>
@@ -40,9 +44,11 @@
                    style="margin-bottom: 5px;">
         </div>
         <div class="form-group required col-lg-3">
-            <label>Запланований час</label>
-            <input type="text" class="form-control datetimepickerN" name="estimatedTime"
-                   style="margin-bottom: 5px;">
+            <label>Час виконання</label>
+            <div class="input-group" style="margin-bottom: 5px;">
+                <input type="text" class="form-control" name="estimatedTime">
+                <span class="input-group-addon">год</span>
+            </div>
         </div>
         <div class="form-group col-lg-3" style="float: right;">
             <label>Опис замовлення</label>

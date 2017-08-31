@@ -13,7 +13,7 @@
 .store-keeper .delete-task {
     display: none;
 }
-.store-keeper .bb {
+.store-keeper .table .bb {
     border-bottom: none;
 }
 .store-keeper .status {

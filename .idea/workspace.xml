@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9523d11f-c2dc-4219-ad79-87ec9e97143d" name="Default" comment="V 3.10.4 Fix task-name dropdown for task-update on requests page.">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/www" afterPath="$PROJECT_DIR$/bin/www" />
-    </list>
+    <list default="true" id="9523d11f-c2dc-4219-ad79-87ec9e97143d" name="Default" comment="V 3.10.4 Fix task-name dropdown for task-update on requests page." />
     <ignored path="service_station.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -203,10 +201,9 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
+    <option name="x" value="-7" />
     <option name="width" value="1378" />
-    <option name="height" value="744" />
+    <option name="height" value="735" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -847,7 +844,7 @@
       <workItem from="1503936672067" duration="476000" />
       <workItem from="1503937781303" duration="4481000" />
       <workItem from="1504011117853" duration="1576000" />
-      <workItem from="1504119718041" duration="1093000" />
+      <workItem from="1504119718041" duration="1684000" />
     </task>
     <task id="LOCAL-00001" summary="Improve add 'requests', divide 'main.js' on components">
       <created>1502346942336</created>
@@ -1070,10 +1067,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="275601000" />
+    <option name="totallyTimeSpent" value="276192000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1378" height="744" extended-state="0" />
+    <frame x="-7" y="0" width="1378" height="735" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25074628" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
