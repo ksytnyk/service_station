@@ -32,12 +32,14 @@ $(document).ready(function () {
         $("#global-task-type-select option").remove();
         $('#global_request_name .select2').removeClass("hidden");
         $('.global-task-type-input').addClass("hidden");
+        $('#global_request_name .input-group').removeClass("hidden");
     });
 
     $('#model').on('change', function () {
         $("#global-task-type-select option").remove();
         $('#global_request_name .select2').removeClass("hidden");
         $('.global-task-type-input').addClass("hidden");
+        $('#global_request_name .input-group').removeClass("hidden");
 
         $.ajax({
             url: getRole(window.location.pathname) + '/get-task-types',
@@ -80,6 +82,7 @@ $(document).ready(function () {
     $('.new-global-task-type').on('click', function () {
         $('#global_request_name .select2').addClass("hidden");
         $('.global-task-type-input').removeClass("hidden");
+        $('#global_request_name .input-group').addClass("hidden");
     });
 
     $('#global-task-type-select').on('select2:closing', function () {
