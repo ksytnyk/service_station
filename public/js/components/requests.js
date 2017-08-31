@@ -60,6 +60,7 @@ $(document).ready(function () {
             url: getRole(window.location.pathname) + '/delete-request/' + requestID,
             type: 'delete',
             success: function (data) {
+                showSuccessAlert('Видалення замовлення пройшло успішно.');
                 window.location.reload();
             }
         })
@@ -75,6 +76,7 @@ $(document).ready(function () {
             type: 'put',
             data: {statusID: statusID},
             success: function (data) {
+                showSuccessAlert('Статус успішно змінено.');
                 window.location.reload();
             }
         })

@@ -29,6 +29,7 @@ $(document).ready(function () {
             url: getRole(window.location.pathname) + '/delete-user/' + userID,
             type: 'delete',
             success: function (data) {
+                showSuccessAlert('Видалення користувача пройшло успішно.');
                 window.location.reload();
             }
         })
