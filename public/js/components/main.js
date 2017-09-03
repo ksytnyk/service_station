@@ -29,7 +29,8 @@ $(document).ready(function () {
 
     $('.dtable-requests').DataTable({
         "order": [[0, "desc"]],
-        "bPaginate": false
+        "bPaginate": false,
+        "bInfo" : false
     });
 
     $('.startTime').datetimepicker({
@@ -94,8 +95,10 @@ function hideAlert() {
 
 function headerFix() {
     $('.modal-window-link').on('click', function () {
-        if (document.body.offsetHeight !== window.innerHeight ) {
-            $('.white_block').outerWidth(+window.innerWidth - 17);
-        }
+        setTimeout(() => {
+            if ($('body').css('padding-right') === '17px') {
+                $('.white_block').outerWidth(+window.innerWidth - 17);
+            }
+        }, 0);
     });
 }

@@ -222,8 +222,9 @@ router.delete('/delete-request/:id', (req, res) => {
 });
 
 router.put('/change-request-status/:id', (req, res) => {
-    Request.changeStatus(req.params.id, req.body.statusID)
-        .then((requests) => {
+    Request
+        .changeStatus(req.params.id, req.body.statusID)
+        .then(() => {
             if (+req.body.statusID === status.DONE) {
                 Request
                     .getRequestById(req.params.id)
@@ -232,9 +233,12 @@ router.put('/change-request-status/:id', (req, res) => {
                     })
                     .catch(error => {
                         console.warn(error);
-                    })
+                    });
             }
-            res.status(200).send({requests: requests});
+            res.status(200).send({
+                status: req.body.statusID,
+                requestID: req.params.id
+            });
         })
         .catch(errors => {
             console.warn(errors);

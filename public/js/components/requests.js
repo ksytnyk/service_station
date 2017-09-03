@@ -59,26 +59,82 @@ $(document).ready(function () {
         $.ajax({
             url: getRole(window.location.pathname) + '/delete-request/' + requestID,
             type: 'delete',
-            success: function (data) {
-                showSuccessAlert('Видалення замовлення пройшло успішно.');
-                window.location.reload();
+            success: function () {
+                var idr = "#idr-request-" + requestID;
+                $(idr).remove();
             }
         })
 
     });
-    
-    $('.request-status-button').on('click', function () {
-        var requestID = $(this).data('request-id');
-        var statusID = $(this).data('status');
 
-        $.ajax({
-            url: getRole(window.location.pathname) + '/change-request-status/' + requestID,
-            type: 'put',
-            data: {statusID: statusID},
-            success: function (data) {
-                showSuccessAlert('Статус успішно змінено.');
-                window.location.reload();
-            }
+    changeRequestStatus('.request-status-button');
+
+    function changeRequestStatus(value) {
+        $(value).on('click', function () {
+            var requestID = $(this).data('request-id');
+                statusID = $(this).data('status');
+                hadStarted = $(this).data('had-started');
+
+            $.ajax({
+                url: getRole(window.location.pathname) + '/change-request-status/' + requestID,
+                type: 'put',
+                data: {
+                    statusID: statusID,
+                    hadStarted: hadStarted
+                },
+                success: function (data) {
+                    var idr = "#idr-request-" + data.requestID;
+                        newRequestStatusClasses = 'status-requests ';
+                        newRequestStatusText = 'status-requests ';
+                        newRequestButtons = '';
+
+                    var requestProcessingButton = '' +
+                        '<input class="btn btn-primary request-form-status request-status-button"' +
+                        ' id="requestProcessing" type="button" value="Доопрацювати"' +
+                        ' data-request-id="' + data.requestID + '"' +
+                        ' data-status="2" />';
+
+                    var requestDoneButton = '' +
+                        '<input class="btn btn-success request-form-status request-status-button"' +
+                        ' id="requestDone" type="button" value="Завершити"' +
+                        ' data-request-id="' + data.requestID + '"' +
+                        ' data-status="3" />';
+
+                    var requestCanceledButton = '' +
+                        '<input class="btn request-form-status status-requests-canceled request-status-button"' +
+                        ' id="requestCanceled" type="button" value="Анулювати"' +
+                        ' data-request-id="' + data.requestID + '"' +
+                        ' data-status="5" />';
+
+                    switch (data.status) {
+                        case "2":
+                            newRequestStatusClasses += 'status-bgc-processing';
+                            newRequestStatusText = '<strong>Замовлення виконується</strong>';
+                            newRequestButtons = requestDoneButton + requestCanceledButton;
+                            break;
+                        case "3":
+                            newRequestStatusClasses += 'status-bgc-done';
+                            newRequestStatusText = '<strong>Замовлення виконано</strong>';
+                            newRequestButtons = requestProcessingButton + requestCanceledButton;
+                            break;
+                        case "5":
+                            newRequestStatusClasses += 'status-bgc-canceled';
+                            newRequestStatusText = '<strong>Замовлення анульовано</strong>';
+                            newRequestButtons = requestProcessingButton;
+                            break;
+                    }
+
+                    if ( data.status === '5' ) {
+                        $(idr + ' td').addClass('disable-task');
+                    } else {
+                        $(idr + ' td').removeClass('disable-task');
+                    }
+                    $(idr + ' .status-requests').removeClass().addClass(newRequestStatusClasses).empty().append(newRequestStatusText);
+                    $(idr + ' .requests-status-form').empty().append(newRequestButtons);
+
+                    changeRequestStatus(idr + ' .request-status-button');
+                }
+            })
         })
-    })
+    }
 });
