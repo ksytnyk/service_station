@@ -29,9 +29,10 @@ module.exports = {
             let errors = req.validationErrors();
 
             if (errors) {
-                req.flash('error_alert', true);
-                req.flash('error_msg', errors);
-                res.redirect(req.baseUrl + '/users');
+                console.warn(errors);
+                res.status(400).send({
+                    errors: errors
+                });
             } else {
                 next();
             }

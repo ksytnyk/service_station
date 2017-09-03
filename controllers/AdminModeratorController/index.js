@@ -58,15 +58,13 @@ router.put('/update-user/:id', validation.createAndUpdateUser(), (req, res) => {
     User
         .updateUser(req.params.id, req.body)
         .then(() => {
-            req.flash('success_alert', true);
-            req.flash('success_msg', 'Редагування користувача пройшло успішно.');
-            res.redirect(req.baseUrl + '/users');
+            res.status(200).send();
         })
-        .catch(error => {
-            console.warn(error);
-            req.flash('error_alert', true);
-            req.flash('error_msg', {msg: 'Виникла помилка при редагуванні користувача.'});
-            res.redirect(req.baseUrl + '/users');
+        .catch(errors => {
+            console.warn(errors);
+            res.status(400).send({
+                errors: errors
+            });
         });
 });
 

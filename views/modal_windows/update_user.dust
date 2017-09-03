@@ -2,15 +2,15 @@
 <div class="modal fade" id="updateUserFormModal" role="dialog" aria-labelledby="formModalLabel">
     <div class="modal-dialog update_form" role="document">
         <div class="modal-content">
-
-            <form id="update-form-id" method="POST" nctype="application/x-www-form-urlencoded" class="update">
-                <input type="hidden" name="_method" value="PUT">
+            <form id="update-form-user" class="update">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title text-center">Редагувати користувача</h4>
                 </div>
                 <div class="modal-body clearfix">
+                    <input type="hidden" id="update-form-id" name="id">
+                    <input type="hidden" id="update-form-type-user" name="typeUser">
                     <div class="form-group required col-lg-6">
                         <label>Ім'я</label>
                         <input type="text" class="form-control" id="update-form-name" name="userName">
@@ -50,20 +50,21 @@
                             <option value="4">Зав. складом</option>
                         </select>
                     </div>
+                    {:else}
+                    <input type="hidden" id="update-form-role" name="userTypeID">
                     {/eq}
                     <div class="form-group required col-lg-6">
                         <label>Пароль</label>
                         <input type="text" class="form-control" id="update-form-password" name="userPassword">
                     </div>
                     <div class='form-group col-lg-{@eq key=typeUser value=1}6{/eq}{@eq key=typeUser value=2}12{/eq}' style="margin-top: 25px;">
-                        <button type="submit" class="btn btn-success width agree">Зберегти</button>
+                        <button class="btn btn-success width agree user-update-button">Зберегти</button>
                         <button class="btn btn-danger pull-right width" data-dismiss="modal">
                             Відмінити
                         </button>
                     </div>
                 </div>
             </form>
-
         </div>
     </div>
 </div>

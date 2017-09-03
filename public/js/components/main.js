@@ -24,7 +24,8 @@ $(document).ready(function () {
     }, TIME_FOR_FLASH);
 
     $('.dtable').DataTable({
-        "bPaginate": false
+        "bPaginate": false,
+        "bInfo" : false
     });
 
     $('.dtable-requests').DataTable({

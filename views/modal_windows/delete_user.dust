@@ -2,7 +2,6 @@
 <div class="modal fade" id="deleteUserFormModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel">
     <div class="modal-dialog delete_form" role="document">
         <div class="modal-content">
-
             <div id="delete-form-id" class="delete">
                 <div class="modal-header">
                     <h4 class="modal-title text-center">Видалити користувача "<span id="delete-form-surname-name"></span>" ?</h4>
@@ -16,7 +15,6 @@
                     </button>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
