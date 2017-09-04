@@ -143,7 +143,8 @@ $(document).ready(function () {
         setOpenTaskNameOnUpdateTask();
     });
 
-    $('.task-update-button').on('click', function () {
+    $('.task-update-button').on('click', function (event) {
+        event.preventDefault();
         var dataArr = $('#update-form-task').serializeArray();
 
         if (getRole(window.location.pathname) !== '/executor' && getRole(window.location.pathname) !== '/store-keeper') {
@@ -161,7 +162,6 @@ $(document).ready(function () {
             data: dataArr,
             success: function (data) {
                 $('.in .close').click();
-                showSuccessAlert('Оновлення задачі пройшло успішно.');
 
                 $('.update-form-task-type-input').addClass("hidden");
                 $('#update_new_task .select2').removeClass("hidden");
@@ -204,23 +204,37 @@ $(document).ready(function () {
                 if (getRole(window.location.pathname) === "/executor") {
                     if (data.task.status === 1) {
                         newTask1 = '' +
-                            '<td class="tac">' +
-                            '<form action="/executor/set-status/' + data.task.id + '" method="POST">' +
-                            '<input type="hidden" value="2" name="status">' +
-                            '<button class="status btn btn-primary" type="submit">Почати задачу</button>' +
-                            '</td>';
+                            '<td class="tac">'+
+                            '<div class="tasks-status-form">'+
+                            '<input class="status btn btn-primary task-form-status task-status-button"'+
+                                'id="taskProcessing"'+
+                                'type="button"'+
+                                'value="Почати задачу"'+
+                                'data-task-id="'+data.task.id+'"'+
+                                'data-status="2"'+
+                            '/>'+
+                            '</div>' +
+                            '</td>'
                     } else {
                         newTask1 = '' +
-                            '<td class="tac">' +
-                            '<form action="/executor/set-status/' + data.task.id + '" method="POST">' +
-                            '<input type="hidden" value="4" name="status">' +
-                            '<button class="status btn btn-danger" type="submit">Відсутні запчастини</button>' +
-                            '</form>' +
-                            '<form action="/executor/set-status/' + data.task.id + '" method="POST">' +
-                            '<input type="hidden" value="3" name="status">' +
-                            '<button class="status btn btn-success" type="submit">Закінчити задачу</button>' +
-                            '</form>' +
-                            '</td>';
+                            '<td class="tac">'+
+                            '<div class="tasks-status-form">'+
+                            '<input class="status btn btn-danger task-form-status task-status-button"'+
+                                'id="taskHold"'+
+                                'type="button"'+
+                                'value="Відсутні запчастини"'+
+                                'data-task-id="'+data.task.id+'"'+
+                                'data-status="4"'+
+                            '/>'+
+                            '<input class="status btn btn-success task-form-status task-status-button"'+
+                                'id="taskDone"'+
+                                'type="button"'+
+                                'value="Завершити задачу"'+
+                                'data-task-id="'+data.task.id+'"'+
+                                'data-status="3"'+
+                            '/>'+
+                            '</div>' +
+                            '</td>'
                     }
                 }
                 if (getRole(window.location.pathname) === '/store-keeper') {
@@ -280,6 +294,7 @@ $(document).ready(function () {
                 deleteTaskOnClick();
                 clearModalAddTask();
                 updateTaskOnClick();
+                changeTaskStatus(idx + ' .task-status-button');
             },
             error: function (err) {
                 $('.in .close').click();

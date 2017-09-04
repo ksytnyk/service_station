@@ -47,7 +47,7 @@ router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
 
 router.put('/set-task-status/:id', (req, res) => {
     Task
-        .changeTaskStatus(req.params.id, req.body.status)
+        .updateTask(req.params.id, req.body)
         .then(() => {
             res.status(200).send();
         })
