@@ -331,14 +331,19 @@ $(document).ready(function () {
         $(value).on('click', function () {
 
             var taskID = $(this).data('task-id'),
-                statusID = $(this).data('status');
+                statusID = $(this).data('status'),
+                data = {
+                    status: statusID
+                };
+
+            if (statusID === 1) {
+                data.assignedUserID = $(this).data('assigned-user-id');
+            }
 
             $.ajax({
                 url: getRole(window.location.pathname) + '/set-task-status/' + taskID,
                 type: 'put',
-                data: {
-                    statusID: statusID
-                },
+                data: data,
                 success: function () {
 
                     var idx = "#idx-task-" + taskID,
@@ -346,42 +351,42 @@ $(document).ready(function () {
                         newTaskStatusText,
                         newTaskButtons = '';
 
-                    if (getRole(window.location.pathname) === '/executor') {
+                    var taskHoldButton = '' +
+                        '<input class="status btn btn-danger task-form-status task-status-button"' +
+                        ' id="taskHold"' +
+                        ' type="button"' +
+                        ' value="Відсутні запчастини"' +
+                        ' data-task-id="' + taskID + '"' +
+                        ' data-status="4"' +
+                        '/>';
 
-                        var taskHoldButton = '' +
-                            '<input class="status btn btn-danger task-form-status task-status-button"'+
-                                'id="taskHold"'+
-                                'type="button"'+
-                                'value="Відсутні запчастини"'+
-                                'data-task-id="' + taskID + '"'+
-                                'data-status="4"'+
-                            '/>';
+                    var taskDoneButton = '' +
+                        '<input class="status btn btn-success task-form-status task-status-button"' +
+                        ' id="taskDone"' +
+                        ' type="button"' +
+                        ' value="Завершити задачу"' +
+                        ' data-task-id="' + taskID + '"' +
+                        ' data-status="3"' +
+                        '/>';
 
-                        var taskDoneButton = '' +
-                            '<input class="status btn btn-success task-form-status task-status-button"'+
-                                'id="taskDone"'+
-                                'type="button"'+
-                                'value="Завершити задачу"'+
-                                'data-task-id="' + taskID + '"'+
-                                'data-status="3"'+
-                            '/>';
-
-                        switch (statusID) {
-                            case 2:
-                                newTaskStatusClasses += 'status-bgc-processing';
-                                newTaskStatusText = '<strong>Задача виконується</strong>';
-                                newTaskButtons = taskHoldButton + taskDoneButton;
-                                $(idx + ' .status-task').removeClass().addClass(newTaskStatusClasses).empty().append(newTaskStatusText);
-                                $(idx + ' .tasks-status-form').empty().append(newTaskButtons);
-                                changeTaskStatus(idx + ' .task-status-button');
-                                break;
-                            case 3:
-                                $(idx).empty();
-                                break;
-                            case 4:
-                                $(idx).empty();
-                                break;
-                        }
+                    switch (statusID) {
+                        case 1:
+                            $(idx).empty();
+                            break;
+                        case 2:
+                            newTaskStatusClasses += 'status-bgc-processing';
+                            newTaskStatusText = '<strong>Задача виконується</strong>';
+                            newTaskButtons = taskHoldButton + taskDoneButton;
+                            $(idx + ' .status-task').removeClass().addClass(newTaskStatusClasses).empty().append(newTaskStatusText);
+                            $(idx + ' .tasks-status-form').empty().append(newTaskButtons);
+                            changeTaskStatus(idx + ' .task-status-button');
+                            break;
+                        case 3:
+                            $(idx).empty();
+                            break;
+                        case 4:
+                            $(idx).empty();
+                            break;
                     }
                 }
             })

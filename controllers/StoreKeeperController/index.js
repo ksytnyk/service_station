@@ -49,19 +49,15 @@ router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
         });
 });
 
-router.post('/set-status/:id', (req, res) => {
+router.put('/set-task-status/:id', (req, res) => {
     Task
         .updateTask(req.params.id, req.body)
         .then(() => {
-            req.flash('success_alert', true);
-            req.flash('success_msg', 'Статус успішно змінений.');
-            res.redirect(req.baseUrl);
+            res.status(200).send();
         })
-        .catch(error => {
-            console.warn(error);
-            req.flash('error_alert', true);
-            req.flash('error_msg', {msg: 'Виникла помилка при зміні статусу.'});
-            res.redirect(req.baseUrl);
+        .catch(errors => {
+            console.warn(errors);
+            res.status(400).send({errors: errors});
         });
 });
 

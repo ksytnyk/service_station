@@ -56,48 +56,56 @@
             <p><strong>Відсутні запчастини: </strong>{needBuyParts}</p>
             <p class="bt"><strong>Коментар: </strong>{comment}</p>
         </td>
-        {@eq key=typeUser value=3}
+        {@gt key=typeUser value=2}
         <td class="tac">
             <div class="tasks-status-form">
-                {@eq key=status value=1}
-                <input class="status btn btn-primary task-form-status task-status-button"
-                       id="taskProcessing"
-                       type="button"
-                       value="Почати задачу"
-                       data-task-id="{id}"
-                       data-status="2"
-                />
+                {@eq key=typeUser value=3}
+                    {@eq key=status value=1}
+                    <input class="status btn btn-primary task-form-status task-status-button"
+                           id="taskProcessing"
+                           type="button"
+                           value="Почати задачу"
+                           data-task-id="{id}"
+                           data-status="2"
+                    />
+                    {/eq}
+                    {@eq key=status value=2}
+                    <input class="status btn btn-danger task-form-status task-status-button"
+                           id="taskHold"
+                           type="button"
+                           value="Відсутні запчастини"
+                           data-task-id="{id}"
+                           data-status="4"
+                    />
+                    <input class="status btn btn-success task-form-status task-status-button"
+                           id="taskDone"
+                           type="button"
+                           value="Завершити задачу"
+                           data-task-id="{id}"
+                           data-status="3"
+                    />
+                    {/eq}
                 {/eq}
-                {@eq key=status value=2}
+                {@eq key=typeUser value=4}
                 <input class="status btn btn-danger task-form-status task-status-button"
                        id="taskHold"
                        type="button"
-                       value="Відсутні запчастини"
+                       value="Зупинити"
                        data-task-id="{id}"
                        data-status="4"
                 />
                 <input class="status btn btn-success task-form-status task-status-button"
-                       id="taskDone"
+                       id="taskPending"
                        type="button"
-                       value="Завершити задачу"
+                       value="Підтвердити"
                        data-task-id="{id}"
-                       data-status="3"
+                       data-status="1"
+                       data-assigned-user-id="{planedExecutorID}"
                 />
                 {/eq}
-                {/eq}
-                {@eq key=typeUser value=4}
-                <form action="/store-keeper/set-status/{id}" method="POST">
-                    <input type="hidden" value="4" name="status"/>
-                    <button class="btn btn-danger status" type="submit">Зупинити</button>
-                </form>
-                <form action="/store-keeper/set-status/{id}" method="POST">
-                    <input type="hidden" value="1" name="status"/>
-                    <input type="hidden" value="{planedExecutorID}" name="assignedUserID"/>
-                    <button class="btn btn-success status" type="submit">Підтвердити</button>
-                </form>
             </div>
         </td>
-        {/eq}
+        {/gt}
         {@lt key=typeUser value=5}
         <td class="tac bb">
             <a class="update-task modal-window-link"
