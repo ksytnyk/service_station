@@ -3,13 +3,13 @@
     <div class="container">
         <ul class="col-lg-12 navbar nav navbar-nav navbar-inverse role{user.dataValues.idTypeUser}">
             {@lt key=typeUser value=3}
-                <li id="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/users">
+                <li class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/users">
                     <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/users">Користувачі</a>
                 </li>
-                <li id="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests">
+                <li class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/all requests_link">
                     <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/all">Замовлення</a>
                 </li>
-                <li id="/admin/chart">
+                <li class="/admin/chart">
                     <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/chart">Статистика</a>
                 </li>
                 <li>
@@ -29,8 +29,12 @@
                     </ul>
                 </li>
             {/lt}
-            <li class="logout pull-right" role="presentation"><a href="/logout" class="last">Вийти</a></li>
-            <li id="headerName" {@gt key=typeUser value=2} style="background-color: #333; float: left;"{/gt}><a>{user.userName} {user.userSurname}</a></li>
+            <li class="logout pull-right" role="presentation">
+                <a href="/logout" class="last">Вийти</a>
+            </li>
+            <li id="headerName" {@gt key=typeUser value=2} style="background-color: #333; float: left;"{/gt}>
+                <a>{user.userName} {user.userSurname}</a>
+            </li>
         </ul>
     </div>
 </nav>

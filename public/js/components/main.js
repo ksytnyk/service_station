@@ -8,9 +8,18 @@ $(document).ready(function () {
         if (event.keyCode === 27) $('.in .close').click();
     });
 
-    var element = document.getElementById(window.location.pathname);
-    if (element !== null) {
-        element.classList.add("active");
+    if (document.getElementsByClassName(window.location.pathname)[0] !== undefined) {
+        var elements = document.getElementsByClassName(window.location.pathname);
+
+        if (window.location.pathname.includes('requests')) {
+            $('.requests_link').addClass('active');
+        }
+
+        for (var key in elements) {
+            if (!isNaN(key)) {
+                elements[key].classList.add('active');
+            }
+        }
     }
 
     headerFix();
