@@ -80,9 +80,26 @@ router.delete('/delete-user/:id', (req, res) => {
         });
 });
 
-router.get('/requests', (req, res) => {
+router.get('/requests/:status', (req, res) => {
+    let findBy;
+
+    if (req.params.status === 'all' ) {
+        findBy = {
+            $between: [1, 5]
+        }
+    }
+    else if (req.params.status === 'processing' ) {
+        findBy = status.PROCESSING
+    }
+    else if (req.params.status === 'done' ) {
+        findBy = status.DONE
+    }
+    else if (req.params.status === 'canceled' ) {
+        findBy = status.CANCELED
+    }
+
     Request
-        .getAllRequests()
+        .getAllRequests(findBy)
         .then(requests => {
             Task
                 .getAllTasks()

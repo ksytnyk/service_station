@@ -70,12 +70,15 @@ Request.belongsTo(User, {foreignKey: 'customerID'});
 
 Request.sync();
 
-Request.getAllRequests = function () {
+Request.getAllRequests = function (findBy) {
     return new Promise((resolve, reject) => {
         Request
             .findAll({
                 include: {
                     model: User
+                },
+                where: {
+                    status: findBy
                 }
             })
             .then(requests => {

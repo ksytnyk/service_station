@@ -3,8 +3,25 @@
 {<body}
 
 {>"header/index"/}
-
 <div class="col-lg-12 requests">
+
+    <ul class="col-lg-6 nav nav-pills">
+        <li role="presentation" id="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/all">
+            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/all">Усі</a>
+        </li>
+        <li role="presentation" id="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/processing">
+            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/processing">Виконуються</a>
+        </li>
+        <li role="presentation" id="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/done">
+            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/done">Виконані</a>
+        </li>
+        <li role="presentation">
+            <a href="#">Очікують запчастини</a>
+        </li>
+        <li role="presentation" id="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/canceled">
+            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/canceled">Анульовані</a>
+        </li>
+    </ul>
     <div class="panel panel-default">
         <table class="table dtable-requests">
             <thead>

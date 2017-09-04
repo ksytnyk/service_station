@@ -105,62 +105,62 @@ select[disabled] {
     left: 0;
     z-index: 10;
 }
-.navbar {
+.white_block .navbar {
     background-color: #666;
     border: 1px solid #333;
     margin: 0 auto;
 }
-.navbar #headerName {
+.white_block .navbar #headerName {
     float: right;
 }
-.navbar > .active > a,
-.navbar > .active > a:hover,
-.navbar > .active > a:focus {
+.white_block .navbar > .active > a,
+.white_block .navbar > .active > a:hover,
+.white_block .navbar > .active > a:focus {
     background-color: #333;
     color: #fff;
 }
-.navbar > li > a:hover {
+.white_block .navbar > li > a:hover {
     color: #fff;
     background-color: #333 !important;
 }
-.nav .open > a,
-.nav .open > a:hover,
-.nav .open > a:focus {
+.white_block .nav .open > a,
+.white_block .nav .open > a:hover,
+.white_block .nav .open > a:focus {
     background-color: #333;
     color: #fff;
     border: none;
     border-right: 1px solid #666;
 }
-.nav .dropdown-menu {
+.white_block .nav .dropdown-menu {
     padding: 0;
 }
-.nav .dropdown-menu > li > a {
+.white_block .nav .dropdown-menu > li > a {
     padding: 10px;
 }
-.dropdown-menu > li > a:hover,
-.dropdown-menu > li > a:focus {
+.white_block .dropdown-menu > li > a:hover,
+.white_block .dropdown-menu > li > a:focus {
     background-color: #eee;
 }
-.nav {
+.white_block .nav {
     padding: 0;
     font-size: 15px;
     margin: 19px 0;
 }
-.nav > li > a {
+.white_block .nav > li > a {
     color: #fff;
     transition: 0.3s;
     border-right: 1px solid #666;
 }
-.nav > li > .last {
+.white_block .nav > li > .last {
     border-right: none;
 }
-.nav > li > a:focus {
+.white_block .nav > li > a:focus {
     background-color: #666;
 }
-.nav > .name > a {
+.white_block .nav > .name > a {
     color: #fff;
 }
-.nav > .name > a:hover {
+.white_block .nav > .name > a:hover {
     color: #fff;
     background-color: #666 !important;
 }

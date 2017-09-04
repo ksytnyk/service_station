@@ -20,7 +20,7 @@ $(document).ready(function () {
             type: 'post',
             data: dataArr,
             success: function () {
-                window.location.replace('/admin/requests');
+                window.location.replace('/admin/requests/all');
             },
             error: function (err) {
                 showErrorAlert(err);
