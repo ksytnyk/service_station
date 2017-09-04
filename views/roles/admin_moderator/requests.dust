@@ -37,7 +37,6 @@
                 <th class="tac" style="position: relative;">
                     <span class="requests_id">{id}</span>
                     <a href="update-request/{id}"
-                       class=""
                        title="Редагувати замовлення"
                        style="font-size: 17px;">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"/>

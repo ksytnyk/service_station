@@ -163,7 +163,7 @@ router.post('/create-request', validation.createAndUpdateRequest(), (req, res) =
         });
 });
 
-router.get('/update-request/:id', (req, res) => {
+router.get('/requests/update-request/:id', (req, res) => {
     User
         .getCustomerUsers()
         .then(usersCustomers => {
