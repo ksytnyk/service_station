@@ -148,7 +148,6 @@ $(document).ready(function () {
         var dataArr = $('#update-form-task').serializeArray();
 
         if (getRole(window.location.pathname) !== '/executor' && getRole(window.location.pathname) !== '/store-keeper') {
-
             if (dataArr[3].value === '') {
                 var taskTypeID = $('#updateTaskTypeID' + $('.update-form-task-type-select').serializeArray()[0].value).attr('updateTaskTypeID');
                 dataArr[4].value = taskTypeID;
@@ -162,7 +161,6 @@ $(document).ready(function () {
             data: dataArr,
             success: function (data) {
                 $('.in .close').click();
-
                 $('.update-form-task-type-input').addClass("hidden");
                 $('#update_new_task .select2').removeClass("hidden");
 
@@ -239,17 +237,12 @@ $(document).ready(function () {
                 }
                 if (getRole(window.location.pathname) === '/store-keeper') {
                     newTask1 = '' +
-                        '<td class="tac">' +
-                        '<form action="/store-keeper/set-status/' + data.task.id + '" method="POST">' +
-                        '<input type="hidden" value="4" name="status"/>' +
-                        '<button class="btn btn-danger status" type="submit">Зупинити</button>' +
-                        '</form>' +
-                        '<form action="/store-keeper/set-status/' + data.task.id + '" method="POST">' +
-                        '<input type="hidden" value="1" name="status"/>' +
-                        '<input type="hidden" value="' + data.task.planedExecutorID + '" name="assignedUserID"/>' +
-                        '<button class="btn btn-warning status" type="submit">Підтвердити</button>' +
-                        '</form>' +
-                        '</td>'
+                        '<td class="tac"><div class="tasks-status-form">' +
+                        '<input class="status btn btn-danger task-form-status task-status-button" id="taskHold" type="button" value="Зупинити" data-status="4"' +
+                        ' data-task-id="' + data.task.id + '"/>' +
+                        '<input class="status btn btn-success task-form-status task-status-button" id="taskPending" type="button" value="Підтвердити" data-status="1"' +
+                        ' data-task-id="' + data.task.id + '"' +
+                        ' data-assigned-user-id="' + data.task.planedExecutorID + '"/></div></td>';
                 }
                 newTask2 = '' +
                     '<td class="tac bb"> ' +

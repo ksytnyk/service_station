@@ -60,7 +60,7 @@
                     <div class='form-group col-lg-{@eq key=typeUser value=1}6{/eq}{@eq key=typeUser value=2}12{/eq}' style="margin-top: 25px;">
                         <button class="btn btn-success width agree user-update-button">Зберегти</button>
                         <button class="btn btn-danger pull-right width" data-dismiss="modal">
-                            Відмінити
+                            Закрити
                         </button>
                     </div>
                 </div>

@@ -130,7 +130,7 @@
                             Оновити
                         </button>
                         <button class="btn btn-danger pull-right width" data-dismiss="modal">
-                            Відмінити
+                            Закрити
                         </button>
                         {/gt}
                     </div>
