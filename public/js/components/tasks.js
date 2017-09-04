@@ -123,9 +123,9 @@ $(document).ready(function () {
                     '</tr>');
 
                 headerFix();
-                deleteTaskOnClick();
+                deleteTaskOnClick('#idx-task-' + data.result.id + ' .delete-task');
                 clearModalAddTask();
-                updateTaskOnClick();
+                updateTaskOnClick('#idx-task-' + data.result.id + ' .update-task');
 
             },
             error: function (err) {
@@ -284,9 +284,9 @@ $(document).ready(function () {
                 $(idx).append(newTask + newTask1 + newTask2);
                 $(idr).append(newCost);
 
-                deleteTaskOnClick();
+                deleteTaskOnClick('#idx-task-' + data.task.id + ' .delete-task');
                 clearModalAddTask();
-                updateTaskOnClick();
+                updateTaskOnClick('#idx-task-' + data.task.id + ' .update-task');
                 changeTaskStatus(idx + ' .task-status-button');
             },
             error: function (err) {
@@ -330,9 +330,8 @@ $(document).ready(function () {
         });
     });
 
-    deleteTaskOnClick();
-    updateTaskOnClick();
-
+    deleteTaskOnClick('.delete-task');
+    updateTaskOnClick('.update-task');
     changeTaskStatus('.task-status-button');
 
     function changeTaskStatus(value) {
@@ -406,8 +405,8 @@ function clearModalAddTask() {
     $('.create-form-task').val('');
 }
 
-function updateTaskOnClick() {
-    $('.update-task').on('click', function () {
+function updateTaskOnClick(value) {
+    $(value).on('click', function () {
 
         setOpenTaskNameOnUpdateTask();
 
@@ -483,8 +482,8 @@ function updateTaskOnClick() {
     });
 }
 
-function deleteTaskOnClick() {
-    $('.delete-task').on('click', function () {
+function deleteTaskOnClick(value) {
+    $(value).on('click', function () {
         $('#delete-button').attr('task-id', ($(this).data('id')));
         $('#delete-button').attr('request-id', ($(this).data('request-id')));
         $('#delete-button').attr('task-old-cost', ($(this).data('task-old-cost')));
