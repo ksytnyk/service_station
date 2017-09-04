@@ -226,15 +226,15 @@ $(document).ready(function () {
                 if (getRole(window.location.pathname) === '/store-keeper') {
                     newTask1 = '' +
                         '<td class="tac">' +
-                            '<form action="/store-keeper/set-status/' + data.task.id + '" method="POST">' +
-                                '<input type="hidden" value="4" name="status"/>' +
-                                '<button class="btn btn-danger status" type="submit">Зупинити</button>' +
-                            '</form>' +
-                            '<form action="/store-keeper/set-status/' + data.task.id + '" method="POST">' +
-                                '<input type="hidden" value="1" name="status"/>' +
-                                '<input type="hidden" value="' + data.task.planedExecutorID + '" name="assignedUserID"/>' +
-                                '<button class="btn btn-warning status" type="submit">Підтвердити</button>' +
-                            '</form>' +
+                        '<form action="/store-keeper/set-status/' + data.task.id + '" method="POST">' +
+                        '<input type="hidden" value="4" name="status"/>' +
+                        '<button class="btn btn-danger status" type="submit">Зупинити</button>' +
+                        '</form>' +
+                        '<form action="/store-keeper/set-status/' + data.task.id + '" method="POST">' +
+                        '<input type="hidden" value="1" name="status"/>' +
+                        '<input type="hidden" value="' + data.task.planedExecutorID + '" name="assignedUserID"/>' +
+                        '<button class="btn btn-warning status" type="submit">Підтвердити</button>' +
+                        '</form>' +
                         '</td>'
                 }
                 newTask2 = '' +
@@ -324,6 +324,69 @@ $(document).ready(function () {
 
     deleteTaskOnClick();
     updateTaskOnClick();
+
+    changeTaskStatus('.task-status-button');
+
+    function changeTaskStatus(value) {
+        $(value).on('click', function () {
+
+            var taskID = $(this).data('task-id'),
+                statusID = $(this).data('status');
+
+            $.ajax({
+                url: getRole(window.location.pathname) + '/set-task-status/' + taskID,
+                type: 'put',
+                data: {
+                    statusID: statusID
+                },
+                success: function () {
+
+                    var idx = "#idx-task-" + taskID,
+                        newTaskStatusClasses = 'status-task ',
+                        newTaskStatusText,
+                        newTaskButtons = '';
+
+                    if (getRole(window.location.pathname) === '/executor') {
+
+                        var taskHoldButton = '' +
+                            '<input class="status btn btn-danger task-form-status task-status-button"'+
+                                'id="taskHold"'+
+                                'type="button"'+
+                                'value="Відсутні запчастини"'+
+                                'data-task-id="' + taskID + '"'+
+                                'data-status="4"'+
+                            '/>';
+
+                        var taskDoneButton = '' +
+                            '<input class="status btn btn-success task-form-status task-status-button"'+
+                                'id="taskDone"'+
+                                'type="button"'+
+                                'value="Завершити задачу"'+
+                                'data-task-id="' + taskID + '"'+
+                                'data-status="3"'+
+                            '/>';
+
+                        switch (statusID) {
+                            case 2:
+                                newTaskStatusClasses += 'status-bgc-processing';
+                                newTaskStatusText = '<strong>Задача виконується</strong>';
+                                newTaskButtons = taskHoldButton + taskDoneButton;
+                                $(idx + ' .status-task').removeClass().addClass(newTaskStatusClasses).empty().append(newTaskStatusText);
+                                $(idx + ' .tasks-status-form').empty().append(newTaskButtons);
+                                changeTaskStatus(idx + ' .task-status-button');
+                                break;
+                            case 3:
+                                $(idx).empty();
+                                break;
+                            case 4:
+                                $(idx).empty();
+                                break;
+                        }
+                    }
+                }
+            })
+        })
+    }
 });
 
 function clearModalAddTask() {
@@ -491,7 +554,7 @@ function setDefaultAssignedUserOnCreateTask() {
     $('.create-assign-task-select').addClass("hidden");
 }
 
-function setOpenTaskNameOnUpdateTask () {
+function setOpenTaskNameOnUpdateTask() {
     $('#update-form-task-type-input').addClass("hidden");
     $('#update_new_task .select2').removeClass("hidden");
     $('#update_new_task .input-group').removeClass("hidden");

@@ -86,9 +86,9 @@ $(document).ready(function () {
                     var idr = "#idr-request-" + data.requestID;
 
                     if (window.location.pathname.split('/')[3] === 'all') {
-                        newRequestStatusClasses = 'status-requests ';
-                        newRequestStatusText = 'status-requests ';
-                        newRequestButtons = '';
+                        var newRequestStatusClasses = 'status-requests ',
+                            newRequestStatusText,
+                            newRequestButtons = '';
 
                         var requestProcessingButton = '' +
                             '<input class="btn btn-primary request-form-status request-status-button"' +

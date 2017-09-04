@@ -57,38 +57,45 @@
             <p class="bt"><strong>Коментар: </strong>{comment}</p>
         </td>
         {@eq key=typeUser value=3}
-        {@eq key=status value=1}
         <td class="tac">
-            <form action="/executor/set-status/{id}" method="POST">
-                <input type="hidden" value="2" name="status">
-                <button class="status btn btn-primary" type="submit">Почати задачу</button>
-            </form>
-        </td>
-        {/eq}
-        {@eq key=status value=2}
-        <td class="tac">
-            <form action="/executor/set-status/{id}" method="POST">
-                <input type="hidden" value="4" name="status">
-                <button class="status btn btn-danger" type="submit">Відсутні запчастини</button>
-            </form>
-            <form action="/executor/set-status/{id}" method="POST">
-                <input type="hidden" value="3" name="status">
-                <button class="status btn btn-success" type="submit">Завершити задачу</button>
-            </form>
-        </td>
-        {/eq}
-        {/eq}
-        {@eq key=typeUser value=4}
-        <td class="tac">
-            <form action="/store-keeper/set-status/{id}" method="POST">
-                <input type="hidden" value="4" name="status"/>
-                <button class="btn btn-danger status" type="submit">Зупинити</button>
-            </form>
-            <form action="/store-keeper/set-status/{id}" method="POST">
-                <input type="hidden" value="1" name="status"/>
-                <input type="hidden" value="{planedExecutorID}" name="assignedUserID"/>
-                <button class="btn btn-success status" type="submit">Підтвердити</button>
-            </form>
+            <div class="tasks-status-form">
+                {@eq key=status value=1}
+                <input class="status btn btn-primary task-form-status task-status-button"
+                       id="taskProcessing"
+                       type="button"
+                       value="Почати задачу"
+                       data-task-id="{id}"
+                       data-status="2"
+                />
+                {/eq}
+                {@eq key=status value=2}
+                <input class="status btn btn-danger task-form-status task-status-button"
+                       id="taskHold"
+                       type="button"
+                       value="Відсутні запчастини"
+                       data-task-id="{id}"
+                       data-status="4"
+                />
+                <input class="status btn btn-success task-form-status task-status-button"
+                       id="taskDone"
+                       type="button"
+                       value="Завершити задачу"
+                       data-task-id="{id}"
+                       data-status="3"
+                />
+                {/eq}
+                {/eq}
+                {@eq key=typeUser value=4}
+                <form action="/store-keeper/set-status/{id}" method="POST">
+                    <input type="hidden" value="4" name="status"/>
+                    <button class="btn btn-danger status" type="submit">Зупинити</button>
+                </form>
+                <form action="/store-keeper/set-status/{id}" method="POST">
+                    <input type="hidden" value="1" name="status"/>
+                    <input type="hidden" value="{planedExecutorID}" name="assignedUserID"/>
+                    <button class="btn btn-success status" type="submit">Підтвердити</button>
+                </form>
+            </div>
         </td>
         {/eq}
         {@lt key=typeUser value=5}
