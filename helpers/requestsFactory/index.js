@@ -2,7 +2,7 @@
 
 const formatDate = require('../formatDate/index');
 
-module.exports = function (requests, tasks) {
+module.exports = function (requests, tasks, isHold) {
 
     let requestsObj = {};
 
@@ -29,6 +29,14 @@ module.exports = function (requests, tasks) {
                 requestsObj[item.requestID].tasks.push(item.dataValues);
             }
         });
+    }
+
+    if (isHold) {
+        for (var key in requestsObj) {
+            if (requestsObj[key].tasks.length === 0) {
+                delete requestsObj[key];
+            }
+        }
     }
 
     let requestsArr = [];

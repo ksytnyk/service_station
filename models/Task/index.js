@@ -110,6 +110,34 @@ Task.getAllTasks = function () {
     });
 };
 
+Task.getAllHoldTasks = function () {
+    return new Promise((resolve, reject) => {
+        Task
+            .findAll({
+                where: {
+                    status: status.HOLD
+                },
+                include: [
+                    {
+                        model: User,
+                        as: 'planedExecutor'
+                    },
+                    {
+                        model: User,
+                        as: 'assignedUser'
+                    }
+                ]
+            })
+            .then(tasks => {
+                resolve(tasks);
+            })
+            .catch(error => {
+                console.warn(error);
+                reject(error);
+            });
+    });
+};
+
 Task.getAllTasksOfRequest = function (id) {
     return new Promise((resolve, reject) => {
         Task

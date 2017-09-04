@@ -83,45 +83,70 @@ router.delete('/delete-user/:id', (req, res) => {
 router.get('/requests/:status', (req, res) => {
     let findBy;
 
-    if (req.params.status === 'all' ) {
+    if (req.params.status === 'all' || req.params.status === 'hold') {
         findBy = {
             $between: [1, 5]
-        }
+        };
     }
-    else if (req.params.status === 'processing' ) {
-        findBy = status.PROCESSING
+    else if (req.params.status === 'processing') {
+        findBy = status.PROCESSING;
     }
-    else if (req.params.status === 'done' ) {
-        findBy = status.DONE
+    else if (req.params.status === 'done') {
+        findBy = status.DONE;
     }
-    else if (req.params.status === 'canceled' ) {
-        findBy = status.CANCELED
+    else if (req.params.status === 'canceled') {
+        findBy = status.CANCELED;
     }
 
     Request
         .getAllRequests(findBy)
         .then(requests => {
-            Task
-                .getAllTasks()
-                .then(tasks => {
-                    User
-                        .getAllUsers()
-                        .then(users => {
-                            res.render('roles/admin_moderator/requests', {
-                                assignedExecutorUsers: users,
-                                requests: requestsFactory(requests, tasks),
-                                typeUser: req.session.passport.user.userTypeID
+            if (req.params.status === 'hold') {
+                Task
+                    .getAllHoldTasks()
+                    .then(tasks => {
+                        User
+                            .getAllUsers()
+                            .then(users => {
+                                res.render('roles/admin_moderator/requests', {
+                                    assignedExecutorUsers: users,
+                                    requests: requestsFactory(requests, tasks, true),
+                                    typeUser: req.session.passport.user.userTypeID
+                                });
+                            })
+                            .catch(error => {
+                                console.warn(error);
+                                res.render('roles/admin_moderator/requests');
                             });
-                        })
-                        .catch(error => {
-                            console.warn(error);
-                            res.render('roles/admin_moderator/requests');
-                        });
-                })
-                .catch(error => {
-                    console.warn(error);
-                    res.render('roles/admin_moderator/requests');
-                });
+                    })
+                    .catch(error => {
+                        console.warn(error);
+                        res.render('roles/admin_moderator/requests');
+                    });
+
+            } else {
+                Task
+                    .getAllTasks()
+                    .then(tasks => {
+                        User
+                            .getAllUsers()
+                            .then(users => {
+                                res.render('roles/admin_moderator/requests', {
+                                    assignedExecutorUsers: users,
+                                    requests: requestsFactory(requests, tasks),
+                                    typeUser: req.session.passport.user.userTypeID
+                                });
+                            })
+                            .catch(error => {
+                                console.warn(error);
+                                res.render('roles/admin_moderator/requests');
+                            });
+                    })
+                    .catch(error => {
+                        console.warn(error);
+                        res.render('roles/admin_moderator/requests');
+                    });
+            }
         })
         .catch(error => {
             console.warn(error);

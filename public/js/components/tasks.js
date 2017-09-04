@@ -238,9 +238,9 @@ $(document).ready(function () {
                 if (getRole(window.location.pathname) === '/store-keeper') {
                     newTask1 = '' +
                         '<td class="tac"><div class="tasks-status-form">' +
-                        '<input class="status btn btn-danger task-form-status task-status-button" id="taskHold" type="button" value="Зупинити" data-status="4"' +
+                        '<input class="status btn btn-danger task-form-status task-status-button" id="taskHold" type="button" value="Анулювати" data-status="4"' +
                         ' data-task-id="' + data.task.id + '"/>' +
-                        '<input class="status btn btn-success task-form-status task-status-button" id="taskPending" type="button" value="Підтвердити" data-status="1"' +
+                        '<input class="status btn btn-success task-form-status task-status-button" id="taskPending" type="button" value="Є на складі" data-status="1"' +
                         ' data-task-id="' + data.task.id + '"' +
                         ' data-assigned-user-id="' + data.task.planedExecutorID + '"/></div></td>';
                 }

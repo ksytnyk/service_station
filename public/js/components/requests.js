@@ -85,7 +85,7 @@ $(document).ready(function () {
                 success: function (data) {
                     var idr = "#idr-request-" + data.requestID;
 
-                    if (window.location.pathname.split('/')[3] === 'all') {
+                    if (window.location.pathname.split('/')[3] === 'all' || window.location.pathname.split('/')[3] === 'hold') {
                         var newRequestStatusClasses = 'status-requests ',
                             newRequestStatusText,
                             newRequestButtons = '';
