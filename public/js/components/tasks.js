@@ -62,6 +62,8 @@ $(document).ready(function () {
             type: 'post',
             data: dataArr,
             success: function (data) {
+                //$('#print_check').removeClass('hidden');
+
                 $('.in .close').click();
 
                 showSuccessAlert('Додавання задачі пройшло успішно.');

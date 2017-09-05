@@ -8,6 +8,9 @@ $(document).ready(function () {
             type: 'post',
             data: $('#createRequestForm').serializeArray(),
             success: function (data) {
+
+                $('#print_check').attr('data-customer-phone', data.customer.userPhone);
+
                 showSuccessAlert('Додавання замовлення пройшло успішно.');
 
                 $('.disable_input').prop('disabled', true);

@@ -149,9 +149,17 @@ router.post('/create-request', validation.createAndUpdateRequest(), (req, res) =
     Request
         .createRequest(req.body)
         .then((result) => {
-            res.status(200).send({
-                result: result
-            });
+            User
+                .getUserById(req.body.customerID)
+                .then(customer => {
+                    res.status(200).send({
+                        result: result,
+                        customer: customer
+                    });
+                })
+                .catch(errors => {
+                    res.status(400).send({errors: errors});
+                });
         })
         .catch(errors => {
             res.status(400).send({errors: errors});
