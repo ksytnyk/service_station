@@ -484,7 +484,6 @@ router.post('/get-task-prise/:id', (req, res) => {
     TaskType
         .getTaskTypeByID(req.params.id)
         .then(taskType => {
-            console.log(taskType.dataValues.cost);
             res.status(200).send({
                 taskTypeCost: taskType.dataValues.cost
             });

@@ -84,7 +84,7 @@
     <script src="/js/components/cars.js"></script>
     <script src="/js/components/globalRequest.js"></script>
     <script src="/js/components/taskType.js"></script>
-<script src="/js/components/setSelect2.js"></script>
+    <script src="/js/components/setSelect2.js"></script>
 {/lt}
 
 <script src="/js/components/main.js"></script>

@@ -411,61 +411,62 @@ function updateTaskOnClick(value) {
     $(value).on('click', function () {
 
         setOpenTaskNameOnUpdateTask();
+        if (!window.location.pathname.includes('update-request')) {
+            if (window.location.pathname.includes('create-request') || window.location.pathname.includes('requests')) {
 
-        if (window.location.pathname.includes('create-request') || window.location.pathname.includes('requests')) {
+                var dataArr;
+                var This = this;
 
-            var dataArr;
-            var This = this;
-
-            if (window.location.pathname.includes('create-request')) {
-                dataArr = {
-                    carMarkk: $('#markk').val(),
-                    carModel: $('#model').val()
-                };
-            } else if (window.location.pathname.includes('requests')) {
-                dataArr = {
-                    carMarkk: $('#markk' + $(this).data('request-id')).attr('attr-name'),
-                    carModel: $('#model' + $(this).data('request-id')).attr('attr-name')
-                };
-            }
-
-            $.ajax({
-                url: getRole(window.location.pathname) + '/get-task-types',
-                type: 'post',
-                data: dataArr,
-                success: function (data) {
-                    $('#update-form-task-type-select').find('option').remove();
-
-                    data.taskTypes.forEach(item => {
-                        $('#update-form-task-type-select').append($('<option>', {
-                            value: item.id,
-                            text: item.typeName,
-                            updateTaskTypeID: item.typeName,
-                            id: 'updateTaskTypeID' + item.id
-                        }));
-                    });
-
-                    $('#update-form-task-type-select').val('');
-
-                    isFirstUpdateClick = true;
-                    var taskName = $(This).data('task-name');
-                    var taskTypeID = $("option[updateTaskTypeID='" + taskName + "']").val();
-
-                    $('#update-form-task-type-select').val(taskTypeID).change();
-                    $('#update-form-task-old-cost').val($(This).data('task-cost'));
-                    $('#update-form-task-cost').val($(This).data('task-cost'));
-
+                if (window.location.pathname.includes('create-request')) {
+                    dataArr = {
+                        carMarkk: $('#markk').val(),
+                        carModel: $('#model').val()
+                    };
+                } else if (window.location.pathname.includes('requests')) {
+                    dataArr = {
+                        carMarkk: $('#markk' + $(this).data('request-id')).attr('attr-name'),
+                        carModel: $('#model' + $(this).data('request-id')).attr('attr-name')
+                    };
                 }
-            });
 
-        } else {
-            isFirstUpdateClick = true;
-            var taskName = $(this).data('task-name');
-            var taskTypeID = $("option[updateTaskTypeID='" + taskName + "']").val();
+                $.ajax({
+                    url: getRole(window.location.pathname) + '/get-task-types',
+                    type: 'post',
+                    data: dataArr,
+                    success: function (data) {
+                        $('#update-form-task-type-select').find('option').remove();
 
-            $('#update-form-task-type-select').val(taskTypeID).change();
-            $('#update-form-task-old-cost').val($(this).data('task-cost'));
-            $('#update-form-task-cost').val($(this).data('task-cost'));
+                        data.taskTypes.forEach(item => {
+                            $('#update-form-task-type-select').append($('<option>', {
+                                value: item.id,
+                                text: item.typeName,
+                                updateTaskTypeID: item.typeName,
+                                id: 'updateTaskTypeID' + item.id
+                            }));
+                        });
+
+                        $('#update-form-task-type-select').val('');
+
+                        isFirstUpdateClick = true;
+                        var taskName = $(This).data('task-name');
+                        var taskTypeID = $("option[updateTaskTypeID='" + taskName + "']").val();
+
+                        $('#update-form-task-type-select').val(taskTypeID).change();
+                        $('#update-form-task-old-cost').val($(This).data('task-cost'));
+                        $('#update-form-task-cost').val($(This).data('task-cost'));
+
+                    }
+                });
+
+            } else {
+                isFirstUpdateClick = true;
+                var taskName = $(this).data('task-name');
+                var taskTypeID = $("option[updateTaskTypeID='" + taskName + "']").val();
+
+                $('#update-form-task-type-select').val(taskTypeID).change();
+                $('#update-form-task-old-cost').val($(this).data('task-cost'));
+                $('#update-form-task-cost').val($(this).data('task-cost'));
+            }
         }
 
         $('#update-form-task-id').val($(this).data('id'));
