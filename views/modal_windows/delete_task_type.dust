@@ -1,0 +1,17 @@
+{+delete_task_type}
+<div class="modal fade" id="deleteTaskTypeFormModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel">
+    <div class="modal-dialog delete_form" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title text-center">Видалити задачу №<span id="delete-task-type-id"></span> ?</h4>
+            </div>
+            <div class="modal-body">
+                <button id="delete-task-type-button" class="btn btn-success width agree" data-dismiss="modal">Підтвердити</button>
+                <button class="btn btn-danger pull-right width" data-dismiss="modal">
+                    Відмінити
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{/delete_task_type}

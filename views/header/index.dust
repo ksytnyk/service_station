@@ -9,9 +9,14 @@
                 <li class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/all requests_link">
                     <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/all">Замовлення</a>
                 </li>
+                <li class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/task-type">
+                    <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/task-type">Задачі</a>
+                </li>
+                {@eq key=typeUser value=1}
                 <li class="/admin/chart">
                     <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/chart">Статистика</a>
                 </li>
+                {/eq}
                 <li>
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                         Додати <span class="caret"></span>

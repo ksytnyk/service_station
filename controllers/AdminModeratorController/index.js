@@ -578,4 +578,43 @@ router.post('/create-global-request', validation.createGlobalRequest(), (req, re
         });
 });
 
+router.get('/task-type', (req, res) => {
+    TaskType
+        .getAllTaskType()
+        .then(taskType => {
+            res.render('roles/admin_moderator/task_type', {
+                taskType: taskType,
+                typeUser: req.session.passport.user.userTypeID
+            });
+        })
+        .catch(error => {
+            console.warn(error);
+            res.render('roles/admin_moderator/task_type');
+        });
+});
+
+router.put('/update-task-type/:id', (req, res) => { // VALIDATION
+    TaskType
+        .updateTaskType(req.params.id, req.body)
+        .then(() => {
+            res.status(200).send();
+        })
+        .catch(errors => {
+            console.warn(errors);
+            res.status(400).send({errors: errors});
+        });
+});
+
+router.delete('/delete-task-type/:id', (req, res) => {
+    TaskType
+        .deleteTaskType(req.params.id)
+        .then(() => {
+            res.status(200).send();
+        })
+        .catch(error => {
+            console.warn(error);
+            res.status(400).send({errors: errors});
+        });
+});
+
 module.exports = router;

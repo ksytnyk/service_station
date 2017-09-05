@@ -43,6 +43,12 @@ $(document).ready(function () {
         "bInfo" : false
     });
 
+    $('.dtable-task-type').DataTable({
+        "order": [[ 2, "asc" ]],
+        "bPaginate": false,
+        "bInfo" : false
+    });
+
     $('.startTime').datetimepicker({
         defaultDate: new Date(),
         locale: "uk",

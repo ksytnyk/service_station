@@ -30,6 +30,58 @@ let TaskType = sequelize.define('task_type', describeTaskTypeTable, optionTaskTy
 
 TaskType.sync();
 
+TaskType.getAllTaskType = function () {
+    return new Promise((resolve, reject) => {
+        TaskType
+            .findAll()
+            .then(tasks => {
+                resolve(tasks);
+            })
+            .catch(error => {
+                console.warn(error);
+                reject(error);
+            });
+    });
+};
+
+TaskType.updateTaskType = function (taskTypeID, params) {
+    return new Promise((resolve, reject) => {
+        TaskType
+            .update(
+                params,
+                {
+                    where: {
+                    id: taskTypeID
+                }
+            })
+            .then(result => {
+                resolve(result);
+            })
+            .catch(err => {
+                console.warn(err);
+                reject(err);
+            });
+    });
+};
+
+TaskType.deleteTaskType = function (taskTypeID) {
+    return new Promise((resolve, reject) => {
+        TaskType
+            .destroy({
+                where: {
+                    id: taskTypeID
+                }
+            })
+            .then(result => {
+                resolve(result);
+            })
+            .catch(err => {
+                console.warn(err);
+                reject(err);
+            });
+    });
+};
+
 TaskType.getTaskTypesByCar = function (carMarkk, carModel) {
     return new Promise((resolve, reject) => {
         TaskType

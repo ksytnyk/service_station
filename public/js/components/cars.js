@@ -4,9 +4,10 @@ $(document).ready(() => {
     let linkForCars = window.location.pathname,
         createLink = getRole(linkForCars) + "/create-request",
         createGlobalReq = getRole(linkForCars) + "/create-global-request",
-        updateLink = getRole(linkForCars) + "/update-request";
+        updateLink = getRole(linkForCars) + "/update-request",
+        taskTypeLink = getRole(linkForCars) + "/task-type";
 
-    if (linkForCars == createLink || (linkForCars.indexOf(updateLink) + 1) || linkForCars == createGlobalReq) {
+    if (linkForCars == createLink || (linkForCars.indexOf(updateLink) + 1) || linkForCars == createGlobalReq || linkForCars == taskTypeLink) {
         getTypes();
     }
 
