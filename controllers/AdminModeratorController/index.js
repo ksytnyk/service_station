@@ -101,52 +101,22 @@ router.get('/requests/:status', (req, res) => {
     Request
         .getAllRequests(findBy)
         .then(requests => {
-            if (req.params.status === 'hold') {
-                Task
-                    .getAllHoldTasks()
-                    .then(tasks => {
-                        User
-                            .getAllUsers()
-                            .then(users => {
-                                res.render('roles/admin_moderator/requests', {
-                                    assignedExecutorUsers: users,
-                                    requests: requestsFactory(requests, tasks, true),
-                                    typeUser: req.session.passport.user.userTypeID
-                                });
-                            })
-                            .catch(error => {
-                                console.warn(error);
-                                res.render('roles/admin_moderator/requests');
+            method(req.params.status)
+                .then(tasks => {
+                    User
+                        .getAllUsers()
+                        .then(users => {
+                            res.render('roles/admin_moderator/requests', {
+                                assignedExecutorUsers: users,
+                                requests: requestsFactory(requests, tasks, true),
+                                typeUser: req.session.passport.user.userTypeID
                             });
-                    })
-                    .catch(error => {
-                        console.warn(error);
-                        res.render('roles/admin_moderator/requests');
-                    });
-
-            } else {
-                Task
-                    .getAllTasks()
-                    .then(tasks => {
-                        User
-                            .getAllUsers()
-                            .then(users => {
-                                res.render('roles/admin_moderator/requests', {
-                                    assignedExecutorUsers: users,
-                                    requests: requestsFactory(requests, tasks),
-                                    typeUser: req.session.passport.user.userTypeID
-                                });
-                            })
-                            .catch(error => {
-                                console.warn(error);
-                                res.render('roles/admin_moderator/requests');
-                            });
-                    })
-                    .catch(error => {
-                        console.warn(error);
-                        res.render('roles/admin_moderator/requests');
-                    });
-            }
+                        })
+                        .catch(error => {
+                            console.warn(error);
+                            res.render('roles/admin_moderator/requests');
+                        });
+                });
         })
         .catch(error => {
             console.warn(error);
@@ -577,6 +547,25 @@ router.post('/create-global-request', validation.createGlobalRequest(), (req, re
             res.status(400).send({errors: errors});
         });
 });
+
+function method(isHold) {
+    return new Promise(function (resolve, reject) {
+
+        if (isHold === 'hold') {
+            Task
+                .getAllHoldTasks()
+                .then(result => {
+                    resolve(result);
+                })
+        } else {
+            Task
+                .getAllTasks()
+                .then(result => {
+                    resolve(result);
+                })
+        }
+    })
+}
 
 router.get('/task-type', (req, res) => {
     TaskType
