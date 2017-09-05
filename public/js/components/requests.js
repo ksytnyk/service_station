@@ -9,7 +9,10 @@ $(document).ready(function () {
             data: $('#createRequestForm').serializeArray(),
             success: function (data) {
 
+                console.log(data.result);
+
                 $('#print_check').attr('data-customer-phone', data.customer.userPhone);
+                $('#print_check').attr('data-request-id', data.result.id);
 
                 showSuccessAlert('Додавання замовлення пройшло успішно.');
 
