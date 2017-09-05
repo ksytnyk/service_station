@@ -502,13 +502,11 @@ router.get('/create-global-request', (req, res) => {
             User
                 .getAllUsers()
                 .then(users => {
-
                     res.render('roles/admin_moderator/create_global_request', {
                         assignedExecutorUsers: users,
                         customers: usersCustomers,
                         typeUser: req.session.passport.user.userTypeID
                     })
-
                 })
                 .catch(err => {
                     console.warn(err);
@@ -524,36 +522,45 @@ router.post('/create-global-request', validation.createGlobalRequest(), (req, re
 
     Request
         .createRequest(req.body)
-        .then((request) => {
-            req.body.endTime = req.body.estimatedTime;
-            req.body.requestID = request.id;
+        .then(request => {
+            User
+                .getUserById(req.body.customerID)
+                .then(customer => {
+                    nodemailer('create-request', customer);
+                    req.body.endTime = req.body.estimatedTime;
+                    req.body.requestID = request.id;
 
-            Task
-                .createTask(req.body)
-                .then(() => {
-                    TaskType
-                        .createTaskType({
-                            typeName: req.body.name,
-                            carMarkk: req.body.carMarkk,
-                            carModel: req.body.carModel,
-                            cost: req.body.cost
-                        })
+                    Task
+                        .createTask(req.body)
                         .then(() => {
-                            res.status(200).send();
+                            TaskType
+                                .createTaskType({
+                                    typeName: req.body.name,
+                                    carMarkk: req.body.carMarkk,
+                                    carModel: req.body.carModel,
+                                    cost: req.body.cost
+                                })
+                                .then(() => {
+                                    res.status(200).send();
+                                })
+                                .catch(errors => {
+                                    console.warn(err);
+                                    res.status(400).send({errors: errors});
+                                })
                         })
                         .catch(errors => {
                             console.warn(err);
                             res.status(400).send({errors: errors});
-                        })
+                        });
+
+                    res.status(200).send({
+                        result: result
+                    });
                 })
                 .catch(errors => {
                     console.warn(err);
                     res.status(400).send({errors: errors});
                 });
-
-            res.status(200).send({
-                result: result
-            });
         })
         .catch(errors => {
             console.warn(err);

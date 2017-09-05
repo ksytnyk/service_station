@@ -2,7 +2,6 @@
 <div class="modal fade" id="deleteRequestFormModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel">
     <div class="modal-dialog delete_form" role="document">
         <div class="modal-content">
-
             <div id="delete-request-form-id" class="delete">
                 <div class="modal-header">
                     <h4 class="modal-title text-center">Видалити замовлення №<span id="delete-request-id"></span> ?</h4>
@@ -16,7 +15,6 @@
                     </button>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
