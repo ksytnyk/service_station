@@ -52,13 +52,13 @@ $(document).ready(function () {
     $('.startTime').datetimepicker({
         defaultDate: new Date(),
         locale: "uk",
-        format: "YYYY.MM.DD HH:mm:ss"
+        format: "YYYY.MM.DD"
     });
 
     $('.datetimepickerN').datetimepicker(
         {
             locale: "uk",
-            format: "YYYY.MM.DD HH:mm:ss"
+            format: "YYYY.MM.DD"
         }
     );
 

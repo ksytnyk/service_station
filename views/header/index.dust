@@ -26,10 +26,10 @@
                             <a href="#" class="modal-window-link" data-toggle="modal" data-target="#createUserFormModal">Користувача</a>
                         </li>
                         <li>
-                            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/create-request">Замовлення</a>
+                            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/create-request">Комплексне замовлення</a>
                         </li>
                         <li>
-                            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/create-global-request">Глобальне замовлення</a>
+                            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/create-global-request">Замовлення</a>
                         </li>
                     </ul>
                 </li>

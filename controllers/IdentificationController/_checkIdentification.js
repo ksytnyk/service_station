@@ -5,11 +5,11 @@ const roles = require("../../constants/roles");
 module.exports = function _checkIdentification(req, res, userTypeID) {
     switch (userTypeID) {
         case roles.ADMIN: {
-            res.redirect('/admin/users');
+            res.redirect('/admin/requests/all');
             break;
         }
         case roles.MODERATOR: {
-            res.redirect('/moderator/users');
+            res.redirect('/moderator/requests/all');
             break;
         }
         case roles.EXECUTOR: {
