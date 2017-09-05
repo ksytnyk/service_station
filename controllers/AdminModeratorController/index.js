@@ -42,6 +42,7 @@ router.post('/create-user', validation.createAndUpdateUser('create'), (req, res)
     User
         .createUser(req.body)
         .then(() => {
+            nodemailer('create-user', req.body);
             req.flash('success_alert', true);
             req.flash('success_msg', 'Додавання користувача пройшло успішно.');
             res.redirect(req.baseUrl + '/users');
@@ -81,7 +82,7 @@ router.delete('/delete-user/:id', (req, res) => {
 });
 
 router.get('/requests/:status', (req, res) => {
-    let findBy;
+    let findBy, hold;
 
     if (req.params.status === 'all' || req.params.status === 'hold') {
         findBy = {
@@ -106,9 +107,12 @@ router.get('/requests/:status', (req, res) => {
                     User
                         .getAllUsers()
                         .then(users => {
+                            if (req.params.status === 'hold') {
+                                hold = true;
+                            }
                             res.render('roles/admin_moderator/requests', {
                                 assignedExecutorUsers: users,
-                                requests: requestsFactory(requests, tasks, true),
+                                requests: requestsFactory(requests, tasks, hold),
                                 typeUser: req.session.passport.user.userTypeID
                             });
                         })
@@ -152,6 +156,7 @@ router.post('/create-request', validation.createAndUpdateRequest(), (req, res) =
             User
                 .getUserById(req.body.customerID)
                 .then(customer => {
+                    nodemailer('create-request', customer);
                     res.status(200).send({
                         result: result,
                         customer: customer
@@ -247,7 +252,7 @@ router.put('/change-request-status/:id', (req, res) => {
                 Request
                     .getRequestById(req.params.id)
                     .then((result) => {
-                        nodemailer(result[0].user.dataValues);
+                        nodemailer('done-request' ,result[0].user.dataValues);
                     })
                     .catch(error => {
                         console.warn(error);

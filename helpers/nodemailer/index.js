@@ -3,10 +3,24 @@
 const nodemailer = require('nodemailer');
 const nodemailerConst = require('../../constants/nodemailer');
 
-module.exports = function (user) {
+module.exports = function (type, data) {
+    let subject, html, to;
 
-    let subject = 'Service Station';
-    let html = 'Ваше замовлення готове!';
+    if (type === 'create-user') {
+        to = data.userEmail;
+        subject = 'Успішна реєстрація користувача';
+        html = data.userName + ' ' + data.userSurname + ', Вас успішно зареєстровано у системі "Service Station". Ваш логін: ' + data.userLogin + ', пароль: ' + data.userPassword + '.';
+    }
+    else if (type === 'done-request') {
+        to = data.userEmail;
+        subject = 'Замолвення готове';
+        html = 'Ваше замовлення готове!';
+    }
+    else if (type === 'create-request') {
+        to = data.userEmail;
+        subject = 'Успішна реєстрація замолвення';
+        html = 'Ваше замовлення успішно зареєстровано!';
+    }
 
     let transporter = nodemailer.createTransport({
         service: "gmail",
@@ -23,7 +37,7 @@ module.exports = function (user) {
 
     let HelperOptions = {
         from: '"Service Station"' + nodemailerConst.EMAIL,
-        to: user.userEmail,
+        to: to,
         subject: subject,
         html: html
     };
