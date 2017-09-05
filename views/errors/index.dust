@@ -4,7 +4,7 @@
     <div class="alert alert-danger clearfix">
         <button class="hide_alert">X</button>
         {#error_msg}
-        <div class="col-lg-4">{msg}</div>
+        <div class="col-lg-12">{msg}</div>
         {/error_msg}
     </div>
     {/error_alert}
@@ -12,7 +12,7 @@
     {#success_alert}
     <div class="alert alert-success clearfix">
         <button class="hide_alert">X</button>
-        <div class="col-lg-4">{success_msg}</div>
+        <div class="col-lg-12">{success_msg}</div>
     </div>
     {/success_alert}
 

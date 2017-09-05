@@ -4,7 +4,7 @@ const roles = require('../../constants/roles');
 
 module.exports = {
 
-    createAndUpdateUser: function () {
+    createAndUpdateUser: function (value) {
 
         return function (req, res, next) {
 
@@ -29,10 +29,16 @@ module.exports = {
             let errors = req.validationErrors();
 
             if (errors) {
-                console.warn(errors);
-                res.status(400).send({
-                    errors: errors
-                });
+                if (value) {
+                    console.warn(errors);
+                    req.flash('error_alert', true);
+                    req.flash('error_msg', errors);
+                    res.redirect('back');
+                } else {
+                    res.status(400).send({
+                        errors: errors
+                    });
+                }
             } else {
                 next();
             }
@@ -127,6 +133,35 @@ module.exports = {
             if (errors) {
                 console.warn(errors);
                 res.status(400).send({errors: errors});
+            } else {
+                next();
+            }
+        }
+    },
+
+    createAndUpdateTaskType: function (value) {
+        return function (req, res, next) {
+
+            req.checkBody('typeName', '"Назва задачі" - обов\'язкове поле.').notEmpty();
+            req.checkBody('carMarkk', '"Марка автомобіля" - обов\'язкове поле.').notEmpty();
+            req.checkBody('carModel', '"Модель автомобіля" - обов\'язкове поле.').notEmpty();
+            req.checkBody('cost', '"Вартість" - обов\'язкове поле.').notEmpty();
+            req.checkBody('cost', 'Поле "Вартість" може містити лише цифри.').isFloat();
+
+            let errors = req.validationErrors();
+
+            if (errors) {
+                console.warn(errors);
+
+                if (value) {
+                    req.flash('error_alert', true);
+                    req.flash('error_msg', errors);
+                    res.redirect(req.baseUrl + '/task-type');
+                } else {
+                    res.status(400).send({
+                        errors: errors
+                    });
+                }
             } else {
                 next();
             }

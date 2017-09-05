@@ -34,7 +34,7 @@ router.get('/users', (req, res) => {
         });
 });
 
-router.post('/create-user', validation.createAndUpdateUser(), (req, res) => {
+router.post('/create-user', validation.createAndUpdateUser('create'), (req, res) => {
     if (req.baseUrl === '/moderator') {
         req.body.userTypeID = roles.CUSTOMER;
     }
@@ -582,7 +582,23 @@ router.get('/task-type', (req, res) => {
         });
 });
 
-router.put('/update-task-type/:id', (req, res) => { // VALIDATION
+router.post('/create-task-type', validation.createAndUpdateTaskType('create'), (req, res) => {
+    TaskType
+        .createTaskType(req.body)
+        .then(() => {
+            req.flash('success_alert', true);
+            req.flash('success_msg', 'Додавання задачі пройшло успішно.');
+            res.redirect(req.baseUrl + '/task-type');
+        })
+        .catch(error => {
+            console.warn(error);
+            req.flash('error_alert', true);
+            req.flash('error_msg', {msg: 'Виникла помилка при додаванні задачі.'});
+            res.redirect(req.baseUrl + '/task-type');
+        });
+});
+
+router.put('/update-task-type/:id', validation.createAndUpdateTaskType(), (req, res) => {
     TaskType
         .updateTaskType(req.params.id, req.body)
         .then(() => {

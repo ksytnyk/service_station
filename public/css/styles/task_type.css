@@ -4,6 +4,7 @@
 .task_type a span {
     margin: 5px;
 }
+.create_task_type .select2,
 .update_task_type .select2 {
     width: 100% !important;
 }

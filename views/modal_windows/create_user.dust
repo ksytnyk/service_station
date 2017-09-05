@@ -2,7 +2,6 @@
 <div class="modal fade" id="createUserFormModal" role="dialog" aria-labelledby="formModalLabel">
     <div class="modal-dialog create_form" role="document">
         <div class="modal-content">
-
             <form action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/create-user" method="POST" class="create">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
