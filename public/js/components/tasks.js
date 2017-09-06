@@ -65,7 +65,6 @@ $(document).ready(function () {
             type: 'post',
             data: dataArr,
             success: function (data) {
-                //$('#print_check').removeClass('hidden');
 
                 $('.check-table tr:last').before('<tr id="idt-' + data.result.id + '">'+
                     '<td>'+data.result.name+'</td>'+

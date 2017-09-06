@@ -1,5 +1,5 @@
 {+print_check}
-<div class="modal fade" id="printCheckFormModal" role="dialog" aria-labelledby="formModalLabel">
+<div class="modal fade printCheckFormModal" id="printCheckFormModal" role="dialog" aria-labelledby="formModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="print_check">
@@ -38,7 +38,7 @@
                             <tbody>
                                 {#request}
                                 {#tasks}
-                                <tr>
+                                <tr id="idt-{id}">
                                     <td>{name}</td>
                                     <td>{cost}</td>
                                     <td>{needBuyParts}</td>
