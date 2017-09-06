@@ -269,6 +269,19 @@ router.put('/change-request-status/:id', (req, res) => {
         });
 });
 
+
+router.get('/get-request-check/:id', (req, res) =>{
+    Request
+        .getRequestById(req.params.id)
+        .then(request => {
+            res.status(200).send({request: request});
+        })
+        .catch(errors => {
+            console.warn(errors);
+            res.status(400).send({errors: errors});
+        });
+});
+
 router.post('/get-task-types', (req, res) => {
     TaskType
         .getTaskTypesByCar(req.body.carMarkk, req.body.carModel)

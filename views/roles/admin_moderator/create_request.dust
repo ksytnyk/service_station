@@ -4,7 +4,7 @@
 
 {>"header/index"/}
 
-<div class="col-lg-12 create_request">
+<div class="col-lg-12 create_request noprint">
     <form class="clearfix" id="createRequestForm">
         <div class="form-group required col-lg-3">
             <label>Назва замовлення</label>
@@ -20,12 +20,12 @@
         </div>
         <div class="form-group required col-lg-3">
                 <label>Час початку</label>
-                <input type="text" class="form-control datetimepickerN startTime disable_input" name="startTime"
+                <input type="text" class="form-control datetimepickerN startTime disable_input" name="startTime" id="startDate"
                        style="margin-bottom: 5px;">
         </div>
         <div class="form-group required col-lg-3">
             <label>Орієнтовний час виконання</label>
-            <input type="text" class="form-control datetimepickerN disable_input" name="estimatedTime"
+            <input type="text" class="form-control datetimepickerN disable_input" name="estimatedTime" id="endDate"
                    style="margin-bottom: 5px;">
         </div>
         <div class="form-group col-lg-3">
@@ -63,8 +63,6 @@
         <div class="form-group col-lg-12" style="margin: 50px 0 -25px;">
             <input type="button" id="create_task" value="Додати задачу" class="btn btn-primary modal-window-link"
                    data-toggle="modal" data-target="#createTaskFormModal" style="width: 255px; float: right; position: relative; z-index: 1;"/>
-            <input type="button" id="print_check" value="Друк" class="btn btn-primary modal-window-link"
-                   data-toggle="modal" data-target="#printCheckFormModal"/>
         </div>
         <div class="form-group col-lg-12" style="margin: 0;">
             <h4>Список завдань</h4>
@@ -74,6 +72,10 @@
                 {>"task_table/index"/}
             </div>
         </div>
+    </div>
+    <div>
+    <input type="button" id="print_check" value="Друк" class="btn btn-primary modal-window-link"
+           data-toggle="modal" data-target="#printCheckFormModal" style="float: right; position: relative; z-index: 1; margin: 0px 5px 0px 0px"/>
     </div>
 </div>
 

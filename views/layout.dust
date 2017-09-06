@@ -29,6 +29,7 @@
         <link rel="stylesheet" href="/css/styles/request.css">
         <link rel="stylesheet" href="/css/styles/chart.css">
         <link rel="stylesheet" href="/css/styles/task_type.css">
+        <link rel="stylesheet" href="/css/styles/print.css">
     {/lt}
 
     {@eq key=typeUser value=undefined}
@@ -85,6 +86,7 @@
     <script src="/js/components/globalRequest.js"></script>
     <script src="/js/components/taskType.js"></script>
     <script src="/js/components/setSelect2.js"></script>
+    <script src="/js/components/check.js"></script>
 {/lt}
 
 <script src="/js/components/main.js"></script>

@@ -66,6 +66,16 @@ $(document).ready(function () {
             success: function (data) {
                 //$('#print_check').removeClass('hidden');
 
+                console.log(data.result.id);
+
+                $('.check-table tr:last').before('<tr id="idt-' + data.result.id + '">'+
+                    '<td>'+data.result.name+'</td>'+
+                    '<td>'+data.result.cost+'</td>'+
+                    '<td>'+data.result.needBuyParts+'</td>'+
+                    '<td></td>'+
+                    '</tr>');
+
+
                 $('.in .close').click();
 
                 showSuccessAlert('Додавання задачі пройшло успішно.');
@@ -168,6 +178,24 @@ $(document).ready(function () {
             type: 'put',
             data: dataArr,
             success: function (data) {
+
+                $('#idt-' + data.task.id + '').empty();
+                $('#idt-' + data.task.id + '').append(''+
+                    '<td>'+data.task.name+'</td>'+
+                    '<td>'+data.task.cost+'</td>'+
+                    '<td>'+data.task.needBuyParts+'</td>'+
+                    '<td></td>');
+
+                /*$('.check-table tr:last').before('<tr class>'+
+                    '<td class="hidden">'+data.result.id+'</td>'+
+                    '<td>'+data.result.name+'</td>'+
+                    '<td>'+data.result.cost+'</td>'+
+                    '<td>'+data.result.needBuyParts+'</td>'+
+                    '<td></td>'+
+                    '</tr>');*/
+
+
+
                 $('.in .close').click();
                 $('.update-form-task-type-input').addClass("hidden");
                 $('#update_new_task .select2').removeClass("hidden");

@@ -1,0 +1,9 @@
+@media print {
+    .noprint {
+        display: none;
+    }
+
+    .noprint .modal-header {
+        border-bottom: none;
+    }
+}

@@ -1,5 +1,5 @@
 {+errors}
-<div class="col-lg-12 alerts_block">
+<div class="col-lg-12 alerts_block noprint">
     {#error_alert}
     <div class="alert alert-danger clearfix">
         <button class="hide_alert">X</button>
