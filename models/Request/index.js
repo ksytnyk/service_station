@@ -29,7 +29,7 @@ const describeRequestTable = {
         defaultValue: 1,
         field: 'status'
     },
-    hadStarted:{
+    hadStarted: {
         type: Sequelize.BOOLEAN,
         field: 'had_started'
     },
@@ -229,24 +229,20 @@ Request.changeStatus = function (idRequest, requestStatus) {
                     }
                 })
             .then(result => {
-                if (+requestStatus !== status.HOLD && +requestStatus !== status.PROCESSING ) {
-                    var data = {
-                        requestID: idRequest,
-                        status: requestStatus
-                    };
+                var data = {
+                    requestID: idRequest,
+                    status: requestStatus
+                };
 
-                    RequestHistory
-                        .createRequestHistory(data)
-                        .then(() => {
-                            resolve(result);
-                        })
-                        .catch(err => {
-                            console.warn(err);
-                            reject(err);
-                        });
-                } else {
-                    resolve(result);
-                }
+                RequestHistory
+                    .createRequestHistory(data)
+                    .then(() => {
+                        resolve(result);
+                    })
+                    .catch(err => {
+                        console.warn(err);
+                        reject(err);
+                    });
             })
             .catch(err => {
                 console.warn(err);

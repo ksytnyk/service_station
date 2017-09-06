@@ -29,7 +29,8 @@ RequestHistory.getAllRequestHistory = function (data) {
                 where: {
                     createdAt: {
                         $between: [new Date(data.fromDateChart), new Date(data.toDateChart)]
-                    }
+                    },
+                    status: [1, 3, 5]
                 },
                 attributes: ['requestID', 'status', 'createdAt']
             })
