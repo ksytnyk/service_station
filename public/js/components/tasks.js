@@ -180,9 +180,9 @@ $(document).ready(function () {
                 $('#idt-' + data.task.id + '').empty();
                 $('#idt-' + data.task.id + '').append(''+
                     '<td>'+data.task.name+'</td>'+
-                    '<td>'+data.task.cost+'</td>'+
+                    '<td class="tac">'+data.task.cost+'</td>'+
                     '<td>'+data.task.needBuyParts+'</td>'+
-                    '<td></td>');
+                    '<td class="tac"></td>');
 
                 $('.in .close').click();
                 $('.update-form-task-type-input').addClass("hidden");

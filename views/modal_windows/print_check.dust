@@ -40,9 +40,9 @@
                                 {#tasks}
                                 <tr id="idt-{id}">
                                     <td>{name}</td>
-                                    <td>{cost}</td>
+                                    <td class="tac">{cost}</td>
                                     <td>{needBuyParts}</td>
-                                    <td></td>
+                                    <td class="tac"></td>
                                 </tr>
                                 {/tasks}
                                 {/request}
