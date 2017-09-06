@@ -310,6 +310,9 @@ thead {
 }
 .create_request #access_update_request,
 .create_request #update_request,
+.create_request #print_check {
+    display: none;
+}
 .create_request #print_check_global {
     display: none;
 }
