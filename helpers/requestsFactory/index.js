@@ -2,7 +2,7 @@
 
 const formatDate = require('../formatDate/index');
 
-module.exports = function (requests, tasks, isHold) {
+module.exports = function (requests, tasks, isHold, requestsHistory) {
 
     let requestsObj = {};
 
@@ -13,6 +13,7 @@ module.exports = function (requests, tasks, isHold) {
             requestsObj[item.id].estimatedTime = formatDate(requestsObj[item.id].estimatedTime);
             requestsObj[item.id].user = item.dataValues.user.dataValues;
             requestsObj[item.id].tasks = [];
+            requestsObj[item.id].requestsHistory = [];
             if (new Date(item.estimatedTime) - new Date() > 0) {
                 requestsObj[item.id].overdue = 0;
             } else {
@@ -28,6 +29,13 @@ module.exports = function (requests, tasks, isHold) {
                 item.dataValues.endTime = formatDate(item.dataValues.endTime);
                 requestsObj[item.requestID].tasks.push(item.dataValues);
             }
+        });
+    }
+
+    if (requestsHistory) {
+        requestsHistory.map(item => {
+            item.dataValues.createdAt = formatDate(item.dataValues.createdAt);
+            requestsObj[item.requestID].requestsHistory.push(item.dataValues);
         });
     }
 

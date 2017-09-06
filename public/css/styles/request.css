@@ -29,7 +29,7 @@
 }
 
 .requests .task_table {
-    margin: 0 0 34px;
+    margin: 0;
 }
 
 .requests .task_table th {
@@ -67,7 +67,15 @@
 .requests .width-control-buttons{
     width: 15px;
 }
-.requests .overdue {
-    color: #ff0000;
-    font-weight: bold;
+.requests .request_history {
+    height: 85px;
+    overflow-y: scroll;
+    border-top: 10px solid #eee;
+}
+.requests .request_history .table {
+    margin-bottom: 0;
+}
+.requests .request_history .table td {
+    padding-top: 0;
+    padding-bottom: 0;
 }

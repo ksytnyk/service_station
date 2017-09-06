@@ -111,6 +111,36 @@
                 </td>
                 <td style="padding: 0; vertical-align: top;" class="{@eq key=status value=5}disable-task{/eq}">
                     {>"task_table/index"/}
+                    <div class="request_history">
+                        <table class="table">
+                            <tbody>
+                            {#requestsHistory}
+                            <tr>
+                                <td class="tac" style="width: 25px;">
+                                    <strong>{id}</strong>
+                                </td>
+                                <td>
+                                    {@eq key=status value=1}
+                                    <p>Замовлення в очікувані</p>
+                                    {/eq}
+                                    {@eq key=status value=2}
+                                    <p>Замовлення виконується</p>
+                                    {/eq}
+                                    {@eq key=status value=3}
+                                    <p>Замовлення виконано</p>
+                                    {/eq}
+                                    {@eq key=status value=5}
+                                    <p>Замовлення анульовано</p>
+                                    {/eq}
+                                </td>
+                                <td>
+                                    <p>{createdAt}</p>
+                                </td>
+                            </tr>
+                            {/requestsHistory}
+                            </tbody>
+                        </table>
+                    </div>
                 </td>
             </tr>
             {/requests}

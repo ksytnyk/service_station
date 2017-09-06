@@ -102,24 +102,32 @@ router.get('/requests/:status', (req, res) => {
     Request
         .getAllRequests(findBy)
         .then(requests => {
-            method(req.params.status)
-                .then(tasks => {
-                    User
-                        .getAllUsers()
-                        .then(users => {
-                            if (req.params.status === 'hold') {
-                                hold = true;
-                            }
-                            res.render('roles/admin_moderator/requests', {
-                                assignedExecutorUsers: users,
-                                requests: requestsFactory(requests, tasks, hold),
-                                typeUser: req.session.passport.user.userTypeID
-                            });
-                        })
-                        .catch(error => {
-                            console.warn(error);
-                            res.render('roles/admin_moderator/requests');
+            RequestHistory
+                .getAllRequestHistory()
+                .then(requestsHistory => {
+                    method(req.params.status)
+                        .then(tasks => {
+                            User
+                                .getAllUsers()
+                                .then(users => {
+                                    if (req.params.status === 'hold') {
+                                        hold = true;
+                                    }
+                                    res.render('roles/admin_moderator/requests', {
+                                        assignedExecutorUsers: users,
+                                        requests: requestsFactory(requests, tasks, hold, requestsHistory),
+                                        typeUser: req.session.passport.user.userTypeID
+                                    });
+                                })
+                                .catch(error => {
+                                    console.warn(error);
+                                    res.render('roles/admin_moderator/requests');
+                                });
                         });
+                })
+                .catch(error => {
+                    console.warn(error);
+                    res.render('roles/admin_moderator/requests');
                 });
         })
         .catch(error => {
@@ -469,7 +477,7 @@ router.get('/chart', (req, res) => {
 
 router.post('/chart/requests', (req, res) => {
     RequestHistory
-        .getAllRequestHistory(req.body)
+        .getChartRequestHistory(req.body)
         .then(requestHistory => {
             res.status(200).send({
                 data: countRequestHistory(req.body, requestHistory)

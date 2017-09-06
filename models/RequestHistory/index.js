@@ -22,7 +22,7 @@ let RequestHistory = sequelize.define('request_history', describeRequestHistoryT
 
 RequestHistory.sync();
 
-RequestHistory.getAllRequestHistory = function (data) {
+RequestHistory.getChartRequestHistory = function (data) {
     return new Promise((resolve, reject) => {
         RequestHistory
             .findAll({
@@ -34,6 +34,20 @@ RequestHistory.getAllRequestHistory = function (data) {
                 },
                 attributes: ['requestID', 'status', 'createdAt']
             })
+            .then(requests => {
+                resolve(requests);
+            })
+            .catch(err => {
+                console.warn(err);
+                reject(err);
+            });
+    });
+};
+
+RequestHistory.getAllRequestHistory = function () {
+    return new Promise((resolve, reject) => {
+        RequestHistory
+            .findAll()
             .then(requests => {
                 resolve(requests);
             })
