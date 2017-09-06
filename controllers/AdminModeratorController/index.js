@@ -577,7 +577,10 @@ router.post('/create-global-request', validation.createGlobalRequest(), (req, re
                                     cost: req.body.cost
                                 })
                                 .then(() => {
-                                    res.status(200).send();
+                                    res.status(200).send({
+                                        request: request,
+                                        customer: customer
+                                    });
                                 })
                                 .catch(errors => {
                                     console.warn(err);

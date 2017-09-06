@@ -11,7 +11,11 @@ $(document).ready(function () {
         var dataArr = $('#createRequestForm').serializeArray();
         var taskTypeName = $('#globalTaskTypeID' + taskTypeID).attr('globalTaskTypeID');
 
-        dataArr[6].value = setTimeToDate(dataArr[6].value);
+        if (dataArr.length === 15) {
+            dataArr[5].value = setTimeToDate(dataArr[5].value);
+        } else {
+            dataArr[6].value = setTimeToDate(dataArr[6].value);
+        }
 
         if (dataArr[3].value === '') {
             dataArr[3].value = taskTypeName;
@@ -21,11 +25,14 @@ $(document).ready(function () {
             url: window.location.pathname,
             type: 'post',
             data: dataArr,
-            success: function () {
-                // window.location.replace('/admin/requests/all');
+            success: function (data) {
+
                 showSuccessAlert('Додавання замовлення пройшло успішно.');
+
+                $('#print_check_global').attr('data-request-id', data.request.id);
+                $('#print_check_global').attr('data-customer-phone', data.customer.userPhone);
                 $('#create_task_request').hide();
-                $('#print_check').show();
+                $('#print_check_global').show();
             },
             error: function (err) {
                 showErrorAlert(err);

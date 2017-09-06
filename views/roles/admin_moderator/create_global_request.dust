@@ -4,7 +4,7 @@
 
 {>"header/index"/}
 
-<div class="col-lg-12 create_request">
+<div class="col-lg-12 create_request noprint">
     <form class="clearfix" id="createRequestForm">
         <div class="form-group required col-lg-3">
             <label>Тип транспорту</label>
@@ -98,7 +98,7 @@
         </div>
         <div class="form-group col-lg-6">
             <label>Відсутні запчастини</label>
-            <textarea class="form-control create-form-task" name="needBuyParts" rows="3"></textarea>
+            <textarea class="form-control create-form-task" name="needBuyParts" rows="3" id="needBuyParts"></textarea>
         </div>
         <div class="form-group col-lg-6">
             <label>Коментар</label>
@@ -107,8 +107,10 @@
         <div class="form-group col-lg-3 col-lg-offset-9" style="margin-top: 10px;">
             <input type="button" id="create_task_request" value="Додати замовлення"
                    class="btn btn-success col-lg-12"/>
-            <input type="button" id="print_check" value="Друкувати замовлення" class="btn btn-danger modal-window-link col-lg-12"
-                    data-toggle="modal" data-target="#printCheckFormModal" title="Друк"/>
+            <button type="button" id="print_check_global" value="Друк" class="btn btn-danger modal-window-link col-lg-offset-1 col-lg-2"
+                    data-toggle="modal" data-target="#printCheckFormModal" title="Друк">
+                <span class="glyphicon glyphicon-print" aria-hidden="true" style="margin: 3px 0;"></span>
+            </button>
         </div>
     </form>
 </div>
