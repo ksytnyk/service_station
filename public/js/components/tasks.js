@@ -51,6 +51,8 @@ $(document).ready(function () {
     $('#taskAddButton').on('click', function () {
         var dataArr = $('#createTaskForm').serializeArray();
 
+        dataArr[6].value = setTimeToDate(dataArr[6].value);
+
         if (dataArr[1].value === '' && $('.task-type-select').serializeArray()[0]) {
             var taskTypeID = $('#taskTypeID' + $('.task-type-select').serializeArray()[0].value).attr('taskTypeID');
             dataArr[2].value = taskTypeID;
@@ -147,7 +149,11 @@ $(document).ready(function () {
 
     $('.task-update-button').on('click', function (event) {
         event.preventDefault();
+
         var dataArr = $('#update-form-task').serializeArray();
+        var oldStartTime = $('#change-status-update-task').attr('old-start-time');
+
+        dataArr[8].value = checkDateForUpdate(oldStartTime, dataArr[8].value);
 
         if (getRole(window.location.pathname) !== '/executor' && getRole(window.location.pathname) !== '/store-keeper') {
             if (dataArr[3].value === '') {
@@ -475,13 +481,16 @@ function updateTaskOnClick(value) {
         $('#update-form-task-description').val($(this).data('task-description'));
         $('#update-form-task-planed-executor').val($(this).data('task-planed-executor')).change();
         $('#update-form-task-estimation-time').val($(this).data('task-estimation-time'));
-        $('#update-form-task-start-time').val($(this).data('task-start-time'));
+        $('#update-form-task-start-time').val($(this).data('task-start-time').slice(0, 10));
+        $('#change-status-update-task').attr('old-start-time', ($(this).data('task-start-time')));
         $('#update-form-task-end-time').val($(this).data('task-end-time'));
         $('#update-form-task-parts').val($(this).data('task-parts'));
         $('#update-form-task-customer-parts').val($(this).data('task-customer-parts'));
         $('#update-form-task-need-buy-parts').val($(this).data('task-need-buy-parts'));
         $('#update-form-task-status').val($(this).data('task-status'));
         $('#update-form-task-comment').val($(this).data('task-comment'));
+
+
     });
 }
 
@@ -502,24 +511,6 @@ function getIdRole(pathname) {
     }
 }
 
-function formatDate(date) {
-    var date = new Date(date);
-    var array = [
-        date.getFullYear(),
-        date.getMonth() + 1,
-        date.getDate(),
-        date.getHours(),
-        date.getMinutes(),
-        date.getSeconds()
-    ];
-
-    var res = array.map(item => {
-        if (item < 10) item = "0" + item;
-        return item;
-    });
-
-    return res[0] + '.' + res[1] + '.' + res[2] + ' ' + res[3] + ':' + res[4] + ':' + res[5];
-}
 
 //====================== function change class for status ==============================================================
 

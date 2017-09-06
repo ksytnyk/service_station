@@ -3,10 +3,15 @@ $(document).ready(function () {
     $('[data-toggle="popover"]').popover();
 
     $('#create_request').on('click', function () {
+        var dataArr = $('#createRequestForm').serializeArray();
+
+        dataArr[2].value = setTimeToDate(dataArr[2].value);
+        dataArr[3].value = setTimeToDate(dataArr[3].value);
+
         $.ajax({
             url: window.location.pathname,
             type: 'post',
-            data: $('#createRequestForm').serializeArray(),
+            data: dataArr,
             success: function (data) {
 
                 $('#print_check').attr('data-customer-phone', data.customer.userPhone);
@@ -35,10 +40,17 @@ $(document).ready(function () {
     });
 
     $('#update_request').on('click', function () {
+        var dataArr = $('#createRequestForm').serializeArray();
+        var oldStartTime = $('#update_request').data('start-time');
+        var oldEstimatedTime = $('#update_request').data('estimated-time');
+
+        dataArr[2].value = checkDateForUpdate(oldStartTime, dataArr[2].value);
+        dataArr[3].value = checkDateForUpdate(oldEstimatedTime, dataArr[3].value);
+
         $.ajax({
             url: getRole(window.location.pathname) + '/update-request/' + $(this).attr("request-id"),
             type: 'put',
-            data: $('#createRequestForm').serializeArray(),
+            data: dataArr,
             success: function (data) {
                 showSuccessAlert('Оновлення замовлення пройшло успішно.');
 

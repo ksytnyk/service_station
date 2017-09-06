@@ -35,9 +35,12 @@ $(document).ready(function () {
 
     function chartRequest() {
         var data = $('#between-dates').serializeArray();
+        var newData = {
+            fromDateChart: setTimeToDate(data[0].value),
+            toDateChart: setTimeToDate(data[1].value)
+        };
 
-        if (checkSequence(data)) {
-
+        if (checkSequence(newData)) {
             var pointBackgroundColor = [
                 '#ffc927',
                 '#43c743',
@@ -52,7 +55,7 @@ $(document).ready(function () {
 
             var title = ["Нові замовлення", "Виконані замовлення", "Анульовані замовлення"];
 
-            $.post("/admin/chart/requests", data, function (result) {
+            $.post("/admin/chart/requests", newData, function (result) {
                 $('#div-for-chart').empty().append('<canvas id="myChart" height="42"></canvas>');
                 $('#div-for-chart1').empty().append('<canvas id="myChart1" height="42"></canvas>');
                 $('#div-for-chart2').empty().append('<canvas id="myChart2" height="42"></canvas>');
@@ -80,9 +83,13 @@ $(document).ready(function () {
 
     function chartTasks() {
         var data = $('#between-dates').serializeArray();
+        var newData = {
+            fromDateChart: setTimeToDate(data[0].value),
+            toDateChart: setTimeToDate(data[1].value)
+        };
 
-        if (checkSequence(data)) {
-            $.post("/admin/chart/tasks", data, function (result) {
+        if (checkSequence(newData)) {
+            $.post("/admin/chart/tasks", newData, function (result) {
 
                 var template = '' +
                     '<h4>Статистика виконання задач</h4>' +
@@ -146,9 +153,13 @@ $(document).ready(function () {
 
     function chartFinances() {
         var data = $('#between-dates').serializeArray();
+        var newData = {
+            fromDateChart: setTimeToDate(data[0].value),
+            toDateChart: setTimeToDate(data[1].value)
+        };
 
-        if (checkSequence(data)) {
-            $.post("/admin/chart/finances", data, function (result) {
+        if (checkSequence(newData)) {
+            $.post("/admin/chart/finances", newData, function (result) {
                 $('#div-for-chart1').empty();
                 $('#div-for-chart2').empty();
                 $('#div-for-chart').empty().append('<canvas id="myChart" height="125"></canvas>');
@@ -173,7 +184,7 @@ $(document).ready(function () {
 });
 
 function checkSequence(data) {
-    return data[1].value > data[0].value;
+    return data.toDateChart > data.fromDateChart;
 }
 
 function setChart(labels, data, borderColor, pointBgc, title, label) {
@@ -218,7 +229,6 @@ function setChart(labels, data, borderColor, pointBgc, title, label) {
         }
     };
 }
-
 
 
 

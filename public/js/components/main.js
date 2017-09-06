@@ -1,12 +1,28 @@
 $(document).ready(function () {
 
+    let permission = true;
+
     $(document).keydown(function(event) {
+
         if (event.keyCode === 13) {
-            $('.in .agree').click();
+            if (permission) {
+                $('.in .agree').click();
+            } else {
+                return;
+            }
         }
 
         if (event.keyCode === 27) $('.in .close').click();
     });
+
+    $('select')
+        .on('select2:open', function () {
+            permission = false;
+        })
+        .on('select2:close', function () {
+            permission = true;
+            event.stopPropagation();
+        });
 
     if (document.getElementsByClassName(window.location.pathname)[0] !== undefined) {
         var elements = document.getElementsByClassName(window.location.pathname);
@@ -55,12 +71,10 @@ $(document).ready(function () {
         format: "YYYY.MM.DD"
     });
 
-    $('.datetimepickerN').datetimepicker(
-        {
-            locale: "uk",
-            format: "YYYY.MM.DD"
-        }
-    );
+    $('.datetimepickerN').datetimepicker({
+        locale: "uk",
+        format: "YYYY.MM.DD"
+    });
 
 });
 
@@ -117,4 +131,45 @@ function headerFix() {
             }
         }, 0);
     });
+}
+
+function formatDate(date) {
+    var date = new Date(date);
+    var array = [
+        date.getFullYear(),
+        date.getMonth() + 1,
+        date.getDate(),
+        date.getHours(),
+        date.getMinutes(),
+        date.getSeconds()
+    ];
+
+    var res = array.map(item => {
+        if (item < 10) item = "0" + item;
+        return item;
+    });
+
+    return res[0] + '.' + res[1] + '.' + res[2] + ' ' + res[3] + ':' + res[4] + ':' + res[5];
+}
+
+function setTimeToDate(value) {
+    value = new Date(value);
+
+    var today = new Date();
+    var hours = today.getHours();
+    var minutes = today.getMinutes();
+    var seconds = today.getSeconds();
+
+    value.setHours(hours, minutes, seconds);
+
+    return value;
+}
+
+function checkDateForUpdate(oldDate, newDate) {
+    if ( oldDate.slice(0, 10) === newDate ) {
+        return oldDate;
+    } else {
+        newDate = setTimeToDate(newDate);
+        return newDate;
+    }
 }

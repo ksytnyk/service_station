@@ -58,7 +58,7 @@
             <input type="button" id="access_update_request" value="Редагувати замовлення"
                    class="btn btn-warning col-lg-12"/>
             <input type="button" id="update_request" value="Зберегти зміни" request-id="{id}"
-                   class="btn btn-success col-lg-12"/>
+                   class="btn btn-success col-lg-12" data-start-time="{startTime}" data-estimated-time="{estimatedTime}"/>
         </div>
     </form>
 

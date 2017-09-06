@@ -11,6 +11,8 @@ $(document).ready(function () {
         var dataArr = $('#createRequestForm').serializeArray();
         var taskTypeName = $('#globalTaskTypeID' + taskTypeID).attr('globalTaskTypeID');
 
+        dataArr[6].value = setTimeToDate(dataArr[6].value);
+
         if (dataArr[3].value === '') {
             dataArr[3].value = taskTypeName;
         }
