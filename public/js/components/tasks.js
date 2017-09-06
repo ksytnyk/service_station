@@ -51,12 +51,13 @@ $(document).ready(function () {
     $('#taskAddButton').on('click', function () {
         var dataArr = $('#createTaskForm').serializeArray();
 
-        dataArr[6].value = setTimeToDate(dataArr[6].value);
-
         if (dataArr[1].value === '' && $('.task-type-select').serializeArray()[0]) {
             var taskTypeID = $('#taskTypeID' + $('.task-type-select').serializeArray()[0].value).attr('taskTypeID');
             dataArr[2].value = taskTypeID;
             dataArr[1].value = dataArr[2].value;
+            dataArr[6].value = setTimeToDate(dataArr[6].value);
+        } else {
+            dataArr[5].value = setTimeToDate(dataArr[5].value);
         }
 
         $.ajax({
@@ -66,13 +67,11 @@ $(document).ready(function () {
             success: function (data) {
                 //$('#print_check').removeClass('hidden');
 
-                console.log(data.result.id);
-
                 $('.check-table tr:last').before('<tr id="idt-' + data.result.id + '">'+
                     '<td>'+data.result.name+'</td>'+
-                    '<td>'+data.result.cost+'</td>'+
+                    '<td class="tac">'+data.result.cost+'</td>'+
                     '<td>'+data.result.needBuyParts+'</td>'+
-                    '<td></td>'+
+                    '<td class="tac"></td>'+
                     '</tr>');
 
 
@@ -501,6 +500,14 @@ function updateTaskOnClick(value) {
                 $('#update-form-task-old-cost').val($(this).data('task-cost'));
                 $('#update-form-task-cost').val($(this).data('task-cost'));
             }
+        } else {
+            isFirstUpdateClick = true;
+            var taskName = $(this).data('task-name');
+            var taskTypeID = $("option[updateTaskTypeID='" + taskName + "']").val();
+
+            $('#update-form-task-type-select').val(taskTypeID).change();
+            $('#update-form-task-old-cost').val($(this).data('task-cost'));
+            $('#update-form-task-cost').val($(this).data('task-cost'));
         }
 
         $('#update-form-task-id').val($(this).data('id'));
@@ -517,8 +524,6 @@ function updateTaskOnClick(value) {
         $('#update-form-task-need-buy-parts').val($(this).data('task-need-buy-parts'));
         $('#update-form-task-status').val($(this).data('task-status'));
         $('#update-form-task-comment').val($(this).data('task-comment'));
-
-
     });
 }
 

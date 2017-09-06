@@ -9,45 +9,50 @@
                     <h4 class="modal-title text-center">Квитанція</h4>
                 </div>
                 <div class="modal-body clearfix">
-                    <div class="form-group">
+                    <div class="form-group col-lg-12">
                         <label>№</label>
-                        <a id="number-or-request"></a>
+                        <span id="number-or-request"></span>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-lg-12">
                         <label>Дата прийняття:</label>
-                        <a id="start-date"></a>
+                        <span id="start-date"></span>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-lg-12">
                         <label>Орієнтована дата завершення:</label>
-                        <a id="end-date"></a>
+                        <span id="end-date"></span>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-lg-12">
                         <label>Телефон клієнта (для довідок):</label>
-                        <a id="customer-phone"></a>
+                        <span id="customer-phone"></span>
                     </div>
-                    <div>
+                    <div class="form-group col-lg-12">
                         <table class="table check-table">
-                            <tr>
-                                <td>Вид робіт</td>
-                                <td>Ціна</td>
-                                <td>Необхідні запчастини</td>
-                                <td>Ціна</td>
-                            </tr>
-                            <tr class="check-table-data">
-                            </tr>
-                            <tr>
-                                <td>Разом</td>
-                                <td id="all-sum"></td>
-                                <td>Разом</td>
-                                <td id="components-sum"></td>
-                            </tr>
+                            <thead>
+                                <tr>
+                                    <th>Вид робіт</th>
+                                    <th class="tac" style="width: 75px;">Ціна</th>
+                                    <th>Необхідні запчастини</th>
+                                    <th class="tac" style="width: 75px;">Ціна</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="check-table-data">
+                                </tr>
+                                <tr>
+                                    <th class="tar">Разом:</th>
+                                    <td class="tac" id="all-sum"></td>
+                                    <th class="tar">Разом:</th>
+                                    <td class="tac" id="components-sum"></td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
-                    <div class="form-group noprint">
-                        <label><input id="checkbox-print" type="checkbox" value="" checked>Друкувати</label>
+                    <div class="form-group noprint col-lg-6" style="margin-top: 6px;">
+                        <label>Друкувати</label>
+                        <input id="checkbox-print" type="checkbox" value="" checked/>
                     </div>
 
-                    <div class="form-group noprint" style="margin-top: 25px;">
+                    <div class="form-group noprint col-lg-6">
                         <button class="btn btn-success width" id="agree-print-check" data-dismiss="modal">
                             Підтвердити
                         </button>

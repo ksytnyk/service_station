@@ -54,9 +54,13 @@
             <input type="button" id="create_request" value="Додати замовлення"
                    class="btn btn-success col-lg-12 disable_input"/>
             <input type="button" id="access_update_request" value="Редагувати замовлення"
-                   class="btn btn-warning col-lg-12"/>
+                   class="btn btn-warning col-lg-9"/>
             <input type="button" id="update_request" value="Зберегти зміни"
-                   class="btn btn-success col-lg-12"/>
+                   class="btn btn-success col-lg-9"/>
+            <button type="button" id="print_check" value="Друк" class="btn btn-danger modal-window-link col-lg-offset-1 col-lg-2"
+                   data-toggle="modal" data-target="#printCheckFormModal" title="Друк">
+                <span class="glyphicon glyphicon-print" aria-hidden="true" style="margin: 3px 0;"></span>
+            </button>
         </div>
     </form>
     <div id="step" class="clearfix">
@@ -72,10 +76,6 @@
                 {>"task_table/index"/}
             </div>
         </div>
-    </div>
-    <div>
-    <input type="button" id="print_check" value="Друк" class="btn btn-primary modal-window-link"
-           data-toggle="modal" data-target="#printCheckFormModal" style="float: right; position: relative; z-index: 1; margin: 0px 5px 0px 0px"/>
     </div>
 </div>
 
