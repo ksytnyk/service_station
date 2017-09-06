@@ -56,6 +56,7 @@
             <p><strong>Відсутні запчастини: </strong>{needBuyParts}</p>
             <p class="bt"><strong>Коментар: </strong>{comment}</p>
         </td>
+        {@lt key=typeUser value=5}
         {@gt key=typeUser value=2}
         <td class="tac">
             <div class="tasks-status-form">
@@ -106,7 +107,6 @@
             </div>
         </td>
         {/gt}
-        {@lt key=typeUser value=5}
         <td class="tac bb">
             <a class="update-task modal-window-link"
                title="Редагувати задачу"

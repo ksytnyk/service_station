@@ -109,14 +109,15 @@
                         {/ne}
                     </div>
                 </td>
-                <td style="padding: 0; vertical-align: top;" class="{@eq key=status value=5}disable-task{/eq}">
+                <td style="padding: 0; vertical-align: top; position: relative;" class="{@eq key=status value=5}disable-task{/eq}">
                     {>"task_table/index"/}
+                    <div class="border"></div>
                     <div class="request_history">
                         <table class="table">
                             <tbody>
                             {#requestsHistory}
                             <tr>
-                                <td class="tac" style="width: 25px;">
+                                <td class="tac" style="width: 35px;">
                                     <strong>{id}</strong>
                                 </td>
                                 <td>
