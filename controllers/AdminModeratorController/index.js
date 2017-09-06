@@ -187,13 +187,22 @@ router.get('/requests/update-request/:id', (req, res) => {
                                     TaskType
                                         .getTaskTypesByCar(request[0].dataValues.carMarkk, request[0].dataValues.carModel)
                                         .then(taskTypes => {
-                                            res.render('roles/admin_moderator/update_request', {
-                                                taskTypes: taskTypes,
-                                                assignedExecutorUsers: users,
-                                                customers: usersCustomers,
-                                                typeUser: req.session.passport.user.userTypeID,
-                                                request: requestsFactory(request, task)
-                                            })
+                                            User
+                                                .getUserById(request[0].dataValues.customerID)
+                                                .then(customer => {
+                                                    res.render('roles/admin_moderator/update_request', {
+                                                        customer: customer,
+                                                        taskTypes: taskTypes,
+                                                        assignedExecutorUsers: users,
+                                                        customers: usersCustomers,
+                                                        typeUser: req.session.passport.user.userTypeID,
+                                                        request: requestsFactory(request, task)
+                                                    })
+                                                })
+                                                .catch(error => {
+                                                    console.warn(error);
+                                                    res.render('roles/admin_moderator/update_request');
+                                                });
                                         })
                                         .catch(error => {
                                             console.warn(error);
@@ -213,7 +222,22 @@ router.put('/update-request/:id', validation.createAndUpdateRequest(), (req, res
     Request
         .updateRequest(req.params.id, req.body)
         .then((result) => {
-            res.status(200).send({result: result});
+            Request
+                .getRequestById(req.params.id)
+                .then(request => {
+                    console.log(request);
+                    User
+                        .getUserById(request[0].dataValues.customerID)
+                        .then(customer => {
+                            res.status(200).send({result: result, customer: customer});
+                        })
+                        .catch(errors => {
+                            res.status(400).send({errors: errors});
+                        });
+                })
+                .catch(errors => {
+                    res.status(400).send({errors: errors});
+                });
         })
         .catch(errors => {
             res.status(400).send({errors: errors});

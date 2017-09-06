@@ -54,8 +54,10 @@ $(document).ready(function () {
             url: getRole(window.location.pathname) + '/update-request/' + $(this).attr("request-id"),
             type: 'put',
             data: dataArr,
-            success: function () {
+            success: function (data) {
                 showSuccessAlert('Оновлення замовлення пройшло успішно.');
+
+                $('#print_check_update_request').attr('customer-phone', data.customer.userPhone);
 
                 $('.disable_input').prop('disabled', true);
                 $('#update_request').hide()

@@ -185,16 +185,6 @@ $(document).ready(function () {
                     '<td>'+data.task.needBuyParts+'</td>'+
                     '<td></td>');
 
-                /*$('.check-table tr:last').before('<tr class>'+
-                    '<td class="hidden">'+data.result.id+'</td>'+
-                    '<td>'+data.result.name+'</td>'+
-                    '<td>'+data.result.cost+'</td>'+
-                    '<td>'+data.result.needBuyParts+'</td>'+
-                    '<td></td>'+
-                    '</tr>');*/
-
-
-
                 $('.in .close').click();
                 $('.update-form-task-type-input').addClass("hidden");
                 $('#update_new_task .select2').removeClass("hidden");

@@ -15,7 +15,7 @@
             <label>Клієнт</label>
             <select class="form-control add_select2 disable_input" name="customerID" id="customers" disabled>
                 {#customers}
-                <option value="{id}">{userName} {userSurname}</option>
+                <option value="{id}" {@eq key=id value=customer.id}selected{/eq} >{userName} {userSurname}</option>
                 {/customers}
             </select>
         </div>
@@ -59,8 +59,13 @@
                    class="btn btn-warning col-lg-9"/>
             <input type="button" id="update_request" value="Зберегти зміни" request-id="{id}"
                    class="btn btn-success col-lg-9" start-time="{startTime}" estimated-time="{estimatedTime}"/>
-            <button type="button" id="print_check" value="Друк" class="btn btn-danger modal-window-link col-lg-offset-1 col-lg-2"
-                    data-toggle="modal" data-target="#printCheckFormModal" title="Друк">
+            <button type="button"
+                    title="Друк"
+                   id="print_check_update_request"
+                   class="btn btn-danger modal-window-link col-lg-offset-1 col-lg-2"
+                   data-toggle="modal"
+                   data-target="#printCheckFormModal"
+                   customer-phone="{customer.userPhone}">
                 <span class="glyphicon glyphicon-print" aria-hidden="true" style="margin: 3px 0;"></span>
             </button>
         </div>
@@ -87,5 +92,6 @@
 {>"modal_windows/create_task"/}
 {>"modal_windows/update_task"/}
 {>"modal_windows/delete_task"/}
+{>"modal_windows/print_check"/}
 
 {/body}

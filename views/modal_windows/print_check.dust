@@ -36,8 +36,16 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="check-table-data">
+                                {#request}
+                                {#tasks}
+                                <tr>
+                                    <td>{name}</td>
+                                    <td>{cost}</td>
+                                    <td>{needBuyParts}</td>
+                                    <td></td>
                                 </tr>
+                                {/tasks}
+                                {/request}
                                 <tr>
                                     <th class="tar">Разом:</th>
                                     <td class="tac" id="all-sum"></td>
