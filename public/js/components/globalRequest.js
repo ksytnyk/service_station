@@ -22,7 +22,10 @@ $(document).ready(function () {
             type: 'post',
             data: dataArr,
             success: function () {
-                window.location.replace('/admin/requests/all');
+                // window.location.replace('/admin/requests/all');
+                showSuccessAlert('Додавання замовлення пройшло успішно.');
+                $('#create_task_request').hide();
+                $('#print_check').show();
             },
             error: function (err) {
                 showErrorAlert(err);

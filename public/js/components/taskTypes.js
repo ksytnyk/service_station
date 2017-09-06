@@ -44,6 +44,7 @@ $(document).ready(function () {
         $('#create_new_task .select2').addClass("hidden");
         $('#create_new_task .input-group').addClass("hidden");
         $('.task-type-input').removeClass("hidden");
+        $('.task-cost').val('');
     });
 
     $('#task-type-select').on('select2:closing',function () {
@@ -54,6 +55,7 @@ $(document).ready(function () {
         $('#update_new_task .select2').addClass("hidden");
         $('#update_new_task .input-group').addClass("hidden");
         $('.update-form-task-type-input').removeClass("hidden");
+        $('#update-form-task-cost').val('');
     });
 
     $('#update-form-task-type-select').on('select2:closing',function () {

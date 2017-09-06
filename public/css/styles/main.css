@@ -309,7 +309,8 @@ thead {
     margin: 15px 0;
 }
 .create_request #access_update_request,
-.create_request #update_request {
+.create_request #update_request,
+.create_request #print_check {
     display: none;
 }
 .create_request #step {
@@ -370,4 +371,31 @@ thead {
 .alerts-errors-info,
 .alerts-success-info {
     display: none;
+}
+
+/* PRINT */
+.print_check .table {
+    border: 1px solid #bbb;
+}
+.print_check .table > thead > tr > th,
+.print_check .table > tbody > tr > th,
+.print_check .table > tbody > tr > td {
+    border-top: 1px solid #bbb;
+    border-right: 1px solid #bbb;
+}
+.print_check .table tbody tr:nth-child(2n) {
+    background-color: #fff;
+}
+.print_check .table > thead > tr > th {
+    background-color: #eee;
+}
+.print_check input {
+    float: left;
+    margin-right: 10px;
+}
+.print_check .modal-body div {
+    margin-bottom: 5px;
+}
+.print_check label {
+    margin-right: 10px;
 }

@@ -107,10 +107,13 @@
         <div class="form-group col-lg-3 col-lg-offset-9" style="margin-top: 10px;">
             <input type="button" id="create_task_request" value="Додати замовлення"
                    class="btn btn-success col-lg-12"/>
+            <input type="button" id="print_check" value="Друкувати замовлення" class="btn btn-danger modal-window-link col-lg-12"
+                    data-toggle="modal" data-target="#printCheckFormModal" title="Друк"/>
         </div>
     </form>
 </div>
 
 {>"modal_windows/create_user"/}
+{>"modal_windows/print_check"/}
 
 {/body}

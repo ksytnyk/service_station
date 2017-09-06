@@ -13,7 +13,6 @@ $(document).ready(function () {
             type: 'post',
             data: dataArr,
             success: function (data) {
-
                 $('#print_check').attr('data-customer-phone', data.customer.userPhone);
                 $('#print_check').attr('data-request-id', data.result.id);
 
@@ -22,9 +21,13 @@ $(document).ready(function () {
                 $('.disable_input').prop('disabled', true);
                 $('#step').slideDown('slow');
                 $('#requestIDForTask').val(data.result.id);
-                $('#update_request').attr("request-id", data.result.id);
+                $('#update_request')
+                    .attr("request-id", data.result.id)
+                    .attr('start-time', formatDate(dataArr[2].value))
+                    .attr('estimated-time', formatDate(dataArr[3].value));
                 $('#create_request').hide();
                 $('#access_update_request').show();
+                $('#print_check').show();
             },
             error: function (err) {
                 showErrorAlert(err);
@@ -41,8 +44,8 @@ $(document).ready(function () {
 
     $('#update_request').on('click', function () {
         var dataArr = $('#createRequestForm').serializeArray();
-        var oldStartTime = $('#update_request').data('start-time');
-        var oldEstimatedTime = $('#update_request').data('estimated-time');
+        var oldStartTime = $('#update_request').attr('start-time');
+        var oldEstimatedTime = $('#update_request').attr('estimated-time');
 
         dataArr[2].value = checkDateForUpdate(oldStartTime, dataArr[2].value);
         dataArr[3].value = checkDateForUpdate(oldEstimatedTime, dataArr[3].value);
@@ -51,11 +54,13 @@ $(document).ready(function () {
             url: getRole(window.location.pathname) + '/update-request/' + $(this).attr("request-id"),
             type: 'put',
             data: dataArr,
-            success: function (data) {
+            success: function () {
                 showSuccessAlert('Оновлення замовлення пройшло успішно.');
 
                 $('.disable_input').prop('disabled', true);
-                $('#update_request').hide();
+                $('#update_request').hide()
+                    .attr('start-time', formatDate(dataArr[2].value))
+                    .attr('estimated-time', formatDate(dataArr[3].value));
                 $('#access_update_request').show();
             },
             error: function (err) {

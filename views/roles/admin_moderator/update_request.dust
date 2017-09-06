@@ -13,7 +13,7 @@
         </div>
         <div class="form-group required col-lg-3">
             <label>Клієнт</label>
-            <select class="form-control disable_input" name="customerID" id="customers" disabled>
+            <select class="form-control add_select2 disable_input" name="customerID" id="customers" disabled>
                 {#customers}
                 <option value="{id}">{userName} {userSurname}</option>
                 {/customers}
@@ -56,9 +56,13 @@
         </div>
         <div class="form-group col-lg-3" style="margin-top: 25px;">
             <input type="button" id="access_update_request" value="Редагувати замовлення"
-                   class="btn btn-warning col-lg-12"/>
+                   class="btn btn-warning col-lg-9"/>
             <input type="button" id="update_request" value="Зберегти зміни" request-id="{id}"
-                   class="btn btn-success col-lg-12" data-start-time="{startTime}" data-estimated-time="{estimatedTime}"/>
+                   class="btn btn-success col-lg-9" start-time="{startTime}" estimated-time="{estimatedTime}"/>
+            <button type="button" id="print_check" value="Друк" class="btn btn-danger modal-window-link col-lg-offset-1 col-lg-2"
+                    data-toggle="modal" data-target="#printCheckFormModal" title="Друк">
+                <span class="glyphicon glyphicon-print" aria-hidden="true" style="margin: 3px 0;"></span>
+            </button>
         </div>
     </form>
 
