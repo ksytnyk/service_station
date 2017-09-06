@@ -34,8 +34,10 @@ module.exports = function (requests, tasks, isHold, requestsHistory) {
 
     if (requestsHistory) {
         requestsHistory.map(item => {
-            item.dataValues.createdAt = formatDate(item.dataValues.createdAt);
-            requestsObj[item.requestID].requestsHistory.push(item.dataValues);
+            if (requestsObj[item.requestID] !== undefined) {
+                item.dataValues.createdAt = formatDate(item.dataValues.createdAt);
+                requestsObj[item.requestID].requestsHistory.push(item.dataValues);
+            }
         });
     }
 
