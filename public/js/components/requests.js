@@ -57,8 +57,8 @@ $(document).ready(function () {
         $('.submit-delete-request').attr('data-request-id', $(this).data('id'));
     });
 
-    $('.submit-delete-request').on('click',function () {
-        var requestID = $(this).data('request-id');
+    $('.submit-delete-request').on('click', function () {
+        var requestID = $(this).attr('data-request-id');
 
         $.ajax({
             url: getRole(window.location.pathname) + '/delete-request/' + requestID,
@@ -66,9 +66,11 @@ $(document).ready(function () {
             success: function () {
                 var idr = "#idr-request-" + requestID;
                 $(idr).remove();
+            },
+            error: function (err) {
+                showErrorAlert(err);
             }
         })
-
     });
 
     changeRequestStatus('.request-status-button');
