@@ -87,7 +87,11 @@
                     <div class="form-group required col-lg-2">
                         <label>Вартість</label>
                         <div class="input-group">
+                            {@eq key=typeUser value=1}
                             <input type="text" class="form-control create-form-task" name="cost" id="update-form-task-cost">
+                            {:else}
+                            <input type="text" class="form-control create-form-task" name="cost" id="update-form-task-cost" disabled>
+                            {/eq}
                             <span class="input-group-addon">грн</span>
                         </div>
                     </div>

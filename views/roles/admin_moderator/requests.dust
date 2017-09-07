@@ -42,6 +42,7 @@
                        style="font-size: 17px;">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"/>
                     </a>
+                    {@eq key=typeUser value=1}
                     <a href="#"
                        class="delete-request modal-window-link"
                        data-current="{typeUser}"
@@ -51,6 +52,7 @@
                        title="Видалити замовлення">
                         <span class="glyphicon glyphicon-remove icon-margin" aria-hidden="true" style="font-size: 19px;"/>
                     </a>
+                    {/eq}
                     {/ne}
                 </th>
                 <td class="vat {@eq key=status value=5}disable-task{/eq}" style="position: relative; padding-top: 40px; padding-bottom: 15px;">
