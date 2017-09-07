@@ -61,10 +61,28 @@ button:focus {
     position: absolute;
     left: 0;
     top: 0;
-    width: 100%;
+    width: 225px;
     padding: 7px 0;
     text-align: center;
     border-bottom: 1px solid #ccc;
+}
+.status-task {
+    width: 100%;
+}
+.request_payed {
+    position: absolute;
+    margin: 0 !important;
+    right: 0;
+    top: 0;
+    width: 38px;
+    padding: 10px 0;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    background-color: rgba(255, 0, 0, 0.4);
+}
+.request_payed_true {
+    background-color: rgba(0, 128, 0, 0.4);
 }
 .glyphicon, glyphicon:hover {
     margin: 15px 0;

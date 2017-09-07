@@ -161,7 +161,10 @@ $(document).ready(function () {
         var dataArr = $('#update-form-task').serializeArray();
         var oldStartTime = $('#change-status-update-task').attr('old-start-time');
 
-        dataArr[8].value = checkDateForUpdate(oldStartTime, dataArr[8].value);
+
+        if ( getRole(window.location.pathname) === '/executor') {
+            dataArr[4].value = checkDateForUpdate(oldStartTime, dataArr[4].value);
+        }
 
         if (getRole(window.location.pathname) !== '/executor' && getRole(window.location.pathname) !== '/store-keeper') {
             if (dataArr[3].value === '') {
@@ -169,6 +172,7 @@ $(document).ready(function () {
                 dataArr[4].value = taskTypeID;
                 dataArr[3].value = dataArr[4].value;
             }
+            dataArr[8].value = checkDateForUpdate(oldStartTime, dataArr[8].value);
         }
 
         $.ajax({

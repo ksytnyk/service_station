@@ -45,7 +45,7 @@
 .requests .request-form-status {
     display: inline-block;
     margin: 10px 2% 0 0;
-    width: 49%;
+    width: 48%;
 }
 
 .requests input[type=submit] {
@@ -99,4 +99,11 @@
 }
 .requests .request_history p {
     margin: 4px 0 3px;
+}
+.requests .bookkeeper tr td:last-child {
+    background-color: #fff;
+}
+.requests .set_payed {
+    margin-top: 10px;
+    min-width: 48%;
 }

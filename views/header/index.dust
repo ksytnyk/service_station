@@ -34,10 +34,15 @@
                     </ul>
                 </li>
             {/lt}
+            {@eq key=typeUser value=6}
+                <li class="active">
+                    <a>Замовлення</a>
+                </li>
+            {/eq}
             <li class="logout pull-right" role="presentation">
                 <a href="/logout" class="last">Вийти</a>
             </li>
-            <li id="headerName" {@gt key=typeUser value=2} style="background-color: #333; float: left;"{/gt}>
+            <li id="headerName" {@gt key=typeUser value=2}{@ne key=typeUser value=6} style="background-color: #333; float: left;"{/ne}{/gt}>
                 <a>{user.userName} {user.userSurname}</a>
             </li>
         </ul>

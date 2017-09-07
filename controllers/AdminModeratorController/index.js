@@ -280,20 +280,29 @@ router.put('/change-request-status/:id', (req, res) => {
     Request
         .changeStatus(req.params.id, req.body.statusID)
         .then(() => {
-            if (+req.body.statusID === status.DONE) {
-                Request
-                    .getRequestById(req.params.id)
-                    .then((result) => {
-                        nodemailer('done-request' ,result[0].user.dataValues);
-                    })
-                    .catch(error => {
-                        console.warn(error);
+            Request
+                .getRequestById(req.params.id)
+                .then(request => {
+                    if (+req.body.statusID === status.DONE) {
+                        Request
+                            .getRequestById(req.params.id)
+                            .then((result) => {
+                                nodemailer('done-request' ,result[0].user.dataValues);
+                            })
+                            .catch(error => {
+                                console.warn(error);
+                            });
+                    }
+                    res.status(200).send({
+                        status: req.body.statusID,
+                        requestID: req.params.id,
+                        request: request
                     });
-            }
-            res.status(200).send({
-                status: req.body.statusID,
-                requestID: req.params.id
-            });
+                })
+                .catch(errors => {
+                    console.warn(errors);
+                    res.status(400).send({errors: errors});
+                });
         })
         .catch(errors => {
             console.warn(errors);
@@ -301,6 +310,17 @@ router.put('/change-request-status/:id', (req, res) => {
         });
 });
 
+router.put('/set-payed/:id', (req, res) => {
+    Request
+        .updateRequest(req.params.id, req.body)
+        .then(() => {
+            res.status(200).send();
+        })
+        .catch(errors => {
+            console.warn(errors);
+            res.status(400).send({errors: errors});
+        });
+});
 
 router.get('/get-request-check/:id', (req, res) =>{
     Request

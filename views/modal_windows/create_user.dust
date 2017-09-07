@@ -46,6 +46,7 @@
                             <option value="2">Менеджер</option>
                             <option value="3">Інженер</option>
                             <option value="4">Зав. складом</option>
+                            <option value="6">Бухгалтер</option>
                         </select>
                     </div>
                     {/eq}

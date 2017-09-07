@@ -90,8 +90,10 @@ function getRole(pathname) {
     else if (pathname.includes('store-keeper')) {
         return '/store-keeper';
     }
-    else {
+    else if (pathname.includes('executor')) {
         return '/executor';
+    } else  {
+        return '/book-keeper';
     }
 }
 

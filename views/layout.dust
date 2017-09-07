@@ -32,6 +32,12 @@
         <link rel="stylesheet" href="/css/styles/print.css">
     {/lt}
 
+    {@eq key=typeUser value=6}
+        <link rel="stylesheet" href="/css/libs/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="/css/libs/select2.min.css">
+        <link rel="stylesheet" href="/css/styles/request.css">
+    {/eq}
+
     {@eq key=typeUser value=undefined}
         <link rel="stylesheet" href="/css/styles/login.css">
     {/eq}
@@ -88,6 +94,11 @@
     <script src="/js/components/setSelect2.js"></script>
     <script src="/js/components/check.js"></script>
 {/lt}
+
+{@eq key=typeUser value=6}
+    <script src="/js/libs/dataTables.bootstrap.min.js"></script>
+    <script src="/js/components/requests.js"></script>
+{/eq}
 
 <script src="/js/components/main.js"></script>
 </body>

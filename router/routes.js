@@ -9,9 +9,10 @@ const admin = require('../controllers/AdminModeratorController'),
     moderator = require('../controllers/AdminModeratorController'),
     executor = require('../controllers/ExecutorController'),
     storeKeeper = require('../controllers/StoreKeeperController'),
-    customer = require('../controllers/CustomerController');
+    customer = require('../controllers/CustomerController'),
+    bookKeeper = require('../controllers/AdminModeratorController');
 
-require('../models/Passport');
+    require('../models/Passport');
 
 module.exports = function (app) {
 
@@ -38,6 +39,7 @@ module.exports = function (app) {
     app.use('/executor', authentication(roles.EXECUTOR), executor);
     app.use('/store-keeper', authentication(roles.STOREKEEPER), storeKeeper);
     app.use('/customer', authentication(roles.CUSTOMER), customer);
+    app.use('/book-keeper', authentication(roles.BOOKKEEPER), bookKeeper);
 
     app.use(authentication());
 };

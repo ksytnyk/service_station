@@ -126,7 +126,7 @@
                         </button>
                         {/lt}
                         {@gt key=typeUser value=2}
-                        <button class="btn btn-success width task-update-button agree">
+                        <button class="btn btn-success width task-update-button agree" id="change-status-update-task">
                             Оновити
                         </button>
                         <button class="btn btn-danger pull-right width" data-dismiss="modal">

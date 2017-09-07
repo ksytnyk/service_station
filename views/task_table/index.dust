@@ -1,5 +1,5 @@
 {+task_table}
-<table class="table task_table {@eq key=typeUser value=3}dtable{/eq}{@eq key=typeUser value=4}dtable{/eq}" id="tasks-table">
+<table class="table task_table {@eq key=typeUser value=3}dtable{/eq}{@eq key=typeUser value=4}dtable{/eq} {@eq key=typeUser value=6}bookkeeper{/eq}" id="tasks-table">
     <thead>
     <tr>
         <th class="tac width-id">ID</th>

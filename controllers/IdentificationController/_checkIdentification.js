@@ -24,6 +24,10 @@ module.exports = function _checkIdentification(req, res, userTypeID) {
             res.redirect('/customer');
             break;
         }
+        case roles.BOOKKEEPER: {
+            res.redirect('/book-keeper/requests/all');
+            break;
+        }
         default: {
             res.redirect('/');
         }

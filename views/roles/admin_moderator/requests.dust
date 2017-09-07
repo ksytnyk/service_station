@@ -6,20 +6,20 @@
 <div class="col-lg-12 requests">
 
     <ul class="col-lg-6 nav nav-pills">
-        <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/all">
-            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/all">Усі</a>
+        <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/all">
+            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/all">Усі</a>
         </li>
-        <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/processing">
-            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/processing">Виконуються</a>
+        <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/processing">
+            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/processing">Виконуються</a>
         </li>
-        <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/done">
-            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/done">Виконані</a>
+        <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/done">
+            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/done">Виконані</a>
         </li>
-        <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/hold">
-            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/hold">Очікують запчастини</a>
+        <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/hold">
+            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/hold">Очікують запчастини</a>
         </li>
-        <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/canceled">
-            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/canceled">Анульовані</a>
+        <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/canceled">
+            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/canceled">Анульовані</a>
         </li>
     </ul>
     <div class="panel panel-default">
@@ -36,6 +36,7 @@
             <tr id="idr-request-{id}">
                 <th class="tac" style="position: relative;">
                     <span class="requests_id">{id}</span>
+                    {@ne key=typeUser value=6}
                     <a href="update-request/{id}"
                        title="Редагувати замовлення"
                        style="font-size: 17px;">
@@ -50,6 +51,7 @@
                        title="Видалити замовлення">
                         <span class="glyphicon glyphicon-remove icon-margin" aria-hidden="true" style="font-size: 19px;"/>
                     </a>
+                    {/ne}
                 </th>
                 <td class="vat {@eq key=status value=5}disable-task{/eq}" style="position: relative; padding-top: 40px; padding-bottom: 15px;">
                     {@eq key=status value=1}
@@ -64,6 +66,7 @@
                     {@eq key=status value=5}
                     <span class="status-requests status-bgc-canceled"><strong>Замовлення анульовано</strong></span>
                     {/eq}
+                    <span class='request_payed {@eq key=payed value="true" type="boolean"}request_payed_true{/eq} glyphicon glyphicon-usd' aria-hidden="true" title='{@eq key=payed value="true" type="boolean"}Розраховано{/eq}{@eq key=payed value="false" type="boolean"}Не розраховано{/eq}'/></span>
                     <p><strong>Назва замовлення: </strong>{name}</p>
                     <p><strong>Опис замовлення: </strong>{description}</p>
                     <p><strong>Клієнт: </strong>{user.userSurname} {user.userName}</p>
@@ -74,6 +77,7 @@
                     <p id="model{id}" attr-name="{carModel}"><strong>Модель: </strong>{carModel}</p>
                     <p><strong>Коментар: </strong>{comment}</p>
                     <div class="requests-status-form">
+                        {@ne key=typeUser value=6}
                         {@ne key=status value=2}
                         <input class="btn btn-primary request-form-status request-status-button"
                                id="requestProcessing"
@@ -106,6 +110,33 @@
                                data-status="5"
                         />
                         {/ne}
+                        {/ne}
+                        {/ne}
+                        {@eq key=typeUser value=6}
+                        {@eq key=payed value="false" type="boolean"}
+                            <input class="btn btn-warning set_payed_true set_payed"
+                                   type="button"
+                                   value="Розрахувати"
+                                   data-request-id="{id}"
+                                   data-payed="true"
+                            />
+                        {/eq}
+                        {/eq}
+                        {@ne key=status value=1}
+                        {@eq key=typeUser value=1}
+                            <input class='btn btn-warning set_payed_true set_payed {@eq key=payed value="true" type="boolean"}hide{/eq}'
+                                   type="button"
+                                   value="Розрахувати"
+                                   data-request-id="{id}"
+                                   data-payed="true"
+                            />
+                            <input class='btn btn-danger set_payed_false set_payed {@eq key=payed value="false" type="boolean"}hide{/eq}'
+                                       type="button"
+                                       value="Відмінити розрахунок"
+                                       data-request-id="{id}"
+                                       data-payed="false"
+                            />
+                        {/eq}
                         {/ne}
                     </div>
                 </td>

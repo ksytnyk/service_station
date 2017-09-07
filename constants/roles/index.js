@@ -4,4 +4,5 @@ module.exports = {
     , EXECUTOR: 3
     , STOREKEEPER: 4
     , CUSTOMER: 5
+    , BOOKKEEPER: 6
 };

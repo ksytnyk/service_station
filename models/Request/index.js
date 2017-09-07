@@ -57,6 +57,11 @@ const describeRequestTable = {
     carModel: {
         type: Sequelize.STRING,
         field: 'car_model'
+    },
+    payed: {
+        type: Sequelize.BOOLEAN,
+        field: 'payed',
+        defaultValue: false
     }
 };
 
