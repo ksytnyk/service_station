@@ -123,19 +123,19 @@ $(document).ready(function () {
                             '<input class="btn btn-primary request-form-status request-status-button"' +
                             ' id="requestProcessing" type="button" value="Доопрацювати"' +
                             ' data-request-id="' + data.requestID + '"' +
-                            ' data-status="2" />';
+                            ' data-status="2" title="Доопрацювати"/>';
 
                         var requestDoneButton = '' +
                             '<input class="btn btn-success request-form-status request-status-button"' +
                             ' id="requestDone" type="button" value="Завершити"' +
                             ' data-request-id="' + data.requestID + '"' +
-                            ' data-status="3" />';
+                            ' data-status="3" title="Завершити"/>';
 
                         var requestCanceledButton = '' +
                             '<input class="btn request-form-status status-requests-canceled request-status-button"' +
                             ' id="requestCanceled" type="button" value="Анулювати"' +
                             ' data-request-id="' + data.requestID + '"' +
-                            ' data-status="5" />';
+                            ' data-status="5" title="Анулювати"/>';
 
                         var requestPayedButton = '',
                             requestDontPayedButton = '';
@@ -154,13 +154,13 @@ $(document).ready(function () {
                                 '<input class="btn btn-warning set_payed_true set_payed ' + set_payed_true + '"' +
                                 ' id="requestCanceled" type="button" value="Розрахувати"' +
                                 ' data-request-id="' + data.requestID + '"' +
-                                ' data-payed="true" />';
+                                ' data-payed="true" title="Розрахувати"/>';
 
                             requestDontPayedButton = '' +
                                 '<input class="btn btn-danger set_payed_false set_payed ' + set_payed_false + '"' +
-                                ' id="requestCanceled" type="button" value="Відмінити розрахунок"' +
+                                ' id="requestCanceled" type="button" value="Відмін. розрах."' +
                                 ' data-request-id="' + data.requestID + '"' +
-                                ' data-payed="false" />';
+                                ' data-payed="false" style="padding: 6px;" title="Відмінити розрахунок"/>';
                         }
 
                         switch (data.status) {

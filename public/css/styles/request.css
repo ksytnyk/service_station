@@ -107,3 +107,9 @@
     margin-top: 10px;
     min-width: 48%;
 }
+.requests .panel > div:first-child .row:first-child div {
+    width: 33.33333333%;
+}
+.requests .panel > div:first-child .row:first-child div .dataTables_filter {
+    width: 100%;
+}

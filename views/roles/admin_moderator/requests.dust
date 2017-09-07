@@ -5,7 +5,7 @@
 {>"header/index"/}
 <div class="col-lg-12 requests">
 
-    <ul class="col-lg-6 nav nav-pills">
+    <ul class="col-lg-8 nav nav-pills">
         <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/all">
             <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/all">Усі</a>
         </li>
@@ -22,7 +22,7 @@
             <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/canceled">Анульовані</a>
         </li>
         <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/trash">
-            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/trash"><span class="glyphicon glyphicon-trash"></span></a>
+            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/trash"><span class="glyphicon glyphicon-trash" style="margin: 3px 0;"></span></a>
         </li>
     </ul>
     <div class="panel panel-default">
@@ -91,6 +91,7 @@
                                value='{@eq key=hadStarted value="true" type="boolean"}Доопрацювати{:else}Почати{/eq}'
                                data-request-id="{id}"
                                data-status="2"
+                               title='{@eq key=hadStarted value="true" type="boolean"}Доопрацювати{:else}Почати{/eq}'
                         />
                         {/ne}
                         {@ne key=status value=3}
@@ -102,6 +103,7 @@
                                value="Завершити"
                                data-request-id="{id}"
                                data-status="3"
+                               title="Завершити"
                         />
                         {/ne}
                         {/ne}
@@ -114,6 +116,7 @@
                                value="Анулювати"
                                data-request-id="{id}"
                                data-status="5"
+                               title="Анулювати"
                         />
                         {/ne}
                         {/ne}
@@ -125,6 +128,7 @@
                                    value="Розрахувати"
                                    data-request-id="{id}"
                                    data-payed="true"
+                                   title="Розрахувати"
                             />
                         {/eq}
                         {/eq}
@@ -135,12 +139,15 @@
                                    value="Розрахувати"
                                    data-request-id="{id}"
                                    data-payed="true"
+                                   title="Розрахувати"
                             />
                             <input class='btn btn-danger set_payed_false set_payed {@eq key=payed value="false" type="boolean"}hide{/eq}'
-                                       type="button"
-                                       value="Відмінити розрахунок"
-                                       data-request-id="{id}"
-                                       data-payed="false"
+                                   type="button"
+                                   value="Відмін. розрах."
+                                   data-request-id="{id}"
+                                   data-payed="false"
+                                   style="padding: 6px;"
+                                   title="Відмінити розрахунок"
                             />
                         {/eq}
                         {/ne}
