@@ -29,8 +29,7 @@
                     <div class="col-lg-4"><strong>Роль: </strong>{user_type.dataValues.userTypeName}</div>
                 </td>
                 <td class="tac">
-                    {@ne key=typeUser value=1}
-                    {@ne key=userTypeID value=1}
+                    {@lt key=typeUser value=3}
                     <a href="#"
                        class="update-user modal-window-link"
                        data-type-user="{typeUser}"
@@ -49,28 +48,6 @@
                        title="Редагувати користувача">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true" style="font-size: 17px;"/>
                     </a>
-                    {/ne}
-                    {:else}
-                    <a href="#"
-                       class="update-user modal-window-link"
-                       data-type-user="{typeUser}"
-                       data-toggle="modal"
-                       data-target="#updateUserFormModal"
-                       data-id="{id}"
-                       data-name="{userName}"
-                       data-surname="{userSurname}"
-                       data-company="{userCompanyName}"
-                       data-address="{userAddress}"
-                       data-phone="{userPhone}"
-                       data-login="{userLogin}"
-                       data-email="{userEmail}"
-                       data-role="{userTypeID}"
-                       data-password="{userPassword}"
-                       title="Редагувати користувача">
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true" style="font-size: 17px;"/>
-                    </a>
-                    {/ne}
-
                     {@eq key=typeUser value=1}
                     {@ne key=userTypeID value=1}
                     <a href="#"
@@ -86,6 +63,7 @@
                     </a>
                     {/ne}
                     {/eq}
+                    {/lt}
                 </td>
             </tr>
             {/users}

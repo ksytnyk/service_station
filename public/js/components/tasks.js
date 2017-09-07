@@ -83,7 +83,7 @@ $(document).ready(function () {
                 var executorNameSurname = $('#option' + data.result.planedExecutorID).attr('executorFullName');
                 var assignedNameSurname = $('#optionAE' + data.result.assignedUserID).attr('assignedUserFullName');
 
-                $("#tasks-table").append('' +
+                var editDeleteButtons = '' +
                     '<tr id="idx-task-' + data.result.id + '">' +
                     '<th class="tac" style="background-color: #fff;">' +
                     data.result.id +
@@ -126,13 +126,23 @@ $(document).ready(function () {
                     ' data-target="#updateTaskFormModal"' +
                     ' style=""> ' +
                     '<span class="glyphicon glyphicon-pencil" aria-hidden="true"/> ' +
-                    '</a> ' +
-                    '<a href="#" class="delete-task modal-window-link" title="Видалити задачу" data-toggle="modal" data-current="' + getIdRole(window.location.pathname) + '" data-id="' + data.result.id + '"' +
-                    ' data-target="#deleteTaskFormModal">' +
-                    '<span class="glyphicon glyphicon-remove" aria-hidden="true"/>' +
-                    '</a>' +
-                    '</td>' +
-                    '</tr>');
+                    '</a> ';
+
+                if(getRole(window.location.pathname)==='/admin') {
+                    editDeleteButtons += ''+
+                        '<a href="#" class="delete-task modal-window-link" title="Видалити задачу" data-toggle="modal" data-current="' + getIdRole(window.location.pathname) + '" data-id="' + data.result.id + '"' +
+                        ' data-target="#deleteTaskFormModal">' +
+                        '<span class="glyphicon glyphicon-remove" aria-hidden="true"/>' +
+                        '</a>' +
+                        '</td>' +
+                        '</tr>';
+                } else {
+                    editDeleteButtons += ''+
+                        '</td>' +
+                        '</tr>';
+                }
+
+                $("#tasks-table").append(editDeleteButtons);
 
                 headerFix();
                 deleteTaskOnClick('#idx-task-' + data.result.id + ' .delete-task');
@@ -290,7 +300,10 @@ $(document).ready(function () {
                     ' data-target="#updateTaskFormModal"' +
                     ' style=""> ' +
                     '<span class="glyphicon glyphicon-pencil" aria-hidden="true"/> ' +
-                    '</a> ' +
+                    '</a> ';
+
+                if (getRole(window.location.pathname) === "/admin") {
+                    newTask2 += ''+
                     '<a href="#"' +
                     ' class="delete-task modal-window-link"' +
                     ' title="Видалити задачу" data-toggle="modal"' +
@@ -302,6 +315,11 @@ $(document).ready(function () {
                     '<span class="glyphicon glyphicon-remove" aria-hidden="true"/> ' +
                     '</a>' +
                     '</td>';
+                } else {
+                    newTask2 += ''+
+                    '</a>' +
+                    '</td>';
+                }
 
                 newCost = '<strong>Вартість: </strong>' + data.newCost + ' грн';
 
