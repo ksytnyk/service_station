@@ -21,7 +21,10 @@
         <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/canceled">
             <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/canceled">Анульовані</a>
         </li>
-        <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/trash">
+        <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/give-out">
+            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/give-out">Видані</a>
+        </li>
+        <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/trash" title="Видалені замовлення">
             <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/trash"><span class="glyphicon glyphicon-trash" style="margin: 3px 0;"></span></a>
         </li>
     </ul>
@@ -30,7 +33,7 @@
             <thead>
             <tr>
                 <th class="tac" style="width: 15px;">№</th>
-                <th class="tac" style="width: 225px;">Інформація про замовлення</th>
+                <th class="tac" style="width: 235px;">Інформація про замовлення</th>
                 <th class="tac">Завдання</th>
             </tr>
             </thead>
@@ -60,6 +63,7 @@
                     {/ne}
                 </th>
                 <td class="vat {@eq key=status value=5}disable-task{/eq}" style="position: relative; padding-top: 40px; padding-bottom: 15px;">
+                    {@eq key=giveOut value="false" type="boolean"}
                     {@eq key=status value=1}
                     <span class="status-requests status-bgc-pending"><strong>Замовлення в очікувані</strong></span>
                     {/eq}
@@ -72,17 +76,24 @@
                     {@eq key=status value=5}
                     <span class="status-requests status-bgc-canceled"><strong>Замовлення анульовано</strong></span>
                     {/eq}
-                    <span class='request_payed {@eq key=payed value="true" type="boolean"}request_payed_true{/eq} glyphicon glyphicon-usd' aria-hidden="true" title='{@eq key=payed value="true" type="boolean"}Розраховано{/eq}{@eq key=payed value="false" type="boolean"}Не розраховано{/eq}'/></span>
+                    {/eq}
+                    {@eq key=giveOut value="true" type="boolean"}
+                    <span class="status-requests status-bgc-give-out"><strong>Замовлення видано</strong></span>
+                    {/eq}
                     <p><strong>Назва замовлення: </strong>{name}</p>
                     <p><strong>Опис замовлення: </strong>{description}</p>
                     <p><strong>Клієнт: </strong>{user.userSurname} {user.userName}</p>
-                    <p id="idr-cost-{id}"><strong>Вартість: </strong>{cost} грн</p>
+                    <p><strong>Телефон: </strong>{user.userPhone}</p>
+                    <p id="idr-cost-{id}" class='request_payed {@eq key=payed value="true" type="boolean"}request_payed_true{/eq}'>
+                        <strong>Вартість: {cost} грн <span>({@eq key=payed value="true" type="boolean"}Розраховано{/eq}{@eq key=payed value="false" type="boolean"}Не розраховано{/eq})</span></strong>
+                    </p>
                     <p><strong>Час початку: </strong>{startTime}</p>
                     <p class="{@eq key=overdue value=1}overdue{/eq}"><strong>Заплан. час: </strong>{estimatedTime}</p>
                     <p id="markk{id}" attr-name="{carMarkk}"><strong>Марка: </strong>{carMarkk}</p>
                     <p id="model{id}" attr-name="{carModel}"><strong>Модель: </strong>{carModel}</p>
                     <p><strong>Коментар: </strong>{comment}</p>
                     <div class="requests-status-form">
+                        {@eq key=giveOut value="false" type="boolean"}
                         {@ne key=typeUser value=6}
                         {@ne key=status value=2}
                         <input class="btn btn-primary request-form-status request-status-button"
@@ -120,6 +131,15 @@
                         />
                         {/ne}
                         {/ne}
+                        {@eq key=giveOut value="false" type="boolean"}
+                        <input class='btn  request-form-status set_give_out {@ne key=status value=3}hide{/ne} {@eq key=payed value="false" type="boolean"}hide{/eq}'
+                               type="button"
+                               value="Видати"
+                               data-request-id="{id}"
+                               data-give-out="true"
+                               title="Видати"
+                        />
+                        {/eq}
                         {/ne}
                         {@eq key=typeUser value=6}
                         {@eq key=payed value="false" type="boolean"}
@@ -151,6 +171,7 @@
                             />
                         {/eq}
                         {/ne}
+                        {/eq}
                     </div>
                 </td>
                 <td style="padding: 0; vertical-align: top; position: relative;" class="{@eq key=status value=5}disable-task{/eq}">

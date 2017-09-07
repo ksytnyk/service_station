@@ -12,11 +12,16 @@
         </div>
         <div class="form-group required col-lg-3">
             <label>Клієнт</label>
-            <select class="form-control add_select2 disable_input" name="customerID" id="customers">
-                {#customers}
-                <option value="{id}">{userName} {userSurname}</option>
-                {/customers}
-            </select>
+            <div class="input-group">
+                <select class="form-control add_select2 disable_input" name="customerID" id="customers">
+                    {#customers}
+                    <option value="{id}">{userName} {userSurname}</option>
+                    {/customers}
+                </select>
+                <span class="input-group-addon plus disable_input" id="add_new_user">
+                    <span class="glyphicon glyphicon-plus disable_input" aria-hidden="true" style="margin: 0;" title="Додати нового користувача"></span>
+                </span>
+            </div>
         </div>
         <div class="form-group required col-lg-3">
                 <label>Час початку</label>
@@ -25,7 +30,7 @@
         </div>
         <div class="form-group required col-lg-3">
             <label>Орієнтовний час виконання</label>
-            <input type="text" class="form-control datetimepickerN disable_input" name="estimatedTime" id="endDate"
+            <input type="text" class="form-control datetimepickerN endTime disable_input" name="estimatedTime" id="endDate"
                    style="margin-bottom: 5px;">
         </div>
         <div class="form-group col-lg-3">

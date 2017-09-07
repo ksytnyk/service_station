@@ -43,6 +43,10 @@ button:focus {
     background-color: rgba(0, 0, 0, 0.4) !important;
     color: #000;
 }
+.status-bgc-give-out {
+    background-color: rgba(171, 78, 0, 0.5) !important;
+    color: #000;
+}
 .status-requests-canceled {
     background-color: #888;
     color: white;
@@ -61,28 +65,16 @@ button:focus {
     position: absolute;
     left: 0;
     top: 0;
-    width: 225px;
+    width: 100%;
     padding: 7px 0;
     text-align: center;
     border-bottom: 1px solid #ccc;
 }
-.status-task {
-    width: 100%;
-}
 .request_payed {
-    position: absolute;
-    margin: 0 !important;
-    right: 0;
-    top: 0;
-    width: 38px;
-    padding: 10px 0;
-    text-align: center;
-    border-bottom: 1px solid #ccc;
-    border-left: 1px solid #ccc;
-    background-color: rgba(255, 0, 0, 0.4);
+    color: #d7050c;
 }
 .request_payed_true {
-    background-color: rgba(0, 128, 0, 0.4);
+    color: #3a9d3a;
 }
 .glyphicon, glyphicon:hover {
     margin: 15px 0;
@@ -104,8 +96,10 @@ button:focus {
 }
 input[disabled],
 textarea[disabled],
-select[disabled] {
+select[disabled],
+span[disabled]{
     opacity: 0.65 !important;
+    cursor: not-allowed;
 }
 .select2-container--disabled span {
     opacity: 0.8;
@@ -224,7 +218,7 @@ select[disabled] {
 }
 .add-new-task-type-button,
 .update-add-new-task-type-button,
-.new-global-task-type {
+.plus {
     padding: 0 7px 1px 9px;
     color: #337ab7;
     border-radius: 4px !important;

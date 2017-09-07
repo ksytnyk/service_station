@@ -67,6 +67,11 @@ const describeRequestTable = {
         type: Sequelize.BOOLEAN,
         field: 'payed',
         defaultValue: false
+    },
+    giveOut: {
+        type: Sequelize.BOOLEAN,
+        field: 'give_out',
+        defaultValue: false
     }
 };
 

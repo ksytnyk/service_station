@@ -18,7 +18,7 @@ $(document).ready(function () {
 
                 showSuccessAlert('Додавання замовлення пройшло успішно.');
 
-                $('.disable_input').prop('disabled', true);
+                $('.disable_input').attr('disabled', true);
                 $('#step').slideDown('slow');
                 $('#requestIDForTask').val(data.result.id);
                 $('#update_request')
@@ -36,7 +36,7 @@ $(document).ready(function () {
     });
 
     $('#access_update_request').on('click', function () {
-        $('.disable_input').prop('disabled', false);
+        $('.disable_input').attr('disabled', false);
         $('.select2').removeClass('select2-container--disabled');
         $('#access_update_request').hide();
         $('#update_request').show();
@@ -59,7 +59,7 @@ $(document).ready(function () {
 
                 $('#print_check_update_request').attr('customer-phone', data.customer.userPhone);
 
-                $('.disable_input').prop('disabled', true);
+                $('.disable_input').attr('disabled', true);
                 $('#update_request').hide()
                     .attr('start-time', formatDate(dataArr[2].value))
                     .attr('estimated-time', formatDate(dataArr[3].value));
@@ -80,7 +80,6 @@ $(document).ready(function () {
     $('.submit-delete-request').on('click', function () {
         var requestID = $(this).attr('data-request-id');
         var hadDeleted = $(this).attr('data-had-deleted');
-        console.log('hadDeleted', hadDeleted);
 
         $.ajax({
             url: getRole(window.location.pathname) + '/delete-request/' + requestID,
@@ -137,8 +136,19 @@ $(document).ready(function () {
                             ' data-request-id="' + data.requestID + '"' +
                             ' data-status="5" title="Анулювати"/>';
 
+                        var give_out = '';
+                        if (data.request[0].giveOut || data.request[0].status !== 3 || !data.request[0].payed) {
+                            give_out = 'hide';
+                        }
+
                         var requestPayedButton = '',
-                            requestDontPayedButton = '';
+                            requestDontPayedButton = '',
+                            requestGiveOutButton = '' +
+                                '<input class="btn btn-info request-form-status set_give_out ' + give_out + '"' +
+                                ' type="button" value="Видати"' +
+                                ' data-request-id="' + data.requestID + '"' +
+                                ' data-give-out="true" title="Видати"/>';
+
 
                         if (getRole(window.location.pathname) === '/admin') {
                             var set_payed_true = '',
@@ -167,17 +177,17 @@ $(document).ready(function () {
                             case "2":
                                 newRequestStatusClasses += 'status-bgc-processing';
                                 newRequestStatusText = '<strong>Замовлення виконується</strong>';
-                                newRequestButtons = requestDoneButton + requestCanceledButton + requestPayedButton + requestDontPayedButton;
+                                newRequestButtons = requestDoneButton + requestCanceledButton + requestGiveOutButton + requestPayedButton + requestDontPayedButton;
                                 break;
                             case "3":
                                 newRequestStatusClasses += 'status-bgc-done';
                                 newRequestStatusText = '<strong>Замовлення виконано</strong>';
-                                newRequestButtons = requestProcessingButton + requestCanceledButton + requestPayedButton + requestDontPayedButton;
+                                newRequestButtons = requestProcessingButton + requestCanceledButton + requestGiveOutButton + requestPayedButton + requestDontPayedButton;
                                 break;
                             case "5":
                                 newRequestStatusClasses += 'status-bgc-canceled';
                                 newRequestStatusText = '<strong>Замовлення анульовано</strong>';
-                                newRequestButtons = requestProcessingButton + requestPayedButton + requestDontPayedButton;
+                                newRequestButtons = requestProcessingButton + requestGiveOutButton + requestPayedButton + requestDontPayedButton;
                                 break;
                         }
 
@@ -191,6 +201,7 @@ $(document).ready(function () {
 
                         changeRequestStatus(idr + ' .request-status-button');
                         setPayed(idr + ' .set_payed');
+                        setGiveOut(idr + ' .set_give_out');
                     } else {
                         $(idr).remove();
                     }
@@ -215,17 +226,24 @@ $(document).ready(function () {
                 data: {
                     payed: payed
                 },
-                success: function () {
-                    var idr = "#idr-request-" + requestID;
+                success: function (data) {
+                    var idr = "#idr-request-" + requestID,
+                        idc = "#idr-cost-" + requestID;
 
                     if (payed) {
-                        $(idr + ' .request_payed').addClass('request_payed_true').attr('title', 'Розраховано');
+                        $(idr + ' .request_payed').addClass('request_payed_true');
+                        $(idc + ' span').empty().append('(Розраховано)');
                         $(idr + ' .set_payed_true').addClass('hide');
                         $(idr + ' .set_payed_false').removeClass('hide');
+                        if (data.request[0].status === 3) {
+                            $(idr + ' .set_give_out').removeClass('hide');
+                        }
                     } else {
-                        $(idr + ' .request_payed').removeClass('request_payed_true').attr('title', 'Не розраховано');
+                        $(idr + ' .request_payed').removeClass('request_payed_true');
+                        $(idc + ' span').empty().append('(Не розраховано)');
                         $(idr + ' .set_payed_false').addClass('hide');
                         $(idr + ' .set_payed_true').removeClass('hide');
+                        $(idr + ' .set_give_out').addClass('hide');
                     }
                 },
                 error: function (err) {
@@ -234,4 +252,48 @@ $(document).ready(function () {
             })
         })
     }
+
+    setGiveOut('.set_give_out');
+
+    function setGiveOut(value) {
+        $(value).on('click', function () {
+            var requestID = $(this).data('request-id'),
+                giveOut = $(this).data('give-out');
+
+            $.ajax({
+                url: getRole(window.location.pathname) + '/set-payed/' + requestID,
+                type: 'put',
+                data: {
+                    giveOut: giveOut
+                },
+                success: function () {
+                    var idr = "#idr-request-" + requestID;
+
+                    $(idr + ' .status-requests').empty().append('<strong>Замовлення видано</strong>').removeClass().addClass('status-requests status-bgc-give-out');
+                    $(idr + ' .requests-status-form').remove();
+                },
+                error: function (err) {
+                    showErrorAlert(err);
+                }
+            })
+        })
+    }
+
+    var addNewUser;
+
+    $('#add_new_user').on('click', function () {
+        if (addNewUser) {
+            $('#createUserFormModal input[name=userName]').val(addNewUser[0]);
+            $('#createUserFormModal input[name=userSurname]').val(addNewUser[1]);
+            $('#createUserFormModal').modal('toggle');
+        }
+    });
+
+    $('.create_request #customers').on('select2:closing', function () {
+        addNewUser = $('.select2-search__field')[0].value.split(' ');
+    });
+
+    $('.update_request #customers').on('select2:closing', function () {
+        addNewUser = $('.select2-search__field')[0].value.split(' ');
+    });
 });

@@ -79,7 +79,7 @@
                     <div class="form-group required col-lg-2">
                         <label>Час виконання</label>
                         <div class="input-group">
-                            <input type="text" class="form-control create-form-task" name="estimationTime"
+                            <input type="number" class="form-control create-form-task" name="estimationTime"
                                id="update-form-task-estimation-time">
                             <span class="input-group-addon">год</span>
                         </div>

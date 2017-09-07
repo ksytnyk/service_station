@@ -13,11 +13,17 @@
         </div>
         <div class="form-group required col-lg-3">
             <label>Клієнт</label>
-            <select class="form-control add_select2 disable_input" name="customerID" id="customers" disabled>
-                {#customers}
-                <option value="{id}" {@eq key=id value=customer.id}selected{/eq} >{userName} {userSurname}</option>
-                {/customers}
-            </select>
+            <div class="input-group">
+                <select class="form-control add_select2 disable_input" name="customerID" id="customers" disabled>
+                    {#customers}
+                    <option value="{id}" {@eq key=id value=customer.id}selected{/eq}>{userName} {userSurname}</option>
+                    {/customers}
+                </select>
+                <span class="input-group-addon disable_input plus" id="add_new_user" disabled>
+                    <span class="glyphicon glyphicon-plus disable_input" aria-hidden="true" style="margin: 0;"
+                          title="Додати нового користувача" disabled></span>
+                </span>
+            </div>
         </div>
         <div class="form-group required col-lg-3">
             <label>Час початку</label>

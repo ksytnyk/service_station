@@ -44,7 +44,7 @@
 
 .requests .request-form-status {
     display: inline-block;
-    margin: 10px 2% 0 0;
+    margin: 2% 1% 0 1%;
     width: 48%;
 }
 
@@ -68,7 +68,7 @@
     width: 15px;
 }
 .requests .overdue {
-    color: #ff0000;
+    color: #d7050c;
     font-weight: bold;
 }
 .requests .border {
@@ -104,7 +104,7 @@
     background-color: #fff;
 }
 .requests .set_payed {
-    margin-top: 10px;
+    margin: 2% 1% 0 1%;
     min-width: 48%;
 }
 .requests .panel > div:first-child .row:first-child div {
@@ -112,4 +112,12 @@
 }
 .requests .panel > div:first-child .row:first-child div .dataTables_filter {
     width: 100%;
+}
+.requests .set_give_out {
+    background-color: rgba(196, 89, 0, 0.75);
+    color: #fff;
+    border: 1px solid rgba(184, 84, 0, 0.75);
+}
+.requests .set_give_out:hover {
+    background-color: rgba(196, 90, 0, 0.85);
 }

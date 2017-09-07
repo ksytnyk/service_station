@@ -45,13 +45,13 @@ router.post('/create-user', validation.createAndUpdateUser('create'), (req, res)
             nodemailer('create-user', req.body);
             req.flash('success_alert', true);
             req.flash('success_msg', 'Додавання користувача пройшло успішно.');
-            res.redirect(req.baseUrl + '/users');
+            res.redirect('back');
         })
         .catch(error => {
             console.warn(error);
             req.flash('error_alert', true);
             req.flash('error_msg', {msg: 'Виникла помилка при додаванні користувача.'});
-            res.redirect(req.baseUrl + '/users');
+            res.redirect('back');
         });
 });
 
@@ -107,6 +107,11 @@ router.get('/requests/:status', (req, res) => {
             status: status.CANCELED
         }
     }
+    else if (req.params.status === 'give-out') {
+        findBy = {
+            giveOut: true
+        }
+    }
     else if (req.params.status === 'trash') {
         findBy = {
             hadDeleted: true
@@ -127,8 +132,6 @@ router.get('/requests/:status', (req, res) => {
                                     if (req.params.status === 'hold') {
                                         hold = true;
                                     }
-                                    console.log(requests);
-                                    console.log(requestsFactory(requests, tasks, hold, requestsHistory));
                                     res.render('roles/admin_moderator/requests', {
                                         assignedExecutorUsers: users,
                                         requests: requestsFactory(requests, tasks, hold, requestsHistory),
@@ -360,7 +363,17 @@ router.put('/set-payed/:id', (req, res) => {
     Request
         .updateRequest(req.params.id, req.body)
         .then(() => {
-            res.status(200).send();
+            Request
+                .getRequestById(req.params.id)
+                .then(request => {
+                    res.status(200).send({
+                        request: request
+                    });
+                })
+                .catch(errors => {
+                    console.warn(errors);
+                    res.status(400).send({errors: errors});
+                });
         })
         .catch(errors => {
             console.warn(errors);

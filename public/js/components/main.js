@@ -71,6 +71,20 @@ $(document).ready(function () {
         format: "YYYY.MM.DD"
     });
 
+    setEndTime();
+
+    function setEndTime() {
+        var endTime = new Date($('.startTime').val());
+
+        endTime.setDate(endTime.getDate() + 14);
+        $('.endTime').val(formatDate(endTime).slice(0, 10));
+    }
+
+    $(".startTime").on("dp.change", function() {
+        setEndTime();
+    });
+
+
     $('.datetimepickerN').datetimepicker({
         locale: "uk",
         format: "YYYY.MM.DD"
