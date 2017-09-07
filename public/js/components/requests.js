@@ -74,14 +74,18 @@ $(document).ready(function () {
     $('.delete-request').on('click', function () {
         $('#delete-request-id').text($(this).data('id'));
         $('.submit-delete-request').attr('data-request-id', $(this).data('id'));
+        $('.submit-delete-request').attr('data-had-deleted', $(this).data('had-deleted'));
     });
 
     $('.submit-delete-request').on('click', function () {
         var requestID = $(this).attr('data-request-id');
+        var hadDeleted = $(this).attr('data-had-deleted');
+        console.log('hadDeleted', hadDeleted);
 
         $.ajax({
             url: getRole(window.location.pathname) + '/delete-request/' + requestID,
             type: 'delete',
+            data: { hadDeleted: hadDeleted },
             success: function () {
                 var idr = "#idr-request-" + requestID;
                 $(idr).remove();

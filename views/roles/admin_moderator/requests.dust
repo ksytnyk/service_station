@@ -21,6 +21,9 @@
         <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/canceled">
             <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/canceled">Анульовані</a>
         </li>
+        <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/trash">
+            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/trash"><span class="glyphicon glyphicon-trash"></span></a>
+        </li>
     </ul>
     <div class="panel panel-default">
         <table class="table dtable-requests">
@@ -47,6 +50,7 @@
                        class="delete-request modal-window-link"
                        data-current="{typeUser}"
                        data-id="{id}"
+                       data-had-deleted="{hadDeleted}"
                        data-toggle="modal"
                        data-target="#deleteRequestFormModal"
                        title="Видалити замовлення">

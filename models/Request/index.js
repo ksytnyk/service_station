@@ -58,6 +58,11 @@ const describeRequestTable = {
         type: Sequelize.STRING,
         field: 'car_model'
     },
+    hadDeleted: {
+        type: Sequelize.BOOLEAN,
+        field: 'had_deleted',
+        defaultValue: false
+    },
     payed: {
         type: Sequelize.BOOLEAN,
         field: 'payed',
@@ -82,9 +87,7 @@ Request.getAllRequests = function (findBy) {
                 include: {
                     model: User
                 },
-                where: {
-                    status: findBy
-                }
+                where: findBy
             })
             .then(requests => {
                 resolve(requests);

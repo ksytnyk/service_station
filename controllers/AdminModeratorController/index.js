@@ -86,17 +86,31 @@ router.get('/requests/:status', (req, res) => {
 
     if (req.params.status === 'all' || req.params.status === 'hold') {
         findBy = {
-            $between: [1, 5]
-        };
+            status: {
+                $between: [1, 5]
+            },
+            hadDeleted: false
+        }
     }
     else if (req.params.status === 'processing') {
-        findBy = status.PROCESSING;
+        findBy = {
+            status: status.PROCESSING
+        }
     }
     else if (req.params.status === 'done') {
-        findBy = status.DONE;
+        findBy = {
+            status: status.DONE
+        }
     }
     else if (req.params.status === 'canceled') {
-        findBy = status.CANCELED;
+        findBy = {
+            status: status.CANCELED
+        }
+    }
+    else if (req.params.status === 'trash') {
+        findBy = {
+            hadDeleted: true
+        }
     }
 
     Request
@@ -113,6 +127,8 @@ router.get('/requests/:status', (req, res) => {
                                     if (req.params.status === 'hold') {
                                         hold = true;
                                     }
+                                    console.log(requests);
+                                    console.log(requestsFactory(requests, tasks, hold, requestsHistory));
                                     res.render('roles/admin_moderator/requests', {
                                         assignedExecutorUsers: users,
                                         requests: requestsFactory(requests, tasks, hold, requestsHistory),
@@ -253,27 +269,57 @@ router.put('/update-request/:id', validation.createAndUpdateRequest(), (req, res
 });
 
 router.delete('/delete-request/:id', (req, res) => {
-    Task
-        .destroy({
-            where: {
-                request_id: Number(req.params.id)
-            }
-        })
-        .then(() => {
-            Request
-                .deleteRequest(req.params.id)
-                .then(() => {
-                    res.status(200).send({result:'ok'});
-                })
-                .catch(error => {
-                    console.warn(error);
-                    res.status(400).send({errors: errors});
-                });
-        })
-        .catch(error => {
-            console.warn(error);
-            res.status(400).send({errors: errors});
-        });
+    if (req.body.hadDeleted === '') {
+        Task
+            .changeStatusByRequestID(Number(req.params.id), status.CANCELED)
+            .then(() => {
+                Request
+                    .changeStatus(Number(req.params.id), status.CANCELED)
+                    .then(() => {
+                        Request
+                            .updateRequest(Number(req.params.id), {hadDeleted: true})
+                            .then(() => {
+                                res.status(200).send();
+                            })
+                            .catch(error => {
+                                console.warn(error);
+                                res.status(400).send({errors: errors});
+                            });
+                    })
+                    .catch(error => {
+                        console.warn(error);
+                        res.status(400).send({errors: errors});
+                    });
+            })
+            .catch(error => {
+                console.warn(error);
+                res.status(400).send({errors: errors});
+            });
+
+    } else {
+        Task
+            .destroy({
+                where: {
+                    request_id: Number(req.params.id)
+                }
+            })
+            .then(() => {
+                Request
+                    .deleteRequest(req.params.id)
+                    .then(() => {
+                        res.status(200).send();
+                    })
+                    .catch(error => {
+                        console.warn(error);
+                        res.status(400).send({errors: errors});
+                    });
+            })
+            .catch(error => {
+                console.warn(error);
+                res.status(400).send({errors: errors});
+            });
+
+    }
 });
 
 router.put('/change-request-status/:id', (req, res) => {
@@ -287,7 +333,7 @@ router.put('/change-request-status/:id', (req, res) => {
                         Request
                             .getRequestById(req.params.id)
                             .then((result) => {
-                                nodemailer('done-request' ,result[0].user.dataValues);
+                                nodemailer('done-request', result[0].user.dataValues);
                             })
                             .catch(error => {
                                 console.warn(error);
@@ -322,7 +368,7 @@ router.put('/set-payed/:id', (req, res) => {
         });
 });
 
-router.get('/get-request-check/:id', (req, res) =>{
+router.get('/get-request-check/:id', (req, res) => {
     Request
         .getRequestById(req.params.id)
         .then(request => {

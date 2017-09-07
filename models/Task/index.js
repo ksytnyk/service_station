@@ -326,4 +326,27 @@ Task.getAllTasksForChart = function (data) {
     });
 };
 
+Task.changeStatusByRequestID = function (requestID, status) {
+    return new Promise((resolve, reject) => {
+        Task
+            .update(
+                {
+                    status: status
+                },
+                {
+                    where: {
+                        requestID: requestID
+                    }
+                }
+            )
+            .then(result => {
+                resolve(result);
+            })
+            .catch(err => {
+                console.warn(err);
+                reject(err);
+            });
+    });
+};
+
 module.exports = Task;
