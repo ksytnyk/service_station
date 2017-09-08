@@ -23,7 +23,7 @@ module.exports = {
             req.checkBody('userPhone', '"Контактний номер" - обов\'язкове поле.').isLength({ min: 13 });
             req.checkBody('userLogin', '"Логін" - обов\'язкове поле.').notEmpty();
             req.checkBody('userEmail', '"Email" - обов\'язкове поле.').notEmpty();
-            req.checkBody('userEmail', '"Email" - обов\'язкове поле.').isEmail();
+            req.checkBody('userEmail', '"Email" - помилковий формат.').isEmail();
             req.checkBody('userPassword', '"Пароль" - обов\'язкове поле.').notEmpty();
 
             let errors = req.validationErrors();
