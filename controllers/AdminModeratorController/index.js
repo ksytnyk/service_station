@@ -92,6 +92,11 @@ router.get('/requests/:status', (req, res) => {
             hadDeleted: false
         }
     }
+    else if (req.params.status === 'pending') {
+        findBy = {
+            status: status.PENDING
+        }
+    }
     else if (req.params.status === 'processing') {
         findBy = {
             status: status.PROCESSING
