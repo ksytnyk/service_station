@@ -700,6 +700,8 @@ router.post('/create-global-request', validation.createGlobalRequest(), (req, re
                         .then(() => {
                             TaskType
                                 .createTaskType({
+                                    estimationTime: req.body.estimationTime,
+                                    planedExecutorID: req.body.planedExecutorID,
                                     typeName: req.body.name,
                                     carMarkk: req.body.carMarkk,
                                     carModel: req.body.carModel,
