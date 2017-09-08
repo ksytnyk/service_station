@@ -12,7 +12,9 @@ $(document).ready(function () {
                 type: 'post',
                 data: dataArr,
                 success: function (data) {
-                    $('.task-cost').val(data.taskTypeCost);
+                    $('.task-cost').val(data.taskType.cost);
+                    $('.task-estimation-time').val(data.taskType.estimationTime);
+                    $('.task-planed-executor-id').val(data.taskType.planedExecutorID).change();
                 }
             })
         }
@@ -31,7 +33,9 @@ $(document).ready(function () {
                 data: dataArr,
                 success: function (data) {
                     if (!isFirstUpdateClick) {
-                        $('#update-form-task-cost').val(data.taskTypeCost);
+                        $('#update-form-task-cost').val(data.taskType.cost);
+                        $('#update-form-task-estimation-time').val(data.taskType.estimationTime);
+                        $('#update-form-task-planed-executor').val(data.taskType.planedExecutorID).change();
                     } else {
                         isFirstUpdateClick = false;
                     }
@@ -45,6 +49,8 @@ $(document).ready(function () {
         $('#create_new_task .input-group').addClass("hidden");
         $('.task-type-input').removeClass("hidden");
         $('.task-cost').val('');
+        $('.task-estimation-time').val('');
+        $('.task-planed-executor-id').val('');
     });
 
     $('#task-type-select').on('select2:closing',function () {
@@ -56,6 +62,8 @@ $(document).ready(function () {
         $('#update_new_task .input-group').addClass("hidden");
         $('.update-form-task-type-input').removeClass("hidden");
         $('#update-form-task-cost').val('');
+        $('#update-form-task-estimation-time').val('');
+        $('#update-form-task-planed-executor').val('');
     });
 
     $('#update-form-task-type-select').on('select2:closing',function () {

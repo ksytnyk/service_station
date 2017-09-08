@@ -21,7 +21,9 @@
                 <th class="tac">Назва задачі</th>
                 <th class="tac">Марка автомобіля</th>
                 <th class="tac">Модель автомобіля</th>
-                <th class="tac">Вартість</th>
+                <th class="tac" style="width: 65px;">Вартість</th>
+                <th class="tac">Виконавець</th>
+                <th class="tac" style="width: 40px;">Час</th>
                 <th style="width: 50px;"></th>
             </tr>
             </thead>
@@ -29,10 +31,12 @@
             {#taskType}
             <tr id="idr-task-type-{id}">
                 <th class="tac" scope="row">{id}</th>
-                <td class="tac pr">{typeName}</td>
-                <td class="tac pr">{carMarkk}</td>
-                <td class="tac pr">{carModel}</td>
-                <td class="tac pr">{cost}</td>
+                <td class="tac">{typeName}</td>
+                <td class="tac">{carMarkk}</td>
+                <td class="tac">{carModel}</td>
+                <td class="tac">{cost}</td>
+                <td class="tac">{planedExecutor.userSurname} {planedExecutor.userName}</td>
+                <td class="tac">{estimationTime}</td>
                 <td class="tac">
                     <a href="#"
                        class="update-task-type modal-window-link"

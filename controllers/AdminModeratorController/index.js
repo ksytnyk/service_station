@@ -424,7 +424,9 @@ router.post('/create-task', validation.createAndUpdateTask(), (req, res) => {
                                     typeName: req.body.name,
                                     carMarkk: request[0].dataValues.carMarkk,
                                     carModel: request[0].dataValues.carModel,
-                                    cost: req.body.cost
+                                    cost: req.body.cost,
+                                    estimationTime: req.body.estimationTime,
+                                    planedExecutorID: req.body.planedExecutorID
                                 })
                                 .then(() => {
                                     res.status(200).send({result: result});
@@ -473,7 +475,9 @@ router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
                                             typeName: req.body.name,
                                             carMarkk: request[0].dataValues.carMarkk,
                                             carModel: request[0].dataValues.carModel,
-                                            cost: req.body.cost
+                                            cost: req.body.cost,
+                                            estimationTime: req.body.estimationTime,
+                                            planedExecutorID: req.body.planedExecutorID
                                         })
                                         .then(() => {
                                             res.status(200).send({
@@ -609,7 +613,7 @@ router.post('/get-task-prise/:id', (req, res) => {
         .getTaskTypeByID(req.params.id)
         .then(taskType => {
             res.status(200).send({
-                taskTypeCost: taskType.dataValues.cost
+                taskType: taskType
             });
         })
         .catch(errors => {

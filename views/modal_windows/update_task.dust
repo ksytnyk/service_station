@@ -90,7 +90,7 @@
                             {@eq key=typeUser value=1}
                             <input type="text" class="form-control create-form-task" name="cost" id="update-form-task-cost">
                             {:else}
-                            <input type="text" class="form-control create-form-task" name="cost" id="update-form-task-cost" disabled>
+                            <input type="text" class="form-control create-form-task" name="cost" id="update-form-task-cost" readonly style="cursor: not-allowed;">
                             {/eq}
                             <span class="input-group-addon">грн</span>
                         </div>

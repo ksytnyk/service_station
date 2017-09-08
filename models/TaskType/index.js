@@ -2,6 +2,7 @@
 
 const Sequelize = require('sequelize');
 const sequelize = require('../connection');
+const User = require('../User');
 
 const describeTaskTypeTable = {
     typeName: {
@@ -19,7 +20,15 @@ const describeTaskTypeTable = {
     cost: {
         type: Sequelize.FLOAT,
         field: 'cost'
-    }
+    },
+    estimationTime: {
+        type: Sequelize.FLOAT,
+        field: 'estimation_time'
+    },
+    planedExecutorID: {
+        type: Sequelize.INTEGER,
+        field: 'planed_executor_id'
+    },
 };
 
 const optionTaskTypeTable = {
@@ -28,12 +37,19 @@ const optionTaskTypeTable = {
 
 let TaskType = sequelize.define('task_type', describeTaskTypeTable, optionTaskTypeTable);
 
+TaskType.belongsTo(User, {foreignKey: 'planedExecutorID', as: 'planedExecutor'});
+
 TaskType.sync();
 
 TaskType.getAllTaskType = function () {
     return new Promise((resolve, reject) => {
         TaskType
-            .findAll()
+            .findAll({
+                include: {
+                    model: User,
+                    as: 'planedExecutor'
+                }
+            })
             .then(tasks => {
                 resolve(tasks);
             })
