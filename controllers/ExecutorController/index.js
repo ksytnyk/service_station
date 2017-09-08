@@ -3,9 +3,11 @@
 const express = require('express');
 const router = express.Router();
 const Task = require('../../models/Task');
+const Request = require('../../models/Request');
 const formatDate = require('../../helpers/formatDate');
 const countEndTime = require('../../helpers/countEndTime');
 const validation = require('../../middleware/validation');
+const status = require('../../constants/status');
 
 router.get('/', (req, res) => {
     Task
@@ -49,7 +51,37 @@ router.put('/set-task-status/:id', (req, res) => {
     Task
         .updateTask(req.params.id, req.body)
         .then(() => {
-            res.status(200).send();
+            Task
+                .getTaskById(req.params.id)
+                .then(task => {
+                    Task
+                        .getAllTasksStatusOfRequest(task.requestID)
+                        .then(tasks => {
+                            for (var key in tasks) {
+                               if (tasks[key].dataValues.status !== 3) {
+                                   break;
+                               } else {
+                                   Request
+                                       .changeStatus(task.requestID, status.DONE)
+                                       .then(() => {})
+                                       .catch(errors => {
+                                           console.warn(errors);
+                                           res.status(400).send({errors: errors});
+                                       });
+                               }
+                            }
+
+                            res.status(200).send();
+                        })
+                        .catch(errors => {
+                            console.warn(errors);
+                            res.status(400).send({errors: errors});
+                        });
+                })
+                .catch(errors => {
+                    console.warn(errors);
+                    res.status(400).send({errors: errors});
+                });
         })
         .catch(errors => {
             console.warn(errors);

@@ -50,7 +50,7 @@ $(document).ready(function () {
         $('.task-type-input').removeClass("hidden");
         $('.task-cost').val('');
         $('.task-estimation-time').val('');
-        $('.task-planed-executor-id').val('');
+        $('.task-planed-executor-id').val('').change();
     });
 
     $('#task-type-select').on('select2:closing',function () {
@@ -61,9 +61,11 @@ $(document).ready(function () {
         $('#update_new_task .select2').addClass("hidden");
         $('#update_new_task .input-group').addClass("hidden");
         $('.update-form-task-type-input').removeClass("hidden");
-        $('#update-form-task-cost').val('');
+        if (getRole(window.location.pathname) === '/admin') {
+            $('#update-form-task-cost').val('');
+        }
         $('#update-form-task-estimation-time').val('');
-        $('#update-form-task-planed-executor').val('');
+        $('#update-form-task-planed-executor').val('').change();
     });
 
     $('#update-form-task-type-select').on('select2:closing',function () {

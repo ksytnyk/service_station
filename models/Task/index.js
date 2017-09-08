@@ -166,6 +166,25 @@ Task.getAllTasksOfRequest = function (id) {
     });
 };
 
+Task.getAllTasksStatusOfRequest = function (id) {
+    return new Promise((resolve, reject) => {
+        Task
+            .findAll({
+                where: {
+                    requestID: id
+                },
+                attributes: ['status']
+            })
+            .then(tasks => {
+                resolve(tasks);
+            })
+            .catch(error => {
+                console.warn(error);
+                reject(error);
+            });
+    });
+};
+
 Task.getTaskById = function (id) {
     return new Promise((resolve, reject) => {
         Task
