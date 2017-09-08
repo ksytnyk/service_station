@@ -46,7 +46,11 @@
                     <div class="form-group required col-lg-6">
                         <label>Вартість</label>
                         <div class="input-group">
+                            {@eq key=typeUser value=1}
                             <input type="number" min="1" class="form-control" name="cost" id="update-form-cost">
+                            {:else}
+                            <input type="number" min="1" class="form-control" name="cost" id="update-form-cost" readonly style="cursor: not-allowed;">
+                            {/eq}
                             <span class="input-group-addon">грн</span>
                         </div>
                     </div>

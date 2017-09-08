@@ -27,7 +27,11 @@ $(document).ready(function () {
                 $('.in .close').click();
 
                 var idr = "#idr-task-type-" + dataArr[0].value;
-                var newTaskType = '' +
+                var newTaskType,
+                    newTaskType1 = '',
+                    newTaskType2 = '</td>';
+
+                newTaskType = '' +
                     '<th class="tac" scope="row">' + dataArr[0].value + '</th>' +
                     '<td class="tac">' + dataArr[1].value + '</td>' +
                     '<td class="tac">' + dataArr[3].value + '</td>' +
@@ -46,15 +50,17 @@ $(document).ready(function () {
                         ' data-planed-executor-id="' + dataArr[5].value + '"' +
                         ' data-estimation-time="' + dataArr[6].value + '">' +
                             '<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="font-size: 17px; margin-right: 10px;"/>' +
-                        '</a>' +
-                        '<a href="#" class="delete-task-type modal-window-link" ' +
+                        '</a>';
+
+                if (getRole(window.location.pathname) === '/admin') {
+                    newTaskType1 =  '<a href="#" class="delete-task-type modal-window-link" ' +
                         ' data-toggle="modal" data-target="#deleteTaskTypeFormModal" title="Видалити задачу"' +
                         ' data-id="' + dataArr[0].value + '">' +
-                            '<span class="glyphicon glyphicon-remove" aria-hidden="true" style="font-size: 19px;"/>' +
-                        '</a>' +
-                    '</td>';
+                        '<span class="glyphicon glyphicon-remove" aria-hidden="true" style="font-size: 19px;"/>' +
+                        '</a>';
+                }
 
-                $(idr).empty().append(newTaskType);
+                $(idr).empty().append(newTaskType + newTaskType1 + newTaskType2);
 
                 updateTaskType(idr + ' .update-task-type');
                 deleteTaskType(idr + ' .delete-task-type');
