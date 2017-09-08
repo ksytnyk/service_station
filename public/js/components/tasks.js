@@ -147,6 +147,7 @@ $(document).ready(function () {
                 headerFix();
                 deleteTaskOnClick('#idx-task-' + data.result.id + ' .delete-task');
                 clearModalAddTask();
+                $('#createTaskForm .startTime').val(formatDate(new Date()).slice(0, 10));
                 updateTaskOnClick('#idx-task-' + data.result.id + ' .update-task');
 
             },
@@ -325,7 +326,13 @@ $(document).ready(function () {
                     '</td>';
                 }
 
-                newCost = '<strong>Вартість: </strong>' + data.newCost + ' грн';
+                var payed = '(Не розраховано)';
+
+                if(data.request.payed) {
+                    payed = '(Розраховано)';
+                }
+
+                newCost = '<strong>Вартість: ' + data.newCost + ' грн <span>'+ payed+ '</span></strong>';
 
                 $(idx).append(newTask + newTask1 + newTask2);
                 $(idr).append(newCost);
@@ -365,7 +372,13 @@ $(document).ready(function () {
                 $(idx).remove();
                 $(idr).empty();
 
-                var newCost = '<strong>Вартість: </strong>' + data.newCost + ' грн';
+                var payed = '(Не розраховано)';
+
+                if(data.request.payed) {
+                    payed = '(Розраховано)';
+                }
+
+                var newCost = '<strong>Вартість: ' + data.newCost + ' грн <span>'+ payed+ '</span></strong>';
 
                 $(idr).append(newCost);
             },

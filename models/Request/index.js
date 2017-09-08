@@ -31,7 +31,8 @@ const describeRequestTable = {
     },
     hadStarted: {
         type: Sequelize.BOOLEAN,
-        field: 'had_started'
+        field: 'had_started',
+        defaultValue: false
     },
     startTime: {
         type: Sequelize.DATE,
@@ -285,7 +286,26 @@ Request.getAllRequestsForChart = function (data) {
     });
 };
 
-Request.getRequests = function (data) {
+Request.getRequests = function (carMarkk, carModel) {
+    return new Promise((resolve, reject) => {
+        Request
+            .findAll({
+                where: {
+                    carMarkk: carMarkk,
+                    carModel: carModel
+                }
+            })
+            .then(requests => {
+                resolve(requests);
+            })
+            .catch(err => {
+                console.warn(err);
+                reject(err);
+            });
+    });
+};
+
+Request.getRequestsWithoutCondition = function () {
     return new Promise((resolve, reject) => {
         Request
             .findAll()

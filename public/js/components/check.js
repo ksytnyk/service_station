@@ -44,6 +44,7 @@ $(document).ready(function () {
 
     $('#print_check_global').on('click', function () {
 
+        window.scrollTo(0,0);
         $('#number-or-request').text($(this).data('request-id'));
         $('#customer-phone').text($(this).data('customer-phone'));
 

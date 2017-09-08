@@ -3,46 +3,47 @@ $(document).ready(function () {
     $('[data-toggle="popover"]').popover();
 
     $('#create_request').on('click', function () {
-        if($('#request-name-select').serializeArray()[0]){
-            var requestID = $('#request-name-select').serializeArray()[0].value;
-        }
 
         var dataArr = $('#createRequestForm').serializeArray();
-        var requestName = $('#requestID' + requestID).attr('requestID');
 
+        if ($('#request-name-select').serializeArray()[0]) {
+            var requestID = $('#request-name-select').serializeArray()[0].value;
+            var requestName = $('#requestID' + requestID).attr('requestID');
+            if (dataArr[0].value === '') {
+                dataArr[0].value = requestName;
+            }
+        }
+
+        var index = 3;
         if (dataArr.length === 9) {
-            dataArr[2].value = setTimeToDate(dataArr[2].value);
-            dataArr[3].value = setTimeToDate(dataArr[3].value);
-        } else {
-            dataArr[3].value = setTimeToDate(dataArr[3].value);
-            dataArr[4].value = setTimeToDate(dataArr[4].value);
+            index = 2;
         }
 
-        if (dataArr[0].value === '') {
-            dataArr[0].value = requestName;
-        }
+        dataArr[index].value = setTimeToDate(dataArr[index].value);
+        dataArr[index + 1].value = setTimeToDate(dataArr[index + 1].value);
 
         $.ajax({
             url: window.location.pathname,
             type: 'post',
             data: dataArr,
             success: function (data) {
-                $('#print_check').attr('data-customer-phone', data.customer.userPhone);
-                $('#print_check').attr('data-request-id', data.result.id);
-
                 showSuccessAlert('Додавання замовлення пройшло успішно.');
 
-                var input = $('#request-name-input')[0].className;
+                $('#print_check')
+                    .attr('data-customer-phone', data.customer.userPhone)
+                    .attr('data-request-id', data.result.id);
 
-                if(!input.includes('hidden')){
-                    $('#request-name-select option[value='+data.result.id+']').remove();
-                    $('#request-name-select').append($('<option>', {
-                        value: data.result.id,
-                        text: dataArr[0].value,
-                        requestID: dataArr[0].value,
-                        id: 'requestID' + data.result.id
-                    }));
-                    $('#request-name-select').val(data.result.id).change()
+                var input = $('#request-name-input')[0].className;
+                if (!input.includes('hidden')) {
+                    $('#request-name-select option[value=' + data.result.id + ']').remove();
+                    $('#request-name-select')
+                        .append($('<option>', {
+                            value: data.result.id,
+                            text: dataArr[0].value,
+                            requestID: dataArr[0].value,
+                            id: 'requestID' + data.result.id
+                        }))
+                        .val(data.result.id).change()
                 }
 
                 $('.disable_input').attr('disabled', true);
@@ -64,14 +65,12 @@ $(document).ready(function () {
 
     $('#access_update_request').on('click', function () {
 
-        $('.update-request-name-input').addClass("hidden");
-        $('#input-group-update').removeClass("hidden");
-
-        if(isFirstUpdateRequestOpen){
+        if (isFirstUpdateRequestOpen) {
             $('#update-request-name-select').val($('#update-request-name-input').attr('request-id')).change();
             isFirstUpdateRequestOpen = false
         }
-
+        $('.update-request-name-input').addClass("hidden");
+        $('#input-group-update').removeClass("hidden");
         $('.disable_input').attr('disabled', false);
         $('#request-name .select2').removeClass("hidden");
         $('.request-name-input').addClass("hidden");
@@ -87,43 +86,31 @@ $(document).ready(function () {
         var oldEstimatedTime = $('#update_request').attr('estimated-time');
         var dataArr = $('#createRequestForm').serializeArray();
 
-        if(window.location.pathname.includes('create-request')){
-            if($('#request-name-select').serializeArray()[0]){
+        if (window.location.pathname.includes('create-request')) {
+            if ($('#request-name-select').serializeArray()[0]) {
                 var requestID = $('#request-name-select').serializeArray()[0].value;
-            }
-
-            var requestName = $('#requestID' + requestID).attr('requestID');
-
-            if (dataArr.length === 9) {
-                dataArr[2].value = checkDateForUpdate(oldStartTime, dataArr[2].value);
-                dataArr[3].value = checkDateForUpdate(oldEstimatedTime, dataArr[3].value);
-            } else {
-                dataArr[3].value = checkDateForUpdate(oldStartTime, dataArr[3].value);
-                dataArr[4].value = checkDateForUpdate(oldEstimatedTime, dataArr[4].value);
-            }
-
-            if (dataArr[0].value === '') {
-                dataArr[0].value = requestName;
+                var requestName = $('#requestID' + requestID).attr('requestID');
+                if (dataArr[0].value === '') {
+                    dataArr[0].value = requestName;
+                }
             }
         } else {
-            if($('#update-request-name-select').serializeArray()[0]){
+            if ($('#update-request-name-select').serializeArray()[0]) {
                 var updateRequestID = $('#update-request-name-select').serializeArray()[0].value;
-            }
-
-            var updateRequestName = $('#updateRequestID' + updateRequestID).attr('updateRequestID');
-
-            if (dataArr.length === 9) {
-                dataArr[2].value = checkDateForUpdate(oldStartTime, dataArr[2].value);
-                dataArr[3].value = checkDateForUpdate(oldEstimatedTime, dataArr[3].value);
-            } else {
-                dataArr[3].value = checkDateForUpdate(oldStartTime, dataArr[3].value);
-                dataArr[4].value = checkDateForUpdate(oldEstimatedTime, dataArr[4].value);
-            }
-
-            if (dataArr[0].value === '') {
-                dataArr[0].value = updateRequestName;
+                var updateRequestName = $('#updateRequestID' + updateRequestID).attr('updateRequestID');
+                if (dataArr[0].value === '') {
+                    dataArr[0].value = updateRequestName;
+                }
             }
         }
+
+        var index = 3;
+        if (dataArr.length === 9) {
+            index = 2;
+        }
+
+        dataArr[index].value = checkDateForUpdate(oldStartTime, dataArr[index].value);
+        dataArr[index + 1].value = checkDateForUpdate(oldEstimatedTime, dataArr[index + 1].value);
 
         $.ajax({
             url: getRole(window.location.pathname) + '/update-request/' + $(this).attr("request-id"),
@@ -134,32 +121,33 @@ $(document).ready(function () {
 
                 $('#print_check_update_request').attr('customer-phone', data.customer.userPhone);
 
-                if(window.location.pathname.includes('create-request')) {
+                if (window.location.pathname.includes('create-request')) {
 
                     var input = $('#request-name-input')[0].className;
-
-                        if(!input.includes('hidden')){
-                            $('#request-name-select option[value='+data.request.id+']').remove();
-                            $('#request-name-select').append($('<option>', {
+                    if (!input.includes('hidden')) {
+                        $('#request-name-select option[value=' + data.request.id + ']').remove();
+                        $('#request-name-select')
+                            .append($('<option>', {
                                 value: data.request.id,
                                 text: data.request.name,
                                 requestID: data.request.name,
                                 id: 'requestID' + data.request.id
-                            }));
-                            $('#request-name-select').val(data.request.id).change();
+                            }))
+                            .val(data.request.id).change();
                     }
                 } else {
-                    var input = $('#update-request-name-input')[0].className;
 
-                    if(!input.includes('hidden')) {
-                        $('#update-request-name-select option[value='+data.request.id+']').remove();
-                        $('#update-request-name-select').append($('<option>', {
-                            value: data.request.id,
-                            text: data.request.name,
-                            updateRequestID: data.request.name,
-                            id: 'updateRequestID' + data.request.id
-                        }));
-                        $('#update-request-name-select').val(data.request.id).change();
+                    var input = $('#update-request-name-input')[0].className;
+                    if (!input.includes('hidden')) {
+                        $('#update-request-name-select option[value=' + data.request.id + ']').remove();
+                        $('#update-request-name-select')
+                            .append($('<option>', {
+                                value: data.request.id,
+                                text: data.request.name,
+                                updateRequestID: data.request.name,
+                                id: 'updateRequestID' + data.request.id
+                            }))
+                            .val(data.request.id).change();
                     }
                 }
 
@@ -177,8 +165,9 @@ $(document).ready(function () {
 
     $('.delete-request').on('click', function () {
         $('#delete-request-id').text($(this).data('id'));
-        $('.submit-delete-request').attr('data-request-id', $(this).data('id'));
-        $('.submit-delete-request').attr('data-had-deleted', $(this).data('had-deleted'));
+        $('.submit-delete-request')
+            .attr('data-request-id', $(this).data('id'))
+            .attr('data-had-deleted', $(this).data('had-deleted'));
     });
 
     $('.submit-delete-request').on('click', function () {
@@ -188,7 +177,7 @@ $(document).ready(function () {
         $.ajax({
             url: getRole(window.location.pathname) + '/delete-request/' + requestID,
             type: 'delete',
-            data: { hadDeleted: hadDeleted },
+            data: {hadDeleted: hadDeleted},
             success: function () {
                 var idr = "#idr-request-" + requestID;
                 $(idr).remove();
@@ -203,6 +192,9 @@ $(document).ready(function () {
 
     function changeRequestStatus(value) {
         $(value).on('click', function () {
+            if(window.location.pathname.includes('trash')){
+                var hadDeleted = true;
+            }
             var requestID = $(this).data('request-id');
             statusID = $(this).data('status');
             hadStarted = $(this).data('had-started');
@@ -212,7 +204,8 @@ $(document).ready(function () {
                 type: 'put',
                 data: {
                     statusID: statusID,
-                    hadStarted: hadStarted
+                    hadStarted: hadStarted,
+                    hadDeleted: hadDeleted
                 },
                 success: function (data) {
                     var idr = "#idr-request-" + data.requestID;
@@ -384,6 +377,7 @@ $(document).ready(function () {
     }
 
     var addNewUser;
+    var isFirstUpdateRequestOpen = true;
 
     $('#add_new_user').on('click', function () {
         if (addNewUser) {
@@ -424,5 +418,4 @@ $(document).ready(function () {
         isFirstUpdateRequestOpen = true;
     });
 
-    var isFirstUpdateRequestOpen = true;
 });

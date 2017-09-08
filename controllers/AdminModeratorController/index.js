@@ -168,7 +168,7 @@ router.get('/create-request', (req, res) => {
                 .getAllUsers()
                 .then(users => {
                     Request
-                        .getRequests()
+                        .getRequestsWithoutCondition()
                         .then(requests => {
                             res.render('roles/admin_moderator/create_request', {
                                 requests: requests,
@@ -232,7 +232,7 @@ router.get('/requests/update-request/:id', (req, res) => {
                                                 .getUserById(request[0].dataValues.customerID)
                                                 .then(customer => {
                                                     Request
-                                                        .getRequests()
+                                                        .getRequests(request[0].dataValues.carMarkk, request[0].dataValues.carModel)
                                                         .then(requests => {
                                                             res.render('roles/admin_moderator/update_request', {
                                                                 requests: requests,
@@ -362,6 +362,20 @@ router.put('/change-request-status/:id', (req, res) => {
                             })
                             .catch(error => {
                                 console.warn(error);
+                            });
+                    }
+
+                    if (req.body.hadDeleted){
+                        var params = {
+                            hadDeleted: false
+                        };
+
+                        Request
+                            .updateRequest(req.params.id, params)
+                            .then()
+                            .catch(errors => {
+                                console.warn(errors);
+                                res.status(400).send({errors: errors});
                             });
                     }
                     res.status(200).send({
@@ -503,6 +517,7 @@ router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
                                         })
                                         .then(() => {
                                             res.status(200).send({
+                                                request: request,
                                                 task: task,
                                                 requestID: req.body.requestID,
                                                 newCost: newCost
@@ -553,6 +568,7 @@ router.delete('/delete-task/:id', (req, res) => {
                         .updateRequest(req.body.requestID, {cost: newCost})
                         .then(() => {
                             res.status(200).send({
+                                request: request,
                                 id: req.params.id,
                                 requestID: req.body.requestID,
                                 newCost: newCost

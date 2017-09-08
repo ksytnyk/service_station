@@ -4,21 +4,20 @@ $(document).ready(function () {
     $('[data-toggle="popover"]').popover();
 
     $('#create_task_request').on('click', function () {
-        if ($('#global-task-type-select').serializeArray()[0]) {
-            var taskTypeID = $('#global-task-type-select').serializeArray()[0].value;
-        }
 
         var dataArr = $('#createRequestForm').serializeArray();
-        var taskTypeName = $('#globalTaskTypeID' + taskTypeID).attr('globalTaskTypeID');
 
+        if ($('#global-task-type-select').serializeArray()[0]) {
+            var taskTypeID = $('#global-task-type-select').serializeArray()[0].value;
+            var taskTypeName = $('#globalTaskTypeID' + taskTypeID).attr('globalTaskTypeID');
+            if (dataArr[3].value === '') {
+                dataArr[3].value = taskTypeName;
+            }
+        }
         if (dataArr.length === 15) {
             dataArr[5].value = setTimeToDate(dataArr[5].value);
         } else {
             dataArr[6].value = setTimeToDate(dataArr[6].value);
-        }
-
-        if (dataArr[3].value === '') {
-            dataArr[3].value = taskTypeName;
         }
 
         $.ajax({
@@ -29,10 +28,11 @@ $(document).ready(function () {
 
                 showSuccessAlert('Додавання замовлення пройшло успішно.');
 
-                $('#print_check_global').attr('data-request-id', data.request.id);
-                $('#print_check_global').attr('data-customer-phone', data.customer.userPhone);
+                $('#print_check_global')
+                    .attr('data-request-id', data.request.id)
+                    .attr('data-customer-phone', data.customer.userPhone)
+                    .show();
                 $('#create_task_request').hide();
-                $('#print_check_global').show();
             },
             error: function (err) {
                 showErrorAlert(err);
@@ -77,7 +77,7 @@ $(document).ready(function () {
 
     $('#global-task-type-select').on('change', function () {
 
-        var dataArr = $('#global-task-type-select').serializeArray();
+        var dataArr = $(this).serializeArray();
         var taskTypeName = $('#globalTaskTypeID' + dataArr[0].value).attr('globalTaskTypeID');
         dataArr[0].value = taskTypeName;
 
@@ -86,7 +86,10 @@ $(document).ready(function () {
             type: 'post',
             data: dataArr,
             success: function (data) {
-                $('.task-cost').val(data.taskTypeCost);
+
+                $('.task-cost').val(data.taskType.cost);
+                $('.task-estimation-time').val(data.taskType.estimationTime);
+                $('#planedExecutor').val(data.taskType.planedExecutorID).change();
             }
         })
     });
