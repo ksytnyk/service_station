@@ -285,4 +285,18 @@ Request.getAllRequestsForChart = function (data) {
     });
 };
 
+Request.getRequests = function (data) {
+    return new Promise((resolve, reject) => {
+        Request
+            .findAll()
+            .then(requests => {
+                resolve(requests);
+            })
+            .catch(err => {
+                console.warn(err);
+                reject(err);
+            });
+    });
+};
+
 module.exports = Request;

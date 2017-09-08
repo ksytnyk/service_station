@@ -3,10 +3,24 @@ $(document).ready(function () {
     $('[data-toggle="popover"]').popover();
 
     $('#create_request').on('click', function () {
-        var dataArr = $('#createRequestForm').serializeArray();
+        if($('#request-name-select').serializeArray()[0]){
+            var requestID = $('#request-name-select').serializeArray()[0].value;
+        }
 
-        dataArr[2].value = setTimeToDate(dataArr[2].value);
-        dataArr[3].value = setTimeToDate(dataArr[3].value);
+        var dataArr = $('#createRequestForm').serializeArray();
+        var requestName = $('#requestID' + requestID).attr('requestID');
+
+        if (dataArr.length === 9) {
+            dataArr[2].value = setTimeToDate(dataArr[2].value);
+            dataArr[3].value = setTimeToDate(dataArr[3].value);
+        } else {
+            dataArr[3].value = setTimeToDate(dataArr[3].value);
+            dataArr[4].value = setTimeToDate(dataArr[4].value);
+        }
+
+        if (dataArr[0].value === '') {
+            dataArr[0].value = requestName;
+        }
 
         $.ajax({
             url: window.location.pathname,
@@ -17,6 +31,19 @@ $(document).ready(function () {
                 $('#print_check').attr('data-request-id', data.result.id);
 
                 showSuccessAlert('Додавання замовлення пройшло успішно.');
+
+                var input = $('#request-name-input')[0].className;
+
+                if(!input.includes('hidden')){
+                    $('#request-name-select option[value='+data.result.id+']').remove();
+                    $('#request-name-select').append($('<option>', {
+                        value: data.result.id,
+                        text: dataArr[0].value,
+                        requestID: dataArr[0].value,
+                        id: 'requestID' + data.result.id
+                    }));
+                    $('#request-name-select').val(data.result.id).change()
+                }
 
                 $('.disable_input').attr('disabled', true);
                 $('#step').slideDown('slow');
@@ -36,19 +63,67 @@ $(document).ready(function () {
     });
 
     $('#access_update_request').on('click', function () {
+
+        $('.update-request-name-input').addClass("hidden");
+        $('#input-group-update').removeClass("hidden");
+
+        if(isFirstUpdateRequestOpen){
+            $('#update-request-name-select').val($('#update-request-name-input').attr('request-id')).change();
+            isFirstUpdateRequestOpen = false
+        }
+
         $('.disable_input').attr('disabled', false);
+        $('#request-name .select2').removeClass("hidden");
+        $('.request-name-input').addClass("hidden");
+        $('#request-name .input-group').removeClass("hidden");
         $('.select2').removeClass('select2-container--disabled');
         $('#access_update_request').hide();
         $('#update_request').show();
     });
 
     $('#update_request').on('click', function () {
-        var dataArr = $('#createRequestForm').serializeArray();
+
         var oldStartTime = $('#update_request').attr('start-time');
         var oldEstimatedTime = $('#update_request').attr('estimated-time');
+        var dataArr = $('#createRequestForm').serializeArray();
 
-        dataArr[2].value = checkDateForUpdate(oldStartTime, dataArr[2].value);
-        dataArr[3].value = checkDateForUpdate(oldEstimatedTime, dataArr[3].value);
+        if(window.location.pathname.includes('create-request')){
+            if($('#request-name-select').serializeArray()[0]){
+                var requestID = $('#request-name-select').serializeArray()[0].value;
+            }
+
+            var requestName = $('#requestID' + requestID).attr('requestID');
+
+            if (dataArr.length === 9) {
+                dataArr[2].value = checkDateForUpdate(oldStartTime, dataArr[2].value);
+                dataArr[3].value = checkDateForUpdate(oldEstimatedTime, dataArr[3].value);
+            } else {
+                dataArr[3].value = checkDateForUpdate(oldStartTime, dataArr[3].value);
+                dataArr[4].value = checkDateForUpdate(oldEstimatedTime, dataArr[4].value);
+            }
+
+            if (dataArr[0].value === '') {
+                dataArr[0].value = requestName;
+            }
+        } else {
+            if($('#update-request-name-select').serializeArray()[0]){
+                var updateRequestID = $('#update-request-name-select').serializeArray()[0].value;
+            }
+
+            var updateRequestName = $('#updateRequestID' + updateRequestID).attr('updateRequestID');
+
+            if (dataArr.length === 9) {
+                dataArr[2].value = checkDateForUpdate(oldStartTime, dataArr[2].value);
+                dataArr[3].value = checkDateForUpdate(oldEstimatedTime, dataArr[3].value);
+            } else {
+                dataArr[3].value = checkDateForUpdate(oldStartTime, dataArr[3].value);
+                dataArr[4].value = checkDateForUpdate(oldEstimatedTime, dataArr[4].value);
+            }
+
+            if (dataArr[0].value === '') {
+                dataArr[0].value = updateRequestName;
+            }
+        }
 
         $.ajax({
             url: getRole(window.location.pathname) + '/update-request/' + $(this).attr("request-id"),
@@ -58,6 +133,35 @@ $(document).ready(function () {
                 showSuccessAlert('Оновлення замовлення пройшло успішно.');
 
                 $('#print_check_update_request').attr('customer-phone', data.customer.userPhone);
+
+                if(window.location.pathname.includes('create-request')) {
+
+                    var input = $('#request-name-input')[0].className;
+
+                        if(!input.includes('hidden')){
+                            $('#request-name-select option[value='+data.request.id+']').remove();
+                            $('#request-name-select').append($('<option>', {
+                                value: data.request.id,
+                                text: data.request.name,
+                                requestID: data.request.name,
+                                id: 'requestID' + data.request.id
+                            }));
+                            $('#request-name-select').val(data.request.id).change();
+                    }
+                } else {
+                    var input = $('#update-request-name-input')[0].className;
+
+                    if(!input.includes('hidden')) {
+                        $('#update-request-name-select option[value='+data.request.id+']').remove();
+                        $('#update-request-name-select').append($('<option>', {
+                            value: data.request.id,
+                            text: data.request.name,
+                            updateRequestID: data.request.name,
+                            id: 'updateRequestID' + data.request.id
+                        }));
+                        $('#update-request-name-select').val(data.request.id).change();
+                    }
+                }
 
                 $('.disable_input').attr('disabled', true);
                 $('#update_request').hide()
@@ -296,4 +400,29 @@ $(document).ready(function () {
     $('.update_request #customers').on('select2:closing', function () {
         addNewUser = $('.select2-search__field')[0].value.split(' ');
     });
+
+    $('.new-request-name').on('click', function () {
+        $('#request-name .select2').addClass("hidden");
+        $('.request-name-input').removeClass("hidden");
+        $('#request-name .input-group').addClass("hidden");
+    });
+
+    $('#request-name-select').on('select2:closing', function () {
+        $('.request-name-input').val($('.select2-search__field')[0].value);
+    });
+
+    $('.update-new-request-name').on('click', function () {
+        $('.update-request-name-input').removeClass("hidden");
+        $('#input-group-update').addClass("hidden");
+    });
+
+    $('#update-request-name-select').on('select2:closing', function () {
+        $('.update-request-name-input').val($('.select2-search__field')[0].value);
+    });
+
+    $('.update-all-request-button').on('click', function () {
+        isFirstUpdateRequestOpen = true;
+    });
+
+    var isFirstUpdateRequestOpen = true;
 });

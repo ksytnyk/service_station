@@ -162,11 +162,20 @@ router.get('/create-request', (req, res) => {
             User
                 .getAllUsers()
                 .then(users => {
-                    res.render('roles/admin_moderator/create_request', {
-                        assignedExecutorUsers: users,
-                        customers: usersCustomers,
-                        typeUser: req.session.passport.user.userTypeID
-                    })
+                    Request
+                        .getRequests()
+                        .then(requests => {
+                            res.render('roles/admin_moderator/create_request', {
+                                requests: requests,
+                                assignedExecutorUsers: users,
+                                customers: usersCustomers,
+                                typeUser: req.session.passport.user.userTypeID
+                            })
+                        })
+                        .catch(err => {
+                            console.warn(err);
+                            res.render('roles/admin_moderator/create_request');
+                        })
                 })
                 .catch(err => {
                     console.warn(err);
@@ -217,14 +226,23 @@ router.get('/requests/update-request/:id', (req, res) => {
                                             User
                                                 .getUserById(request[0].dataValues.customerID)
                                                 .then(customer => {
-                                                    res.render('roles/admin_moderator/update_request', {
-                                                        customer: customer,
-                                                        taskTypes: taskTypes,
-                                                        assignedExecutorUsers: users,
-                                                        customers: usersCustomers,
-                                                        typeUser: req.session.passport.user.userTypeID,
-                                                        request: requestsFactory(request, task)
-                                                    })
+                                                    Request
+                                                        .getRequests()
+                                                        .then(requests => {
+                                                            res.render('roles/admin_moderator/update_request', {
+                                                                requests: requests,
+                                                                customer: customer,
+                                                                taskTypes: taskTypes,
+                                                                assignedExecutorUsers: users,
+                                                                customers: usersCustomers,
+                                                                typeUser: req.session.passport.user.userTypeID,
+                                                                request: requestsFactory(request, task)
+                                                            })
+                                                        })
+                                                        .catch(error => {
+                                                            console.warn(error);
+                                                            res.render('roles/admin_moderator/update_request');
+                                                        });
                                                 })
                                                 .catch(error => {
                                                     console.warn(error);
@@ -252,11 +270,10 @@ router.put('/update-request/:id', validation.createAndUpdateRequest(), (req, res
             Request
                 .getRequestById(req.params.id)
                 .then(request => {
-                    console.log(request);
                     User
                         .getUserById(request[0].dataValues.customerID)
                         .then(customer => {
-                            res.status(200).send({result: result, customer: customer});
+                            res.status(200).send({request: request[0].dataValues, result: result, customer: customer});
                         })
                         .catch(errors => {
                             res.status(400).send({errors: errors});

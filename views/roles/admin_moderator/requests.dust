@@ -45,7 +45,8 @@
                     {@ne key=typeUser value=6}
                     <a href="update-request/{id}"
                        title="Редагувати замовлення"
-                       style="font-size: 17px;">
+                       style="font-size: 17px;"
+                        class="update-all-request-button">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"/>
                     </a>
                     {@eq key=typeUser value=1}

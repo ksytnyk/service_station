@@ -6,9 +6,21 @@
 
 <div class="col-lg-12 create_request noprint">
     <form class="clearfix" id="createRequestForm">
-        <div class="form-group required col-lg-3">
+        <div class="form-group required col-lg-3" id="request-name">
             <label>Назва замовлення</label>
-            <input type="text" class="form-control disable_input" name="name">
+            <input type="text" class="form-control request-name-input hidden disable_input" id="request-name-input" name="name">
+
+            <div class="input-group">
+                <select class="form-control add_select2 request-name-select disable_input" id="request-name-select" name="name2">
+                    {#requests}
+                        <option value="{id}" requestID="{name}" id="requestID{id}">{name}</option>
+                    {/requests}
+                </select>
+                <span class="input-group-addon new-request-name plus disable_input">
+                    <span class="glyphicon glyphicon-plus disable_input" aria-hidden="true" style="margin: 0;" title="Додати нове замовлення"></span>
+                </span>
+            </div>
+
         </div>
         <div class="form-group required col-lg-3">
             <label>Клієнт</label>

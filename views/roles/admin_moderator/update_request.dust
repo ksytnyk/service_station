@@ -9,7 +9,17 @@
     <form class="clearfix" id="createRequestForm">
         <div class="form-group required col-lg-3">
             <label>Назва замовлення</label>
-            <input type="text" class="form-control disable_input" name="name" value="{name}" disabled>
+            <input type="text" class="form-control disable_input update-request-name-input" request-id="{id}" name="name" value="{name}" id="update-request-name-input" disabled>
+            <div class="input-group hidden" id="input-group-update">
+                <select value="{id}" class="form-control add_select2 update-request-name-select disable_input" id="update-request-name-select" name="name2">
+                    {#requests}
+                    <option value="{id}" updateRequestID="{name}" id="updateRequestID{id}">{name}</option>
+                    {/requests}
+                </select>
+                <span class="input-group-addon update-new-request-name plus disable_input">
+                    <span class="glyphicon glyphicon-plus disable_input" aria-hidden="true" style="margin: 0;" title="Додати нове замовлення"></span>
+                </span>
+            </div>
         </div>
         <div class="form-group required col-lg-3">
             <label>Клієнт</label>
