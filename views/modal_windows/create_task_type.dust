@@ -28,9 +28,24 @@
                         <select class="form-control" name="carModel" id="model1"></select>
                     </div>
                     <div class="form-group required col-lg-6">
+                        <label>Виконавець</label>
+                        <select class="form-control add_select2 task-planed-executor-id" name="planedExecutorID">
+                            {#users}
+                            <option value="{id}">{userSurname} {userName}</option>
+                            {/users}
+                        </select>
+                    </div>
+                    <div class="form-group required col-lg-6">
+                        <label>Час виконання</label>
+                        <div class="input-group">
+                            <input type="number" min="1" class="form-control" name="estimationTime">
+                            <span class="input-group-addon">год</span>
+                        </div>
+                    </div>
+                    <div class="form-group required col-lg-6">
                         <label>Вартість</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="cost" id="update-form-cost">
+                            <input type="number" min="1" class="form-control" name="cost">
                             <span class="input-group-addon">грн</span>
                         </div>
                     </div>

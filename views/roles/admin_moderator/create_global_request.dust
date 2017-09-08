@@ -62,7 +62,7 @@
         <div class="form-group required col-lg-3">
             <label>Вартість</label>
             <div class="input-group">
-                <input type="text" class="form-control create-form-task task-cost" name="cost">
+                <input type="number" min="1" class="form-control create-form-task task-cost" name="cost">
                 <span class="input-group-addon">грн</span>
             </div>
         </div>
@@ -112,7 +112,7 @@
         <div class="form-group col-lg-3 col-lg-offset-9" style="margin-top: 10px;">
             <input type="button" id="create_task_request" value="Додати замовлення"
                    class="btn btn-success col-lg-12"/>
-            <button type="button" id="print_check_global" value="Друк" class="btn btn-danger modal-window-link col-lg-offset-1 col-lg-2"
+            <button type="button" id="print_check_global" value="Друк" class="btn btn-danger modal-window-link col-lg-offset-10 col-lg-2"
                     data-toggle="modal" data-target="#printCheckFormModal" title="Друк">
                 <span class="glyphicon glyphicon-print" aria-hidden="true" style="margin: 3px 0;"></span>
             </button>

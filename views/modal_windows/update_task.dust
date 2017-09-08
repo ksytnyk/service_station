@@ -79,7 +79,7 @@
                     <div class="form-group required col-lg-2">
                         <label>Час виконання</label>
                         <div class="input-group">
-                            <input type="number" class="form-control create-form-task" name="estimationTime"
+                            <input type="number" min="1" class="form-control create-form-task" name="estimationTime"
                                id="update-form-task-estimation-time">
                             <span class="input-group-addon">год</span>
                         </div>
@@ -88,9 +88,9 @@
                         <label>Вартість</label>
                         <div class="input-group">
                             {@eq key=typeUser value=1}
-                            <input type="text" class="form-control create-form-task" name="cost" id="update-form-task-cost">
+                            <input type="number" min="1" class="form-control create-form-task" name="cost" id="update-form-task-cost">
                             {:else}
-                            <input type="text" class="form-control create-form-task" name="cost" id="update-form-task-cost" readonly style="cursor: not-allowed;">
+                            <input type="number" min="1" class="form-control create-form-task" name="cost" id="update-form-task-cost" readonly style="cursor: not-allowed;">
                             {/eq}
                             <span class="input-group-addon">грн</span>
                         </div>

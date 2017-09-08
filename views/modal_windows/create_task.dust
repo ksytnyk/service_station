@@ -68,14 +68,14 @@
                     <div class="form-group required col-lg-2">
                         <label>Час виконання</label>
                         <div class="input-group">
-                            <input type="number" class="form-control create-form-task task-estimation-time" name="estimationTime">
+                            <input type="number" min="1" class="form-control create-form-task task-estimation-time" name="estimationTime">
                             <span class="input-group-addon">год</span>
                         </div>
                     </div>
                     <div class="form-group required col-lg-2">
                         <label>Вартість</label>
                         <div class="input-group">
-                            <input type="text" class="form-control create-form-task task-cost" name="cost">
+                            <input type="number" min="1" class="form-control create-form-task task-cost" name="cost">
                             <span class="input-group-addon">грн</span>
                         </div>
                     </div>

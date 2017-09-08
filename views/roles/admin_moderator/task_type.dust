@@ -47,6 +47,8 @@
                        data-car-markk="{carMarkk}"
                        data-car-model="{carModel}"
                        data-cost="{cost}"
+                       data-planed-executor-id="{planedExecutorID}"
+                       data-estimation-time="{estimationTime}"
                        title="Редагувати задачу">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true" style="font-size: 17px; margin-right: 10px;"/>
                     </a>

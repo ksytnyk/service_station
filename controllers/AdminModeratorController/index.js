@@ -738,10 +738,19 @@ router.get('/task-type', (req, res) => {
     TaskType
         .getAllTaskType()
         .then(taskType => {
-            res.render('roles/admin_moderator/task_type', {
-                taskType: taskType,
-                typeUser: req.session.passport.user.userTypeID
-            });
+            User
+                .getExecutorUsers()
+                .then(users => {
+                    res.render('roles/admin_moderator/task_type', {
+                        users: users,
+                        taskType: taskType,
+                        typeUser: req.session.passport.user.userTypeID
+                    });
+                })
+                .catch(error => {
+                    console.warn(error);
+                    res.render('roles/admin_moderator/task_type');
+                });
         })
         .catch(error => {
             console.warn(error);
@@ -769,7 +778,17 @@ router.put('/update-task-type/:id', validation.createAndUpdateTaskType(), (req, 
     TaskType
         .updateTaskType(req.params.id, req.body)
         .then(() => {
-            res.status(200).send();
+            User
+                .getUserById(req.body.planedExecutorID)
+                .then(user => {
+                    res.status(200).send({
+                        user: user
+                    });
+                })
+                .catch(errors => {
+                    console.warn(errors);
+                    res.status(400).send({errors: errors});
+                });
         })
         .catch(errors => {
             console.warn(errors);

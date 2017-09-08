@@ -8,6 +8,8 @@ $(document).ready(function () {
             $('#update-form-type-name').val($(this).data('type-name'));
             $("#markk").append("<option value='" + $(this).data('car-markk') + "'>" + $(this).data('car-markk') + "</option>");
             $("#model").append("<option value='" + $(this).data('car-model') + "'>" + $(this).data('car-model') + "</option>");
+            $('#update-form-planed-executor-id').val($(this).data('planed-executor-id')).change();
+            $('#update-form-estimation-time').val($(this).data('estimation-time'));
             $('#update-form-cost').val($(this).data('cost'));
         });
     }
@@ -21,16 +23,18 @@ $(document).ready(function () {
             url: getRole(window.location.pathname) + '/update-task-type/' + dataArr[0].value,
             type: 'put',
             data: dataArr,
-            success: function () {
+            success: function (data) {
                 $('.in .close').click();
 
                 var idr = "#idr-task-type-" + dataArr[0].value;
                 var newTaskType = '' +
                     '<th class="tac" scope="row">' + dataArr[0].value + '</th>' +
-                    '<td class="tac pr">' + dataArr[1].value + '</td>' +
-                    '<td class="tac pr">' + dataArr[3].value + '</td>' +
-                    '<td class="tac pr">' + dataArr[4].value + '</td>' +
-                    '<td class="tac pr">' + dataArr[5].value + '</td>' +
+                    '<td class="tac">' + dataArr[1].value + '</td>' +
+                    '<td class="tac">' + dataArr[3].value + '</td>' +
+                    '<td class="tac">' + dataArr[4].value + '</td>' +
+                    '<td class="tac">' + dataArr[7].value + '</td>' +
+                    '<td class="tac">' + data.user.userSurname + ' ' + data.user.userName + '</td>' +
+                    '<td class="tac">' + dataArr[6].value + '</td>' +
                     '<td class="tac">' +
                         '<a href="#" class="update-task-type modal-window-link"' +
                         ' data-toggle="modal" data-target="#updateTaskTypeFormModal" title="Редагувати задачу"' +
@@ -38,7 +42,9 @@ $(document).ready(function () {
                         ' data-type-name="' + dataArr[1].value + '"' +
                         ' data-car-markk="' + dataArr[3].value + '"' +
                         ' data-car-model="' + dataArr[4].value + '"' +
-                        ' data-cost="' + dataArr[5].value + '">' +
+                        ' data-cost="' + dataArr[7].value + '"' +
+                        ' data-planed-executor-id="' + dataArr[5].value + '"' +
+                        ' data-estimation-time="' + dataArr[6].value + '">' +
                             '<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="font-size: 17px; margin-right: 10px;"/>' +
                         '</a>' +
                         '<a href="#" class="delete-task-type modal-window-link" ' +
