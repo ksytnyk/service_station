@@ -9,14 +9,14 @@ $(document).ready(function () {
         if ($('#request-name-select').serializeArray()[0]) {
             var requestID = $('#request-name-select').serializeArray()[0].value;
             var requestName = $('#requestID' + requestID).attr('requestID');
-            if (dataArr[0].value === '') {
-                dataArr[0].value = requestName;
+            if (dataArr[4].value === '') {
+                dataArr[4].value = requestName;
             }
         }
 
-        var index = 3;
+        var index = 6;
         if (dataArr.length === 9) {
-            index = 2;
+            index = 5;
         }
 
         dataArr[index].value = setTimeToDate(dataArr[index].value);
@@ -39,8 +39,8 @@ $(document).ready(function () {
                     $('#request-name-select')
                         .append($('<option>', {
                             value: data.result.id,
-                            text: dataArr[0].value,
-                            requestID: dataArr[0].value,
+                            text: dataArr[4].value,
+                            requestID: dataArr[4].value,
                             id: 'requestID' + data.result.id
                         }))
                         .val(data.result.id).change()
@@ -90,23 +90,23 @@ $(document).ready(function () {
             if ($('#request-name-select').serializeArray()[0]) {
                 var requestID = $('#request-name-select').serializeArray()[0].value;
                 var requestName = $('#requestID' + requestID).attr('requestID');
-                if (dataArr[0].value === '') {
-                    dataArr[0].value = requestName;
+                if (dataArr[4].value === '') {
+                    dataArr[4].value = requestName;
                 }
             }
         } else {
             if ($('#update-request-name-select').serializeArray()[0]) {
                 var updateRequestID = $('#update-request-name-select').serializeArray()[0].value;
                 var updateRequestName = $('#updateRequestID' + updateRequestID).attr('updateRequestID');
-                if (dataArr[0].value === '') {
-                    dataArr[0].value = updateRequestName;
+                if (dataArr[4].value === '') {
+                    dataArr[4].value = updateRequestName;
                 }
             }
         }
 
-        var index = 3;
+        var index = 6;
         if (dataArr.length === 9) {
-            index = 2;
+            index = 5;
         }
 
         dataArr[index].value = checkDateForUpdate(oldStartTime, dataArr[index].value);
@@ -418,6 +418,44 @@ $(document).ready(function () {
 
     $('.update-all-request-button').on('click', function () {
         isFirstUpdateRequestOpen = true;
+    });
+
+    $('#model').on('change', function () {
+
+        $(".request-name-select option").remove();
+
+        $.ajax({
+            url: getRole(window.location.pathname) + '/request-type',
+            type: 'post',
+            data: {
+                carMarkk: $('#markk').val(),
+                carModel: $('#model').val()
+            },
+            success: function (data) {
+                if (window.location.pathname.includes('update-request')) {
+                    $.each(data.requestTypes, function (i, item) {
+                        $('.request-name-select').append($('<option>', {
+                            value: item.id,
+                            text: item.name,
+                            updateRequestID: item.name,
+                            id: 'updateRequestID' + item.id
+                        }));
+                    });
+                }
+                else {
+                    $.each(data.requestTypes, function (i, item) {
+                        $('.request-name-select').append($('<option>', {
+                            value: item.id,
+                            text: item.name,
+                            requestID: item.name,
+                            id: 'requestID' + item.id
+                        }));
+                    });
+                }
+
+                $('#request-name-select').val('').select2();
+            }
+        });
     });
 
 });

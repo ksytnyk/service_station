@@ -4,7 +4,7 @@ $(document).ready(() => {
     let linkForCars = window.location.pathname,
         createLink = getRole(linkForCars) + "/create-request",
         createGlobalReq = getRole(linkForCars) + "/create-global-request",
-        updateLink = getRole(linkForCars) + "/update-request",
+        updateLink = getRole(linkForCars) + "/requests/update-request",
         taskTypeLink = getRole(linkForCars) + "/task-type";
 
     let idArray = ['', '1'];

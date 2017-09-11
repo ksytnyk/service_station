@@ -781,6 +781,21 @@ router.get('/task-type', (req, res) => {
         });
 });
 
+router.post('/request-type', (req, res) => {
+    Request
+        .getRequests(req.body.carMarkk, req.body.carModel)
+        .then(requestTypes  => {
+            res.status(200).send({
+                requestTypes: requestTypes
+            });
+        })
+        .catch(errors => {
+            console.warn(errors);
+            res.status(400).send({errors: errors});
+        });
+
+});
+
 router.post('/create-task-type', validation.createAndUpdateTaskType('create'), (req, res) => {
     TaskType
         .createTaskType(req.body)

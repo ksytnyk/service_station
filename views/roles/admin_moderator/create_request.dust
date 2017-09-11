@@ -6,53 +6,6 @@
 
 <div class="col-lg-12 create_request noprint">
     <form class="clearfix" id="createRequestForm">
-        <div class="form-group required col-lg-3" id="request-name">
-            <label>Назва замовлення</label>
-            <input type="text" class="form-control request-name-input hidden disable_input" id="request-name-input" name="name">
-
-            <div class="input-group">
-                <select class="form-control add_select2 request-name-select disable_input" id="request-name-select" name="name2">
-                    {#requests}
-                        <option value="{id}" requestID="{name}" id="requestID{id}">{name}</option>
-                    {/requests}
-                </select>
-                <span class="input-group-addon new-request-name plus disable_input">
-                    <span class="glyphicon glyphicon-plus disable_input" aria-hidden="true" style="margin: 0;" title="Додати нове замовлення"></span>
-                </span>
-            </div>
-
-        </div>
-        <div class="form-group required col-lg-3">
-            <label>Клієнт</label>
-            <div class="input-group">
-                <select class="form-control add_select2 disable_input" name="customerID" id="customers">
-                    {#customers}
-                    <option value="{id}">{userName} {userSurname}</option>
-                    {/customers}
-                </select>
-                <span class="input-group-addon plus disable_input" id="add_new_user">
-                    <span class="glyphicon glyphicon-plus disable_input" aria-hidden="true" style="margin: 0;" title="Додати нового користувача"></span>
-                </span>
-            </div>
-        </div>
-        <div class="form-group required col-lg-3">
-                <label>Час початку</label>
-                <input type="text" class="form-control datetimepickerN startTime disable_input" name="startTime" id="startDate"
-                       style="margin-bottom: 5px;">
-        </div>
-        <div class="form-group required col-lg-3">
-            <label>Орієнтовний час виконання</label>
-            <input type="text" class="form-control datetimepickerN endTime disable_input" name="estimatedTime" id="endDate"
-                   style="margin-bottom: 5px;">
-        </div>
-        <div class="form-group col-lg-3">
-            <label>Опис замовлення</label>
-            <textarea class="form-control disable_input" name="description" rows="4" style="height: 108px;"></textarea>
-        </div>
-        <div class="form-group col-lg-3">
-            <label>Коментар</label>
-            <textarea class="form-control disable_input" name="comment" rows="4" style="height: 108px;"></textarea>
-        </div>
         <div class="form-group required col-lg-3">
             <label>Тип транспорту</label>
             <select class="form-control disable_input" name="typeOfCar" id="typeOfCar">
@@ -67,7 +20,43 @@
             <label>Модель транспорту</label>
             <select class="form-control disable_input" name="carModel" id="model"></select>
         </div>
-        <div class="form-group col-lg-3" style="margin-top: 25px;">
+        <div class="form-group required col-lg-3">
+            <label>Клієнт</label>
+            <div class="input-group">
+                <select class="form-control add_select2 disable_input" name="customerID" id="customers">
+                    {#customers}
+                    <option value="{id}">{userName} {userSurname}</option>
+                    {/customers}
+                </select>
+                <span class="input-group-addon plus disable_input" id="add_new_user">
+                    <span class="glyphicon glyphicon-plus disable_input" aria-hidden="true" style="margin: 0;" title="Додати нового користувача"></span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group required col-lg-3" id="request-name">
+            <label>Назва замовлення</label>
+            <input type="text" class="form-control request-name-input hidden disable_input" id="request-name-input" name="name">
+
+            <div class="input-group">
+                <select class="form-control request-name-select disable_input" id="request-name-select" name="name2" style="width:99%; border-radius: 4px;"></select>
+                <span class="input-group-addon new-request-name plus disable_input">
+                    <span class="glyphicon glyphicon-plus disable_input" aria-hidden="true" style="margin: 0;" title="Додати нове замовлення"></span>
+                </span>
+            </div>
+
+        </div>
+
+        <div class="form-group required col-lg-3">
+                <label>Час початку</label>
+                <input type="text" class="form-control datetimepickerN startTime disable_input" name="startTime" id="startDate"
+                       style="margin-bottom: 5px;">
+        </div>
+        <div class="form-group required col-lg-3">
+            <label>Орієнтовний час виконання</label>
+            <input type="text" class="form-control datetimepickerN endTime disable_input" name="estimatedTime" id="endDate"
+                   style="margin-bottom: 5px;">
+        </div>
+        <div class="form-group col-lg-3" style="margin-top: 25px; margin-bottom: 20px;">
             <input type="button" id="create_request" value="Додати замовлення"
                    class="btn btn-success col-lg-12 disable_input"/>
             <input type="button" id="access_update_request" value="Редагувати замовлення"
@@ -75,9 +64,17 @@
             <input type="button" id="update_request" value="Зберегти зміни"
                    class="btn btn-success col-lg-9"/>
             <button type="button" id="print_check" value="Друк" class="btn btn-danger modal-window-link col-lg-offset-1 col-lg-2"
-                   data-toggle="modal" data-target="#printCheckFormModal" title="Друк">
+                    data-toggle="modal" data-target="#printCheckFormModal" title="Друк">
                 <span class="glyphicon glyphicon-print" aria-hidden="true" style="margin: 3px 0;"></span>
             </button>
+        </div>
+        <div class="form-group col-lg-3">
+            <label>Опис замовлення</label>
+            <textarea class="form-control disable_input" name="description" rows="4" style="height: 108px;"></textarea>
+        </div>
+        <div class="form-group col-lg-3">
+            <label>Коментар</label>
+            <textarea class="form-control disable_input" name="comment" rows="4" style="height: 108px;"></textarea>
         </div>
     </form>
     <div id="step" class="clearfix">
