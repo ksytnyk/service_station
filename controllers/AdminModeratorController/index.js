@@ -117,6 +117,16 @@ router.get('/requests/:status', (req, res) => {
             giveOut: true
         }
     }
+    else if (req.params.status === 'payed') {
+        findBy = {
+            payed: true
+        }
+    }
+    else if (req.params.status === 'not-payed') {
+        findBy = {
+            payed: false
+        }
+    }
     else if (req.params.status === 'trash') {
         findBy = {
             hadDeleted: true

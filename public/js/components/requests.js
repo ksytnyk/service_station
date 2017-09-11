@@ -329,21 +329,26 @@ $(document).ready(function () {
                     var idr = "#idr-request-" + requestID,
                         idc = "#idr-cost-" + requestID;
 
-                    if (payed) {
-                        $(idr + ' .request_payed').addClass('request_payed_true');
-                        $(idc + ' span').empty().append('(Розраховано)');
-                        $(idr + ' .set_payed_true').addClass('hide');
-                        $(idr + ' .set_payed_false').removeClass('hide');
-                        if (data.request[0].status === 3) {
-                            $(idr + ' .set_give_out').removeClass('hide');
+                    if (window.location.pathname.split('/')[3] === 'all' || window.location.pathname.split('/')[3] === 'hold') {
+                        if (payed) {
+                            $(idr + ' .request_payed').addClass('request_payed_true');
+                            $(idc + ' span').empty().append('(Розраховано)');
+                            $(idr + ' .set_payed_true').addClass('hide');
+                            $(idr + ' .set_payed_false').removeClass('hide');
+                            if (data.request[0].status === 3) {
+                                $(idr + ' .set_give_out').removeClass('hide');
+                            }
+                        } else {
+                            $(idr + ' .request_payed').removeClass('request_payed_true');
+                            $(idc + ' span').empty().append('(Не розраховано)');
+                            $(idr + ' .set_payed_false').addClass('hide');
+                            $(idr + ' .set_payed_true').removeClass('hide');
+                            $(idr + ' .set_give_out').addClass('hide');
                         }
                     } else {
-                        $(idr + ' .request_payed').removeClass('request_payed_true');
-                        $(idc + ' span').empty().append('(Не розраховано)');
-                        $(idr + ' .set_payed_false').addClass('hide');
-                        $(idr + ' .set_payed_true').removeClass('hide');
-                        $(idr + ' .set_give_out').addClass('hide');
+                        $(idr).remove();
                     }
+
                 },
                 error: function (err) {
                     showErrorAlert(err);

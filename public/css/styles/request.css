@@ -1,3 +1,6 @@
+.requests .nav > li > a {
+    padding: 10px 14px;
+}
 .requests p {
     margin: 3px 0;
     font-size: 13px;
@@ -108,7 +111,8 @@
     min-width: 48%;
 }
 .requests .panel > div:first-child .row:first-child div {
-    width: 33.33333333%;
+    width: 25%;
+    padding-right: 4px;
 }
 .requests .panel > div:first-child .row:first-child div .dataTables_filter {
     width: 100%;
