@@ -412,9 +412,17 @@ router.put('/set-payed/:id', (req, res) => {
             Request
                 .getRequestById(req.params.id)
                 .then(request => {
-                    res.status(200).send({
-                        request: request
-                    });
+                    User
+                        .getAllAdmins()
+                        .then(admins => {
+                            if (req.body.payed) {
+                                nodemailer('set-payed', admins, request[0].dataValues);
+                            }
+                            res.status(200).send({
+                                request: request
+                            });
+                        })
+
                 })
                 .catch(errors => {
                     console.warn(errors);

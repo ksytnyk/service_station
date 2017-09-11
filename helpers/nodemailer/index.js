@@ -3,49 +3,57 @@
 const nodemailer = require('nodemailer');
 const nodemailerConst = require('../../constants/nodemailer');
 
-module.exports = function (type, data) {
+module.exports = function (type, data, request) {
     let subject, html, to;
 
     if (type === 'create-user') {
-        to = data.userEmail;
+        to = [data];
         subject = 'Успішна реєстрація користувача';
         html = data.userName + ' ' + data.userSurname + ', Вас успішно зареєстровано у системі "Service Station". Ваш логін: ' + data.userLogin + ', пароль: ' + data.userPassword + '.';
     }
     else if (type === 'done-request') {
-        to = data.userEmail;
+        to = [data];
         subject = 'Замолвення готове';
         html = 'Ваше замовлення готове!';
     }
     else if (type === 'create-request') {
-        to = data.userEmail;
+        to = [data.dataValues];
         subject = 'Успішна реєстрація замолвення';
         html = 'Ваше замовлення успішно зареєстровано!';
     }
+    else if (type === 'set-payed') {
+        to = data;
+        subject = 'Здійснена оплата замовлення';
+        html = request.user.userSurname + ' ' + request.user.userName + ' здійснив оплату розміром: ' + request.cost + ' грн.';
+    }
 
-    let transporter = nodemailer.createTransport({
-        service: "gmail",
-        secure: false,
-        port: 25,
-        auth: {
-            user: nodemailerConst.EMAIL,
-            pass: nodemailerConst.PASS
-        },
-        tls: {
-            rejectUnauthorized: false
-        }
-    });
+    to.forEach(item => {
 
-    let HelperOptions = {
-        from: '"Service Station"' + nodemailerConst.EMAIL,
-        to: to,
-        subject: subject,
-        html: html
-    };
+        let transporter = nodemailer.createTransport({
+            service: "gmail",
+            secure: false,
+            port: 25,
+            auth: {
+                user: nodemailerConst.EMAIL,
+                pass: nodemailerConst.PASS
+            },
+            tls: {
+                rejectUnauthorized: false
+            }
+        });
 
-    transporter.sendMail(HelperOptions, (err) => {
-        if (err) {
-            console.log(err);
-        }
+        let HelperOptions = {
+            from: '"Service Station"' + nodemailerConst.EMAIL,
+            to: item.userEmail,
+            subject: subject,
+            html: html
+        };
+
+        transporter.sendMail(HelperOptions, (err) => {
+            if (err) {
+                console.log(err);
+            }
+        });
     });
 
     return;

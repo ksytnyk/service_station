@@ -221,4 +221,22 @@ User.getAllExecutors = function () {
     })
 };
 
+User.getAllAdmins = function () {
+    return new Promise((resolve, reject) => {
+        User
+            .findAll({
+                where: {
+                    user_type_id: [1]
+                },
+            })
+            .then(users => {
+                resolve(users);
+            })
+            .catch(err => {
+                console.warn(err);
+                reject(err);
+            });
+    })
+};
+
 module.exports = User;
