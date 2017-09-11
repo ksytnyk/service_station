@@ -26,6 +26,8 @@ $(document).ready(function () {
             success: function () {
                 $('.in .close').click();
 
+                showSuccessAlert('Редагування користувача пройшло успішно.');
+
                 var idr = "#idr-user-" + dataArr[0].value;
 
                 $(idr).empty();
@@ -103,8 +105,14 @@ $(document).ready(function () {
             url: getRole(window.location.pathname) + '/delete-user/' + userID,
             type: 'delete',
             success: function () {
+                showSuccessAlert('Видалення користувача пройшло успішно.');
+
                 var idr = "#idr-user-" + userID;
                 $(idr).remove();
+            },
+            error: function (err) {
+                $('.in .close').click();
+                showErrorAlert(err);
             }
         })
     });

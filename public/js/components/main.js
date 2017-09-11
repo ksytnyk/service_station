@@ -41,7 +41,7 @@ $(document).ready(function () {
     headerFix();
 
     $('.hide_alert').on('click', function () {
-        $('.alert').slideUp();
+        $('.alert').css('left', '-500px');
     });
 
     setTimeout(function () {
@@ -112,9 +112,12 @@ function getRole(pathname) {
 }
 
 function showSuccessAlert(message) {
-    $('.alerts-success-info').css("display", "block");
+    $('.alerts-success-info').css({
+        "display": "block",
+        "left": "15px"
+    });
 
-    var successTemplate = "<div class='col-lg-12'>" + message + "</div>";
+    var successTemplate = "<div>" + message + "</div>";
 
     $('#success-block').html(successTemplate);
 
@@ -122,10 +125,13 @@ function showSuccessAlert(message) {
 }
 
 function showErrorAlert(err) {
-    $('.alerts-errors-info').css("display", "block");
+    $('.alerts-errors-info').css({
+        "display": "block",
+        "left": "15px"
+    });
 
     var errorsTemplate = err.responseJSON.errors.map(error => {
-        return ("<div class='col-lg-12'>" + error.msg + "</div>");
+        return ("<div>" + error.msg + "</div>");
     });
 
     $('#errors-block').html(errorsTemplate);

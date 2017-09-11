@@ -181,24 +181,6 @@ span[disabled]{
     color: #fff;
     background-color: #666 !important;
 }
-.alert {
-    position: relative;
-    width: 100%;
-    padding: 10px 15px;
-}
-.alert button {
-    position: absolute;
-    top: 5px;
-    right: 10px;
-    background: transparent;
-    border: none;
-    color: #aaa;
-    padding: 0;
-    transition: 0.3s;
-}
-.alert button:hover {
-    color: #000;
-}
 
 /* MODAL WINDOWS */
 .width {
@@ -388,10 +370,51 @@ thead {
 }
 
 /* ALERTS */
+.alerts_block {
+    position: fixed;
+    z-index: 1;
+    width: 1170px;
+}
 .alerts-errors-info,
 .alerts-success-info {
     display: none;
 }
+.alert {
+    position: absolute;
+    padding: 10px 30px 10px 15px ;
+    transition: 0.75s;
+    left: 15px;
+    opacity: 1;
+}
+.alert:before {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: -5px;
+    top: -5px;
+    padding: 5px;
+    background-color: #fff;
+    content: '';
+    display: block;
+    z-index: -1;
+    box-sizing: content-box;
+    border-radius: 5px;
+}
+.alert button {
+    position: absolute;
+    top: 5px;
+    right: 8px;
+    background: transparent;
+    border: none;
+    color: #aaa;
+    padding: 0;
+    transition: 0.3s;
+    font-size: 12px;
+}
+.alert button:hover {
+    color: #000;
+}
+
 
 /* PRINT */
 .print_check .table {

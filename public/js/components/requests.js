@@ -117,7 +117,7 @@ $(document).ready(function () {
             type: 'put',
             data: dataArr,
             success: function (data) {
-                showSuccessAlert('Оновлення замовлення пройшло успішно.');
+                showSuccessAlert('Редагування замовлення пройшло успішно.');
 
                 $('#print_check_update_request').attr('customer-phone', data.customer.userPhone);
 
@@ -179,6 +179,8 @@ $(document).ready(function () {
             type: 'delete',
             data: {hadDeleted: hadDeleted},
             success: function () {
+                showSuccessAlert('Видалення замовлення пройшло успішно.');
+
                 var idr = "#idr-request-" + requestID;
                 $(idr).remove();
             },

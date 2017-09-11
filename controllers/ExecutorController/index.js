@@ -31,10 +31,21 @@ router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
     Task
         .updateTask(req.body.id, req.body)
         .then(() => {
-            Task
-                .getTaskById(req.body.id)
-                .then(task => {
-                    res.status(200).send({task: task});
+            Request
+                .getRequestById(req.body.requestID)
+                .then(request => {
+                    Task
+                        .getTaskById(req.body.id)
+                        .then(task => {
+                            res.status(200).send({
+                                request: request,
+                                task: task
+                            });
+                        })
+                        .catch(errors => {
+                            console.warn(errors);
+                            res.status(400).send({errors: errors});
+                        });
                 })
                 .catch(errors => {
                     console.warn(errors);

@@ -24,6 +24,8 @@ $(document).ready(function () {
             type: 'put',
             data: dataArr,
             success: function (data) {
+                showSuccessAlert('Редагування задачі пройшло успішно.');
+
                 $('.in .close').click();
 
                 var idr = "#idr-task-type-" + dataArr[0].value;
@@ -89,6 +91,8 @@ $(document).ready(function () {
             url: getRole(window.location.pathname) + '/delete-task-type/' + taskTypeID,
             type: 'delete',
             success: function () {
+                showSuccessAlert('Видалення задачі пройшло успішно.');
+
                 $('.in .close').click();
                 var idr = "#idr-task-type-" + taskTypeID;
                 $(idr).remove();

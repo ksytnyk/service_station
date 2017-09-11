@@ -65,6 +65,7 @@ $(document).ready(function () {
             type: 'post',
             data: dataArr,
             success: function (data) {
+                showSuccessAlert('Додавання задачі пройшло успішно.');
 
                 $('.check-table tr:last').before('<tr id="idt-' + data.result.id + '">'+
                     '<td>'+data.result.name+'</td>'+
@@ -76,7 +77,6 @@ $(document).ready(function () {
 
                 $('.in .close').click();
 
-                showSuccessAlert('Додавання задачі пройшло успішно.');
                 setDefaultAssignedUserOnCreateTask();
                 setDefaultTaskNameOnCreateTask();
 
@@ -191,6 +191,7 @@ $(document).ready(function () {
             type: 'put',
             data: dataArr,
             success: function (data) {
+                showSuccessAlert('Редагування задачі пройшло успішно.');
 
                 $('#idt-' + data.task.id + '').empty();
                 $('#idt-' + data.task.id + '').append(''+
@@ -328,7 +329,7 @@ $(document).ready(function () {
 
                 var payed = '(Не розраховано)';
 
-                if(data.request.payed) {
+                if (data.request.payed) {
                     payed = '(Розраховано)';
                 }
 
