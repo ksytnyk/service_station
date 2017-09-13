@@ -13,17 +13,17 @@
                         <label>Назва задачі</label>
                         <input type="text" class="form-control" id="update-form-type-name" name="typeName">
                     </div>
-                    <div class="form-group required col-lg-6">
+                    <div class="form-group col-lg-6">
                         <label>Тип транспорту</label>
                         <select class="form-control" name="typeOfCar" id="typeOfCar1">
-                            <option value="default">Оберіть тип транспорту</option>
+                            <option value="">Оберіть тип транспорту</option>
                         </select>
                     </div>
-                    <div class="form-group required col-lg-6">
+                    <div class="form-group col-lg-6">
                         <label>Марка автомобіля</label>
                         <select class="form-control" name="carMarkk" id="markk1"></select>
                     </div>
-                    <div class="form-group required col-lg-6">
+                    <div class="form-group col-lg-6">
                         <label>Модель автомобіля</label>
                         <select class="form-control" name="carModel" id="model1"></select>
                     </div>

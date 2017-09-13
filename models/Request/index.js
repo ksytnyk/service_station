@@ -51,6 +51,10 @@ const describeRequestTable = {
         type: Sequelize.INTEGER,
         field: 'created_by'
     },
+    typeOfCar: {
+        type: Sequelize.STRING,
+        field: 'type_of_car'
+    },
     carMarkk: {
         type: Sequelize.STRING,
         field: 'car_markk'
@@ -308,7 +312,11 @@ Request.getRequests = function (carMarkk, carModel) {
 Request.getRequestsWithoutCondition = function () {
     return new Promise((resolve, reject) => {
         Request
-            .findAll()
+            .findAll({
+                attributes: [
+                    [Sequelize.fn('DISTINCT', Sequelize.col('name')), 'name'], 'id'
+                ]
+            })
             .then(requests => {
                 resolve(requests);
             })

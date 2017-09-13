@@ -69,7 +69,7 @@ const describeTaskTable = {
     typeID: {
         type: Sequelize.INTEGER,
         field: 'type_id'
-    },
+    }
 
 };
 

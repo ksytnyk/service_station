@@ -20,7 +20,18 @@
                         <div class="input-group">
                             <select class="form-control add_select2 update-form-task-type-select" id="update-form-task-type-select" name="name2">
                                 {#taskTypes}
-                                <option value="{id}" updateTaskTypeID="{typeName}" id="updateTaskTypeID{id}">{typeName}</option>
+                                {@eq key=title value="0"}
+                                <option value="{id}" updateTaskTypeID="{typeName}" id="updateTaskTypeID{id}" title="Усі категорії">{typeName} (Усі категорії)</option>
+                                {/eq}
+                                {@eq key=title value="1"}
+                                <option value="{id}" updateTaskTypeID="{typeName}" id="updateTaskTypeID{id}" title="Категорія: {typeOfCar}">{typeName} (Категорія: {typeOfCar})</option>
+                                {/eq}
+                                {@eq key=title value="2"}
+                                <option value="{id}" updateTaskTypeID="{typeName}" id="updateTaskTypeID{id}" title="Категорія: {typeOfCar}, {carMarkk}">{typeName} (Категорія: {typeOfCar}, {carMarkk})</option>
+                                {/eq}
+                                {@eq key=title value="3"}
+                                <option value="{id}" updateTaskTypeID="{typeName}" id="updateTaskTypeID{id}" title="Категорія: {typeOfCar}, {carMarkk}, {carModel}">{typeName} (Категорія: {typeOfCar}, {carMarkk}, {carModel})</option>
+                                {/eq}
                                 {/taskTypes}
                             </select>
                             <span class="input-group-addon update-add-new-task-type-button">
@@ -34,8 +45,7 @@
                                 id="update-form-task-planed-executor">
                             {#assignedExecutorUsers}
                             {@eq key=userTypeID value=3}
-                            <option value="{id}" executorFullName="{userName} {userSurname}" id="option{id}">{userName}
-                                {userSurname}
+                            <option value="{id}" executorFullName="{userName} {userSurname}" id="option{id}">{userName} {userSurname}
                             </option>
                             {/eq}
                             {/assignedExecutorUsers}

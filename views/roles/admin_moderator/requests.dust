@@ -104,6 +104,7 @@
                     </p>
                     <p><strong>Час початку: </strong>{startTime}</p>
                     <p class="{@eq key=overdue value=1}overdue{/eq}"><strong>Заплан. час: </strong>{estimatedTime}</p>
+                    <p id="typeOfCar{id}" attr-name="{typeOfCar}"><strong>Тип транспорту: </strong>{typeOfCar}</p>
                     <p id="markk{id}" attr-name="{carMarkk}"><strong>Марка: </strong>{carMarkk}</p>
                     <p id="model{id}" attr-name="{carModel}"><strong>Модель: </strong>{carModel}</p>
                     <p><strong>Коментар: </strong>{comment}</p>

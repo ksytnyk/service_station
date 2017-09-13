@@ -19,8 +19,9 @@
             <tr>
                 <th class="tac" style="width: 15px;">ID</th>
                 <th class="tac">Назва задачі</th>
-                <th class="tac">Марка автомобіля</th>
-                <th class="tac">Модель автомобіля</th>
+                <th class="tac" title="Тип транспорту" style="width: 75px;">Тип тр.</th>
+                <th class="tac" title="Марка транспорту">Марка тр.</th>
+                <th class="tac" title="Модель транспорту">Модель тр.</th>
                 <th class="tac" style="width: 65px;">Вартість</th>
                 <th class="tac">Виконавець</th>
                 <th class="tac" style="width: 40px;">Час</th>
@@ -32,6 +33,7 @@
             <tr id="idr-task-type-{id}">
                 <th class="tac" scope="row">{id}</th>
                 <td class="tac">{typeName}</td>
+                <td class="tac">{typeOfCar}</td>
                 <td class="tac">{carMarkk}</td>
                 <td class="tac">{carModel}</td>
                 <td class="tac">{cost}</td>
@@ -44,6 +46,7 @@
                        data-target="#updateTaskTypeFormModal"
                        data-id="{id}"
                        data-type-name="{typeName}"
+                       data-type-of-car="{typeOfCar}"
                        data-car-markk="{carMarkk}"
                        data-car-model="{carModel}"
                        data-cost="{cost}"

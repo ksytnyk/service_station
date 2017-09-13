@@ -4,7 +4,7 @@
     <div class="alert alert-danger clearfix">
         <button class="hide_alert">X</button>
         {#error_msg}
-        <div>• {msg}</div>
+        <div>{msg}</div>
         {/error_msg}
     </div>
     {/error_alert}

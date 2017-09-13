@@ -9,20 +9,22 @@ $(document).ready(function () {
                 url: getRole(window.location.pathname) + '/get-task-types',
                 type: 'post',
                 data: {
+                    typeOfCar: $('#typeOfCar').val(),
                     carMarkk: $('#markk').val(),
                     carModel: $('#model').val()
                 },
                 success: function (data) {
-
                     $('#task-type-select').find('option').remove();
 
                     $.each(data.taskTypes, function (i, item) {
+                        var title = setTaskTypesTitle(item);
 
                         $('#task-type-select').append($('<option>', {
                             value: item.id,
-                            text: item.typeName,
+                            text: item.typeName + ' (' + title + ')',
                             taskTypeID: item.typeName,
-                            id: 'taskTypeID' + item.id
+                            id: 'taskTypeID' + item.id,
+                            title: title
                         }));
                     });
                     setDefaultTaskNameOnCreateTask();
@@ -56,6 +58,10 @@ $(document).ready(function () {
             dataArr[2].value = taskTypeID;
             dataArr[1].value = dataArr[2].value;
             dataArr[6].value = setTimeToDate(dataArr[6].value);
+            dataArr.push({
+                name: 'typeID',
+                value: $('#task-type-select').serializeArray()[0].value
+            });
         } else {
             dataArr[5].value = setTimeToDate(dataArr[5].value);
         }
@@ -113,6 +119,7 @@ $(document).ready(function () {
                     ' data-request-id="' + data.result.requestID + '"' +
                     ' data-task-description="' + data.result.description + '"' +
                     ' data-task-name="' + data.result.name + '"' +
+                    ' data-task-type-id="' + data.result.typeID + '"' +
                     ' data-task-assigned-user="' + data.result.assignedUserID + '"' +
                     ' data-task-planed-executor="' + data.result.planedExecutorID + '"' +
                     ' data-task-cost="' + data.result.cost + '"' +
@@ -131,7 +138,9 @@ $(document).ready(function () {
                 if(getRole(window.location.pathname)==='/admin') {
                     editDeleteButtons += ''+
                         '<a href="#" class="delete-task modal-window-link" title="Видалити задачу" data-toggle="modal" data-current="' + getIdRole(window.location.pathname) + '" data-id="' + data.result.id + '"' +
-                        ' data-target="#deleteTaskFormModal">' +
+                        ' data-target="#deleteTaskFormModal"' +
+                        ' data-request-id="' + data.result.requestID + '"' +
+                        ' data-task-old-cost="' + data.result.cost + '">' +
                         '<span class="glyphicon glyphicon-remove" aria-hidden="true"/>' +
                         '</a>' +
                         '</td>' +
@@ -182,6 +191,10 @@ $(document).ready(function () {
                 var taskTypeID = $('#updateTaskTypeID' + $('.update-form-task-type-select').serializeArray()[0].value).attr('updateTaskTypeID');
                 dataArr[4].value = taskTypeID;
                 dataArr[3].value = dataArr[4].value;
+                dataArr.push({
+                    name: 'typeID',
+                    value: $('#update-form-task-type-select').serializeArray()[0].value
+                });
             }
             dataArr[8].value = checkDateForUpdate(oldStartTime, dataArr[8].value);
         }
@@ -293,6 +306,7 @@ $(document).ready(function () {
                     ' data-request-id="' + data.task.requestID + '"' +
                     ' data-task-description="' + data.task.description + '"' +
                     ' data-task-name="' + data.task.name + '"' +
+                    ' data-task-type-id="' + data.task.typeID + '"' +
                     ' data-task-assigned-user="' + data.task.assignedUserID + '"' +
                     ' data-task-planed-executor="' + data.task.planedExecutorID + '"' +
                     ' data-task-cost="' + data.task.cost + '"' +
@@ -477,11 +491,13 @@ function updateTaskOnClick(value) {
 
                 if (window.location.pathname.includes('create-request')) {
                     dataArr = {
+                        typeOfCar: $('#typeOfCar').val(),
                         carMarkk: $('#markk').val(),
                         carModel: $('#model').val()
                     };
                 } else if (window.location.pathname.includes('requests')) {
                     dataArr = {
+                        typeOfCar: $('#typeOfCar' + $(this).data('request-id')).attr('attr-name'),
                         carMarkk: $('#markk' + $(this).data('request-id')).attr('attr-name'),
                         carModel: $('#model' + $(this).data('request-id')).attr('attr-name')
                     };
@@ -495,31 +511,31 @@ function updateTaskOnClick(value) {
                         $('#update-form-task-type-select').find('option').remove();
 
                         data.taskTypes.forEach(item => {
+                            var title = setTaskTypesTitle(item);
+
                             $('#update-form-task-type-select').append($('<option>', {
                                 value: item.id,
-                                text: item.typeName,
+                                text: item.typeName + ' (' + title + ')',
                                 updateTaskTypeID: item.typeName,
-                                id: 'updateTaskTypeID' + item.id
+                                id: 'updateTaskTypeID' + item.id,
+                                title: title
                             }));
                         });
 
                         $('#update-form-task-type-select').val('');
 
                         isFirstUpdateClick = true;
-                        var taskName = $(This).data('task-name');
-                        var taskTypeID = $("option[updateTaskTypeID='" + taskName + "']").val();
+                        var taskTypeID = $("option[id='updateTaskTypeID" + $(This).data('task-type-id') + "']").val();
 
                         $('#update-form-task-type-select').val(taskTypeID).change();
                         $('#update-form-task-old-cost').val($(This).data('task-cost'));
                         $('#update-form-task-cost').val($(This).data('task-cost'));
-
                     }
                 });
 
             } else {
                 isFirstUpdateClick = true;
-                var taskName = $(this).data('task-name');
-                var taskTypeID = $("option[updateTaskTypeID='" + taskName + "']").val();
+                var taskTypeID = $("option[id='updateTaskTypeID" + $(this).data('task-type-id') + "']").val();
 
                 $('#update-form-task-type-select').val(taskTypeID).change();
                 $('#update-form-task-old-cost').val($(this).data('task-cost'));
@@ -527,8 +543,7 @@ function updateTaskOnClick(value) {
             }
         } else {
             isFirstUpdateClick = true;
-            var taskName = $(this).data('task-name');
-            var taskTypeID = $("option[updateTaskTypeID='" + taskName + "']").val();
+            var taskTypeID = $("option[id='updateTaskTypeID" + $(this).data('task-type-id') + "']").val();
 
             $('#update-form-task-type-select').val(taskTypeID).change();
             $('#update-form-task-old-cost').val($(this).data('task-cost'));
@@ -624,4 +639,25 @@ function setOpenTaskNameOnUpdateTask() {
     $('#update_new_task .input-group').removeClass("hidden");
     $('.update-assign-task-button').addClass('hidden');
     $('.update-assign-task-select').removeClass("hidden");
+}
+
+function setTaskTypesTitle(item) {
+    switch (item.title) {
+        case '0': {
+            return 'Усі категорії';
+            break;
+        }
+        case '1': {
+            return 'Категорія: ' + item.typeOfCar;
+            break;
+        }
+        case '2': {
+            return 'Категорія: ' + item.typeOfCar + ', ' + item.carMarkk;
+            break;
+        }
+        case '3': {
+            return 'Категорія: ' + item.typeOfCar + ', ' + item.carMarkk + ', ' + item.carModel;
+            break;
+        }
+    }
 }

@@ -9,8 +9,8 @@
     <form class="clearfix" id="createRequestForm">
         <div class="form-group required col-lg-3">
             <label>Тип транспорту</label>
-            <select class="form-control disable_input" name="typeOfCar" id="typeOfCar" disabled>
-                <option value="default">Оберіть тип транспорту</option>
+            <select class="form-control disable_input" name="typeOfCar" id="typeOfCar" default-value="{typeOfCar}" disabled>
+                <option value="">Оберіть тип транспорту</option>
             </select>
         </div>
         <div class="form-group required col-lg-3">
@@ -58,7 +58,7 @@
             <input type="text" class="form-control datetimepickerN startTime disable_input" name="startTime" style="margin-bottom: 5px;" value="{startTime}" disabled>
         </div>
         <div class="form-group required col-lg-3">
-            <label>Запланований час</label>
+            <label>Орієнтовний час виконання</label>
             <input type="text" class="form-control datetimepickerN disable_input" name="estimatedTime"
                    style="margin-bottom: 5px;" value="{estimatedTime}" disabled>
         </div>

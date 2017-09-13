@@ -177,20 +177,11 @@ router.get('/create-request', (req, res) => {
             User
                 .getAllUsers()
                 .then(users => {
-                    Request
-                        .getRequestsWithoutCondition()
-                        .then(requests => {
-                            res.render('roles/admin_moderator/create_request', {
-                                requests: requests,
-                                assignedExecutorUsers: users,
-                                customers: usersCustomers,
-                                typeUser: req.session.passport.user.userTypeID
-                            })
-                        })
-                        .catch(err => {
-                            console.warn(err);
-                            res.render('roles/admin_moderator/create_request');
-                        })
+                    res.render('roles/admin_moderator/create_request', {
+                        assignedExecutorUsers: users,
+                        customers: usersCustomers,
+                        typeUser: req.session.passport.user.userTypeID
+                    })
                 })
                 .catch(err => {
                     console.warn(err);
@@ -236,7 +227,7 @@ router.get('/requests/update-request/:id', (req, res) => {
                                 .getAllTasksOfRequest(req.params.id)
                                 .then(task => {
                                     TaskType
-                                        .getTaskTypesByCar(request[0].dataValues.carMarkk, request[0].dataValues.carModel)
+                                        .getTaskTypesByCarAttributes(request[0].dataValues.typeOfCar, request[0].dataValues.carMarkk, request[0].dataValues.carModel)
                                         .then(taskTypes => {
                                             User
                                                 .getUserById(request[0].dataValues.customerID)
@@ -449,9 +440,11 @@ router.get('/get-request-check/:id', (req, res) => {
 
 router.post('/get-task-types', (req, res) => {
     TaskType
-        .getTaskTypesByCar(req.body.carMarkk, req.body.carModel)
+        .getTaskTypesByCarAttributes(req.body.typeOfCar, req.body.carMarkk, req.body.carModel)
         .then(taskTypes => {
-            res.status(200).send({taskTypes: taskTypes});
+            res.status(200).send({
+                taskTypes: taskTypes
+            });
         })
         .catch(errors => {
             console.warn(errors);
@@ -462,28 +455,38 @@ router.post('/get-task-types', (req, res) => {
 router.post('/create-task', validation.createAndUpdateTask(), (req, res) => {
     req.body.endTime = countEndTime(req.body.startTime, +req.body.estimationTime);
 
-    Task
-        .createTask(req.body)
-        .then(result => {
-            Request
-                .getRequestById(req.body.requestID)
-                .then(request => {
-                    var newCost = +request[0].dataValues.cost + +req.body.cost;
+    Request
+        .getRequestById(req.body.requestID)
+        .then(request => {
+            var newCost = +request[0].dataValues.cost + +req.body.cost;
 
-                    Request
-                        .updateRequest(req.body.requestID, {cost: newCost})
-                        .then(() => {
-                            TaskType
-                                .createTaskType({
-                                    typeName: req.body.name,
-                                    carMarkk: request[0].dataValues.carMarkk,
-                                    carModel: request[0].dataValues.carModel,
-                                    cost: req.body.cost,
-                                    estimationTime: req.body.estimationTime,
-                                    planedExecutorID: req.body.planedExecutorID
-                                })
-                                .then(() => {
-                                    res.status(200).send({result: result});
+            Request
+                .updateRequest(req.body.requestID, {cost: newCost})
+                .then(() => {
+                var search = {
+                    typeName: req.body.name,
+                    typeOfCar: request[0].dataValues.typeOfCar,
+                    carMarkk: request[0].dataValues.carMarkk,
+                    carModel: request[0].dataValues.carModel,
+                    cost: req.body.cost,
+                    estimationTime: req.body.estimationTime,
+                    planedExecutorID: req.body.planedExecutorID
+                };
+
+                if (!req.body.typeID) {
+                    search.typeID = true;
+                }
+                    TaskType
+                        .createTaskType(search)
+                        .then(result => {
+                            if (!req.body.typeID) {
+                                req.body.typeID = result.taskTypes[0].dataValues.id;
+                            }
+
+                            Task
+                                .createTask(req.body)
+                                .then(task => {
+                                    res.status(200).send({result: task});
                                 })
                                 .catch(errors => {
                                     console.warn(errors);
@@ -509,54 +512,63 @@ router.post('/create-task', validation.createAndUpdateTask(), (req, res) => {
 router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
     req.body.endTime = countEndTime(req.body.startTime, +req.body.estimationTime);
 
-    Task
-        .updateTask(req.body.id, req.body)
-        .then(() => {
+    Request
+        .getRequestById(req.body.requestID)
+        .then(request => {
+            var newCost = +request[0].dataValues.cost - +req.body.oldCost + +req.body.cost;
+
             Request
-                .getRequestById(req.body.requestID)
-                .then(request => {
-                    var newCost = +request[0].dataValues.cost - +req.body.oldCost + +req.body.cost;
+                .updateRequest(req.body.requestID, {cost: newCost})
+                .then(() => {
+                    var search = {
+                        typeName: req.body.name,
+                        typeOfCar: request[0].dataValues.typeOfCar,
+                        carMarkk: request[0].dataValues.carMarkk,
+                        carModel: request[0].dataValues.carModel,
+                        cost: req.body.cost,
+                        estimationTime: req.body.estimationTime,
+                        planedExecutorID: req.body.planedExecutorID
+                    };
 
-                    Request
-                        .updateRequest(req.body.requestID, {cost: newCost})
-                        .then(() => {
+                    if (!req.body.typeID) {
+                        search.typeID = true;
+                    }
+
+                    TaskType
+                        .createTaskType(search)
+                        .then(result => {
+                            if (!req.body.typeID) {
+                                req.body.typeID = result.taskTypes[0].dataValues.id;
+                            }
+
                             Task
-                                .getTaskById(req.body.id)
-                                .then(task => {
-
-                                    TaskType
-                                        .createTaskType({
-                                            typeName: req.body.name,
-                                            carMarkk: request[0].dataValues.carMarkk,
-                                            carModel: request[0].dataValues.carModel,
-                                            cost: req.body.cost,
-                                            estimationTime: req.body.estimationTime,
-                                            planedExecutorID: req.body.planedExecutorID
-                                        })
-                                        .then(() => {
+                                .updateTask(req.body.id, req.body)
+                                .then(() => {
+                                    Task
+                                        .getTaskById(req.body.id)
+                                        .then(task => {
                                             res.status(200).send({
                                                 request: request,
                                                 task: task,
                                                 requestID: req.body.requestID,
                                                 newCost: newCost
-                                            });
-                                        })
-                                        .catch(errors => {
-                                            console.warn(errors);
-                                            res.status(400).send({errors: errors});
-                                        })
-
+                                            })
+                                                .catch(errors => {
+                                                    console.warn(errors);
+                                                    res.status(400).send({errors: errors});
+                                                });
+                                        });
                                 })
                                 .catch(errors => {
                                     console.warn(errors);
                                     res.status(400).send({errors: errors});
                                 });
-
                         })
                         .catch(errors => {
                             console.warn(errors);
                             res.status(400).send({errors: errors});
-                        });
+                        })
+
                 })
                 .catch(errors => {
                     console.warn(errors);
@@ -678,83 +690,84 @@ router.post('/get-task-prise/:id', (req, res) => {
         });
 });
 
-router.get('/create-global-request', (req, res) => {
-    User
-        .getCustomerUsers()
-        .then(usersCustomers => {
-            User
-                .getAllUsers()
-                .then(users => {
-                    res.render('roles/admin_moderator/create_global_request', {
-                        assignedExecutorUsers: users,
-                        customers: usersCustomers,
-                        typeUser: req.session.passport.user.userTypeID
-                    })
-                })
-                .catch(err => {
-                    console.warn(err);
-                    res.render('roles/admin_moderator/create_global_request');
-                })
-        })
-});
+// router.get('/create-global-request', (req, res) => {
+//     User
+//         .getCustomerUsers()
+//         .then(usersCustomers => {
+//             User
+//                 .getAllUsers()
+//                 .then(users => {
+//                     res.render('roles/admin_moderator/create_global_request', {
+//                         assignedExecutorUsers: users,
+//                         customers: usersCustomers,
+//                         typeUser: req.session.passport.user.userTypeID
+//                     })
+//                 })
+//                 .catch(err => {
+//                     console.warn(err);
+//                     res.render('roles/admin_moderator/create_global_request');
+//                 })
+//         })
+// });
 
-router.post('/create-global-request', validation.createGlobalRequest(), (req, res) => {
-    req.body.createdBy = req.session.passport.user.id;
-    req.body.estimationTime = req.body.estimatedTime;
-    req.body.estimatedTime = countEndTime(req.body.startTime, +req.body.estimationTime);
-
-    Request
-        .createRequest(req.body)
-        .then(request => {
-            User
-                .getUserById(req.body.customerID)
-                .then(customer => {
-                    nodemailer('create-request', customer);
-                    req.body.endTime = req.body.estimatedTime;
-                    req.body.requestID = request.id;
-
-                    Task
-                        .createTask(req.body)
-                        .then(() => {
-                            TaskType
-                                .createTaskType({
-                                    estimationTime: req.body.estimationTime,
-                                    planedExecutorID: req.body.planedExecutorID,
-                                    typeName: req.body.name,
-                                    carMarkk: req.body.carMarkk,
-                                    carModel: req.body.carModel,
-                                    cost: req.body.cost
-                                })
-                                .then(() => {
-                                    res.status(200).send({
-                                        request: request,
-                                        customer: customer
-                                    });
-                                })
-                                .catch(errors => {
-                                    console.warn(err);
-                                    res.status(400).send({errors: errors});
-                                })
-                        })
-                        .catch(errors => {
-                            console.warn(err);
-                            res.status(400).send({errors: errors});
-                        });
-
-                    res.status(200).send({
-                        result: result
-                    });
-                })
-                .catch(errors => {
-                    console.warn(err);
-                    res.status(400).send({errors: errors});
-                });
-        })
-        .catch(errors => {
-            console.warn(err);
-            res.status(400).send({errors: errors});
-        });
-});
+// router.post('/create-global-request', validation.createGlobalRequest(), (req, res) => {
+//     req.body.createdBy = req.session.passport.user.id;
+//     req.body.estimationTime = req.body.estimatedTime;
+//     req.body.estimatedTime = countEndTime(req.body.startTime, +req.body.estimationTime);
+//
+//     Request
+//         .createRequest(req.body)
+//         .then(request => {
+//             User
+//                 .getUserById(req.body.customerID)
+//                 .then(customer => {
+//                     nodemailer('create-request', customer);
+//                     req.body.endTime = req.body.estimatedTime;
+//                     req.body.requestID = request.id;
+//
+//                     Task
+//                         .createTask(req.body)
+//                         .then(() => {
+//                             TaskType
+//                                 .createTaskType({
+//                                     estimationTime: req.body.estimationTime,
+//                                     planedExecutorID: req.body.planedExecutorID,
+//                                     typeName: req.body.name,
+//                                     typeOfCar: req.body.typeOfCar,
+//                                     carMarkk: req.body.carMarkk,
+//                                     carModel: req.body.carModel,
+//                                     cost: req.body.cost
+//                                 })
+//                                 .then(() => {
+//                                     res.status(200).send({
+//                                         request: request,
+//                                         customer: customer
+//                                     });
+//                                 })
+//                                 .catch(errors => {
+//                                     console.warn(err);
+//                                     res.status(400).send({errors: errors});
+//                                 })
+//                         })
+//                         .catch(errors => {
+//                             console.warn(err);
+//                             res.status(400).send({errors: errors});
+//                         });
+//
+//                     res.status(200).send({
+//                         result: result
+//                     });
+//                 })
+//                 .catch(errors => {
+//                     console.warn(err);
+//                     res.status(400).send({errors: errors});
+//                 });
+//         })
+//         .catch(errors => {
+//             console.warn(err);
+//             res.status(400).send({errors: errors});
+//         });
+// });
 
 function method(isHold) {
     return new Promise(function (resolve, reject) {
@@ -801,7 +814,7 @@ router.get('/task-type', (req, res) => {
 
 router.post('/request-type', (req, res) => {
     Request
-        .getRequests(req.body.carMarkk, req.body.carModel)
+        .getRequestsWithoutCondition()
         .then(requestTypes  => {
             res.status(200).send({
                 requestTypes: requestTypes
@@ -815,12 +828,23 @@ router.post('/request-type', (req, res) => {
 });
 
 router.post('/create-task-type', validation.createAndUpdateTaskType('create'), (req, res) => {
+    req.body.typeID = true;
+
     TaskType
         .createTaskType(req.body)
-        .then(() => {
-            req.flash('success_alert', true);
-            req.flash('success_msg', 'Додавання задачі пройшло успішно.');
-            res.redirect(req.baseUrl + '/task-type');
+        .then((result) => {
+            if (result.hasResult) {
+                req.flash('success_alert', true);
+                req.flash('success_msg', 'Додавання задачі пройшло успішно.');
+                res.redirect(req.baseUrl + '/task-type');
+            }
+            else {
+                var msg = 'Задача "' + req.body.typeName + '" вже існує. Скористайтеся пошуком.';
+
+                req.flash('error_alert', true);
+                req.flash('error_msg', {msg: msg});
+                res.redirect(req.baseUrl + '/task-type');
+            }
         })
         .catch(error => {
             console.warn(error);

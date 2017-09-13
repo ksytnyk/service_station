@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     $('#task-type-select').on('change', function () {
 
-        if($(this).val() !== null) {
+        if ($(this).val() !== null) {
             var dataArr = $('.task-type-select').serializeArray();
             var taskTypeName = $('#taskTypeID' + dataArr[0].value).attr('taskTypeID');
             dataArr[0].value = taskTypeName;
@@ -22,7 +22,7 @@ $(document).ready(function () {
 
     $('#update-form-task-type-select').on('change', function () {
 
-        if($(this).val() !== null) {
+        if ($(this).val() !== null) {
             var dataArr = $('.update-form-task-type-select').serializeArray();
             var taskTypeName = $('#updateTaskTypeID' + dataArr[0].value).attr('updateTaskTypeID');
             dataArr[0].value = taskTypeName;
@@ -44,6 +44,8 @@ $(document).ready(function () {
         }
     });
 
+    var searchVariable = '';
+
     $('.add-new-task-type-button').on('click', function () {
         $('#create_new_task .select2').addClass("hidden");
         $('#create_new_task .input-group').addClass("hidden");
@@ -51,10 +53,12 @@ $(document).ready(function () {
         $('.task-cost').val('');
         $('.task-estimation-time').val('');
         $('.task-planed-executor-id').val('').change();
+        $('.task-type-input').val(searchVariable);
+        searchVariable = '';
     });
 
     $('#task-type-select').on('select2:closing',function () {
-        $('.task-type-input').val($('.select2-search__field')[0].value);
+        searchVariable = $('.select2-search__field')[0].value;
     });
 
     $('.update-add-new-task-type-button').on('click', function () {
@@ -66,10 +70,12 @@ $(document).ready(function () {
         }
         $('#update-form-task-estimation-time').val('');
         $('#update-form-task-planed-executor').val('').change();
+        $('.update-form-task-type-input').val(searchVariable);
+        searchVariable = '';
     });
 
     $('#update-form-task-type-select').on('select2:closing',function () {
-        $('.update-form-task-type-input').val($('.select2-search__field')[0].value);
+        searchVariable = $('.select2-search__field')[0].value;
     });
 
 });

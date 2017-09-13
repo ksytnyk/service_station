@@ -6,6 +6,10 @@ $(document).ready(function () {
         $(value).on('click', function () {
             $('#update-form-id').val($(this).data('id'));
             $('#update-form-type-name').val($(this).data('type-name'));
+            if ($(this).data('type-of-car')) {
+                $("#typeOfCar #" + $(this).data('type-of-car')).attr('selected', true);
+                $("#typeOfCar").change();
+            }
             $("#markk").append("<option value='" + $(this).data('car-markk') + "'>" + $(this).data('car-markk') + "</option>");
             $("#model").append("<option value='" + $(this).data('car-model') + "'>" + $(this).data('car-model') + "</option>");
             $('#update-form-planed-executor-id').val($(this).data('planed-executor-id')).change();
@@ -36,6 +40,7 @@ $(document).ready(function () {
                 newTaskType = '' +
                     '<th class="tac" scope="row">' + dataArr[0].value + '</th>' +
                     '<td class="tac">' + dataArr[1].value + '</td>' +
+                    '<td class="tac">' + dataArr[2].value + '</td>' +
                     '<td class="tac">' + dataArr[3].value + '</td>' +
                     '<td class="tac">' + dataArr[4].value + '</td>' +
                     '<td class="tac">' + dataArr[7].value + '</td>' +
@@ -46,6 +51,7 @@ $(document).ready(function () {
                         ' data-toggle="modal" data-target="#updateTaskTypeFormModal" title="Редагувати задачу"' +
                         ' data-id="' + dataArr[0].value + '"' +
                         ' data-type-name="' + dataArr[1].value + '"' +
+                        ' data-type-of-car="' + dataArr[2].value + '"' +
                         ' data-car-markk="' + dataArr[3].value + '"' +
                         ' data-car-model="' + dataArr[4].value + '"' +
                         ' data-cost="' + dataArr[7].value + '"' +

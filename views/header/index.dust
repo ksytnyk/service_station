@@ -28,9 +28,9 @@
                         <li>
                             <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/create-request">Комплексне замовлення</a>
                         </li>
-                        <li>
-                            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/create-global-request">Замовлення</a>
-                        </li>
+                        <!--<li>-->
+                            <!--<a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/create-global-request">Замовлення</a>-->
+                        <!--</li>-->
                     </ul>
                 </li>
             {/lt}

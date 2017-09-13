@@ -14,12 +14,14 @@ $(document).ready(() => {
             getTypes(idItem);
         }
 
-        $('#typeOfCar' + idItem).on('change', function () {
-            $("#markk" + idItem + " option").remove();
-            $("#model" + idItem + " option").remove();
+        $('#typeOfCar' + idItem).on('select2:closing', function () {
+            if ($('#typeOfCar' + idItem).attr('disabled') === undefined) {
+                $("#markk" + idItem + " option").remove();
+                $("#model" + idItem + " option").remove();
 
-            if (this.value !== "default") {
-                getMarkks(this, idItem);
+                if (this.value !== "") {
+                    getMarkks(this, idItem);
+                }
             }
         });
 
@@ -46,10 +48,19 @@ $(document).ready(() => {
         newTypes[3].nameUK = "Автобуси";
 
         newTypes.forEach(item => {
-            $("#typeOfCar" + idItem).append("<option id='" + item.name + "' value='" + item.name + "' data-id='" + item.value + "'>" + item.nameUK + "</option>")
+            let option = "<option id='" + item.name + "' value='" + item.name + "' data-id='" + item.value + "'",
+                option1 = "",
+                option2 = ">" + item.nameUK + "</option>";
+
+            if ( $('#typeOfCar').attr('default-value') === item.name ) {
+                option1 = " selected";
+            }
+
+            $("#typeOfCar" + idItem).append(option + option1 + option2);
         });
 
         $("#typeOfCar" + idItem).select2();
+        $("#typeOfCar").change();
     }
 
     let link;
@@ -65,7 +76,7 @@ $(document).ready(() => {
     }
 
     function renderMarkks(Markk, idItem) {
-        $("#markk" + idItem).append("<option>Оберіть марку транспорту</option>").select2();
+        $("#markk" + idItem).append("<option value=''>Оберіть марку транспорту</option>").select2();
 
         Markk.forEach(item => {
             $("#markk" + idItem).append("<option id='" + item.name.replace(/\s+/g, '-') + "' value='" + item.name.replace(/\s+/g, '-') + "' data-id='" + item.value + "'>" + item.name + "</option>")
@@ -81,7 +92,7 @@ $(document).ready(() => {
     }
 
     function renderModels(Models, idItem) {
-        $("#model" + idItem).append("<option>Оберіть модель транспорту</option>").select2();
+        $("#model" + idItem).append("<option value=''>Оберіть модель транспорту</option>").select2();
 
         Models.forEach(item => {
             $("#model" + idItem).append("<option value='" + item.name + "' attr-id='" + item.value + "' >" + item.name + "</option>")

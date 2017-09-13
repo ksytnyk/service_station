@@ -3,19 +3,27 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../connection');
 const User = require('../User');
+const taskTypesFactory = require('../../helpers/taskTypesFactory');
 
 const describeTaskTypeTable = {
     typeName: {
         type: Sequelize.STRING,
         field: 'type_name'
     },
+    typeOfCar: {
+        type: Sequelize.STRING,
+        field: 'type_of_car',
+        defaultValue: ''
+    },
     carMarkk: {
         type: Sequelize.STRING,
-        field: 'car_markk'
+        field: 'car_markk',
+        defaultValue: ''
     },
     carModel: {
         type: Sequelize.STRING,
-        field: 'car_model'
+        field: 'car_model',
+        defaultValue: ''
     },
     cost: {
         type: Sequelize.FLOAT,
@@ -98,17 +106,62 @@ TaskType.deleteTaskType = function (taskTypeID) {
     });
 };
 
-TaskType.getTaskTypesByCar = function (carMarkk, carModel) {
+TaskType.getTaskTypesByCarAttributes = function (typeOfCar, carMarkk, carModel) {
     return new Promise((resolve, reject) => {
         TaskType
             .findAll({
                 where: {
-                    carMarkk: carMarkk,
-                    carModel: carModel
+                    typeOfCar: '',
+                    carMarkk: '',
+                    carModel: ''
                 }
             })
-            .then(taskTypes => {
-                resolve(taskTypes);
+            .then(taskTypesNoneAttributes => {
+                TaskType
+                    .findAll({
+                        where: {
+                            typeOfCar: typeOfCar,
+                            carMarkk: '',
+                            carModel: ''
+                        }
+                    })
+                    .then(taskTypesOneAttributes => {
+                        TaskType
+                            .findAll({
+                                where: {
+                                    typeOfCar: typeOfCar,
+                                    carMarkk: carMarkk,
+                                    carModel: ''
+                                }
+                            })
+                            .then(taskTypesTwoAttributes => {
+                                TaskType
+                                    .findAll({
+                                        where: {
+                                            typeOfCar: typeOfCar,
+                                            carMarkk: carMarkk,
+                                            carModel: carModel
+                                        }
+                                    })
+                                    .then(taskTypesAllAttributes => {
+                                        var result = taskTypesFactory(taskTypesNoneAttributes, taskTypesOneAttributes, taskTypesTwoAttributes, taskTypesAllAttributes);
+
+                                        resolve(result);
+                                    })
+                                    .catch(error => {
+                                        console.warn(error);
+                                        reject(error);
+                                    });
+                            })
+                            .catch(error => {
+                                console.warn(error);
+                                reject(error);
+                            });
+                    })
+                    .catch(error => {
+                        console.warn(error);
+                        reject(error);
+                    });
             })
             .catch(error => {
                 console.warn(error);
@@ -119,28 +172,51 @@ TaskType.getTaskTypesByCar = function (carMarkk, carModel) {
 
 TaskType.createTaskType = function (taskType) {
     return new Promise((resolve, reject) => {
+        var search = {
+            typeName: '',
+            typeOfCar: '',
+            carModel: '',
+            carMarkk: ''
+        };
+
+        if (taskType.typeName) {
+            search.typeName = taskType.typeName;
+        }
+        if (taskType.typeOfCar) {
+            search.typeOfCar = taskType.typeOfCar;
+        }
+        if (taskType.carModel) {
+            search.carModel = taskType.carModel;
+        }
+        if (taskType.carMarkk) {
+            search.carMarkk = taskType.carMarkk;
+        }
+
         TaskType
-            .count({
-                where: {
-                    typeName: taskType.typeName,
-                    carMarkk: taskType.carMarkk,
-                    carModel: taskType.carModel
-                }
+            .findAll({
+                where: search
             })
-            .then(count => {
-                if (count === 0) {
+            .then(result => {
+
+                if (result.length === 0 && taskType.typeID) {
                     TaskType
                         .build(taskType)
                         .save()
                         .then(taskTypes => {
-                            resolve(taskTypes);
+                            resolve({
+                                taskTypes: [taskTypes],
+                                hasResult: true
+                            });
                         })
                         .catch(error => {
                             console.warn(error);
                             reject(error);
                         });
                 } else {
-                    resolve();
+                    resolve({
+                        taskTypes: result,
+                        hasResult: false
+                    });
                 }
             })
     });

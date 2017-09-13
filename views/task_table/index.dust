@@ -115,6 +115,7 @@
                data-request-id="{requestID}"
                data-task-description="{description}"
                data-task-name="{name}"
+               data-task-type-id="{typeID}"
                data-task-assigned-user="{assignedUserID}"
                data-task-planed-executor="{planedExecutorID}"
                data-task-cost="{cost}"

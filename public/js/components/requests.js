@@ -6,61 +6,69 @@ $(document).ready(function () {
 
         var dataArr = $('#createRequestForm').serializeArray();
 
-        if ($('#request-name-select').serializeArray()[0]) {
-            var requestID = $('#request-name-select').serializeArray()[0].value;
-            var requestName = $('#requestID' + requestID).attr('requestID');
-            if (dataArr[4].value === '') {
-                dataArr[4].value = requestName;
-            }
-        }
-
-        var index = 6;
-        if (dataArr.length === 9) {
-            index = 5;
-        }
-
-        dataArr[index].value = setTimeToDate(dataArr[index].value);
-        dataArr[index + 1].value = setTimeToDate(dataArr[index + 1].value);
-
-        $.ajax({
-            url: window.location.pathname,
-            type: 'post',
-            data: dataArr,
-            success: function (data) {
-                showSuccessAlert('Додавання замовлення пройшло успішно.');
-
-                $('#print_check')
-                    .attr('data-customer-phone', data.customer.userPhone)
-                    .attr('data-request-id', data.result.id);
-
-                var input = $('#request-name-input')[0].className;
-                if (!input.includes('hidden')) {
-                    $('#request-name-select option[value=' + data.result.id + ']').remove();
-                    $('#request-name-select')
-                        .append($('<option>', {
-                            value: data.result.id,
-                            text: dataArr[4].value,
-                            requestID: dataArr[4].value,
-                            id: 'requestID' + data.result.id
-                        }))
-                        .val(data.result.id).change()
+        if (dataArr.length >= 9) {
+            if ($('#request-name-select').serializeArray()[0]) {
+                var requestID = $('#request-name-select').serializeArray()[0].value;
+                var requestName = $('#requestID' + requestID).attr('requestID');
+                if (dataArr[4].value === '') {
+                    dataArr[4].value = requestName;
                 }
-
-                $('.disable_input').attr('disabled', true);
-                $('#step').slideDown('slow');
-                $('#requestIDForTask').val(data.result.id);
-                $('#update_request')
-                    .attr("request-id", data.result.id)
-                    .attr('start-time', formatDate(dataArr[2].value))
-                    .attr('estimated-time', formatDate(dataArr[3].value));
-                $('#create_request').hide();
-                $('#access_update_request').show();
-                $('#print_check').show();
-            },
-            error: function (err) {
-                showErrorAlert(err);
             }
-        });
+
+            var index = 6;
+            if (dataArr.length === 9) {
+                index = 5;
+            }
+
+            dataArr[index].value = setTimeToDate(dataArr[index].value);
+            dataArr[index + 1].value = setTimeToDate(dataArr[index + 1].value);
+
+            $.ajax({
+                url: window.location.pathname,
+                type: 'post',
+                data: dataArr,
+                success: function (data) {
+                    showSuccessAlert('Додавання замовлення пройшло успішно.');
+
+                    $('#print_check')
+                        .attr('data-customer-phone', data.customer.userPhone)
+                        .attr('data-request-id', data.result.id);
+
+                    var input = $('#request-name-input')[0].className;
+                    if (!input.includes('hidden')) {
+                        $('#request-name-select option[value=' + data.result.id + ']').remove();
+                        $('#request-name-select')
+                            .append($('<option>', {
+                                value: data.result.id,
+                                text: dataArr[4].value,
+                                requestID: dataArr[4].value,
+                                id: 'requestID' + data.result.id
+                            }))
+                            .val(data.result.id).change()
+                    }
+
+                    $('.disable_input').attr('disabled', true);
+                    $('#step').slideDown('slow');
+                    $('#requestIDForTask').val(data.result.id);
+                    $('#update_request')
+                        .attr("request-id", data.result.id)
+                        .attr('start-time', formatDate(dataArr[2].value))
+                        .attr('estimated-time', formatDate(dataArr[3].value));
+                    $('#create_request').hide();
+                    $('#access_update_request').show();
+                    $('#print_check').show();
+                },
+                error: function (err) {
+                    showErrorAlert(err);
+                }
+            });
+        } else {
+            showErrorAlert({responseJSON: {
+                errors: [
+                        { msg: "Заповніть усі обов'язкові поля!"}
+                    ]
+            }});
+        }
     });
 
     $('#access_update_request').on('click', function () {
@@ -86,81 +94,83 @@ $(document).ready(function () {
         var oldEstimatedTime = $('#update_request').attr('estimated-time');
         var dataArr = $('#createRequestForm').serializeArray();
 
-        if (window.location.pathname.includes('create-request')) {
-            if ($('#request-name-select').serializeArray()[0]) {
-                var requestID = $('#request-name-select').serializeArray()[0].value;
-                var requestName = $('#requestID' + requestID).attr('requestID');
-                if (dataArr[4].value === '') {
-                    dataArr[4].value = requestName;
-                }
-            }
-        } else {
-            if ($('#update-request-name-select').serializeArray()[0]) {
-                var updateRequestID = $('#update-request-name-select').serializeArray()[0].value;
-                var updateRequestName = $('#updateRequestID' + updateRequestID).attr('updateRequestID');
-                if (dataArr[4].value === '') {
-                    dataArr[4].value = updateRequestName;
-                }
-            }
-        }
-
-        var index = 6;
-        if (dataArr.length === 9) {
-            index = 5;
-        }
-
-        dataArr[index].value = checkDateForUpdate(oldStartTime, dataArr[index].value);
-        dataArr[index + 1].value = checkDateForUpdate(oldEstimatedTime, dataArr[index + 1].value);
-
-        $.ajax({
-            url: getRole(window.location.pathname) + '/update-request/' + $(this).attr("request-id"),
-            type: 'put',
-            data: dataArr,
-            success: function (data) {
-                showSuccessAlert('Редагування замовлення пройшло успішно.');
-
-                $('#print_check_update_request').attr('customer-phone', data.customer.userPhone);
-
-                if (window.location.pathname.includes('create-request')) {
-
-                    var input = $('#request-name-input')[0].className;
-                    if (!input.includes('hidden')) {
-                        $('#request-name-select option[value=' + data.request.id + ']').remove();
-                        $('#request-name-select')
-                            .append($('<option>', {
-                                value: data.request.id,
-                                text: data.request.name,
-                                requestID: data.request.name,
-                                id: 'requestID' + data.request.id
-                            }))
-                            .val(data.request.id).change();
-                    }
-                } else {
-
-                    var input = $('#update-request-name-input')[0].className;
-                    if (!input.includes('hidden')) {
-                        $('#update-request-name-select option[value=' + data.request.id + ']').remove();
-                        $('#update-request-name-select')
-                            .append($('<option>', {
-                                value: data.request.id,
-                                text: data.request.name,
-                                updateRequestID: data.request.name,
-                                id: 'updateRequestID' + data.request.id
-                            }))
-                            .val(data.request.id).change();
+            if (window.location.pathname.includes('create-request')) {
+                if ($('#request-name-select').serializeArray()[0]) {
+                    var requestID = $('#request-name-select').serializeArray()[0].value;
+                    var requestName = $('#requestID' + requestID).attr('requestID');
+                    if (dataArr[4].value === '') {
+                        dataArr[4].value = requestName;
                     }
                 }
-
-                $('.disable_input').attr('disabled', true);
-                $('#update_request').hide()
-                    .attr('start-time', formatDate(dataArr[2].value))
-                    .attr('estimated-time', formatDate(dataArr[3].value));
-                $('#access_update_request').show();
-            },
-            error: function (err) {
-                showErrorAlert(err);
+            } else {
+                if ($('#update-request-name-select').serializeArray()[0]) {
+                    var updateRequestID = $('#update-request-name-select').serializeArray()[0].value;
+                    var updateRequestName = $('#updateRequestID' + updateRequestID).attr('updateRequestID');
+                    if (dataArr[4].value === '') {
+                        dataArr[4].value = updateRequestName;
+                    }
+                }
             }
-        });
+
+            var index = 6;
+            if (dataArr.length === 9) {
+                index = 5;
+            }
+
+            if (dataArr[index].value && dataArr[index + 1].value) {
+                dataArr[index].value = checkDateForUpdate(oldStartTime, dataArr[index].value);
+                dataArr[index + 1].value = checkDateForUpdate(oldEstimatedTime, dataArr[index + 1].value);
+            }
+
+            $.ajax({
+                url: getRole(window.location.pathname) + '/update-request/' + $(this).attr("request-id"),
+                type: 'put',
+                data: dataArr,
+                success: function (data) {
+                    showSuccessAlert('Редагування замовлення пройшло успішно.');
+
+                    $('#print_check_update_request').attr('customer-phone', data.customer.userPhone);
+
+                    if (window.location.pathname.includes('create-request')) {
+
+                        var input = $('#request-name-input')[0].className;
+                        if (!input.includes('hidden')) {
+                            $('#request-name-select option[value=' + data.request.id + ']').remove();
+                            $('#request-name-select')
+                                .append($('<option>', {
+                                    value: data.request.id,
+                                    text: data.request.name,
+                                    requestID: data.request.name,
+                                    id: 'requestID' + data.request.id
+                                }))
+                                .val(data.request.id).change();
+                        }
+                    } else {
+
+                        var input = $('#update-request-name-input')[0].className;
+                        if (!input.includes('hidden')) {
+                            $('#update-request-name-select option[value=' + data.request.id + ']').remove();
+                            $('#update-request-name-select')
+                                .append($('<option>', {
+                                    value: data.request.id,
+                                    text: data.request.name,
+                                    updateRequestID: data.request.name,
+                                    id: 'updateRequestID' + data.request.id
+                                }))
+                                .val(data.request.id).change();
+                        }
+                    }
+
+                    $('.disable_input').attr('disabled', true);
+                    $('#update_request').hide()
+                        .attr('start-time', formatDate(dataArr[2].value))
+                        .attr('estimated-time', formatDate(dataArr[3].value));
+                    $('#access_update_request').show();
+                },
+                error: function (err) {
+                    showErrorAlert(err);
+                }
+            });
     });
 
     $('.delete-request').on('click', function () {
@@ -432,10 +442,6 @@ $(document).ready(function () {
         $.ajax({
             url: getRole(window.location.pathname) + '/request-type',
             type: 'post',
-            data: {
-                carMarkk: $('#markk').val(),
-                carModel: $('#model').val()
-            },
             success: function (data) {
                 if (window.location.pathname.includes('update-request')) {
                     $.each(data.requestTypes, function (i, item) {
