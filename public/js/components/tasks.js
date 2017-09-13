@@ -3,6 +3,7 @@ $(document).ready(function () {
     $('#create_task').on('click', function () {
         $('#requestIDForTask').val($("#update_request").attr("request-id"));
         clearModalAddTask();
+        setStartTime();
         if (window.location.pathname.includes('create-request')) {
 
             $.ajax({
@@ -52,12 +53,13 @@ $(document).ready(function () {
 
     $('#taskAddButton').on('click', function () {
         var dataArr = $('#createTaskForm').serializeArray();
-
         if (dataArr[1].value === '' && $('.task-type-select').serializeArray()[0]) {
             var taskTypeID = $('#taskTypeID' + $('.task-type-select').serializeArray()[0].value).attr('taskTypeID');
             dataArr[2].value = taskTypeID;
             dataArr[1].value = dataArr[2].value;
-            dataArr[6].value = setTimeToDate(dataArr[6].value);
+            if (dataArr[6].value !== '') {
+                dataArr[6].value = setTimeToDate(dataArr[6].value);
+            }
             dataArr.push({
                 name: 'typeID',
                 value: $('#task-type-select').serializeArray()[0].value
@@ -482,6 +484,7 @@ function clearModalAddTask() {
 function updateTaskOnClick(value) {
     $(value).on('click', function () {
         clearModalAddTask();
+        setStartTime()
         setOpenTaskNameOnUpdateTask();
         if (!window.location.pathname.includes('update-request')) {
             if (window.location.pathname.includes('create-request') || window.location.pathname.includes('requests')) {

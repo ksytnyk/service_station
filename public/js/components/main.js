@@ -195,3 +195,7 @@ function checkDateForUpdate(oldDate, newDate) {
         return newDate;
     }
 }
+
+function setStartTime() {
+    $('.startTime').val(formatDate(new Date()).slice(0,10));
+}
