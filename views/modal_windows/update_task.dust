@@ -16,9 +16,9 @@
                     {@lt key=typeUser value=3}
                     <div class="form-group required col-lg-4" id="update_new_task">
                         <label>Назва задачі</label>
-                        <input type="text" class="form-control hidden update-form-task-type-input" id="update-form-task-type-input" name="name">
+                        <input type="text" class="form-control create-form-task hidden update-form-task-type-input" id="update-form-task-type-input" name="name">
                         <div class="input-group">
-                            <select class="form-control add_select2 update-form-task-type-select" id="update-form-task-type-select" name="name2">
+                            <select class="form-control add_select2 create-form-task update-form-task-type-select" id="update-form-task-type-select" name="name2">
                                 {#taskTypes}
                                 {@eq key=title value="0"}
                                 <option value="{id}" updateTaskTypeID="{typeName}" id="updateTaskTypeID{id}" title="Усі категорії">{typeName} (Усі категорії)</option>

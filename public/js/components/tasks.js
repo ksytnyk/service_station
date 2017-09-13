@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     $('#create_task').on('click', function () {
         $('#requestIDForTask').val($("#update_request").attr("request-id"));
-
+        clearModalAddTask();
         if (window.location.pathname.includes('create-request')) {
 
             $.ajax({
@@ -481,7 +481,7 @@ function clearModalAddTask() {
 
 function updateTaskOnClick(value) {
     $(value).on('click', function () {
-
+        clearModalAddTask();
         setOpenTaskNameOnUpdateTask();
         if (!window.location.pathname.includes('update-request')) {
             if (window.location.pathname.includes('create-request') || window.location.pathname.includes('requests')) {

@@ -6,6 +6,7 @@ const User = require('../User');
 const Task = require('../Task');
 const RequestHistory = require('../RequestHistory');
 const status = require('../../constants/status');
+const requestTypesFactory = require('../../helpers/requestTypesFactory');
 
 const describeRequestTable = {
     customerID: {
@@ -313,12 +314,12 @@ Request.getRequestsWithoutCondition = function () {
     return new Promise((resolve, reject) => {
         Request
             .findAll({
-                attributes: [
-                    [Sequelize.fn('DISTINCT', Sequelize.col('name')), 'name'], 'id'
-                ]
+                attributes: ['id','name']
             })
             .then(requests => {
-                resolve(requests);
+                var result = requestTypesFactory(requests);
+
+                resolve(result);
             })
             .catch(err => {
                 console.warn(err);

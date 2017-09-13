@@ -233,7 +233,7 @@ router.get('/requests/update-request/:id', (req, res) => {
                                                 .getUserById(request[0].dataValues.customerID)
                                                 .then(customer => {
                                                     Request
-                                                        .getRequests(request[0].dataValues.carMarkk, request[0].dataValues.carModel)
+                                                        .getRequestsWithoutCondition()
                                                         .then(requests => {
                                                             res.render('roles/admin_moderator/update_request', {
                                                                 requests: requests,
