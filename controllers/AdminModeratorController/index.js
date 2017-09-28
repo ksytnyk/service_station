@@ -430,7 +430,20 @@ router.get('/get-request-check/:id', (req, res) => {
     Request
         .getRequestById(req.params.id)
         .then(request => {
-            res.status(200).send({request: request});
+            User
+                .getUserById(request[0].dataValues.customerID)
+                .then(customer => {
+                    Task
+                        .getAllTasksOfRequest(request[0].dataValues.id)
+                        .then(tasks => {
+                            res.status(200).send({
+                                request: request,
+                                customerPhone: customer.dataValues.userPhone,
+                                tasks: tasks
+                            });
+                        })
+
+                });
         })
         .catch(errors => {
             console.warn(errors);

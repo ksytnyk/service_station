@@ -36,6 +36,7 @@
         <link rel="stylesheet" href="/css/libs/dataTables.bootstrap.min.css">
         <link rel="stylesheet" href="/css/libs/select2.min.css">
         <link rel="stylesheet" href="/css/styles/request.css">
+        <link rel="stylesheet" href="/css/styles/print.css">
     {/eq}
 
     {@eq key=typeUser value=undefined}
@@ -98,6 +99,7 @@
 {@eq key=typeUser value=6}
     <script src="/js/libs/dataTables.bootstrap.min.js"></script>
     <script src="/js/components/requests.js"></script>
+    <script src="/js/components/check.js"></script>
 {/eq}
 
 <script src="/js/components/main.js"></script>

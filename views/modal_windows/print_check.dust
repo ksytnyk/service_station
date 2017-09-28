@@ -1,5 +1,5 @@
 {+print_check}
-<div class="modal fade printCheckFormModal" id="printCheckFormModal" role="dialog" aria-labelledby="formModalLabel">
+<div class="modal fade printCheckFormModal section-to-print" id="printCheckFormModal" role="dialog" aria-labelledby="formModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="print_check">
