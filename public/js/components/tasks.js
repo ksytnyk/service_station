@@ -260,11 +260,11 @@ $(document).ready(function () {
                             '<td class="tac">'+
                             '<div class="tasks-status-form">'+
                             '<input class="status btn btn-primary task-form-status task-status-button"'+
-                                'id="taskProcessing"'+
-                                'type="button"'+
-                                'value="Почати задачу"'+
-                                'data-task-id="'+data.task.id+'"'+
-                                'data-status="2"'+
+                                ' id="taskProcessing"'+
+                                ' type="button"'+
+                                ' value="Почати задачу"'+
+                                ' data-task-id="'+data.task.id+'"'+
+                                ' data-status="2"'+
                             '/>'+
                             '</div>' +
                             '</td>'
@@ -272,19 +272,21 @@ $(document).ready(function () {
                         newTask1 = '' +
                             '<td class="tac">'+
                             '<div class="tasks-status-form">'+
-                            '<input class="status btn btn-danger task-form-status task-status-button"'+
-                                'id="taskHold"'+
-                                'type="button"'+
-                                'value="Відсутні запчастини"'+
-                                'data-task-id="'+data.task.id+'"'+
-                                'data-status="4"'+
+                            '<input class="status btn btn-danger set-task-status-hold modal-window-link"'+
+                                ' data-toggle="modal"' +
+                                ' id="taskHold"'+
+                                ' type="button"'+
+                                ' value="Відсутні запчастини"'+
+                                ' data-task-id="' + data.task.id + '"'+
+                                ' data-task-comment="' + data.task.comment + '"' +
+                                ' data-target="#setTaskStatusHoldModal"' +
                             '/>'+
                             '<input class="status btn btn-success task-form-status task-status-button"'+
-                                'id="taskDone"'+
-                                'type="button"'+
-                                'value="Завершити задачу"'+
-                                'data-task-id="'+data.task.id+'"'+
-                                'data-status="3"'+
+                                ' id="taskDone"'+
+                                ' type="button"'+
+                                ' value="Завершити задачу"'+
+                                ' data-task-id="'+data.task.id+'"'+
+                                ' data-status="3"'+
                             '/>'+
                             '</div>' +
                             '</td>'
@@ -358,6 +360,7 @@ $(document).ready(function () {
                 clearModalAddTask();
                 updateTaskOnClick('#idx-task-' + data.task.id + ' .update-task');
                 changeTaskStatus(idx + ' .task-status-button');
+                setTaskStatusHold(idx + ' .set-task-status-hold');
             },
             error: function (err) {
                 $('.in .close').click();
@@ -411,7 +414,8 @@ $(document).ready(function () {
     changeTaskStatus('.task-status-button');
 
     function changeTaskStatus(value) {
-        $(value).on('click', function () {
+        $(value).on('click', function (event) {
+            event.preventDefault();
 
             var taskID = $(this).data('task-id'),
                 statusID = $(this).data('status'),
@@ -423,24 +427,43 @@ $(document).ready(function () {
                 data.assignedUserID = $(this).data('assigned-user-id');
             }
 
+            if (statusID === 4) {
+                var dataArr = $('#change-task-status-form').serializeArray();
+                taskID = dataArr[0].value;
+
+                if (dataArr[1].value.length === 0) {
+                    return showErrorAlert({
+                        responseJSON: {
+                            errors: [
+                                {
+                                    'msg': '"Коментар" - обов\'язкове поле.'
+                                }
+                            ]
+                        }
+                    });
+                } else {
+                    data.comment = dataArr[1].value;
+                }
+            }
+
             $.ajax({
                 url: getRole(window.location.pathname) + '/set-task-status/' + taskID,
                 type: 'put',
                 data: data,
                 success: function () {
-
                     var idx = "#idx-task-" + taskID,
                         newTaskStatusClasses = 'status-task ',
                         newTaskStatusText,
                         newTaskButtons = '';
 
                     var taskHoldButton = '' +
-                        '<input class="status btn btn-danger task-form-status task-status-button"' +
+                        '<input class="status btn btn-danger set-task-status-hold modal-window-link"' +
+                        ' data-toggle="modal"' +
                         ' id="taskHold"' +
                         ' type="button"' +
                         ' value="Відсутні запчастини"' +
                         ' data-task-id="' + taskID + '"' +
-                        ' data-status="4"' +
+                        ' data-target="#setTaskStatusHoldModal"' +
                         '/>';
 
                     var taskDoneButton = '' +
@@ -471,6 +494,8 @@ $(document).ready(function () {
                             $(idx).empty();
                             break;
                     }
+
+                    setTaskStatusHold(idx + ' .set-task-status-hold');
                 }
             })
         })
@@ -484,7 +509,7 @@ function clearModalAddTask() {
 function updateTaskOnClick(value) {
     $(value).on('click', function () {
         clearModalAddTask();
-        setStartTime()
+        setStartTime();
         setOpenTaskNameOnUpdateTask();
         if (!window.location.pathname.includes('update-request')) {
             if (window.location.pathname.includes('create-request') || window.location.pathname.includes('requests')) {
@@ -663,4 +688,13 @@ function setTaskTypesTitle(item) {
             break;
         }
     }
+}
+
+setTaskStatusHold('.set-task-status-hold');
+
+function setTaskStatusHold(value) {
+    $(value).on('click', function () {
+        $('#change-task-status-id').val($(this).data('task-id'));
+        $('#change-task-status-comment').val($(this).data('task-comment'));
+    });
 }

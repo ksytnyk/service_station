@@ -71,12 +71,14 @@
                     />
                     {/eq}
                     {@eq key=status value=2}
-                    <input class="status btn btn-danger task-form-status task-status-button"
+                    <input class="status btn btn-danger set-task-status-hold modal-window-link"
+                           data-toggle="modal"
                            id="taskHold"
                            type="button"
                            value="Відсутні запчастини"
                            data-task-id="{id}"
-                           data-status="4"
+                           data-task-comment="{comment}"
+                           data-target="#setTaskStatusHoldModal"
                     />
                     <input class="status btn btn-success task-form-status task-status-button"
                            id="taskDone"

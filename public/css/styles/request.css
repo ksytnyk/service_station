@@ -125,3 +125,8 @@
 .requests .set_give_out:hover {
     background-color: rgba(196, 90, 0, 0.85);
 }
+
+/* CREATE-REQUEST */
+.create_request .input-group .form-control {
+    z-index: 0;
+}

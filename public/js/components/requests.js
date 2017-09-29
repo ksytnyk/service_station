@@ -400,8 +400,8 @@ $(document).ready(function () {
         if (addNewUser) {
             $('#createUserFormModal input[name=userName]').val(addNewUser[0]);
             $('#createUserFormModal input[name=userSurname]').val(addNewUser[1]);
-            $('#createUserFormModal').modal('toggle');
         }
+        $('#createUserFormModal').modal('toggle');
     });
 
     $('.create_request #customers').on('select2:closing', function () {
