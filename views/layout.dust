@@ -103,7 +103,6 @@
     <script src="/js/components/check.js"></script>
 {/eq}
 
-/*Commit*/
 <script src="/js/components/main.js"></script>
 </body>
 </html>

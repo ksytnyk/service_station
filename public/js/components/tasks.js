@@ -365,8 +365,6 @@ $(document).ready(function () {
                 $(idr).append(newCost);
 
                 if(data.isDone) { //if REQUEST IS DONE
-                    console.log('ok');
-                    console.log(data);
 
                     var newRequestStatusClasses = 'status-requests ',
                         newRequestStatusText;
@@ -408,7 +406,9 @@ $(document).ready(function () {
                             '<input class="btn btn-warning set_payed_true set_payed ' + set_payed_true + '"' +
                             ' id="requestCanceled" type="button" value="Розрахувати"' +
                             ' data-request-id="' + data.requestID + '"' +
-                            ' data-payed="true" title="Розрахувати"/>';
+                            ' data-payed="true" title="Розрахувати" data-toggle="modal"\n' +
+                            ' data-target="#printCheckFormModal" request-start-time="'+ data.startTime +'"\n' +
+                            ' request-estimate-time="' + data.estimatedTime + '"/>';
 
                         requestDontPayedButton = '' +
                             '<input class="btn btn-danger set_payed_false set_payed ' + set_payed_false + '"' +
@@ -427,6 +427,7 @@ $(document).ready(function () {
                     changeRequestStatus(idrr + ' .request-status-button');
                     setPayed(idrr + ' .set_payed');
                     setGiveOut(idrr + ' .set_give_out');
+                    printOnClick();
                 }
 
                 deleteTaskOnClick('#idx-task-' + data.task.id + ' .delete-task');

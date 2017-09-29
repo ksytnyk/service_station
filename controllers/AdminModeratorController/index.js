@@ -572,8 +572,9 @@ router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
                                                         if(counter === allTasks.length) {
                                                             condition = true;
                                                             Request
-                                                                .changeStatus(req.body.requestID, status.DONE)
+                                                                .changeStatus(req.body.requestID, {status:status.DONE})
                                                                 .then((isDone) => {
+
                                                                         res.status(200).send({
                                                                             isDone: isDone,
                                                                             request: request,

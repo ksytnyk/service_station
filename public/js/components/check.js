@@ -67,6 +67,9 @@ $(document).ready(function () {
         })
     });
 
+    printOnClick();
+});
+function printOnClick() {
     $('.set_payed_true').on('click', function () {
         $.ajax({
             url: getRole(window.location.pathname) + '/get-request-check/' + $(this).data('request-id'),
@@ -90,4 +93,4 @@ $(document).ready(function () {
             }
         })
     })
-});
+}
