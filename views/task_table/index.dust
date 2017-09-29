@@ -78,6 +78,7 @@
                            value="Відсутні запчастини"
                            data-task-id="{id}"
                            data-task-comment="{comment}"
+                           data-task-need-buy-parts="{needBuyParts}"
                            data-target="#setTaskStatusHoldModal"
                     />
                     <input class="status btn btn-success task-form-status task-status-button"

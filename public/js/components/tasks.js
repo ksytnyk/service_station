@@ -279,6 +279,7 @@ $(document).ready(function () {
                                 ' value="Відсутні запчастини"'+
                                 ' data-task-id="' + data.task.id + '"'+
                                 ' data-task-comment="' + data.task.comment + '"' +
+                                ' data-task-need-buy-parts="' + data.task.needBuyParts + '"' +
                                 ' data-target="#setTaskStatusHoldModal"' +
                             '/>'+
                             '<input class="status btn btn-success task-form-status task-status-button"'+
@@ -429,19 +430,27 @@ $(document).ready(function () {
 
             if (statusID === 4) {
                 var dataArr = $('#change-task-status-form').serializeArray();
-                taskID = dataArr[0].value;
 
-                if (dataArr[1].value.length === 0) {
-                    return showErrorAlert({
+                if (dataArr[1].value.length === 0 || dataArr[2].value.length === 0) {
+                    var err = {
                         responseJSON: {
-                            errors: [
-                                {
-                                    'msg': '"Коментар" - обов\'язкове поле.'
-                                }
-                            ]
+                            errors: []
                         }
-                    });
-                } else {
+                    };
+
+                    if (dataArr[1].value.length === 0) {
+                        err.responseJSON.errors.push({'msg': '"Відсутні запчастини" -  обов\'язкове поле.'})
+                    }
+
+                    if (dataArr[2].value.length === 0) {
+                        err.responseJSON.errors.push({'msg': '"Коментар" -  обов\'язкове поле.'})
+                    }
+
+                    return showErrorAlert(err);
+                }
+                else {
+                    taskID = dataArr[0].value;
+                    data.needBuyParts = dataArr[1].value;
                     data.comment = dataArr[1].value;
                 }
             }
@@ -463,6 +472,7 @@ $(document).ready(function () {
                         ' type="button"' +
                         ' value="Відсутні запчастини"' +
                         ' data-task-id="' + taskID + '"' +
+                        ' data-task-need-buy-parts="' + data.needBuyParts + '"' +
                         ' data-target="#setTaskStatusHoldModal"' +
                         '/>';
 
@@ -695,6 +705,7 @@ setTaskStatusHold('.set-task-status-hold');
 function setTaskStatusHold(value) {
     $(value).on('click', function () {
         $('#change-task-status-id').val($(this).data('task-id'));
+        $('#change-task-status-need-buy-parts').val($(this).data('task-need-buy-parts'));
         $('#change-task-status-comment').val($(this).data('task-comment'));
     });
 }

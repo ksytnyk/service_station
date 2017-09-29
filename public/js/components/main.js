@@ -92,7 +92,7 @@ $(document).ready(function () {
 
 });
 
-const TIME_FOR_FLASH = 7500;
+const TIME_FOR_FLASH = 10000;
 
 function getRole(pathname) {
     if (pathname.includes('admin')) {
