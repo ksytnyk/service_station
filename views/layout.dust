@@ -44,6 +44,7 @@
     {/eq}
 
     <link rel="stylesheet" href="/css/styles/main.css">
+    <link rel="stylesheet" href="/css/media/main.css">
 
 </head>
 <body>

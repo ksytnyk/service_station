@@ -4,7 +4,7 @@
 
 {>"header/index"/}
 
-<div class="col-lg-12 users">
+<div class="col-xs-12 users">
     <div class="panel panel-default">
         <table class="table dtable">
             <thead>
@@ -19,14 +19,14 @@
             <tr id="idr-user-{id}">
                 <th class="tac" scope="row">{id}</th>
                 <td class="pr">
-                    <div class="col-lg-4"><strong>Прізвище Ім'я: </strong>{userSurname} {userName}</div>
-                    <div class="col-lg-4"><strong>Адреса: </strong>{userAddress}</div>
-                    <div class="col-lg-4"><strong>Логін: </strong>{userLogin}</div>
-                    <div class="col-lg-4"><strong>Контактний номер: </strong>{userPhone}</div>
-                    <div class="col-lg-4"><strong>Email: </strong>{userEmail}</div>
-                    <div class="col-lg-4"><strong>Пароль: </strong>{userPassword}</div>
-                    <div class="col-lg-4"><strong>Компанія: </strong>{userCompanyName}</div>
-                    <div class="col-lg-4"><strong>Роль: </strong>{user_type.dataValues.userTypeName}</div>
+                    <div class="col-xs-4"><strong>Прізвище Ім'я: </strong>{userSurname} {userName}</div>
+                    <div class="col-xs-4"><strong>Адреса: </strong>{userAddress}</div>
+                    <div class="col-xs-4"><strong>Логін: </strong>{userLogin}</div>
+                    <div class="col-xs-4"><strong>Контактний номер: </strong>{userPhone}</div>
+                    <div class="col-xs-4"><strong>Email: </strong>{userEmail}</div>
+                    <div class="col-xs-4"><strong>Пароль: </strong>{userPassword}</div>
+                    <div class="col-xs-4"><strong>Компанія: </strong>{userCompanyName}</div>
+                    <div class="col-xs-4"><strong>Роль: </strong>{user_type.dataValues.userTypeName}</div>
                 </td>
                 <td class="tac">
                     {@lt key=typeUser value=3}

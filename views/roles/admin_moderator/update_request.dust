@@ -4,28 +4,28 @@
 
 {>"header/index"/}
 
-<div class="col-lg-12 update_request noprint">
+<div class="col-xs-12 update_request noprint">
     {#request}
     <form class="clearfix" id="createRequestForm">
-        <div class="form-group required col-lg-3">
+        <div class="form-group required col-xs-3">
             <label>Тип транспорту</label>
             <select class="form-control disable_input" name="typeOfCar" id="typeOfCar" default-value="{typeOfCar}" disabled>
                 <option value="">Оберіть тип транспорту</option>
             </select>
         </div>
-        <div class="form-group required col-lg-3">
+        <div class="form-group required col-xs-3">
             <label>Марка транспорту</label>
             <select class="form-control disable_input" name="carMarkk" id="markk" disabled>
                 <option value="{carMarkk}">{carMarkk}</option>
             </select>
         </div>
-        <div class="form-group required col-lg-3">
+        <div class="form-group required col-xs-3">
             <label>Модель транспорту</label>
             <select class="form-control disable_input" name="carModel" id="model" disabled>
                 <option value="{carModel}">{carModel}</option>
             </select>
         </div>
-        <div class="form-group required col-lg-3">
+        <div class="form-group required col-xs-3">
             <label>Клієнт</label>
             <div class="input-group">
                 <select class="form-control add_select2 disable_input" name="customerID" id="customers" disabled>
@@ -39,7 +39,7 @@
                 </span>
             </div>
         </div>
-        <div class="form-group required col-lg-3">
+        <div class="form-group required col-xs-3">
             <label>Назва замовлення</label>
             <input type="text" class="form-control disable_input update-request-name-input" request-id="{id}" name="name" value="{name}" id="update-request-name-input" disabled>
             <div class="input-group hidden" id="input-group-update">
@@ -53,49 +53,49 @@
                 </span>
             </div>
         </div>
-        <div class="form-group required col-lg-3">
+        <div class="form-group required col-xs-3">
             <label>Час початку</label>
             <input type="text" class="form-control datetimepickerN startTime disable_input" name="startTime" style="margin-bottom: 5px;" value="{startTime}" disabled>
         </div>
-        <div class="form-group required col-lg-3">
+        <div class="form-group required col-xs-3">
             <label>Орієнтовний час виконання</label>
             <input type="text" class="form-control datetimepickerN disable_input" name="estimatedTime"
                    style="margin-bottom: 5px;" value="{estimatedTime}" disabled>
         </div>
-        <div class="form-group col-lg-3" style="margin-top: 25px; margin-bottom: 20px;">
+        <div class="form-group col-xs-3" style="margin-top: 25px; margin-bottom: 20px;">
             <input type="button" id="access_update_request" value="Редагувати замовлення"
-                   class="btn btn-warning col-lg-9"/>
+                   class="btn btn-warning col-xs-9"/>
             <input type="button" id="update_request" value="Зберегти зміни" request-id="{id}"
-                   class="btn btn-success col-lg-9" start-time="{startTime}" estimated-time="{estimatedTime}"/>
+                   class="btn btn-success col-xs-9" start-time="{startTime}" estimated-time="{estimatedTime}"/>
             <button type="button"
                     title="Друк"
                     id="print_check_update_request"
-                    class="btn btn-danger modal-window-link col-lg-offset-1 col-lg-2"
+                    class="btn btn-danger modal-window-link col-xs-offset-1 col-xs-2"
                     data-toggle="modal"
                     data-target="#printCheckFormModal"
                     customer-phone="{customer.userPhone}">
                 <span class="glyphicon glyphicon-print" aria-hidden="true" style="margin: 3px 0;"></span>
             </button>
         </div>
-        <div class="form-group col-lg-3">
+        <div class="form-group col-xs-3">
             <label>Опис замовлення</label>
             <textarea class="form-control disable_input" name="description" rows="4" style="height: 108px;" disabled>{description}</textarea>
         </div>
-        <div class="form-group col-lg-3">
+        <div class="form-group col-xs-3">
             <label>Коментар</label>
             <textarea class="form-control disable_input" name="comment" rows="4" style="height: 108px;" disabled>{comment}</textarea>
         </div>
     </form>
 
     <div class="clearfix">
-        <div class="form-group col-lg-12" style="margin: 30px 0 -15px;">
+        <div class="form-group col-xs-12" style="margin: 30px 0 -15px;">
             <input type="button" id="create_task" value="Додати задачу" class="btn btn-primary modal-window-link"
                    data-toggle="modal" data-target="#createTaskFormModal" style="width: 255px; float: right; position: relative; z-index: 1;"/>
         </div>
-        <div class="form-group col-lg-12" style="margin: 0;">
+        <div class="form-group col-xs-12" style="margin: 0;">
             <label>Список замовлень</label>
         </div>
-        <div class="form-group col-lg-12">
+        <div class="form-group col-xs-12">
             <div class="panel panel-default">
                 {>"task_table/index"/}
             </div>

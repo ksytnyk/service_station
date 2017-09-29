@@ -10,12 +10,12 @@
                 </div>
                 <input type="hidden" id="change-request-status-id" name="id">
                 <div class="modal-body clearfix">
-                    <div class="form-group required col-lg-12">
+                    <div class="form-group required col-xs-12">
                     <label>Коментар</label>
                     <textarea class="form-control create-form-task" name="comment" rows="3"
                               id="change-request-status-comment"></textarea>
                 </div>
-                <div class='form-group col-lg-12'>
+                <div class='form-group col-xs-12'>
                     <button class="btn btn-success request-status-button width agree" data-dismiss="modal" data-status="5">
                         Підтвердити
                     </button>

@@ -3,9 +3,9 @@
 {<body}
 
 {>"header/index"/}
-<div class="col-lg-12 requests noprint">
+<div class="col-xs-12 requests noprint">
 
-    <ul class="col-lg-9 nav nav-pills">
+    <ul class="col-xs-9 nav nav-pills">
         <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/all">
             <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/all">Усі</a>
         </li>

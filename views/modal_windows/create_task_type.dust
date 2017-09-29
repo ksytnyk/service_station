@@ -9,25 +9,25 @@
                     <h4 class="modal-title text-center">Додати задачу</h4>
                 </div>
                 <div class="modal-body clearfix">
-                    <div class="form-group required col-lg-6" id="update_new_task">
+                    <div class="form-group required col-xs-6" id="update_new_task">
                         <label>Назва задачі</label>
                         <input type="text" class="form-control" id="update-form-type-name" name="typeName">
                     </div>
-                    <div class="form-group col-lg-6">
+                    <div class="form-group col-xs-6">
                         <label>Тип транспорту</label>
                         <select class="form-control" name="typeOfCar" id="typeOfCar1">
                             <option value="">Оберіть тип транспорту</option>
                         </select>
                     </div>
-                    <div class="form-group col-lg-6">
+                    <div class="form-group col-xs-6">
                         <label>Марка автомобіля</label>
                         <select class="form-control" name="carMarkk" id="markk1"></select>
                     </div>
-                    <div class="form-group col-lg-6">
+                    <div class="form-group col-xs-6">
                         <label>Модель автомобіля</label>
                         <select class="form-control" name="carModel" id="model1"></select>
                     </div>
-                    <div class="form-group required col-lg-6">
+                    <div class="form-group required col-xs-6">
                         <label>Виконавець</label>
                         <select class="form-control add_select2 task-planed-executor-id" name="planedExecutorID">
                             {#users}
@@ -35,14 +35,14 @@
                             {/users}
                         </select>
                     </div>
-                    <div class="form-group required col-lg-6">
+                    <div class="form-group required col-xs-6">
                         <label>Час виконання</label>
                         <div class="input-group">
                             <input type="number" min="1" class="form-control" name="estimationTime">
                             <span class="input-group-addon">год</span>
                         </div>
                     </div>
-                    <div class="form-group required col-lg-6">
+                    <div class="form-group required col-xs-6">
                         <label>Вартість</label>
                         <div class="input-group">
                             <input type="number" min="1" class="form-control" name="cost">
@@ -50,7 +50,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-lg-6" style="margin-top: 25px;">
+                    <div class="form-group col-xs-6" style="margin-top: 25px;">
                         <button class="btn btn-success width task-type-create-button agree">
                             Додати
                         </button>
