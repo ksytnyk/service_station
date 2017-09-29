@@ -387,7 +387,8 @@ function changeRequestStatus(value) {
                             '<input class="btn btn-warning set_payed_true set_payed ' + set_payed_true + '"' +
                             ' id="requestCanceled" type="button" value="Розрахувати"' +
                             ' data-request-id="' + data.requestID + '"' +
-                            ' data-payed="true" title="Розрахувати"/>';
+                            ' data-payed="true" title="Розрахувати" data-toggle="modal"\n' +
+                            '                                   data-target="#printCheckFormModal" />';
 
                         requestDontPayedButton = '' +
                             '<input class="btn btn-danger set_payed_false set_payed ' + set_payed_false + '"' +
@@ -426,6 +427,7 @@ function changeRequestStatus(value) {
                     setPayed(idr + ' .set_payed');
                     setGiveOut(idr + ' .set_give_out');
                     setRequestStatusCanceled(idr + ' .status-requests-canceled');
+                    printOnClick();
                 } else {
                     $(idr).remove();
                 }
