@@ -296,8 +296,10 @@ $(document).ready(function () {
                 if (getRole(window.location.pathname) === '/store-keeper') {
                     newTask1 = '' +
                         '<td class="tac"><div class="tasks-status-form">' +
-                        '<input class="status btn btn-danger task-form-status task-status-button" id="taskHold" type="button" value="Анулювати" data-status="4"' +
-                        ' data-task-id="' + data.task.id + '"/>' +
+                        '<input class="status btn btn-danger set-task-status-hold modal-window-link" data-toggle="modal" id="taskHold" type="button" value="Анулювати" data-target="#setTaskStatusHoldModal"' +
+                        ' data-task-id="' + data.task.id + '"' +
+                        ' data-task-comment="' + data.task.comment + '"/>' +
+
                         '<input class="status btn btn-success task-form-status task-status-button" id="taskPending" type="button" value="Є на складі" data-status="1"' +
                         ' data-task-id="' + data.task.id + '"' +
                         ' data-assigned-user-id="' + data.task.planedExecutorID + '"/></div></td>';
@@ -431,28 +433,47 @@ $(document).ready(function () {
             if (statusID === 4) {
                 var dataArr = $('#change-task-status-form').serializeArray();
 
-                if (dataArr[1].value.length === 0 || dataArr[2].value.length === 0) {
-                    var err = {
-                        responseJSON: {
-                            errors: []
+                if (window.location.pathname.includes('executor')) {
+                    if (dataArr[1].value.length === 0 || dataArr[2].value.length === 0) {
+                        var err = {
+                            responseJSON: {
+                                errors: []
+                            }
+                        };
+
+                        if (dataArr[1].value.length === 0) {
+                            err.responseJSON.errors.push({'msg': '"Відсутні запчастини" -  обов\'язкове поле.'})
                         }
-                    };
 
+                        if (dataArr[2].value.length === 0) {
+                            err.responseJSON.errors.push({'msg': '"Коментар" -  обов\'язкове поле.'})
+                        }
+
+                        return showErrorAlert(err);
+                    }
+                    else {
+                        data.needBuyParts = dataArr[1].value;
+                        data.comment = dataArr[2].value;
+                    }
+                }
+
+                if (window.location.pathname.includes('store-keeper')) {
                     if (dataArr[1].value.length === 0) {
-                        err.responseJSON.errors.push({'msg': '"Відсутні запчастини" -  обов\'язкове поле.'})
-                    }
+                        var err = {
+                            responseJSON: {
+                                errors: [
+                                    {'msg': '"Коментар" -  обов\'язкове поле.'}
+                                ]
+                            }
+                        };
 
-                    if (dataArr[2].value.length === 0) {
-                        err.responseJSON.errors.push({'msg': '"Коментар" -  обов\'язкове поле.'})
+                        return showErrorAlert(err);
                     }
-
-                    return showErrorAlert(err);
+                    else {
+                        data.comment = dataArr[1].value;
+                    }
                 }
-                else {
-                    taskID = dataArr[0].value;
-                    data.needBuyParts = dataArr[1].value;
-                    data.comment = dataArr[1].value;
-                }
+                taskID = dataArr[0].value;
             }
 
             $.ajax({

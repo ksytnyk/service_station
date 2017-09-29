@@ -11,5 +11,6 @@
 </div>
 
 {>"modal_windows/update_task"/}
+{>"modal_windows/set_task_status_hold"/}
 
 {/body}

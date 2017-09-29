@@ -6,29 +6,29 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title text-center">Відсутні запчастини</h4>
+                    <h4 class="modal-title text-center">{@eq key=typeUser value=3}Відсутні запчастини{/eq}{@eq key=typeUser value=4}Анулювати{/eq}</h4>
                 </div>
                 <input type="hidden" id="change-task-status-id" name="id">
                 <div class="modal-body clearfix">
+                    {@eq key=typeUser value=3}
                     <div class="form-group required col-lg-6" style="padding-right: 5px;">
                         <label>Відсутні запчастини</label>
                         <textarea class="form-control need-buy-parts" name="needBuyParts" rows="3"
                                   id="change-task-status-need-buy-parts"></textarea>
                     </div>
-                    <div class="form-group required col-lg-6" style="padding-left: 5px;">
+                    {/eq}
+                    <div class="form-group required {@eq key=typeUser value=3}col-lg-6{/eq}{@eq key=typeUser value=4}col-lg-12{/eq}" {@eq key=typeUser value=3}style="padding-left: 5px;"{/eq}>
                         <label>Коментар</label>
                         <textarea class="form-control create-form-task" name="comment" rows="3"
                                   id="change-task-status-comment"></textarea>
                     </div>
                     <div class='form-group col-lg-12'>
-                        {@gt key=typeUser value=2}
                         <button class="btn btn-success width task-status-button agree" data-dismiss="modal" data-status="4" id="change-status-update-task">
                             Підтвердити
                         </button>
                         <button class="btn btn-danger pull-right width" data-dismiss="modal">
                             Закрити
                         </button>
-                        {/gt}
                     </div>
                 </div>
             </form>
