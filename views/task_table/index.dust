@@ -53,8 +53,8 @@
             <p><strong>Опис задачі: </strong>{description}</p>
             <p class="bt"><strong>Запчастини: </strong>{parts}</p>
             <p><strong>Запчастини клієнта: </strong>{customerParts}</p>
-            <p><strong>Відсутні запчастини: </strong>{needBuyParts}</p>
-            <p class="bt"><strong>Коментар: </strong>{comment}</p>
+            <p id="need-buy-parts"><strong>Відсутні запчастини: </strong>{needBuyParts}</p>
+            <p class="bt" id="comment"><strong>Коментар: </strong>{comment}</p>
         </td>
         {@lt key=typeUser value=5}
         {@gt key=typeUser value=2}

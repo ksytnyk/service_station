@@ -250,8 +250,8 @@ $(document).ready(function () {
                     '<p><strong>Опис задачі: </strong>' + data.task.description + '</p> ' +
                     '<p class="bt"><strong>Запчастини: </strong>' + data.task.parts + '</p> ' +
                     '<p><strong>Запчастини клієнта: </strong>' + data.task.customerParts + '</p> ' +
-                    '<p><strong>Відсутні запчастини: </strong>' + data.task.needBuyParts + '</p> ' +
-                    '<p class="bt"><strong>Коментар: </strong>' + data.task.comment + '</p> ' +
+                    '<p  id="need-buy-parts"><strong>Відсутні запчастини: </strong>' + data.task.needBuyParts + '</p> ' +
+                    '<p class="bt" id="comment"><strong>Коментар: </strong>' + data.task.comment + '</p> ' +
                     '</td>';
 
                 if (getRole(window.location.pathname) === "/executor") {
@@ -472,7 +472,8 @@ $(document).ready(function () {
                         ' type="button"' +
                         ' value="Відсутні запчастини"' +
                         ' data-task-id="' + taskID + '"' +
-                        ' data-task-need-buy-parts="' + data.needBuyParts + '"' +
+                        ' data-task-comment="' + $('#comment')[0].lastChild.data + '"' +
+                        ' data-task-need-buy-parts="' + $('#need-buy-parts')[0].lastChild.data + '"' +
                         ' data-target="#setTaskStatusHoldModal"' +
                         '/>';
 
