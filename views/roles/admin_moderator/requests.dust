@@ -218,6 +218,9 @@
                                     {@eq key=status value=3}
                                     <p>Замовлення виконано</p>
                                     {/eq}
+                                    {@eq key=status value=4}
+                                    <p>Задачу зупинено</p>
+                                    {/eq}
                                     {@eq key=status value=5}
                                     <p>Замовлення анульовано</p>
                                     {/eq}

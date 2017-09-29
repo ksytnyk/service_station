@@ -797,7 +797,10 @@ setTaskStatusHold('.set-task-status-hold');
 function setTaskStatusHold(value) {
     $(value).on('click', function () {
         $('#change-task-status-id').val($(this).data('task-id'));
-        $('#change-task-status-need-buy-parts').val($(this).data('task-need-buy-parts'));
+
+        if ('' + $(this).data('task-need-buy-parts') !== 'undefined') {
+            $('#change-task-status-need-buy-parts').val($(this).data('task-need-buy-parts'));
+        }
         $('#change-task-status-comment').val($(this).data('task-comment'));
     });
 }

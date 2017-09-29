@@ -5,6 +5,7 @@ const sequelize = require('../connection');
 
 const Request = require('../Request');
 const User = require('../User');
+const RequestHistory = require('../RequestHistory');
 
 const status = require('../../constants/status');
 
@@ -276,6 +277,33 @@ Task.updateTask = function (taskID, params) {
                 params,
                 {where: {id: taskID}})
             .then(result => {
+
+                if (params.status == status.HOLD) {
+                    Task
+                        .getTaskById(taskID)
+                        .then(task => {
+                            var data = {
+                                'requestID': task.dataValues.requestID,
+                                'status': 4,
+                                'comment': task.dataValues.comment
+                            };
+
+                            RequestHistory
+                                .createRequestHistory(data)
+                                .then(result => {
+                                    resolve(result);
+                                })
+                                .catch(err => {
+                                    console.warn(err);
+                                    reject(err);
+                                });
+                        })
+                        .catch(err => {
+                            console.warn(err);
+                            reject(err);
+                        });
+                }
+
                 resolve(result);
             })
             .catch(err => {
