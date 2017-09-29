@@ -248,7 +248,8 @@ Request.changeStatus = function (idRequest, params) {
             .then(result => {
                 var data = {
                     requestID: idRequest,
-                    status: params.status
+                    status: params.status,
+                    comment: params.comment
                 };
 
                 RequestHistory

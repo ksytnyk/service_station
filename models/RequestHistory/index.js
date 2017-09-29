@@ -12,6 +12,10 @@ const describeRequestHistoryTable = {
         type: Sequelize.INTEGER,
         field: 'status'
     },
+    comment: {
+        type: Sequelize.STRING,
+        field: 'comment'
+    }
 };
 
 const optionRequestHistoryTable = {

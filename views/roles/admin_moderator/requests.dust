@@ -208,9 +208,6 @@
                             <tbody>
                             {#requestsHistory}
                             <tr>
-                                <td class="tac" style="width: 35px;">
-                                    <strong>{id}</strong>
-                                </td>
                                 <td>
                                     {@eq key=status value=1}
                                     <p>Замовлення в очікувані</p>
@@ -224,6 +221,9 @@
                                     {@eq key=status value=5}
                                     <p>Замовлення анульовано</p>
                                     {/eq}
+                                </td>
+                                <td>
+                                    <p>{comment}</p>
                                 </td>
                                 <td>
                                     <p>{createdAt}</p>
