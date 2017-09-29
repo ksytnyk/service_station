@@ -107,7 +107,7 @@
                     <p id="typeOfCar{id}" attr-name="{typeOfCar}"><strong>Тип транспорту: </strong>{typeOfCar}</p>
                     <p id="markk{id}" attr-name="{carMarkk}"><strong>Марка: </strong>{carMarkk}</p>
                     <p id="model{id}" attr-name="{carModel}"><strong>Модель: </strong>{carModel}</p>
-                    <p><strong>Коментар: </strong>{comment}</p>
+                    <p id="request-comment"><strong>Коментар: </strong>{comment}</p>
                     <div class="requests-status-form">
                         {@eq key=giveOut value="false" type="boolean"}
                         {@ne key=typeUser value=6}
@@ -137,13 +137,15 @@
                         {/ne}
                         {@ne key=status value=5}
                         {@ne key=status value=1}
-                        <input class="btn request-form-status status-requests-canceled request-status-button"
+                        <input class="btn request-form-status status-requests-canceled modal-window-link"
+                               data-toggle="modal"
                                id="requestCanceled"
                                type="button"
                                value="Анулювати"
                                data-request-id="{id}"
-                               data-status="5"
+                               data-request-comment="{comment}"
                                title="Анулювати"
+                               data-target="#setRequestStatusCanceledModal"
                         />
                         {/ne}
                         {/ne}
@@ -244,5 +246,6 @@
 {>"modal_windows/update_task"/}
 {>"modal_windows/delete_task"/}
 {>"modal_windows/delete_request"/}
+{>"modal_windows/set_request_status_canceled"/}
 
 {/body}

@@ -17,7 +17,7 @@
                                   id="change-task-status-need-buy-parts"></textarea>
                     </div>
                     {/eq}
-                    <div class="form-group required {@eq key=typeUser value=3}col-lg-6{/eq}{@eq key=typeUser value=4}col-lg-12{/eq}" {@eq key=typeUser value=3}style="padding-left: 5px;"{/eq}>
+                    <div class="form-group required {@eq key=typeUser value=3}col-lg-6{/eq}{@eq key=typeUser value=4}col-lg-12{/eq}" {@eq key=typeUser value=3}style="padding-left: 5px;"{/eq} >
                         <label>Коментар</label>
                         <textarea class="form-control create-form-task" name="comment" rows="3"
                                   id="change-task-status-comment"></textarea>

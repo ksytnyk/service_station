@@ -231,17 +231,15 @@ Request.deleteRequest = function (idRequest) {
     });
 };
 
-Request.changeStatus = function (idRequest, requestStatus) {
+Request.changeStatus = function (idRequest, params) {
     return new Promise((resolve, reject) => {
-        let hadStarted;
-        if (requestStatus == status.PROCESSING) {
-            hadStarted = true;
+        if (params.status == status.PROCESSING) {
+            params.hadStarted = true;
         }
+
         Request
-            .update({
-                    status: requestStatus,
-                    hadStarted: hadStarted
-                },
+            .update(
+                params,
                 {
                     where: {
                         id: idRequest
@@ -250,7 +248,7 @@ Request.changeStatus = function (idRequest, requestStatus) {
             .then(result => {
                 var data = {
                     requestID: idRequest,
-                    status: requestStatus
+                    status: params.status
                 };
 
                 RequestHistory

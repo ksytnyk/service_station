@@ -350,7 +350,7 @@ router.delete('/delete-request/:id', (req, res) => {
 
 router.put('/change-request-status/:id', (req, res) => {
     Request
-        .changeStatus(req.params.id, req.body.statusID)
+        .changeStatus(req.params.id, req.body)
         .then(() => {
             Request
                 .getRequestById(req.params.id)
@@ -380,7 +380,7 @@ router.put('/change-request-status/:id', (req, res) => {
                             });
                     }
                     res.status(200).send({
-                        status: req.body.statusID,
+                        status: req.body.status,
                         requestID: req.params.id,
                         request: request
                     });

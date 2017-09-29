@@ -202,15 +202,9 @@ $(document).ready(function () {
 
     changeRequestStatus('.request-status-button');
 
-
-
     setPayed('.set_payed');
 
-
-
     setGiveOut('.set_give_out');
-
-
 
     var addNewUser;
     var isFirstUpdateRequestOpen = true;
@@ -291,24 +285,55 @@ $(document).ready(function () {
 });
 
 function changeRequestStatus(value) {
-    $(value).on('click', function () {
-        if(window.location.pathname.includes('trash')){
+    $(value).on('click', function (event) {
+        event.preventDefault();
+
+        if (window.location.pathname.includes('trash')){
             var hadDeleted = true;
         }
-        var requestID = $(this).data('request-id');
-        statusID = $(this).data('status');
-        hadStarted = $(this).data('had-started');
+
+        var requestID = $(this).data('request-id'),
+            statusID = $(this).data('status'),
+            hadStarted = $(this).data('had-started');
+
+        var data = {
+            status: statusID,
+            hadStarted: hadStarted,
+            hadDeleted: hadDeleted
+        };
+
+        if (statusID === 5) {
+            var dataArr = $('#change-request-status-form').serializeArray();
+
+            if (dataArr[1].value.length === 0) {
+                var err = {
+                    responseJSON: {
+                        errors: [
+                            {'msg': '"Коментар" -  обов\'язкове поле.'}
+                        ]
+                    }
+                };
+
+                return showErrorAlert(err);
+            }
+            else {
+                data.comment = dataArr[1].value;
+            }
+
+            requestID = dataArr[0].value;
+
+        }
 
         $.ajax({
             url: getRole(window.location.pathname) + '/change-request-status/' + requestID,
             type: 'put',
-            data: {
-                statusID: statusID,
-                hadStarted: hadStarted,
-                hadDeleted: hadDeleted
-            },
+            data: data,
             success: function (data) {
                 var idr = "#idr-request-" + data.requestID;
+
+                if (data.status == 5) {
+                    $('#request-comment').empty().append('<strong>Коментар: </strong>' + data.request[0].comment);
+                }
 
                 if (window.location.pathname.split('/')[3] === 'all' || window.location.pathname.split('/')[3] === 'hold') {
                     var newRequestStatusClasses = 'status-requests ',
@@ -328,10 +353,11 @@ function changeRequestStatus(value) {
                         ' data-status="3" title="Завершити"/>';
 
                     var requestCanceledButton = '' +
-                        '<input class="btn request-form-status status-requests-canceled request-status-button"' +
-                        ' id="requestCanceled" type="button" value="Анулювати"' +
+                        '<input class="btn request-form-status status-requests-canceled modal-window-link"' +
+                        ' data-toggle="modal" id="requestCanceled" type="button" value="Анулювати"' +
                         ' data-request-id="' + data.requestID + '"' +
-                        ' data-status="5" title="Анулювати"/>';
+                        ' data-request-comment="' + data.request[0].comment + '"' +
+                        ' title="Анулювати" data-target="#setRequestStatusCanceledModal"/>';
 
                     var give_out = '';
                     if (data.request[0].giveOut || data.request[0].status !== 3 || !data.request[0].payed) {
@@ -399,6 +425,7 @@ function changeRequestStatus(value) {
                     changeRequestStatus(idr + ' .request-status-button');
                     setPayed(idr + ' .set_payed');
                     setGiveOut(idr + ' .set_give_out');
+                    setRequestStatusCanceled(idr + ' .status-requests-canceled');
                 } else {
                     $(idr).remove();
                 }
@@ -473,4 +500,13 @@ function setGiveOut(value) {
             }
         })
     })
+}
+
+setRequestStatusCanceled('.status-requests-canceled');
+
+function setRequestStatusCanceled(value) {
+    $(value).on('click', function () {
+        $('#change-request-status-id').val($(this).data('request-id'));
+        $('#change-request-status-comment').val($(this).data('request-comment'));
+    });
 }
