@@ -369,6 +369,20 @@ thead {
     border-radius: 4px !important;
 }
 
+#change-status-cancel-task {
+    background-color: #888;
+    color: white;
+    border: 1px solid #666;
+}
+#change-status-cancel-task:hover {
+    color: white;
+    background-color: #777;
+}
+.buttons-update-task-modal {
+    margin-right: 2%;
+    width: 32%;
+}
+
 /* ALERTS */
 .alerts_block {
     position: fixed;

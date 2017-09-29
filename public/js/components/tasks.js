@@ -46,6 +46,10 @@ $(document).ready(function () {
         $('#update-form-task-status').val(5);
     });
 
+    $('#change-status-done-task').on('click', function () {
+        $('#update-form-task-status').val(3);
+    });
+
     $('.create-assign-task-button').on('click', function () {
         $('.create-assign-task-button').addClass('hidden');
         $('.create-assign-task-select').removeClass("hidden");
@@ -221,6 +225,7 @@ $(document).ready(function () {
 
                 var idx = "#idx-task-" + data.task.id;
                 var idr = "#idr-cost-" + data.requestID;
+                var idrr = "#idr-request-" + data.requestID;
 
                 $(idx).empty();
                 $(idr).empty();
@@ -358,6 +363,71 @@ $(document).ready(function () {
 
                 $(idx).append(newTask + newTask1 + newTask2);
                 $(idr).append(newCost);
+
+                if(data.isDone) { //if REQUEST IS DONE
+                    console.log('ok');
+                    console.log(data);
+
+                    var newRequestStatusClasses = 'status-requests ',
+                        newRequestStatusText;
+
+                    var requestProcessingButton = '' +
+                        '<input class="btn btn-primary request-form-status request-status-button"' +
+                        ' id="requestProcessing" type="button" value="Доопрацювати"' +
+                        ' data-request-id="' + data.requestID + '"' +
+                        ' data-status="2" title="Доопрацювати"/>';
+
+                    var requestCanceledButton = '' +
+                        '<input class="btn request-form-status status-requests-canceled request-status-button"' +
+                        ' id="requestCanceled" type="button" value="Анулювати"' +
+                        ' data-request-id="' + data.requestID + '"' +
+                        ' data-status="5" title="Анулювати"/>';
+
+                    var give_out = '';
+
+                    var requestPayedButton = '',
+                        requestDontPayedButton = '',
+                        requestGiveOutButton = '' +
+                            '<input class="btn btn-info request-form-status set_give_out ' + give_out + '"' +
+                            ' type="button" value="Видати"' +
+                            ' data-request-id="' + data.requestID + '"' +
+                            ' data-give-out="true" title="Видати"/>';
+
+
+                    if (getRole(window.location.pathname) === '/admin') {
+                        var set_payed_true = '',
+                            set_payed_false = '';
+
+                        if (data.request[0].payed) {
+                            set_payed_true = 'hide';
+                        } else {
+                            set_payed_false = 'hide';
+                        }
+
+                        requestPayedButton = '' +
+                            '<input class="btn btn-warning set_payed_true set_payed ' + set_payed_true + '"' +
+                            ' id="requestCanceled" type="button" value="Розрахувати"' +
+                            ' data-request-id="' + data.requestID + '"' +
+                            ' data-payed="true" title="Розрахувати"/>';
+
+                        requestDontPayedButton = '' +
+                            '<input class="btn btn-danger set_payed_false set_payed ' + set_payed_false + '"' +
+                            ' id="requestCanceled" type="button" value="Відмін. розрах."' +
+                            ' data-request-id="' + data.requestID + '"' +
+                            ' data-payed="false" style="padding: 6px;" title="Відмінити розрахунок"/>';
+                    }
+
+                    newRequestStatusClasses += 'status-bgc-done';
+                    newRequestStatusText = '<strong>Замовлення виконано</strong>';
+                    newRequestButtons = requestProcessingButton + requestCanceledButton + requestGiveOutButton + requestPayedButton + requestDontPayedButton;
+
+                    $(idrr + ' .status-requests').removeClass().addClass(newRequestStatusClasses).empty().append(newRequestStatusText);
+                    $(idrr + ' .requests-status-form').empty().append(newRequestButtons);
+
+                    changeRequestStatus(idrr + ' .request-status-button');
+                    setPayed(idrr + ' .set_payed');
+                    setGiveOut(idrr + ' .set_give_out');
+                }
 
                 deleteTaskOnClick('#idx-task-' + data.task.id + ' .delete-task');
                 clearModalAddTask();

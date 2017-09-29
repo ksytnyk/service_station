@@ -560,12 +560,46 @@ router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
                                     Task
                                         .getTaskById(req.body.id)
                                         .then(task => {
-                                            res.status(200).send({
-                                                request: request,
-                                                task: task,
-                                                requestID: req.body.requestID,
-                                                newCost: newCost
-                                            })
+                                            Task
+                                                .getAllTasksStatusOfRequest(req.body.requestID)
+                                                .then(allTasks => {
+                                                    var condition = false;
+                                                    var counter = 1;
+                                                    for (var key in allTasks) {
+                                                        if (allTasks[key].dataValues.status !== 3) {
+                                                            break;
+                                                        }
+                                                        if(counter === allTasks.length) {
+                                                            condition = true;
+                                                            Request
+                                                                .changeStatus(req.body.requestID, status.DONE)
+                                                                .then((isDone) => {
+                                                                        res.status(200).send({
+                                                                            isDone: isDone,
+                                                                            request: request,
+                                                                            task: task,
+                                                                            requestID: req.body.requestID,
+                                                                            newCost: newCost
+                                                                        })
+                                                                })
+                                                                .catch(errors => {
+                                                                    console.warn(errors);
+                                                                    res.status(400).send({errors: errors});
+                                                                });
+                                                        }
+                                                        counter++;
+                                                    }
+                                                    if(!condition) {
+                                                        console.log(request);
+                                                        res.status(200).send({
+                                                            request: request,
+                                                            task: task,
+                                                            requestID: req.body.requestID,
+                                                            newCost: newCost
+                                                        })
+                                                    }
+                                                })
+
                                                 .catch(errors => {
                                                     console.warn(errors);
                                                     res.status(400).send({errors: errors});

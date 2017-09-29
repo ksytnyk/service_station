@@ -68,10 +68,12 @@ router.put('/set-task-status/:id', (req, res) => {
                     Task
                         .getAllTasksStatusOfRequest(task.requestID)
                         .then(tasks => {
+                            var counter = 1;
                             for (var key in tasks) {
                                if (tasks[key].dataValues.status !== 3) {
                                    break;
-                               } else {
+                               }
+                               if(counter === tasks.length) {
                                    Request
                                        .changeStatus(task.requestID, status.DONE)
                                        .then(() => {})
@@ -80,6 +82,7 @@ router.put('/set-task-status/:id', (req, res) => {
                                            res.status(400).send({errors: errors});
                                        });
                                }
+                               counter++;
                             }
 
                             res.status(200).send();

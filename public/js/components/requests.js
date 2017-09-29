@@ -202,196 +202,15 @@ $(document).ready(function () {
 
     changeRequestStatus('.request-status-button');
 
-    function changeRequestStatus(value) {
-        $(value).on('click', function () {
-            if(window.location.pathname.includes('trash')){
-                var hadDeleted = true;
-            }
-            var requestID = $(this).data('request-id');
-            statusID = $(this).data('status');
-            hadStarted = $(this).data('had-started');
 
-            $.ajax({
-                url: getRole(window.location.pathname) + '/change-request-status/' + requestID,
-                type: 'put',
-                data: {
-                    statusID: statusID,
-                    hadStarted: hadStarted,
-                    hadDeleted: hadDeleted
-                },
-                success: function (data) {
-                    var idr = "#idr-request-" + data.requestID;
-
-                    if (window.location.pathname.split('/')[3] === 'all' || window.location.pathname.split('/')[3] === 'hold') {
-                        var newRequestStatusClasses = 'status-requests ',
-                            newRequestStatusText,
-                            newRequestButtons = '';
-
-                        var requestProcessingButton = '' +
-                            '<input class="btn btn-primary request-form-status request-status-button"' +
-                            ' id="requestProcessing" type="button" value="Доопрацювати"' +
-                            ' data-request-id="' + data.requestID + '"' +
-                            ' data-status="2" title="Доопрацювати"/>';
-
-                        var requestDoneButton = '' +
-                            '<input class="btn btn-success request-form-status request-status-button"' +
-                            ' id="requestDone" type="button" value="Завершити"' +
-                            ' data-request-id="' + data.requestID + '"' +
-                            ' data-status="3" title="Завершити"/>';
-
-                        var requestCanceledButton = '' +
-                            '<input class="btn request-form-status status-requests-canceled request-status-button"' +
-                            ' id="requestCanceled" type="button" value="Анулювати"' +
-                            ' data-request-id="' + data.requestID + '"' +
-                            ' data-status="5" title="Анулювати"/>';
-
-                        var give_out = '';
-                        if (data.request[0].giveOut || data.request[0].status !== 3 || !data.request[0].payed) {
-                            give_out = 'hide';
-                        }
-
-                        var requestPayedButton = '',
-                            requestDontPayedButton = '',
-                            requestGiveOutButton = '' +
-                                '<input class="btn btn-info request-form-status set_give_out ' + give_out + '"' +
-                                ' type="button" value="Видати"' +
-                                ' data-request-id="' + data.requestID + '"' +
-                                ' data-give-out="true" title="Видати"/>';
-
-
-                        if (getRole(window.location.pathname) === '/admin') {
-                            var set_payed_true = '',
-                                set_payed_false = '';
-
-                            if (data.request[0].payed) {
-                                set_payed_true = 'hide';
-                            } else {
-                                set_payed_false = 'hide';
-                            }
-
-                            requestPayedButton = '' +
-                                '<input class="btn btn-warning set_payed_true set_payed ' + set_payed_true + '"' +
-                                ' id="requestCanceled" type="button" value="Розрахувати"' +
-                                ' data-request-id="' + data.requestID + '"' +
-                                ' data-payed="true" title="Розрахувати"/>';
-
-                            requestDontPayedButton = '' +
-                                '<input class="btn btn-danger set_payed_false set_payed ' + set_payed_false + '"' +
-                                ' id="requestCanceled" type="button" value="Відмін. розрах."' +
-                                ' data-request-id="' + data.requestID + '"' +
-                                ' data-payed="false" style="padding: 6px;" title="Відмінити розрахунок"/>';
-                        }
-
-                        switch (data.status) {
-                            case "2":
-                                newRequestStatusClasses += 'status-bgc-processing';
-                                newRequestStatusText = '<strong>Замовлення виконується</strong>';
-                                newRequestButtons = requestDoneButton + requestCanceledButton + requestGiveOutButton + requestPayedButton + requestDontPayedButton;
-                                break;
-                            case "3":
-                                newRequestStatusClasses += 'status-bgc-done';
-                                newRequestStatusText = '<strong>Замовлення виконано</strong>';
-                                newRequestButtons = requestProcessingButton + requestCanceledButton + requestGiveOutButton + requestPayedButton + requestDontPayedButton;
-                                break;
-                            case "5":
-                                newRequestStatusClasses += 'status-bgc-canceled';
-                                newRequestStatusText = '<strong>Замовлення анульовано</strong>';
-                                newRequestButtons = requestProcessingButton + requestGiveOutButton + requestPayedButton + requestDontPayedButton;
-                                break;
-                        }
-
-                        if (data.status === '5') {
-                            $(idr + ' td').addClass('disable-task');
-                        } else {
-                            $(idr + ' td').removeClass('disable-task');
-                        }
-                        $(idr + ' .status-requests').removeClass().addClass(newRequestStatusClasses).empty().append(newRequestStatusText);
-                        $(idr + ' .requests-status-form').empty().append(newRequestButtons);
-
-                        changeRequestStatus(idr + ' .request-status-button');
-                        setPayed(idr + ' .set_payed');
-                        setGiveOut(idr + ' .set_give_out');
-                    } else {
-                        $(idr).remove();
-                    }
-                },
-                error: function (err) {
-                    showErrorAlert(err);
-                }
-            })
-        })
-    }
 
     setPayed('.set_payed');
 
-    function setPayed(value) {
-        $(value).on('click', function () {
-            var requestID = $(this).data('request-id'),
-                payed = $(this).data('payed');
 
-            $.ajax({
-                url: getRole(window.location.pathname) + '/set-payed/' + requestID,
-                type: 'put',
-                data: {
-                    payed: payed
-                },
-                success: function (data) {
-                    var idr = "#idr-request-" + requestID,
-                        idc = "#idr-cost-" + requestID;
-
-                    if (window.location.pathname.split('/')[3] === 'all' || window.location.pathname.split('/')[3] === 'hold') {
-                        if (payed) {
-                            $(idr + ' .request_payed').addClass('request_payed_true');
-                            $(idc + ' span').empty().append('(Розраховано)');
-                            $(idr + ' .set_payed_true').addClass('hide');
-                            $(idr + ' .set_payed_false').removeClass('hide');
-                            if (data.request[0].status === 3) {
-                                $(idr + ' .set_give_out').removeClass('hide');
-                            }
-                        } else {
-                            $(idr + ' .request_payed').removeClass('request_payed_true');
-                            $(idc + ' span').empty().append('(Не розраховано)');
-                            $(idr + ' .set_payed_false').addClass('hide');
-                            $(idr + ' .set_payed_true').removeClass('hide');
-                            $(idr + ' .set_give_out').addClass('hide');
-                        }
-                    } else {
-                        $(idr).remove();
-                    }
-
-                },
-                error: function (err) {
-                    showErrorAlert(err);
-                }
-            })
-        })
-    }
 
     setGiveOut('.set_give_out');
 
-    function setGiveOut(value) {
-        $(value).on('click', function () {
-            var requestID = $(this).data('request-id'),
-                giveOut = $(this).data('give-out');
 
-            $.ajax({
-                url: getRole(window.location.pathname) + '/set-payed/' + requestID,
-                type: 'put',
-                data: {
-                    giveOut: giveOut
-                },
-                success: function () {
-                    var idr = "#idr-request-" + requestID;
-
-                    $(idr + ' .status-requests').empty().append('<strong>Замовлення видано</strong>').removeClass().addClass('status-requests status-bgc-give-out');
-                    $(idr + ' .requests-status-form').remove();
-                },
-                error: function (err) {
-                    showErrorAlert(err);
-                }
-            })
-        })
-    }
 
     var addNewUser;
     var isFirstUpdateRequestOpen = true;
@@ -470,3 +289,188 @@ $(document).ready(function () {
     });
 
 });
+
+function changeRequestStatus(value) {
+    $(value).on('click', function () {
+        if(window.location.pathname.includes('trash')){
+            var hadDeleted = true;
+        }
+        var requestID = $(this).data('request-id');
+        statusID = $(this).data('status');
+        hadStarted = $(this).data('had-started');
+
+        $.ajax({
+            url: getRole(window.location.pathname) + '/change-request-status/' + requestID,
+            type: 'put',
+            data: {
+                statusID: statusID,
+                hadStarted: hadStarted,
+                hadDeleted: hadDeleted
+            },
+            success: function (data) {
+                var idr = "#idr-request-" + data.requestID;
+
+                if (window.location.pathname.split('/')[3] === 'all' || window.location.pathname.split('/')[3] === 'hold') {
+                    var newRequestStatusClasses = 'status-requests ',
+                        newRequestStatusText,
+                        newRequestButtons = '';
+
+                    var requestProcessingButton = '' +
+                        '<input class="btn btn-primary request-form-status request-status-button"' +
+                        ' id="requestProcessing" type="button" value="Доопрацювати"' +
+                        ' data-request-id="' + data.requestID + '"' +
+                        ' data-status="2" title="Доопрацювати"/>';
+
+                    var requestDoneButton = '' +
+                        '<input class="btn btn-success request-form-status request-status-button"' +
+                        ' id="requestDone" type="button" value="Завершити"' +
+                        ' data-request-id="' + data.requestID + '"' +
+                        ' data-status="3" title="Завершити"/>';
+
+                    var requestCanceledButton = '' +
+                        '<input class="btn request-form-status status-requests-canceled request-status-button"' +
+                        ' id="requestCanceled" type="button" value="Анулювати"' +
+                        ' data-request-id="' + data.requestID + '"' +
+                        ' data-status="5" title="Анулювати"/>';
+
+                    var give_out = '';
+                    if (data.request[0].giveOut || data.request[0].status !== 3 || !data.request[0].payed) {
+                        give_out = 'hide';
+                    }
+
+                    var requestPayedButton = '',
+                        requestDontPayedButton = '',
+                        requestGiveOutButton = '' +
+                            '<input class="btn btn-info request-form-status set_give_out ' + give_out + '"' +
+                            ' type="button" value="Видати"' +
+                            ' data-request-id="' + data.requestID + '"' +
+                            ' data-give-out="true" title="Видати"/>';
+
+
+                    if (getRole(window.location.pathname) === '/admin') {
+                        var set_payed_true = '',
+                            set_payed_false = '';
+
+                        if (data.request[0].payed) {
+                            set_payed_true = 'hide';
+                        } else {
+                            set_payed_false = 'hide';
+                        }
+
+                        requestPayedButton = '' +
+                            '<input class="btn btn-warning set_payed_true set_payed ' + set_payed_true + '"' +
+                            ' id="requestCanceled" type="button" value="Розрахувати"' +
+                            ' data-request-id="' + data.requestID + '"' +
+                            ' data-payed="true" title="Розрахувати"/>';
+
+                        requestDontPayedButton = '' +
+                            '<input class="btn btn-danger set_payed_false set_payed ' + set_payed_false + '"' +
+                            ' id="requestCanceled" type="button" value="Відмін. розрах."' +
+                            ' data-request-id="' + data.requestID + '"' +
+                            ' data-payed="false" style="padding: 6px;" title="Відмінити розрахунок"/>';
+                    }
+
+                    switch (data.status) {
+                        case "2":
+                            newRequestStatusClasses += 'status-bgc-processing';
+                            newRequestStatusText = '<strong>Замовлення виконується</strong>';
+                            newRequestButtons = requestDoneButton + requestCanceledButton + requestGiveOutButton + requestPayedButton + requestDontPayedButton;
+                            break;
+                        case "3":
+                            newRequestStatusClasses += 'status-bgc-done';
+                            newRequestStatusText = '<strong>Замовлення виконано</strong>';
+                            newRequestButtons = requestProcessingButton + requestCanceledButton + requestGiveOutButton + requestPayedButton + requestDontPayedButton;
+                            break;
+                        case "5":
+                            newRequestStatusClasses += 'status-bgc-canceled';
+                            newRequestStatusText = '<strong>Замовлення анульовано</strong>';
+                            newRequestButtons = requestProcessingButton + requestGiveOutButton + requestPayedButton + requestDontPayedButton;
+                            break;
+                    }
+
+                    if (data.status === '5') {
+                        $(idr + ' td').addClass('disable-task');
+                    } else {
+                        $(idr + ' td').removeClass('disable-task');
+                    }
+                    $(idr + ' .status-requests').removeClass().addClass(newRequestStatusClasses).empty().append(newRequestStatusText);
+                    $(idr + ' .requests-status-form').empty().append(newRequestButtons);
+
+                    changeRequestStatus(idr + ' .request-status-button');
+                    setPayed(idr + ' .set_payed');
+                    setGiveOut(idr + ' .set_give_out');
+                } else {
+                    $(idr).remove();
+                }
+            },
+            error: function (err) {
+                showErrorAlert(err);
+            }
+        })
+    })
+}
+function setPayed(value) {
+    $(value).on('click', function () {
+        var requestID = $(this).data('request-id'),
+            payed = $(this).data('payed');
+
+        $.ajax({
+            url: getRole(window.location.pathname) + '/set-payed/' + requestID,
+            type: 'put',
+            data: {
+                payed: payed
+            },
+            success: function (data) {
+                var idr = "#idr-request-" + requestID,
+                    idc = "#idr-cost-" + requestID;
+
+                if (window.location.pathname.split('/')[3] === 'all' || window.location.pathname.split('/')[3] === 'hold') {
+                    if (payed) {
+                        $(idr + ' .request_payed').addClass('request_payed_true');
+                        $(idc + ' span').empty().append('(Розраховано)');
+                        $(idr + ' .set_payed_true').addClass('hide');
+                        $(idr + ' .set_payed_false').removeClass('hide');
+                        if (data.request[0].status === 3) {
+                            $(idr + ' .set_give_out').removeClass('hide');
+                        }
+                    } else {
+                        $(idr + ' .request_payed').removeClass('request_payed_true');
+                        $(idc + ' span').empty().append('(Не розраховано)');
+                        $(idr + ' .set_payed_false').addClass('hide');
+                        $(idr + ' .set_payed_true').removeClass('hide');
+                        $(idr + ' .set_give_out').addClass('hide');
+                    }
+                } else {
+                    $(idr).remove();
+                }
+
+            },
+            error: function (err) {
+                showErrorAlert(err);
+            }
+        })
+    })
+}
+function setGiveOut(value) {
+    $(value).on('click', function () {
+        var requestID = $(this).data('request-id'),
+            giveOut = $(this).data('give-out');
+
+        $.ajax({
+            url: getRole(window.location.pathname) + '/set-payed/' + requestID,
+            type: 'put',
+            data: {
+                giveOut: giveOut
+            },
+            success: function () {
+                var idr = "#idr-request-" + requestID;
+
+                $(idr + ' .status-requests').empty().append('<strong>Замовлення видано</strong>').removeClass().addClass('status-requests status-bgc-give-out');
+                $(idr + ' .requests-status-form').remove();
+            },
+            error: function (err) {
+                showErrorAlert(err);
+            }
+        })
+    })
+}
