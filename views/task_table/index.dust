@@ -41,8 +41,8 @@
             {/eq}
             <p><strong>Назва задачі: </strong> {name}</p>
             {@lt key=typeUser value=3}
-                <p><strong>Виконавець: </strong>{planedExecutor.dataValues.userSurname} {planedExecutor.dataValues.userName}</p>
-                <p><strong>Доручити задачу: </strong>{assignedUser.dataValues.userSurname} {assignedUser.dataValues.userName}</p>
+                <p class="executor-name" exec-name="{planedExecutor.dataValues.userSurname} {planedExecutor.dataValues.userName}"><strong>Виконавець: </strong>{planedExecutor.dataValues.userSurname} {planedExecutor.dataValues.userName}</p>
+                <p class="assign-user-name" assign-name="{assignedUser.dataValues.userSurname} {assignedUser.dataValues.userName}"><strong>Доручити задачу: </strong>{assignedUser.dataValues.userSurname} {assignedUser.dataValues.userName}</p>
             {/lt}
             <p><strong>Вартість: </strong>{cost} грн</p>
             <p><strong>Час виконання: </strong>{estimationTime} год</p>

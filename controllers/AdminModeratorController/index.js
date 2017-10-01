@@ -591,7 +591,6 @@ router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
                                                         counter++;
                                                     }
                                                     if(!condition) {
-                                                        console.log(request);
                                                         res.status(200).send({
                                                             request: request,
                                                             task: task,
@@ -656,6 +655,28 @@ router.delete('/delete-task/:id', (req, res) => {
                             console.warn(errors);
                             res.status(400).send({errors: errors});
                         });
+                })
+                .catch(errors => {
+                    console.warn(errors);
+                    res.status(400).send({errors: errors});
+                });
+        })
+        .catch(errors => {
+            console.warn(errors);
+            res.status(400).send({errors: errors});
+        });
+});
+
+router.put('/cancel-task/:id', (req, res) => {
+    Task
+        .updateTask(req.params.id, req.body)
+        .then(() => {
+            Task
+                .getTaskById(req.params.id)
+                .then(task => {
+                    res.status(200).send({
+                        task: task
+                    })
                 })
                 .catch(errors => {
                     console.warn(errors);

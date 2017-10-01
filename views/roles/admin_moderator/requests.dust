@@ -250,5 +250,6 @@
 {>"modal_windows/delete_task"/}
 {>"modal_windows/delete_request"/}
 {>"modal_windows/set_request_status_canceled"/}
+{>"modal_windows/set_task_status_canceled"/}
 
 {/body}

@@ -129,16 +129,20 @@
                         {@lt key=typeUser value=3}
                         <div class='form-group col-xs-6 col-xs-offset-6'>
                         <input type="hidden" name="status" id="update-form-task-status">
-                        <button class=" buttons-update-task-modal btn btn-success task-form-status task-update-button"
+                        <button class="buttons-update-task-modal btn btn-success task-form-status task-update-button"
                                 id="change-status-done-task" data-dismiss="modal">
                             Завершити задачу
                         </button>
-                        <button type="button" class=" buttons-update-task-modal btn btn-warning task-update-button agree"
+                        <button class="buttons-update-task-modal btn btn-warning task-update-button agree"
                                 id="change-status-update-task" data-dismiss="modal">
                             Оновити задачу
                         </button>
-                        <button type="button" class="buttons-update-task-modal btn btn-danger pull-right task-update-button"
-                                id="change-status-cancel-task" data-dismiss="modal" style="margin-right:0">
+                        <button class="buttons-update-task-modal btn btn-danger pull-right"
+                                id="change-status-cancel-task"
+                                data-dismiss="modal"
+                                data-toggle="modal"
+                                data-target="#setTaskStatusCanceledModal"
+                                style="margin-right:0">
                             Анулювати задачу
                         </button>
                         {/lt}

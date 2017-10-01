@@ -42,9 +42,9 @@ $(document).ready(function () {
         $('#update-form-task-status').val(1);
     });
 
-    $('#change-status-cancel-task').on('click', function () {
-        $('#update-form-task-status').val(5);
-    });
+    // $('#change-status-cancel-task').on('click', function () {
+    //     $('#update-form-task-status').val(5);
+    // });
 
     $('#change-status-done-task').on('click', function () {
         $('#update-form-task-status').val(3);
@@ -603,6 +603,114 @@ $(document).ready(function () {
             })
         })
     }
+
+    $('#change-status-cancel-task').on('click', function () {
+        $('#change-task-status-id').val($('#update-form-task-id').val());
+        $('#change-task-status-comment').val($('#update-form-task-comment').val());
+    });
+
+    $('.task-status-canceled-button').on('click', function () {
+
+        var idx = "#idx-task-" + $('#change-task-status-id').val();
+        var dataArr = {
+            status: 5,
+            comment: $('#change-task-status-comment').val()
+        };
+
+        $.ajax({
+            url: getRole(window.location.pathname) + '/cancel-task/' + $('#change-task-status-id').val(),
+            type: 'put',
+            data: dataArr,
+            success: function (data) {
+
+                showSuccessAlert('Анулювання задачі пройшло успішно.');
+
+                var newTask, newTask1 = '', newTask2;
+                var executorNameSurname = $(idx + ' .executor-name').attr('exec-name');
+                var assignedNameSurname = $(idx + ' .assign-user-name').attr('assign-name');
+
+                $(idx).empty();
+
+                newTask = '' +
+                    '<th class="tac bb" style="background-color:#fff;">' +
+                    data.task.id +
+                    '</th>' +
+                    '<td class="vat bb' + disableFields(data.task.status) + '" style="position: relative; padding-top: 40px;">' +
+                    changeStatus(data.task.status) +
+                    '<p><strong>Назва задачі: </strong>' + data.task.name + '</p>' +
+                    '<p class="executor_name_surname"><strong>Виконавець: </strong>' + executorNameSurname + '</p> ' +
+                    '<p class="assigned_name_surname"><strong>Доручити задачу: </strong>' + assignedNameSurname + '</p>' +
+                    '<p><strong>Вартість: </strong>' + data.task.cost + ' грн</p>' +
+                    '<p><strong>Час виконання: </strong>' + data.task.estimationTime + ' год</p>' +
+                    '<p><strong>Час початку: </strong>' + formatDate(data.task.startTime) + '</p> ' +
+                    '<p><strong>Кінцевий час: </strong>' + formatDate(data.task.endTime) + '</p> ' +
+                    '</td>' +
+                    '<td class="vat bb' + disableFields(data.task.status) + '"> ' +
+                    '<p><strong>Опис задачі: </strong>' + data.task.description + '</p> ' +
+                    '<p class="bt"><strong>Запчастини: </strong>' + data.task.parts + '</p> ' +
+                    '<p><strong>Запчастини клієнта: </strong>' + data.task.customerParts + '</p> ' +
+                    '<p  id="need-buy-parts"><strong>Відсутні запчастини: </strong>' + data.task.needBuyParts + '</p> ' +
+                    '<p class="bt" id="comment"><strong>Коментар: </strong>' + data.task.comment + '</p> ' +
+                    '</td>';
+
+                newTask2 = '' +
+                    '<td class="tac bb"> ' +
+                    '<a class="update-task modal-window-link"' +
+                    ' title="Редагувати задачу"' +
+                    ' data-toggle="modal"' +
+                    ' data-id="' + data.task.id + '"' +
+                    ' data-request-id="' + data.task.requestID + '"' +
+                    ' data-task-description="' + data.task.description + '"' +
+                    ' data-task-name="' + data.task.name + '"' +
+                    ' data-task-type-id="' + data.task.typeID + '"' +
+                    ' data-task-assigned-user="' + data.task.assignedUserID + '"' +
+                    ' data-task-planed-executor="' + data.task.planedExecutorID + '"' +
+                    ' data-task-cost="' + data.task.cost + '"' +
+                    ' data-task-estimation-time="' + data.task.estimationTime + '"' +
+                    ' data-task-start-time="' + formatDate(data.task.startTime) + '"' +
+                    ' data-task-end-time="' + formatDate(data.task.endTime) + '"' +
+                    ' data-task-parts="' + data.task.parts + '"' +
+                    ' data-task-customer-parts="' + data.task.customerParts + '"' +
+                    ' data-task-need-buy-parts="' + data.task.needBuyParts + '"' +
+                    ' data-task-comment="' + data.task.comment + '"' +
+                    ' data-target="#updateTaskFormModal"' +
+                    ' style=""> ' +
+                    '<span class="glyphicon glyphicon-pencil" aria-hidden="true"/> ' +
+                    '</a> ';
+
+                if (getRole(window.location.pathname) === "/admin") {
+                    newTask2 += ''+
+                        '<a href="#"' +
+                        ' class="delete-task modal-window-link"' +
+                        ' title="Видалити задачу" data-toggle="modal"' +
+                        ' data-current="' + getIdRole(window.location.pathname) + '" data-id="' + data.task.id + '"' +
+                        ' data-request-id="' + data.task.requestID + '"' +
+                        ' data-task-old-cost="' + data.task.cost + '"' +
+                        ' data-target="#deleteTaskFormModal"' +
+                        ' style=""> ' +
+                        '<span class="glyphicon glyphicon-remove" aria-hidden="true"/> ' +
+                        '</a>' +
+                        '</td>';
+                } else {
+                    newTask2 += ''+
+                        '</a>' +
+                        '</td>';
+                }
+
+                $(idx).append(newTask + newTask1 + newTask2);
+
+                deleteTaskOnClick('#idx-task-' + data.task.id + ' .delete-task');
+                clearModalAddTask();
+                updateTaskOnClick('#idx-task-' + data.task.id + ' .update-task');
+                changeTaskStatus(idx + ' .task-status-button');
+                setTaskStatusHold(idx + ' .set-task-status-hold');
+            },
+            error: function (err) {
+                $('.in .close').click();
+                showErrorAlert(err);
+            }
+        })
+    })
 });
 
 function clearModalAddTask() {
