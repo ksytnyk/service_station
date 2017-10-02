@@ -552,6 +552,8 @@ $(document).ready(function () {
                 type: 'put',
                 data: data,
                 success: function () {
+                    $('.in .close').click();
+
                     var idx = "#idx-task-" + taskID,
                         newTaskStatusClasses = 'status-task ',
                         newTaskStatusText,

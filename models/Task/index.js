@@ -313,6 +313,39 @@ Task.updateTask = function (taskID, params) {
     });
 };
 
+Task.updateAllTasksStatusOfRequest = function (tasksArray, status) {
+
+    var params;
+    if (status.status === "2") {
+        params = {
+            status: "1"
+        }
+    } else {
+        params = status;
+    }
+
+    return new Promise((resolve, reject) => {
+        tasksArray.forEach(item => {
+            Task
+                .update(
+                    params,
+                    {
+                        where: {
+                            id: item.id
+                        }
+                    }
+                )
+                .then()
+                .catch(err => {
+                    console.warn(err);
+                    reject(err);
+                });
+        });
+
+        resolve(200);
+    });
+};
+
 Task.deleteTask = function (taskID) {
     return new Promise((resolve, reject) => {
         Task

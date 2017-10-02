@@ -337,7 +337,9 @@ function changeRequestStatus(value) {
 
                 if (window.location.pathname.split('/')[3] === 'all' || window.location.pathname.split('/')[3] === 'hold') {
                     var newRequestStatusClasses = 'status-requests ',
+                        newTaskStatusClasses = 'status-task ',
                         newRequestStatusText,
+                        newTaskStatusText,
                         newRequestButtons = '';
 
                     var requestProcessingButton = '' +
@@ -397,20 +399,28 @@ function changeRequestStatus(value) {
                             ' data-payed="false" style="padding: 6px;" title="Відмінити розрахунок"/>';
                     }
 
+                    console.log( data.status )
+
                     switch (data.status) {
                         case "2":
                             newRequestStatusClasses += 'status-bgc-processing';
                             newRequestStatusText = '<strong>Замовлення виконується</strong>';
+                            newTaskStatusClasses += 'status-bgc-pending';
+                            newTaskStatusText = '<strong>Задача в очікуванні</strong>';
                             newRequestButtons = requestDoneButton + requestCanceledButton + requestGiveOutButton + requestPayedButton + requestDontPayedButton;
                             break;
                         case "3":
                             newRequestStatusClasses += 'status-bgc-done';
                             newRequestStatusText = '<strong>Замовлення виконано</strong>';
+                            newTaskStatusClasses += 'status-bgc-done';
+                            newTaskStatusText = '<strong>Задачу виконано</strong>';
                             newRequestButtons = requestProcessingButton + requestCanceledButton + requestGiveOutButton + requestPayedButton + requestDontPayedButton;
                             break;
                         case "5":
                             newRequestStatusClasses += 'status-bgc-canceled';
                             newRequestStatusText = '<strong>Замовлення анульовано</strong>';
+                            newTaskStatusClasses += 'status-bgc-canceled';
+                            newTaskStatusText = '<strong>Задачу анульовано</strong>';
                             newRequestButtons = requestProcessingButton + requestGiveOutButton + requestPayedButton + requestDontPayedButton;
                             break;
                     }
@@ -421,6 +431,7 @@ function changeRequestStatus(value) {
                         $(idr + ' td').removeClass('disable-task');
                     }
                     $(idr + ' .status-requests').removeClass().addClass(newRequestStatusClasses).empty().append(newRequestStatusText);
+                    $(idr + ' .status-task').removeClass().addClass(newTaskStatusClasses).empty().append(newTaskStatusText);
                     $(idr + ' .requests-status-form').empty().append(newRequestButtons);
 
                     changeRequestStatus(idr + ' .request-status-button');

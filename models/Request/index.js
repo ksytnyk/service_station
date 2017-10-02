@@ -110,13 +110,11 @@ Request.getAllRequests = function (findBy) {
     });
 };
 
-Request.getAllRequestsByCustomerId = function (customerID) {
+Request.getAllRequestsByCustomerId = function (findBy) {
     return new Promise((resolve, reject) => {
         Request
             .findAll({
-                where: {
-                    customerID: customerID
-                },
+                where: findBy,
                 include: {
                     model: User
                 }

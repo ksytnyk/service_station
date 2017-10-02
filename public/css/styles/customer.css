@@ -32,3 +32,10 @@
     width: 475px;
     box-sizing: border-box;
 }
+.customer .panel > div:first-child .row:first-child div {
+    width: 25%;
+    padding-right: 4px;
+}
+.customer .panel > div:first-child .row:first-child div .dataTables_filter {
+    width: 100%;
+}

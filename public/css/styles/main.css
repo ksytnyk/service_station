@@ -181,6 +181,12 @@ span[disabled]{
     color: #fff;
     background-color: #666 !important;
 }
+.nav-pills {
+    padding-right: 0;
+}
+.nav-pills > li + li {
+    margin-left: 0;
+}
 
 /* MODAL WINDOWS */
 .width {
@@ -245,6 +251,15 @@ thead {
     vertical-align: middle;
     border-top: 1px solid #ccc;
     border-right: 1px solid #ccc;
+}
+.table > tbody > tr > th {
+    vertical-align: top;
+}
+.table > tbody > tr > th a {
+    margin-top: 140px;
+}
+.table > tbody > tr > th a:last-child {
+    margin-top: 0;
 }
 .table tr td:last-child,
 .table tr th:last-child {

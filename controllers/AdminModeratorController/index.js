@@ -352,43 +352,61 @@ router.put('/change-request-status/:id', (req, res) => {
     Request
         .changeStatus(req.params.id, req.body)
         .then(() => {
-            Request
-                .getRequestById(req.params.id)
-                .then(request => {
-                    if (+req.body.statusID === status.DONE) {
+        Task
+            .getAllTasksOfRequest(req.params.id)
+            .then(tasks => {
+
+                Task
+                    .updateAllTasksStatusOfRequest(tasks, req.body)
+                    .then(() => {
+
                         Request
                             .getRequestById(req.params.id)
-                            .then((result) => {
-                                nodemailer('done-request', result[0].user.dataValues);
+                            .then(request => {
+                                if (+req.body.statusID === status.DONE) {
+                                    Request
+                                        .getRequestById(req.params.id)
+                                        .then((result) => {
+                                            nodemailer('done-request', result[0].user.dataValues);
+                                        })
+                                        .catch(error => {
+                                            console.warn(error);
+                                        });
+                                }
+
+                                if (req.body.hadDeleted){
+                                    var params = {
+                                        hadDeleted: false
+                                    };
+
+                                    Request
+                                        .updateRequest(req.params.id, params)
+                                        .then()
+                                        .catch(errors => {
+                                            console.warn(errors);
+                                            res.status(400).send({errors: errors});
+                                        });
+                                }
+                                res.status(200).send({
+                                    status: req.body.status,
+                                    requestID: req.params.id,
+                                    request: request
+                                });
                             })
-                            .catch(error => {
-                                console.warn(error);
-                            });
-                    }
-
-                    if (req.body.hadDeleted){
-                        var params = {
-                            hadDeleted: false
-                        };
-
-                        Request
-                            .updateRequest(req.params.id, params)
-                            .then()
                             .catch(errors => {
                                 console.warn(errors);
                                 res.status(400).send({errors: errors});
                             });
-                    }
-                    res.status(200).send({
-                        status: req.body.status,
-                        requestID: req.params.id,
-                        request: request
+                    })
+                    .catch(errors => {
+                        console.warn(errors);
+                        res.status(400).send({errors: errors});
                     });
-                })
-                .catch(errors => {
-                    console.warn(errors);
-                    res.status(400).send({errors: errors});
-                });
+            })
+            .catch(errors => {
+                console.warn(errors);
+                res.status(400).send({errors: errors});
+            });
         })
         .catch(errors => {
             console.warn(errors);

@@ -23,10 +23,10 @@
                                   id="change-task-status-comment"></textarea>
                     </div>
                     <div class='form-group col-xs-12'>
-                        <button class="btn btn-success width task-status-button agree" data-dismiss="modal" data-status="4" id="change-status-update-task">
+                        <button class="btn btn-success width task-status-button agree" data-status="4" id="change-status-update-task">
                             Підтвердити
                         </button>
-                        <button class="btn btn-danger pull-right width" data-dismiss="modal">
+                        <button class="btn btn-danger pull-right width">
                             Закрити
                         </button>
                     </div>

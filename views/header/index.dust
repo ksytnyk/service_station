@@ -1,7 +1,7 @@
 {+header}
-<nav class="col-lg-12 white_block">
+<nav class="col-xs-12 white_block">
     <div class="container">
-        <ul class="col-lg-12 navbar nav navbar-nav navbar-inverse role{user.dataValues.idTypeUser}">
+        <ul class="col-xs-12 navbar nav navbar-nav navbar-inverse role{user.dataValues.idTypeUser}">
             {@lt key=typeUser value=3}
                 <li class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/all requests_link">
                     <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/all">Замовлення</a>

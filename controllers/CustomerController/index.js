@@ -6,9 +6,20 @@ const Task = require('../../models/Task');
 const Request = require('../../models/Request');
 const requestsFactory = require('../../helpers/requestsFactory');
 
-router.get('/', (req, res) => {
+router.get('/:status', (req, res) => {
+    var findBy = {
+        customerID: req.session.passport.user.id
+    };
+
+    if (req.params.status === 'active') {
+        findBy.giveOut = false;
+    }
+    else {
+        findBy.giveOut = true;
+    }
+
     Request
-        .getAllRequestsByCustomerId(req.session.passport.user.id)
+        .getAllRequestsByCustomerId(findBy)
         .then(requests => {
             Task
                 .getAllTasks()

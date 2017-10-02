@@ -16,7 +16,7 @@
                               id="change-request-status-comment"></textarea>
                 </div>
                 <div class='form-group col-xs-12'>
-                    <button class="btn btn-success request-status-button width agree" data-dismiss="modal" data-status="5">
+                    <button class="btn btn-success request-status-button width" data-dismiss="modal" data-status="5">
                         Підтвердити
                     </button>
                     <button class="btn btn-danger pull-right width" data-dismiss="modal">

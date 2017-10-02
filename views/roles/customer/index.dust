@@ -5,6 +5,16 @@
 {>"header/index"/}
 
 <div class="col-xs-12 customer">
+
+    <ul class="col-xs-9 nav nav-pills">
+        <li role="presentation" class="/customer/active">
+            <a href="/customer/active">Активні</a>
+        </li>
+        <li role="presentation" class="/customer/history">
+            <a href="/customer/history">Історія</a>
+        </li>
+    </ul>
+
     <div class="panel panel-default">
         <table class="table dtable">
             <thead>

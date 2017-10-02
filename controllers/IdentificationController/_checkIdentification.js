@@ -21,7 +21,7 @@ module.exports = function _checkIdentification(req, res, userTypeID) {
             break;
         }
         case roles.CUSTOMER: {
-            res.redirect('/customer');
+            res.redirect('/customer/active');
             break;
         }
         case roles.BOOKKEEPER: {
