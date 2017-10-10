@@ -19,7 +19,7 @@ $(document).ready(function () {
         .on('select2:open', function () {
             permission = false;
         })
-        .on('select2:close', function () {
+        .on('select2:close', function (event) {
             permission = true;
             event.stopPropagation();
         });
@@ -175,7 +175,16 @@ function formatDate(date) {
 }
 
 function setTimeToDate(value) {
-    value = new Date(value);
+
+    var array = value.split('.');
+
+    for (var i = 0; i < array.length; i++) {
+        array[i] = +array[i];
+    }
+
+    array[1] = array[1] - 1;
+
+    value = new Date(array[0], array[1], array[2]);
 
     var today = new Date();
     var hours = today.getHours();

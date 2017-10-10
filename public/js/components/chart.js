@@ -7,14 +7,14 @@ $(document).ready(function () {
         fromDate.setDate(toDate.getDate() - 30);
         $('#from-date-for-statistic').val(formatDate(fromDate));
         $('#to-date-for-statistic').val(formatDate(toDate));
-        setTimeout(() => {
+        setTimeout(function () {
             $('#chart-finances').click();
         }, 1);
     }
 
     var lastChart = '';
 
-    $(".datetimepickerN").on("dp.change", function() {
+    $(".datetimepickerN").on("dp.change", function () {
         $(lastChart).click();
     });
 
@@ -159,76 +159,82 @@ $(document).ready(function () {
         };
 
         if (checkSequence(newData)) {
-            $.post("/admin/chart/finances", newData, function (result) {
-                $('#div-for-chart1').empty();
-                $('#div-for-chart2').empty();
-                $('#div-for-chart').empty().append('<canvas id="myChart" height="125"></canvas>');
+            $.ajax({
+                url: "/admin/chart/finances",
+                type: 'post',
+                data: newData,
+                success: function (result) {
+                    $('#div-for-chart1').empty();
+                    $('#div-for-chart2').empty();
+                    $('#div-for-chart').empty().append('<canvas id="myChart" height="125"></canvas>');
 
-                var ctx = document.getElementById("myChart").getContext('2d');
+                    var ctx = document.getElementById("myChart").getContext('2d');
 
-                Chart.defaults.global.defaultFontColor = '#333';
-                Chart.defaults.global.defaultFontSize = 14;
+                    Chart.defaults.global.defaultFontColor = '#333';
+                    Chart.defaults.global.defaultFontSize = 14;
 
-                new Chart(ctx, setChart(result.data.dates, result.data.money, '#398439', '#5dd65d', "Фінансова статистика", "Всього"));
+                    new Chart(ctx, setChart(result.data.dates, result.data.money, '#398439', '#5dd65d', "Фінансова статистика", "Всього"));
+                },
+                error: function (err) {
+                    showErrorAlert(err);
+                }
             });
         } else {
-            showErrorAlert({responseJSON: {
-                errors: [{msg: 'Неправильний порядок дат.'}]
-            }});
+            showErrorAlert({
+                responseJSON: {
+                    errors: [{msg: 'Неправильний порядок дат.'}]
+                }
+            });
 
             $('#div-for-chart').empty();
             $('#div-for-chart1').empty();
             $('#div-for-chart2').empty();
         }
     }
-});
+    function checkSequence(data) {
+        return data.toDateChart > data.fromDateChart;
+    }
 
-function checkSequence(data) {
-    return data.toDateChart > data.fromDateChart;
-}
-
-function setChart(labels, data, borderColor, pointBgc, title, label) {
-    return {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [
-                {
-                    label: label,
-                    data: data,
-                    backgroundColor: "transparent",
-                    borderColor: borderColor,
-                    pointRadius: 4,
-                    pointBackgroundColor: pointBgc
-                }
-            ]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
+    function setChart(labels, data, borderColor, pointBgc, title, label) {
+        return {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: label,
+                        data: data,
+                        backgroundColor: "transparent",
+                        borderColor: borderColor,
+                        pointRadius: 4,
+                        pointBackgroundColor: pointBgc
                     }
-                }]
+                ]
             },
-            legend: {
-                display: false
-            },
-            title: {
-                display: true,
-                fontSize: 16,
-                padding: 10,
-                fontColor: '#333',
-                text: title
-            },
-            elements: {
-                line: {
-                    tension: 0
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
+                legend: {
+                    display: false
+                },
+                title: {
+                    display: true,
+                    fontSize: 16,
+                    padding: 10,
+                    fontColor: '#333',
+                    text: title
+                },
+                elements: {
+                    line: {
+                        tension: 0
+                    }
                 }
             }
-        }
-    };
-}
-
-
-
+        };
+    }
+});

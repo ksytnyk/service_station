@@ -300,7 +300,7 @@ router.delete('/delete-request/:id', (req, res) => {
             .changeStatusByRequestID(Number(req.params.id), status.CANCELED)
             .then(() => {
                 Request
-                    .changeStatus(Number(req.params.id), status.CANCELED)
+                    .changeStatus(Number(req.params.id), {status: status.CANCELED})
                     .then(() => {
                         Request
                             .updateRequest(Number(req.params.id), {hadDeleted: true})
@@ -321,7 +321,6 @@ router.delete('/delete-request/:id', (req, res) => {
                 console.warn(error);
                 res.status(400).send({errors: errors});
             });
-
     } else {
         Task
             .destroy({
