@@ -234,7 +234,6 @@ Request.changeStatus = function (idRequest, params) {
         if (params.status == status.PROCESSING) {
             params.hadStarted = true;
         }
-        console.log(params);
 
         Request
             .update(
