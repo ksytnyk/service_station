@@ -26,7 +26,7 @@
                         <button class="btn btn-success width task-status-button agree" data-status="4" id="change-status-update-task">
                             Підтвердити
                         </button>
-                        <button class="btn btn-danger pull-right width">
+                        <button class="btn btn-danger pull-right width" data-dismiss="modal">
                             Закрити
                         </button>
                     </div>

@@ -41,7 +41,7 @@ $(document).ready(function () {
     headerFix();
 
     $('.hide_alert').on('click', function () {
-        $('.alert').css('left', '-50vw');
+        $('.alert').css('left', '-60vw');
     });
 
     setTimeout(function () {

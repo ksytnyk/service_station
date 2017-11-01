@@ -912,6 +912,8 @@ function setTaskStatusHold(value) {
         if ('' + $(this).data('task-need-buy-parts') !== 'undefined') {
             $('#change-task-status-need-buy-parts').val($(this).data('task-need-buy-parts'));
         }
-        $('#change-task-status-comment').val($(this).data('task-comment'));
+        if ('' + $(this).data('task-comment') !== 'undefined') {
+            $('#change-task-status-comment').val($(this).data('task-comment'));
+        }
     });
 }
