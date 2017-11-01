@@ -106,7 +106,8 @@
 .requests .bookkeeper tr td:last-child {
     background-color: #fff;
 }
-.requests .set_payed {
+.requests .set_payed_true,
+.requests .set_payed_false {
     margin: 2% 1% 0 1%;
     min-width: 48%;
 }

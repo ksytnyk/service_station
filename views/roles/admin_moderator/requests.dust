@@ -150,7 +150,7 @@
                         {/ne}
                         {/ne}
                         {@eq key=giveOut value="false" type="boolean"}
-                        <input class='btn  request-form-status set_give_out {@ne key=status value=3}hide{/ne} {@eq key=payed value="false" type="boolean"}hide{/eq}'
+                        <input class='btn request-form-status set_give_out {@ne key=status value=3}hide{/ne} {@eq key=payed value="false" type="boolean"}hide{/eq}'
                                type="button"
                                value="Видати"
                                data-request-id="{id}"
@@ -161,7 +161,7 @@
                         {/ne}
                         {@eq key=typeUser value=6}
                         {@eq key=payed value="false" type="boolean"}
-                            <input class="btn btn-warning set_payed_true set_payed"
+                            <input class="btn btn-warning set_payed_true"
                                    type="button"
                                    value="Розрахувати"
                                    data-request-id="{id}"
@@ -176,7 +176,7 @@
                         {/eq}
                         {@ne key=status value=1}
                         {@eq key=typeUser value=1}
-                            <input class='btn btn-warning set_payed_true set_payed {@eq key=payed value="true" type="boolean"}hide{/eq}'
+                            <input class='btn btn-warning set_payed_true {@eq key=payed value="true" type="boolean"}hide{/eq}'
                                    type="button"
                                    value="Розрахувати"
                                    data-request-id="{id}"
@@ -190,8 +190,8 @@
                             <input class='btn btn-danger set_payed_false set_payed {@eq key=payed value="false" type="boolean"}hide{/eq}'
                                    type="button"
                                    value="Відмін. розрах."
-                                   data-request-id="{id}"
-                                   data-payed="false"
+                                   request-id="{id}"
+                                   payed="false"
                                    style="padding: 6px;"
                                    title="Відмінити розрахунок"
                             />

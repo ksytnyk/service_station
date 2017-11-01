@@ -69,8 +69,13 @@ $(document).ready(function () {
 
     printOnClick();
 });
+
 function printOnClick() {
     $('.set_payed_true').on('click', function () {
+        $('#agree-print-check')
+            .attr('request-id', $(this).data('request-id'))
+            .attr('payed', $(this).data('payed'));
+
         $.ajax({
             url: getRole(window.location.pathname) + '/get-request-check/' + $(this).data('request-id'),
             type: 'get',

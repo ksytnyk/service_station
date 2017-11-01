@@ -451,8 +451,8 @@ function changeRequestStatus(value) {
 }
 function setPayed(value) {
     $(value).on('click', function () {
-        var requestID = $(this).data('request-id'),
-            payed = $(this).data('payed');
+        var requestID = $(this).attr('request-id'),
+            payed = $(this).attr('payed');
 
         $.ajax({
             url: getRole(window.location.pathname) + '/set-payed/' + requestID,
@@ -465,7 +465,7 @@ function setPayed(value) {
                     idc = "#idr-cost-" + requestID;
 
                 if (window.location.pathname.split('/')[3] === 'all' || window.location.pathname.split('/')[3] === 'hold') {
-                    if (payed) {
+                    if (payed === 'true') {
                         $(idr + ' .request_payed').addClass('request_payed_true');
                         $(idc + ' span').empty().append('(Розраховано)');
                         $(idr + ' .set_payed_true').addClass('hide');
