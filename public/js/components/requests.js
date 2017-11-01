@@ -386,7 +386,7 @@ function changeRequestStatus(value) {
                         }
 
                         requestPayedButton = '' +
-                            '<input class="btn btn-warning set_payed_true set_payed ' + set_payed_true + '"' +
+                            '<input class="btn btn-warning set_payed_true ' + set_payed_true + '"' +
                             ' id="requestCanceled" type="button" value="Розрахувати"' +
                             ' data-request-id="' + data.requestID + '"' +
                             ' data-payed="true" title="Розрахувати" data-toggle="modal"\n' +
@@ -395,11 +395,11 @@ function changeRequestStatus(value) {
                         requestDontPayedButton = '' +
                             '<input class="btn btn-danger set_payed_false set_payed ' + set_payed_false + '"' +
                             ' id="requestCanceled" type="button" value="Відмін. розрах."' +
-                            ' data-request-id="' + data.requestID + '"' +
-                            ' data-payed="false" style="padding: 6px;" title="Відмінити розрахунок"/>';
+                            ' request-id="' + data.requestID + '"' +
+                            ' payed="false" style="padding: 6px;" title="Відмінити розрахунок"/>';
                     }
 
-                    console.log( data.status )
+                    // console.log( data.status );
 
                     switch (data.status) {
                         case "2":

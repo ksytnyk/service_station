@@ -13,7 +13,7 @@ module.exports = function (type, data, request) {
     }
     else if (type === 'done-request') {
         to = [data];
-        subject = 'Замолвення готове';
+        subject = 'Замовлення готове';
         html = 'Ваше замовлення готове!';
     }
     else if (type === 'create-request') {

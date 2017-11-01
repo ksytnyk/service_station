@@ -362,10 +362,13 @@ router.put('/change-request-status/:id', (req, res) => {
                         Request
                             .getRequestById(req.params.id)
                             .then(request => {
-                                if (+req.body.statusID === status.DONE) {
+
+                                if (+req.body.status === status.DONE) {
+
                                     Request
                                         .getRequestById(req.params.id)
                                         .then((result) => {
+
                                             nodemailer('done-request', result[0].user.dataValues);
                                         })
                                         .catch(error => {
@@ -591,14 +594,15 @@ router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
                                                             Request
                                                                 .changeStatus(req.body.requestID, {status:status.DONE})
                                                                 .then((isDone) => {
+                                                                    nodemailer('done-request', request[0].user.dataValues);
 
-                                                                        res.status(200).send({
-                                                                            isDone: isDone,
-                                                                            request: request,
-                                                                            task: task,
-                                                                            requestID: req.body.requestID,
-                                                                            newCost: newCost
-                                                                        })
+                                                                    res.status(200).send({
+                                                                        isDone: isDone,
+                                                                        request: request,
+                                                                        task: task,
+                                                                        requestID: req.body.requestID,
+                                                                        newCost: newCost
+                                                                    })
                                                                 })
                                                                 .catch(errors => {
                                                                     console.warn(errors);
