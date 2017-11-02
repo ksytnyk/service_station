@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 const Task = require('../../models/Task');
 const Request = require('../../models/Request');
+const User = require('../../models/User');
 const formatDate = require('../../helpers/formatDate');
 const countEndTime = require('../../helpers/countEndTime');
 const validation = require('../../middleware/validation');
@@ -13,15 +14,29 @@ router.get('/', (req, res) => {
     Task
         .getTaskByExecutorId(req.session.passport.user.id)
         .then(result => {
-
             for (var i = 0; i < result.length; i++) {
                 result[i].dataValues.startTime = formatDate(result[i].dataValues.startTime);
                 result[i].dataValues.endTime = formatDate(result[i].dataValues.endTime);
             }
-            res.render('roles/executor', {
-                typeUser: req.session.passport.user.userTypeID,
-                tasks: result
-            });
+
+            User
+                .getAllUsers()
+                .then(users => {
+                    res.render('roles/executor', {
+                        typeUser: req.session.passport.user.userTypeID,
+                        tasks: result,
+                        assignedExecutorUsers: users
+                    });
+                })
+                .catch(errors => {
+                    console.warn(errors);
+                    res.status(400).send({errors: errors});
+                });
+
+        })
+        .catch(errors => {
+            console.warn(errors);
+            res.status(400).send({errors: errors});
         });
 });
 

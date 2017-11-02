@@ -11,6 +11,10 @@
                 <input type="hidden" id="update-form-task-id" name="id">
                 <input type="hidden" id="update-form-request-id" name="requestID">
                 <input type="hidden" id="update-form-task-old-cost" name="oldCost">
+                {@eq key=typeUser value=3}
+                <input type="hidden" id="update-form-task-planed-executor" name="planedExecutorID">
+                {/eq}
+
                 <div class="modal-body clearfix">
                     {@lt key=typeUser value=4}
                     {@lt key=typeUser value=3}
@@ -51,37 +55,41 @@
                             {/assignedExecutorUsers}
                         </select>
                     </div>
-                    <div class="form-group required col-xs-4">
+                    {/lt}
+                    <div class="form-group required {@lt key=typeUser value=3}col-xs-4{/lt}{@eq key=typeUser value=3}col-xs-3{/eq}">
+                        {@lt key=typeUser value=3}
                         <button type="button" class="btn btn-primary update-assign-task-button col-xs-12"
                                 style="margin-top: 25px;">Доручити задачу
                         </button>
+                        {/lt}
                         <div class="hidden update-assign-task-select">
                             <label>Доручити задачу</label>
                             <select class="form-control add_select2 create-form-task" name="assignedUserID"
                                     id="update-form-task-assigned-user">
                                 {#assignedExecutorUsers}
+                                {@lt key=typeUser value=3}
                                 {@eq key=userTypeID value=4}
                                 <option value="{id}" assignedUserFullName="{userName} {userSurname}"
                                         id="optionAE{id}">
                                     (Зав. складом) {userName} {userSurname}
                                 </option>
                                 {/eq}
+                                {/lt}
                                 {@eq key=userTypeID value=3}
                                 <option value="{id}" assignedUserFullName="{userName} {userSurname}"
                                         id="optionAE{id}">
-                                    (Інженер) {userName} {userSurname}
+                                    {@lt key=typeUser value=3}(Інженер) {/lt}{userName} {userSurname}
                                 </option>
                                 {/eq}
                                 {/assignedExecutorUsers}
                             </select>
                         </div>
                     </div>
-                    {/lt}
-                    <div class="form-group col-xs-4">
+                    <div class="form-group {@lt key=typeUser value=3}col-xs-4{/lt}{@eq key=typeUser value=3}col-xs-3{/eq}">
                         <label>Опис задачі</label>
                         <input type="text" class="form-control create-form-task" name="description" id="update-form-task-description">
                     </div>
-                    <div class="form-group required col-xs-4">
+                    <div class="form-group required {@lt key=typeUser value=3}col-xs-4{/lt}{@eq key=typeUser value=3}col-xs-2{/eq}">
                         <label>Час початку</label>
                         <input type="text" class="form-control create-form-task datetimepickerN" name="startTime"
                                id="update-form-task-start-time">

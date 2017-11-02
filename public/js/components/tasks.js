@@ -189,7 +189,13 @@ $(document).ready(function () {
 
 
         if ( getRole(window.location.pathname) === '/executor') {
-            dataArr[4].value = checkDateForUpdate(oldStartTime, dataArr[4].value);
+            dataArr[6].value = checkDateForUpdate(oldStartTime, dataArr[6].value);
+
+            if (dataArr[3].value !== dataArr[4].value) {
+                var planedExecutorChanged = true;
+
+                dataArr[3].value = dataArr[4].value; // set to 'planedExecutorID' value equivalent 'assignedUserID'
+            }
         }
 
         if (getRole(window.location.pathname) !== '/executor' && getRole(window.location.pathname) !== '/store-keeper') {
@@ -211,230 +217,236 @@ $(document).ready(function () {
             data: dataArr,
             success: function (data) {
                 showSuccessAlert('Редагування задачі пройшло успішно.');
-
-                $('#idt-' + data.task.id + '').empty();
-                $('#idt-' + data.task.id + '').append(''+
-                    '<td>'+data.task.name+'</td>'+
-                    '<td class="tac">'+data.task.cost+'</td>'+
-                    '<td>'+data.task.needBuyParts+'</td>'+
-                    '<td class="tac"></td>');
-
                 $('.in .close').click();
-                $('.update-form-task-type-input').addClass("hidden");
-                $('#update_new_task .select2').removeClass("hidden");
 
                 var idx = "#idx-task-" + data.task.id;
-                var idr = "#idr-cost-" + data.requestID;
-                var idrr = "#idr-request-" + data.requestID;
 
-                $(idx).empty();
-                $(idr).empty();
-
-                if (getRole(window.location.pathname) !== "/executor" && getRole(window.location.pathname) !== "/store-keeper") {
-                    var executorNameSurname = $('#option' + dataArr[5].value).attr('executorFullName');
-                    var assignedNameSurname = $('#optionAE' + dataArr[6].value).attr('assignedUserFullName');
+                if (getRole(window.location.pathname) === '/executor' && planedExecutorChanged) {
+                    $(idx).empty();
                 }
+                else {
+                    $('#idt-' + data.task.id + '').empty();
+                    $('#idt-' + data.task.id + '').append('' +
+                        '<td>' + data.task.name + '</td>' +
+                        '<td class="tac">' + data.task.cost + '</td>' +
+                        '<td>' + data.task.needBuyParts + '</td>' +
+                        '<td class="tac"></td>');
 
-                var newTask, newTask1 = '', newTask2, newCost;
+                    $('.update-form-task-type-input').addClass("hidden");
+                    $('#update_new_task .select2').removeClass("hidden");
 
-                newTask = '' +
-                    '<th class="tac bb" style="background-color:#fff;">' +
-                    data.task.id +
-                    '</th>' +
-                    '<td class="vat bb' + disableFields(data.task.status) + '" style="position: relative; padding-top: 40px;">' +
-                    changeStatus(data.task.status) +
-                    '<p><strong>Назва задачі: </strong>' + data.task.name + '</p>' +
-                    '<p class="executor_name_surname"><strong>Виконавець: </strong>' + executorNameSurname + '</p> ' +
-                    '<p class="assigned_name_surname"><strong>Доручити задачу: </strong>' + assignedNameSurname + '</p>' +
-                    '<p><strong>Вартість: </strong>' + data.task.cost + ' грн</p>' +
-                    '<p><strong>Час виконання: </strong>' + data.task.estimationTime + ' год</p>' +
-                    '<p><strong>Час початку: </strong>' + formatDate(data.task.startTime) + '</p> ' +
-                    '<p><strong>Кінцевий час: </strong>' + formatDate(data.task.endTime) + '</p> ' +
-                    '</td>' +
-                    '<td class="vat bb' + disableFields(data.task.status) + '"> ' +
-                    '<p><strong>Опис задачі: </strong>' + data.task.description + '</p> ' +
-                    '<p class="bt"><strong>Запчастини: </strong>' + data.task.parts + '</p> ' +
-                    '<p><strong>Запчастини клієнта: </strong>' + data.task.customerParts + '</p> ' +
-                    '<p  id="need-buy-parts"><strong>Відсутні запчастини: </strong>' + data.task.needBuyParts + '</p> ' +
-                    '<p class="bt" id="comment"><strong>Коментар: </strong>' + data.task.comment + '</p> ' +
-                    '</td>';
+                    var idr = "#idr-cost-" + data.requestID;
+                    var idrr = "#idr-request-" + data.requestID;
 
-                if (getRole(window.location.pathname) === "/executor") {
-                    if (data.task.status === 1) {
-                        newTask1 = '' +
-                            '<td class="tac">'+
-                            '<div class="tasks-status-form">'+
-                            '<input class="status btn btn-primary task-form-status task-status-button"'+
-                                ' id="taskProcessing"'+
-                                ' type="button"'+
-                                ' value="Почати задачу"'+
-                                ' data-task-id="'+data.task.id+'"'+
-                                ' data-status="2"'+
-                            '/>'+
-                            '</div>' +
-                            '</td>'
-                    } else {
-                        newTask1 = '' +
-                            '<td class="tac">'+
-                            '<div class="tasks-status-form">'+
-                            '<input class="status btn btn-danger set-task-status-hold modal-window-link"'+
+                    $(idx).empty();
+                    $(idr).empty();
+
+                    if (getRole(window.location.pathname) !== "/executor" && getRole(window.location.pathname) !== "/store-keeper") {
+                        var executorNameSurname = $('#option' + dataArr[5].value).attr('executorFullName');
+                        var assignedNameSurname = $('#optionAE' + dataArr[6].value).attr('assignedUserFullName');
+                    }
+
+                    var newTask, newTask1 = '', newTask2, newCost;
+
+                    newTask = '' +
+                        '<th class="tac bb" style="background-color:#fff;">' +
+                        data.task.id +
+                        '</th>' +
+                        '<td class="vat bb' + disableFields(data.task.status) + '" style="position: relative; padding-top: 40px;">' +
+                        changeStatus(data.task.status) +
+                        '<p><strong>Назва задачі: </strong>' + data.task.name + '</p>' +
+                        '<p class="executor_name_surname"><strong>Виконавець: </strong>' + executorNameSurname + '</p> ' +
+                        '<p class="assigned_name_surname"><strong>Доручити задачу: </strong>' + assignedNameSurname + '</p>' +
+                        '<p><strong>Вартість: </strong>' + data.task.cost + ' грн</p>' +
+                        '<p><strong>Час виконання: </strong>' + data.task.estimationTime + ' год</p>' +
+                        '<p><strong>Час початку: </strong>' + formatDate(data.task.startTime) + '</p> ' +
+                        '<p><strong>Кінцевий час: </strong>' + formatDate(data.task.endTime) + '</p> ' +
+                        '</td>' +
+                        '<td class="vat bb' + disableFields(data.task.status) + '"> ' +
+                        '<p><strong>Опис задачі: </strong>' + data.task.description + '</p> ' +
+                        '<p class="bt"><strong>Запчастини: </strong>' + data.task.parts + '</p> ' +
+                        '<p><strong>Запчастини клієнта: </strong>' + data.task.customerParts + '</p> ' +
+                        '<p  id="need-buy-parts"><strong>Відсутні запчастини: </strong>' + data.task.needBuyParts + '</p> ' +
+                        '<p class="bt" id="comment"><strong>Коментар: </strong>' + data.task.comment + '</p> ' +
+                        '</td>';
+
+                    if (getRole(window.location.pathname) === "/executor") {
+                        if (data.task.status === 1) {
+                            newTask1 = '' +
+                                '<td class="tac">' +
+                                '<div class="tasks-status-form">' +
+                                '<input class="status btn btn-primary task-form-status task-status-button"' +
+                                ' id="taskProcessing"' +
+                                ' type="button"' +
+                                ' value="Почати задачу"' +
+                                ' data-task-id="' + data.task.id + '"' +
+                                ' data-status="2"' +
+                                '/>' +
+                                '</div>' +
+                                '</td>'
+                        } else {
+                            newTask1 = '' +
+                                '<td class="tac">' +
+                                '<div class="tasks-status-form">' +
+                                '<input class="status btn btn-danger set-task-status-hold modal-window-link"' +
                                 ' data-toggle="modal"' +
-                                ' id="taskHold"'+
-                                ' type="button"'+
-                                ' value="Відсутні запчастини"'+
-                                ' data-task-id="' + data.task.id + '"'+
+                                ' id="taskHold"' +
+                                ' type="button"' +
+                                ' value="Відсутні запчастини"' +
+                                ' data-task-id="' + data.task.id + '"' +
                                 ' data-task-comment="' + data.task.comment + '"' +
                                 ' data-task-need-buy-parts="' + data.task.needBuyParts + '"' +
                                 ' data-target="#setTaskStatusHoldModal"' +
-                            '/>'+
-                            '<input class="status btn btn-success task-form-status task-status-button"'+
-                                ' id="taskDone"'+
-                                ' type="button"'+
-                                ' value="Завершити задачу"'+
-                                ' data-task-id="'+data.task.id+'"'+
-                                ' data-status="3"'+
-                            '/>'+
-                            '</div>' +
-                            '</td>'
+                                '/>' +
+                                '<input class="status btn btn-success task-form-status task-status-button"' +
+                                ' id="taskDone"' +
+                                ' type="button"' +
+                                ' value="Завершити задачу"' +
+                                ' data-task-id="' + data.task.id + '"' +
+                                ' data-status="3"' +
+                                '/>' +
+                                '</div>' +
+                                '</td>'
+                        }
                     }
-                }
-                if (getRole(window.location.pathname) === '/store-keeper') {
-                    newTask1 = '' +
-                        '<td class="tac"><div class="tasks-status-form">' +
-                        '<input class="status btn btn-danger set-task-status-hold modal-window-link" data-toggle="modal" id="taskHold" type="button" value="Анулювати" data-target="#setTaskStatusHoldModal"' +
-                        ' data-task-id="' + data.task.id + '"' +
-                        ' data-task-comment="' + data.task.comment + '"/>' +
+                    if (getRole(window.location.pathname) === '/store-keeper') {
+                        newTask1 = '' +
+                            '<td class="tac"><div class="tasks-status-form">' +
+                            '<input class="status btn btn-danger set-task-status-hold modal-window-link" data-toggle="modal" id="taskHold" type="button" value="Анулювати" data-target="#setTaskStatusHoldModal"' +
+                            ' data-task-id="' + data.task.id + '"' +
+                            ' data-task-comment="' + data.task.comment + '"/>' +
 
-                        '<input class="status btn btn-success task-form-status task-status-button" id="taskPending" type="button" value="Є на складі" data-status="1"' +
-                        ' data-task-id="' + data.task.id + '"' +
-                        ' data-assigned-user-id="' + data.task.planedExecutorID + '"/></div></td>';
-                }
-                newTask2 = '' +
-                    '<td class="tac bb"> ' +
-                    '<a class="update-task modal-window-link"' +
-                    ' title="Редагувати задачу"' +
-                    ' data-toggle="modal"' +
-                    ' data-id="' + data.task.id + '"' +
-                    ' data-request-id="' + data.task.requestID + '"' +
-                    ' data-task-description="' + data.task.description + '"' +
-                    ' data-task-name="' + data.task.name + '"' +
-                    ' data-task-type-id="' + data.task.typeID + '"' +
-                    ' data-task-assigned-user="' + data.task.assignedUserID + '"' +
-                    ' data-task-planed-executor="' + data.task.planedExecutorID + '"' +
-                    ' data-task-cost="' + data.task.cost + '"' +
-                    ' data-task-estimation-time="' + data.task.estimationTime + '"' +
-                    ' data-task-start-time="' + formatDate(data.task.startTime) + '"' +
-                    ' data-task-end-time="' + formatDate(data.task.endTime) + '"' +
-                    ' data-task-parts="' + data.task.parts + '"' +
-                    ' data-task-customer-parts="' + data.task.customerParts + '"' +
-                    ' data-task-need-buy-parts="' + data.task.needBuyParts + '"' +
-                    ' data-task-comment="' + data.task.comment + '"' +
-                    ' data-target="#updateTaskFormModal"' +
-                    ' style=""> ' +
-                    '<span class="glyphicon glyphicon-pencil" aria-hidden="true"/> ' +
-                    '</a> ';
+                            '<input class="status btn btn-success task-form-status task-status-button" id="taskPending" type="button" value="Є на складі" data-status="1"' +
+                            ' data-task-id="' + data.task.id + '"' +
+                            ' data-assigned-user-id="' + data.task.planedExecutorID + '"/></div></td>';
+                    }
+                    newTask2 = '' +
+                        '<td class="tac bb"> ' +
+                        '<a class="update-task modal-window-link"' +
+                        ' title="Редагувати задачу"' +
+                        ' data-toggle="modal"' +
+                        ' data-id="' + data.task.id + '"' +
+                        ' data-request-id="' + data.task.requestID + '"' +
+                        ' data-task-description="' + data.task.description + '"' +
+                        ' data-task-name="' + data.task.name + '"' +
+                        ' data-task-type-id="' + data.task.typeID + '"' +
+                        ' data-task-assigned-user="' + data.task.assignedUserID + '"' +
+                        ' data-task-planed-executor="' + data.task.planedExecutorID + '"' +
+                        ' data-task-cost="' + data.task.cost + '"' +
+                        ' data-task-estimation-time="' + data.task.estimationTime + '"' +
+                        ' data-task-start-time="' + formatDate(data.task.startTime) + '"' +
+                        ' data-task-end-time="' + formatDate(data.task.endTime) + '"' +
+                        ' data-task-parts="' + data.task.parts + '"' +
+                        ' data-task-customer-parts="' + data.task.customerParts + '"' +
+                        ' data-task-need-buy-parts="' + data.task.needBuyParts + '"' +
+                        ' data-task-comment="' + data.task.comment + '"' +
+                        ' data-target="#updateTaskFormModal"' +
+                        ' style=""> ' +
+                        '<span class="glyphicon glyphicon-pencil" aria-hidden="true"/> ' +
+                        '</a> ';
 
-                if (getRole(window.location.pathname) === "/admin") {
-                    newTask2 += ''+
-                    '<a href="#"' +
-                    ' class="delete-task modal-window-link"' +
-                    ' title="Видалити задачу" data-toggle="modal"' +
-                    ' data-current="' + getIdRole(window.location.pathname) + '" data-id="' + data.task.id + '"' +
-                    ' data-request-id="' + data.task.requestID + '"' +
-                    ' data-task-old-cost="' + data.task.cost + '"' +
-                    ' data-target="#deleteTaskFormModal"' +
-                    ' style=""> ' +
-                    '<span class="glyphicon glyphicon-remove" aria-hidden="true"/> ' +
-                    '</a>' +
-                    '</td>';
-                } else {
-                    newTask2 += ''+
-                    '</a>' +
-                    '</td>';
-                }
+                    if (getRole(window.location.pathname) === "/admin") {
+                        newTask2 += '' +
+                            '<a href="#"' +
+                            ' class="delete-task modal-window-link"' +
+                            ' title="Видалити задачу" data-toggle="modal"' +
+                            ' data-current="' + getIdRole(window.location.pathname) + '" data-id="' + data.task.id + '"' +
+                            ' data-request-id="' + data.task.requestID + '"' +
+                            ' data-task-old-cost="' + data.task.cost + '"' +
+                            ' data-target="#deleteTaskFormModal"' +
+                            ' style=""> ' +
+                            '<span class="glyphicon glyphicon-remove" aria-hidden="true"/> ' +
+                            '</a>' +
+                            '</td>';
+                    } else {
+                        newTask2 += '' +
+                            '</a>' +
+                            '</td>';
+                    }
 
-                var payed = '(Не розраховано)';
+                    var payed = '(Не розраховано)';
 
-                if (data.request.payed) {
-                    payed = '(Розраховано)';
-                }
+                    if (data.request.payed) {
+                        payed = '(Розраховано)';
+                    }
 
-                newCost = '<strong>Вартість: ' + data.newCost + ' грн <span>'+ payed+ '</span></strong>';
+                    newCost = '<strong>Вартість: ' + data.newCost + ' грн <span>' + payed + '</span></strong>';
 
-                $(idx).append(newTask + newTask1 + newTask2);
-                $(idr).append(newCost);
+                    $(idx).append(newTask + newTask1 + newTask2);
+                    $(idr).append(newCost);
 
-                if(data.isDone) { //if REQUEST IS DONE
+                    if (data.isDone) { //if REQUEST IS DONE
 
-                    var newRequestStatusClasses = 'status-requests ',
-                        newRequestStatusText;
+                        var newRequestStatusClasses = 'status-requests ',
+                            newRequestStatusText;
 
-                    var requestProcessingButton = '' +
-                        '<input class="btn btn-primary request-form-status request-status-button"' +
-                        ' id="requestProcessing" type="button" value="Доопрацювати"' +
-                        ' data-request-id="' + data.requestID + '"' +
-                        ' data-status="2" title="Доопрацювати"/>';
-
-                    var requestCanceledButton = '' +
-                        '<input class="btn request-form-status status-requests-canceled request-status-button"' +
-                        ' id="requestCanceled" type="button" value="Анулювати"' +
-                        ' data-request-id="' + data.requestID + '"' +
-                        ' data-status="5" title="Анулювати"/>';
-
-                    var give_out = '';
-
-                    var requestPayedButton = '',
-                        requestDontPayedButton = '',
-                        requestGiveOutButton = '' +
-                            '<input class="btn btn-info request-form-status set_give_out ' + give_out + '"' +
-                            ' type="button" value="Видати"' +
+                        var requestProcessingButton = '' +
+                            '<input class="btn btn-primary request-form-status request-status-button"' +
+                            ' id="requestProcessing" type="button" value="Доопрацювати"' +
                             ' data-request-id="' + data.requestID + '"' +
-                            ' data-give-out="true" title="Видати"/>';
+                            ' data-status="2" title="Доопрацювати"/>';
+
+                        var requestCanceledButton = '' +
+                            '<input class="btn request-form-status status-requests-canceled request-status-button"' +
+                            ' id="requestCanceled" type="button" value="Анулювати"' +
+                            ' data-request-id="' + data.requestID + '"' +
+                            ' data-status="5" title="Анулювати"/>';
+
+                        var give_out = '';
+
+                        var requestPayedButton = '',
+                            requestDontPayedButton = '',
+                            requestGiveOutButton = '' +
+                                '<input class="btn btn-info request-form-status set_give_out ' + give_out + '"' +
+                                ' type="button" value="Видати"' +
+                                ' data-request-id="' + data.requestID + '"' +
+                                ' data-give-out="true" title="Видати"/>';
 
 
-                    if (getRole(window.location.pathname) === '/admin') {
-                        var set_payed_true = '',
-                            set_payed_false = '';
+                        if (getRole(window.location.pathname) === '/admin') {
+                            var set_payed_true = '',
+                                set_payed_false = '';
 
-                        if (data.request[0].payed) {
-                            set_payed_true = 'hide';
-                        } else {
-                            set_payed_false = 'hide';
+                            if (data.request[0].payed) {
+                                set_payed_true = 'hide';
+                            } else {
+                                set_payed_false = 'hide';
+                            }
+
+                            requestPayedButton = '' +
+                                '<input class="btn btn-warning set_payed_true set_payed ' + set_payed_true + '"' +
+                                ' id="requestCanceled" type="button" value="Розрахувати"' +
+                                ' data-request-id="' + data.requestID + '"' +
+                                ' data-payed="true" title="Розрахувати" data-toggle="modal"\n' +
+                                ' data-target="#printCheckFormModal" request-start-time="' + data.startTime + '"\n' +
+                                ' request-estimate-time="' + data.estimatedTime + '"/>';
+
+                            requestDontPayedButton = '' +
+                                '<input class="btn btn-danger set_payed_false set_payed ' + set_payed_false + '"' +
+                                ' id="requestCanceled" type="button" value="Відмін. розрах."' +
+                                ' data-request-id="' + data.requestID + '"' +
+                                ' data-payed="false" style="padding: 6px;" title="Відмінити розрахунок"/>';
                         }
 
-                        requestPayedButton = '' +
-                            '<input class="btn btn-warning set_payed_true set_payed ' + set_payed_true + '"' +
-                            ' id="requestCanceled" type="button" value="Розрахувати"' +
-                            ' data-request-id="' + data.requestID + '"' +
-                            ' data-payed="true" title="Розрахувати" data-toggle="modal"\n' +
-                            ' data-target="#printCheckFormModal" request-start-time="'+ data.startTime +'"\n' +
-                            ' request-estimate-time="' + data.estimatedTime + '"/>';
+                        newRequestStatusClasses += 'status-bgc-done';
+                        newRequestStatusText = '<strong>Замовлення виконано</strong>';
+                        newRequestButtons = requestProcessingButton + requestCanceledButton + requestGiveOutButton + requestPayedButton + requestDontPayedButton;
 
-                        requestDontPayedButton = '' +
-                            '<input class="btn btn-danger set_payed_false set_payed ' + set_payed_false + '"' +
-                            ' id="requestCanceled" type="button" value="Відмін. розрах."' +
-                            ' data-request-id="' + data.requestID + '"' +
-                            ' data-payed="false" style="padding: 6px;" title="Відмінити розрахунок"/>';
+                        $(idrr + ' .status-requests').removeClass().addClass(newRequestStatusClasses).empty().append(newRequestStatusText);
+                        $(idrr + ' .requests-status-form').empty().append(newRequestButtons);
+
+                        changeRequestStatus(idrr + ' .request-status-button');
+                        setPayed(idrr + ' .set_payed');
+                        setGiveOut(idrr + ' .set_give_out');
+                        printOnClick();
                     }
 
-                    newRequestStatusClasses += 'status-bgc-done';
-                    newRequestStatusText = '<strong>Замовлення виконано</strong>';
-                    newRequestButtons = requestProcessingButton + requestCanceledButton + requestGiveOutButton + requestPayedButton + requestDontPayedButton;
-
-                    $(idrr + ' .status-requests').removeClass().addClass(newRequestStatusClasses).empty().append(newRequestStatusText);
-                    $(idrr + ' .requests-status-form').empty().append(newRequestButtons);
-
-                    changeRequestStatus(idrr + ' .request-status-button');
-                    setPayed(idrr + ' .set_payed');
-                    setGiveOut(idrr + ' .set_give_out');
-                    printOnClick();
+                    deleteTaskOnClick('#idx-task-' + data.task.id + ' .delete-task');
+                    clearModalAddTask();
+                    updateTaskOnClick('#idx-task-' + data.task.id + ' .update-task');
+                    changeTaskStatus(idx + ' .task-status-button');
+                    setTaskStatusHold(idx + ' .set-task-status-hold');
                 }
-
-                deleteTaskOnClick('#idx-task-' + data.task.id + ' .delete-task');
-                clearModalAddTask();
-                updateTaskOnClick('#idx-task-' + data.task.id + ' .update-task');
-                changeTaskStatus(idx + ' .task-status-button');
-                setTaskStatusHold(idx + ' .set-task-status-hold');
             },
             error: function (err) {
                 $('.in .close').click();

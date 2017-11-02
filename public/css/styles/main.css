@@ -255,11 +255,11 @@ thead {
 .table > tbody > tr > th {
     vertical-align: top;
 }
-.table > tbody > tr > th a {
-    margin-top: 140px;
-}
 .table > tbody > tr > th a:last-child {
     margin-top: 0;
+}
+.table > tbody > tr > th a:nth-child(2) {
+    margin-top: 140px;
 }
 .table tr td:last-child,
 .table tr th:last-child {
