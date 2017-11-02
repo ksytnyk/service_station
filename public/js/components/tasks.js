@@ -736,7 +736,15 @@ $(document).ready(function () {
                 showErrorAlert(err);
             }
         })
-    })
+    });
+
+    $('.task-planed-executor-id').on('change', function () {
+        $('.task-assigned-user-id').val($(this).val()).select2();
+    });
+
+    $('#update-form-task-planed-executor').on('change', function () {
+        $('#update-form-task-assigned-user').val($(this).val()).select2();
+    });
 });
 
 function clearModalAddTask() {

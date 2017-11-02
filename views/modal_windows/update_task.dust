@@ -65,7 +65,7 @@
                         <div class="hidden update-assign-task-select">
                             <label>Доручити задачу</label>
                             <select class="form-control add_select2 create-form-task" name="assignedUserID"
-                                    id="update-form-task-assigned-user">
+                                    id="update-form-task-assigned-user" style="width: 100%;">
                                 {#assignedExecutorUsers}
                                 {@lt key=typeUser value=3}
                                 {@eq key=userTypeID value=4}

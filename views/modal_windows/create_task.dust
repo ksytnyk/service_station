@@ -52,7 +52,7 @@
                         </button>
                         <div class="hidden create-assign-task-select">
                             <label>Доручити задачу</label>
-                            <select class="form-control add_select2" name="assignedUserID">
+                            <select class="form-control add_select2 task-assigned-user-id" name="assignedUserID" style="width: 100%;">
                                 {#assignedExecutorUsers}
                                 {@eq key=userTypeID value=4}
                                 <option value="{id}" assignedUserFullName="{userName} {userSurname}"
