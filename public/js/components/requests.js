@@ -365,7 +365,7 @@ function changeRequestStatus(value) {
                         ' title="Анулювати" data-target="#setRequestStatusCanceledModal"/>';
 
                     var give_out = '';
-                    if (data.request[0].giveOut || data.request[0].status !== 3 || !data.request[0].payed) {
+                    if (data.request[0].giveOut || data.request[0].status !== 3) {
                         give_out = 'hide';
                     }
 

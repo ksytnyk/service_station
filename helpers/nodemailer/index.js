@@ -26,6 +26,11 @@ module.exports = function (type, data, request) {
         subject = 'Здійснена оплата замовлення';
         html = request.user.userSurname + ' ' + request.user.userName + ' здійснив оплату розміром: ' + request.cost + ' грн.';
     }
+    else if (type === 'give-out') {
+        to = data;
+        subject = 'Здійснено видачу замовлення без оплати !';
+        html = 'Здійснено видачу замовлення без оплати клієнту - ' + request.user.userSurname + ' ' + request.user.userName + '!';
+    }
 
     to.forEach(item => {
 

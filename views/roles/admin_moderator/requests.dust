@@ -150,7 +150,7 @@
                         {/ne}
                         {/ne}
                         {@eq key=giveOut value="false" type="boolean"}
-                        <input class='btn request-form-status set_give_out {@ne key=status value=3}hide{/ne} {@eq key=payed value="false" type="boolean"}hide{/eq}'
+                        <input class='btn request-form-status set_give_out {@ne key=status value=3}hide{/ne}'
                                type="button"
                                value="Видати"
                                data-request-id="{id}"

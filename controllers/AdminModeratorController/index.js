@@ -431,11 +431,31 @@ router.put('/set-payed/:id', (req, res) => {
                         .then(admins => {
                             if (req.body.payed) {
                                 nodemailer('set-payed', admins, request[0].dataValues);
+                            } else {
+                                if (req.body.giveOut) {
+                                    User
+                                        .getAllBookkeepers()
+                                        .then(bookkeepers => {
+                                            bookkeepers.forEach(item => {
+                                                admins.push(item);
+                                            });
+
+                                            nodemailer('give-out', admins, request[0].dataValues);
+                                        })
+                                        .catch(errors => {
+                                            console.warn(errors);
+                                            res.status(400).send({errors: errors});
+                                        });
+                                }
                             }
                             res.status(200).send({
                                 request: request
                             });
                         })
+                        .catch(errors => {
+                            console.warn(errors);
+                            res.status(400).send({errors: errors});
+                        });
 
                 })
                 .catch(errors => {
