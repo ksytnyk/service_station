@@ -134,6 +134,9 @@ $(document).ready(function () {
             case "5":
                 return 'Клієнт';
                 break;
+            case "6":
+                return 'Бухгалтер';
+                break;
         }
     }
 

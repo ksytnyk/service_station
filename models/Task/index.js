@@ -205,7 +205,20 @@ Task.getTaskByExecutorId = function (id) {
                 include: [
                     {
                         model: Request,
-                        where: {status: status.PROCESSING}
+
+                        where: {
+                            $or: [
+                                {
+                                    status: status.DONE
+                                },
+                                {
+                                    status: status.PROCESSING
+                                },
+                                {
+                                    status: status.CANCELED
+                                },
+                            ]
+                        }
                     }
                 ],
                 where: {
@@ -216,7 +229,16 @@ Task.getTaskByExecutorId = function (id) {
                         },
                         {
                             status: status.PROCESSING
-                        }
+                        },
+                        {
+                            status: status.HOLD
+                        },
+                        {
+                            status: status.DONE
+                        },
+                        {
+                            status: status.CANCELED
+                        },
                     ]
                 }
             })
@@ -237,11 +259,43 @@ Task.getAllTasksForStore = function (storeID) {
                 include: [
                     {
                         model: Request,
-                        where: {status: status.PROCESSING}
+                        where: {
+                            $or: [
+                                {
+                                    status: status.PENDING
+                                },
+                                {
+                                    status: status.PROCESSING
+                                },
+                                {
+                                    status: status.DONE
+                                },
+                                {
+                                    status: status.CANCELED
+                                }
+                            ]
+                        }
                     }
                 ],
                 where: {
-                    status: status.PENDING,
+                    $or: [
+                        {
+                            status: status.PENDING
+                        },
+                        {
+                            status: status.PROCESSING
+                        },
+                        {
+                            status: status.HOLD
+                        },
+                        {
+                            status: status.DONE
+                        },
+                        {
+                            status: status.CANCELED
+                        }
+
+                    ],
                     assigned_user_id: storeID
                 }
             })

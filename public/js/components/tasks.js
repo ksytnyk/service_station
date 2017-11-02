@@ -222,7 +222,7 @@ $(document).ready(function () {
                 var idx = "#idx-task-" + data.task.id;
 
                 if (getRole(window.location.pathname) === '/executor' && planedExecutorChanged) {
-                    $(idx).empty();
+                    /*$(idx).empty();*/
                 }
                 else {
                     $('#idt-' + data.task.id + '').empty();
@@ -605,14 +605,26 @@ $(document).ready(function () {
                             changeTaskStatus(idx + ' .task-status-button');
                             break;
                         case 3:
-                            $(idx).empty();
+                            newTaskStatusClasses += 'status-bgc-done';
+                            newTaskStatusText = '<strong>Задачу виконано</strong>';
+                            $(idx + ' .status-task').removeClass().addClass(newTaskStatusClasses).empty().append(newTaskStatusText);
+                            $(idx + ' .tasks-status-form').empty();
+                            $(idx + ' td:last-child').empty();
                             break;
                         case 4:
-                            $(idx).empty();
+                            newTaskStatusClasses += 'status-bgc-hold';
+                            newTaskStatusText = '<strong>Задачу зупинено</strong>';
+                            $(idx + ' .status-task').removeClass().addClass(newTaskStatusClasses).empty().append(newTaskStatusText);
+                            $(idx + ' .tasks-status-form').empty();
+                            $(idx + ' td:last-child').empty();
                             break;
                     }
 
                     setTaskStatusHold(idx + ' .set-task-status-hold');
+                },
+                error: function (err) {
+                    console.log('ERRORRRR!');
+                    console.error(err);
                 }
             })
         })

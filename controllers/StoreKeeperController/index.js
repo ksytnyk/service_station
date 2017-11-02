@@ -2,7 +2,6 @@
 
 const express = require('express');
 const router = express.Router();
-const status = require('../../constants/status');
 const Task = require('../../models/Task');
 const Request = require('../../models/Request');
 const formatDate = require('../../helpers/formatDate');
