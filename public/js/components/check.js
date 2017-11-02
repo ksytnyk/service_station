@@ -1,6 +1,8 @@
 $(document).ready(function () {
 
-    $('#print_check').on('click', function () {
+    $('.print_check_button').on('click', function () {
+
+        changeModalView($(this));
 
         window.scrollTo(0,0);
         $('#number-or-request').text($(this).data('request-id'));
@@ -42,7 +44,24 @@ $(document).ready(function () {
         })
     });
 
-    $('#print_check_global').on('click', function () {
+    //handler for start request
+    $('#start_and_print_request').on('click', function () {
+        var requestID = $(this).data('request-id');
+
+        $.ajax({
+            url: getRole(window.location.pathname) + '/start-request/' + requestID,
+            type: 'put',
+            success: function () {
+                $('#start_and_print_request').hide();
+                showSuccessAlert("Замовлення почато.");
+            },
+            error: function () {
+                showErrorAlert("Помилка при початку замовлення.");
+            }
+        })
+    });
+
+    /*$('#print_check_global').on('click', function () {
 
         window.scrollTo(0,0);
         $('#number-or-request').text($(this).data('request-id'));
@@ -65,7 +84,7 @@ $(document).ready(function () {
                     '</tr>');
             }
         })
-    });
+    });*/
 
     printOnClick();
 });
@@ -98,4 +117,17 @@ function printOnClick() {
             }
         })
     })
+}
+
+function changeModalView(sourceButton) {
+    var sourceButtonID = sourceButton.attr('id');
+    var goalButton = $('#agree-print-check');
+
+    if (sourceButtonID==='start_and_print_request') {
+        $('.checkbox-block').hide();
+        goalButton.text('Друкувати');
+    } else {
+        goalButton.text('Підтвердити');
+        $('.checkbox-block').show();
+    }
 }

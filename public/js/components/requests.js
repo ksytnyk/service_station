@@ -33,6 +33,9 @@ $(document).ready(function () {
                     $('#print_check')
                         .attr('data-customer-phone', data.customer.userPhone)
                         .attr('data-request-id', data.result.id);
+                    $('.print_check_button')
+                        .attr('data-customer-phone', data.customer.userPhone)
+                        .attr('data-request-id', data.result.id);
 
                     var input = $('#request-name-input')[0].className;
                     if (!input.includes('hidden')) {

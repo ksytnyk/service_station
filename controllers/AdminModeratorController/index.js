@@ -152,7 +152,8 @@ router.get('/requests/:status', (req, res) => {
                                     res.render('roles/admin_moderator/requests', {
                                         assignedExecutorUsers: users,
                                         requests: requestsFactory(requests, tasks, hold, requestsHistory),
-                                        typeUser: req.session.passport.user.userTypeID
+                                        typeUser: req.session.passport.user.userTypeID,
+                                        isSetPayed: true //for add class set_payed to print modal
                                     });
                                 })
                                 .catch(error => {
@@ -973,6 +974,21 @@ router.delete('/delete-task-type/:id', (req, res) => {
         .deleteTaskType(req.params.id)
         .then(() => {
             res.status(200).send();
+        })
+        .catch(error => {
+            console.warn(error);
+            res.status(400).send({errors: errors});
+        });
+});
+
+router.put('/start-request/:id', (req,res) => {
+
+    Request
+        .changeStatus(req.params.id, {status: status.PROCESSING})
+        .then(() => {
+            res.status(200).send({
+                isBeginButton: true
+            })
         })
         .catch(error => {
             console.warn(error);

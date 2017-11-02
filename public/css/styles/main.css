@@ -466,6 +466,8 @@ thead {
     margin-right: 10px;
 }
 .print_check .modal-body div {
+    position: relative;
+    float: right;
     margin-bottom: 5px;
 }
 .print_check label {
