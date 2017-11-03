@@ -16,6 +16,22 @@
                 <li class="/admin/chart">
                     <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/chart">Статистика</a>
                 </li>
+            <li>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    Транспортні засоби <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/transport-type">Тип транспортного засобу</a>
+                    </li>
+                    <li>
+                        <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/transport-markk">Марка транспортного засобу</a>
+                    </li>
+                    <li>
+                    <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/transport-model">Модель транспортного засобу</a>
+                    </li>
+                </ul>
+            </li>
                 {/eq}
                 <li>
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">

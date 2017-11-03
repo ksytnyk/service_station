@@ -1016,4 +1016,49 @@ router.put('/start-request/:id', (req,res) => {
         });
 });
 
+router.get('/transport-type', (req, res) => {
+    // User
+    //     .getAllUsers()
+    //     .then(users => {
+            res.render('roles/admin_moderator/transport_type', {
+                // users: users,
+                typeUser: req.session.passport.user.userTypeID
+            });
+        // })
+        // .catch(error => {
+        //     console.warn(error);
+        //     res.render('roles/admin_moderator/users');
+        // });
+});
+
+router.get('/transport-markk', (req, res) => {
+    // User
+    //     .getAllUsers()
+    //     .then(users => {
+            res.render('roles/admin_moderator/transport_markk', {
+                // users: users,
+                typeUser: req.session.passport.user.userTypeID
+            });
+        // })
+        // .catch(error => {
+        //     console.warn(error);
+        //     res.render('roles/admin_moderator/users');
+        // });
+});
+
+router.get('/transport-model', (req, res) => {
+    // User
+    //     .getAllUsers()
+    //     .then(users => {
+            res.render('roles/admin_moderator/transport_model', {
+                // users: users,
+                typeUser: req.session.passport.user.userTypeID
+            });
+        // })
+        // .catch(error => {
+        //     console.warn(error);
+        //     res.render('roles/admin_moderator/users');
+        // });
+});
+
 module.exports = router;

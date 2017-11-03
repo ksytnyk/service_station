@@ -90,7 +90,7 @@
     <script src="/js/components/tasks.js"></script>
     <script src="/js/components/taskTypes.js"></script>
     <script src="/js/components/chart.js"></script>
-    <script src="/js/components/cars.js"></script>
+    <!--<script src="/js/components/cars.js"></script>-->
     <script src="/js/components/globalRequest.js"></script>
     <script src="/js/components/taskType.js"></script>
     <script src="/js/components/setSelect2.js"></script>
