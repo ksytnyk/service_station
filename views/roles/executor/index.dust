@@ -10,7 +10,7 @@
     </div>
 </div>
 
-{>"modal_windows/update_task"/}
-{>"modal_windows/set_task_status_hold"/}
+{>"modal_windows/tasks/update_task"/}
+{>"modal_windows/set_status/set_task_status_hold"/}
 
 {/body}

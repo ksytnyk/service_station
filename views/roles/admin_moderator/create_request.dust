@@ -96,10 +96,10 @@
     </div>
 </div>
 
-{>"modal_windows/create_user"/}
-{>"modal_windows/create_task"/}
-{>"modal_windows/update_task"/}
-{>"modal_windows/delete_task"/}
+{>"modal_windows/users/create_user"/}
+{>"modal_windows/tasks/create_task"/}
+{>"modal_windows/tasks/update_task"/}
+{>"modal_windows/tasks/delete_task"/}
 {>"modal_windows/print_check"/}
 
 {/body}

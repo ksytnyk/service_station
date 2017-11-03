@@ -73,9 +73,9 @@
     </div>
 </div>
 
-{>"modal_windows/create_user"/}
-{>"modal_windows/update_task_type"/}
-{>"modal_windows/delete_task_type"/}
-{>"modal_windows/create_task_type"/}
+{>"modal_windows/users/create_user"/}
+{>"modal_windows/task_types/update_task_type"/}
+{>"modal_windows/task_types/delete_task_type"/}
+{>"modal_windows/task_types/create_task_type"/}
 
 {/body}

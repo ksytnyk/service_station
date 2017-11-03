@@ -72,8 +72,8 @@
     </div>
 </div>
 
-{>"modal_windows/create_user"/}
-{>"modal_windows/update_user"/}
-{>"modal_windows/delete_user"/}
+{>"modal_windows/users/create_user"/}
+{>"modal_windows/users/update_user"/}
+{>"modal_windows/users/delete_user"/}
 
 {/body}

@@ -5,6 +5,7 @@ const Task = require('../../models/Task');
 const Request = require('../../models/Request');
 const TaskType = require('../../models/TaskType');
 const RequestHistory = require('../../models/RequestHistory');
+const TransportType = require('../../models/TransportType');
 
 const express = require('express');
 const router = express.Router();
@@ -1017,18 +1018,18 @@ router.put('/start-request/:id', (req,res) => {
 });
 
 router.get('/transport-type', (req, res) => {
-    // User
-    //     .getAllUsers()
-    //     .then(users => {
+    TransportType
+        .getAllTransportType()
+        .then(transportTypes => {
             res.render('roles/admin_moderator/transport_type', {
-                // users: users,
+                transportTypes: transportTypes,
                 typeUser: req.session.passport.user.userTypeID
             });
-        // })
-        // .catch(error => {
-        //     console.warn(error);
-        //     res.render('roles/admin_moderator/users');
-        // });
+        })
+        .catch(error => {
+            console.warn(error);
+            res.render('roles/admin_moderator/requests/all');
+        });
 });
 
 router.get('/transport-markk', (req, res) => {

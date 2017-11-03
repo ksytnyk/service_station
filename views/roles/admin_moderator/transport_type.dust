@@ -8,7 +8,7 @@
     <div class="col-xs-6" style="padding-left: 0;">
         <a class="btn btn-primary modal-window-link"
            data-toggle="modal"
-           data-target="#createTaskTypeFormModal"
+           data-target="#createTransportTypeFormModal"
            title="Додати тип транспорту">
             Додати тип транспорту
         </a>
@@ -19,49 +19,45 @@
             <tr>
                 <th class="tac" style="width: 15px;">ID</th>
                 <th class="tac">Тип транспорту</th>
-                <th style="width: 50px;"></th>
+                <th style="width: 150px;"></th>
             </tr>
             </thead>
             <tbody>
-            <tr id="idr-task-type-{id}">
-                <th class="tac" scope="row"></th>
-                <td class="tac"></td>
+            {#transportTypes}
+            <tr id="idr-transport-type-{id}">
+                <th class="tac" scope="row">{id}</th>
+                <td class="tac">{transportTypeName}</td>
                 <td class="tac">
                     <a href="#"
                        class="update-task-type modal-window-link"
                        data-toggle="modal"
-                       data-target="#updateTaskTypeFormModal"
+                       data-target="#updateTransportTypeFormModal"
                        data-id="{id}"
-                       data-type-name="{typeName}"
-                       data-type-of-car="{typeOfCar}"
-                       data-car-markk="{carMarkk}"
-                       data-car-model="{carModel}"
-                       data-cost="{cost}"
-                       data-planed-executor-id="{planedExecutorID}"
-                       data-estimation-time="{estimationTime}"
-                       title="Редагувати задачу">
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true" style="font-size: 17px; margin-right: 10px;"/>
+                       data-type-name="{transportTypeName}"
+                       title="Редагувати тип транспорту">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true" style="font-size: 17px;"/>
                     </a>
                     {@eq key=typeUser value=1}
                     <a href="#"
                        class="delete-task-type modal-window-link"
                        data-toggle="modal"
-                       data-target="#deleteTaskTypeFormModal"
+                       data-target="#deleteTransportTypeFormModal"
                        data-id="{id}"
-                       title="Видалити задачу">
+                       title="Видалити тип транспорту">
                         <span class="glyphicon glyphicon-remove" aria-hidden="true" style="font-size: 19px;"/>
                     </a>
                     {/eq}
                 </td>
             </tr>
+            {/transportTypes}
             </tbody>
         </table>
     </div>
 </div>
 
-{>"modal_windows/create_user"/}
-{>"modal_windows/update_task_type"/}
-{>"modal_windows/delete_task_type"/}
-{>"modal_windows/create_task_type"/}
+{>"modal_windows/users/create_user"/}
+{>"modal_windows/transport_types/update_transport_type"/}
+{>"modal_windows/transport_types/delete_transport_type"/}
+{>"modal_windows/transport_types/create_transport_type"/}
 
 {/body}

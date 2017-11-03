@@ -245,11 +245,11 @@
 </div>
 
 {>"modal_windows/print_check"/}
-{>"modal_windows/create_user"/}
-{>"modal_windows/update_task"/}
-{>"modal_windows/delete_task"/}
-{>"modal_windows/delete_request"/}
-{>"modal_windows/set_request_status_canceled"/}
-{>"modal_windows/set_task_status_canceled"/}
+{>"modal_windows/users/create_user"/}
+{>"modal_windows/tasks/update_task"/}
+{>"modal_windows/tasks/delete_task"/}
+{>"modal_windows/requests/delete_request"/}
+{>"modal_windows/set_status/set_request_status_canceled"/}
+{>"modal_windows/set_status/set_task_status_canceled"/}
 
 {/body}

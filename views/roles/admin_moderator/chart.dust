@@ -42,6 +42,6 @@
     <div id="div-for-chart2"></div>
 </div>
 
-{>"modal_windows/create_user"/}
+{>"modal_windows/users/create_user"/}
 
 {/body}

@@ -4,7 +4,7 @@ const Sequelize = require('sequelize');
 const sequelize = require('../connection');
 
 const describeTransportType = {
-    typeName: {
+    transportTypeName: {
         type: Sequelize.STRING,
         field: 'transport_type_name'
     }
@@ -22,8 +22,8 @@ TransportType.getAllTransportType = function () {
     return new Promise((resolve, reject) => {
         TransportType
             .findAll()
-            .then(tasks => {
-                resolve(tasks);
+            .then(result => {
+                resolve(result);
             })
             .catch(error => {
                 console.warn(error);
