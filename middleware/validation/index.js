@@ -4,6 +4,30 @@ const roles = require('../../constants/roles');
 
 module.exports = {
 
+    createAndUpdateTransportMarkk: function (value) {
+        return function (req, res, next) {
+
+            req.checkBody('markkName', '"Назва моделі" - обов\'язкове поле.').notEmpty();
+
+            let errors = req.validationErrors();
+
+            if (errors) {
+                if (value) {
+                    console.warn(errors);
+                    req.flash('error_alert', true);
+                    req.flash('error_msg', errors);
+                    res.redirect('back');
+                } else {
+                    res.status(400).send({
+                        errors: errors
+                    });
+                }
+            } else {
+                next();
+            }
+        };
+    },
+
     createAndUpdateUser: function (value) {
 
         return function (req, res, next) {

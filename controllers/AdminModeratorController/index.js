@@ -6,6 +6,7 @@ const Request = require('../../models/Request');
 const TaskType = require('../../models/TaskType');
 const RequestHistory = require('../../models/RequestHistory');
 const TransportType = require('../../models/TransportType');
+const TransportMarkk = require('../../models/TransportMarkk');
 
 const express = require('express');
 const router = express.Router();
@@ -1083,19 +1084,59 @@ router.delete('/delete-transport-type/:id', (req, res) => {
 });
 
 router.get('/transport-markk', (req, res) => {
-    // User
-    //     .getAllUsers()
-    //     .then(users => {
-            res.render('roles/admin_moderator/transport_markk', {
-                // users: users,
-                typeUser: req.session.passport.user.userTypeID
-            });
-        // })
-        // .catch(error => {
-        //     console.warn(error);
-        //     res.render('roles/admin_moderator/users');
-        // });
+    TransportMarkk
+        .getAllTransportMarkks()
+        .then(markks => {
+            TransportType
+                .getAllTransportType()
+                .then(types => {
+                    res.render('roles/admin_moderator/transport_markk', {
+                        markks: markks,
+                        types: types,
+                        typeUser: req.session.passport.user.userTypeID
+                    });
+                })
+                .catch(error => {
+                    console.warn(error);
+                    res.render('roles/admin_moderator/users');
+                });
+        })
+        .catch(error => {
+            console.warn(error);
+            res.render('roles/admin_moderator/users');
+        });
 });
+
+router.post('/create-transport-markk', validation.createAndUpdateTransportMarkk('create'), (req, res) => {
+    TransportMarkk
+        .createTransportMarkk({markkName: req.body.markkName, typeID: +req.body.typeName})
+        .then(result => {
+
+            if (result.hasResult) {
+                req.flash('success_alert', true);
+                req.flash('success_msg', 'Додавання моделі пройшло успішно.');
+                res.redirect(req.baseUrl + '/transport-markk');
+            }
+            else {
+                var msg = 'Модель "' + req.body.markkName + '" вже існує. Скористайтеся пошуком.';
+                req.flash('error_alert', true);
+                req.flash('error_msg', {msg: msg});
+                res.redirect(req.baseUrl + '/transport-markk');
+            }
+        })
+        .catch(error => {
+            console.warn(error);
+
+            res.redirect(req.baseUrl + '/transport-markk');
+        });
+});
+
+router.put('/update-transport-markk', (req, res) => {
+    console.log(req.body);
+    /*TransportMarkk
+        .updateTransportMarkk()*/
+});
+
 
 router.get('/transport-model', (req, res) => {
     // User
