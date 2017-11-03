@@ -2,8 +2,9 @@
 
 const Sequelize = require('sequelize');
 const sequelize = require('../connection');
-
 const UserType = require('../UserType');
+require('../TransportMarkk');
+require('../TransportType');
 
 const describeUserTable = {
     userName: {

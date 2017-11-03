@@ -1,5 +1,6 @@
 $(document).ready(function () {
 
+    /* ========================= TRANSPORT TYPE ===============*/
     updateTransportType('.update-transport-type');
 
     function updateTransportType(value) {
@@ -90,5 +91,47 @@ $(document).ready(function () {
             }
         });
     });
+
+    /* ========================= TRANSPORT MARKK===============*/
+    //disable input field for create markk
+    $('#typeName').on('change', function () {
+        if($('#typeName').find(":selected").val() !== '') {
+            $('#markkName').prop("disabled", false);
+        } else {
+            $('#markkName').prop("disabled", true);
+        }
+    });
+
+    $('.update-transport-markk').on('click', function () {
+        var markkName = $(this).data('transport-markk-name');
+        var typeID = +$(this).data('transport-type-id');
+        $('#typeNameUpdate').val(typeID).select2();
+        $('#markkNameUpdate').val(markkName);
+    });
+
+    $('.transport-markk-update-button').on('click', function () {
+        event.preventDefault();
+
+        var typeID = $('#typeNameUpdate').find(":selected").val();
+        var markkName = $('#markkNameUpdate').val();
+
+        var dataArr = {
+            markkName: markkName,
+            typeID: typeID
+        };
+
+        console.log(dataArr);
+
+        /*$.ajax({
+            url: getRole(window.location.pathname) + '/update-transport-markk/' + id,
+            type: 'put',
+            data: dataArr,
+            success: function (data) {
+                showSuccessAlert('Редагування задачі пройшло успішно.');
+
+            }
+        })*/
+    });
+
 
 });

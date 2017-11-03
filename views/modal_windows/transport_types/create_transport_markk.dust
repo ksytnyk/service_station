@@ -1,0 +1,38 @@
+{+create_transport_markk}
+<div class="modal fade" id="createTransportMarkkFormModal" role="dialog" aria-labelledby="formModalLabel">
+    <div class="modal-dialog" role="document" style="margin-top: 100px;">
+        <div class="modal-content">
+            <form class="create_task_type" action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/create-transport-markk" method="post">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title text-center">Додати марку</h4>
+                </div>
+                <div class="modal-body clearfix">
+                    <div class="form-group required col-xs-6">
+                        <label>Тип транспорту</label>
+                        <select class="form-control add_select2" name="typeName" id="typeName">
+                            <option value="">Оберіть тип транспорту</option>
+                            {#types}
+                            <option value="{id}">{transportTypeName}</option>
+                            {/types}
+                        </select>
+                    </div>
+                    <div class="form-group required col-xs-6">
+                        <label>Марка автомобіля</label>
+                        <input type="text" class="form-control" id="markkName" name="markkName" disabled>
+                    </div>
+                    <div class="form-group col-xs-6" style="margin-top: 25px;">
+                        <button type="submit" class="btn btn-success width transport-markk-create-button agree">
+                            Додати
+                        </button>
+                        <button class="btn btn-danger pull-right width" data-dismiss="modal">
+                            Закрити
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{/create_transport_markk}
