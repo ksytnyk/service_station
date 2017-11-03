@@ -19,17 +19,17 @@
             <tr>
                 <th class="tac" style="width: 15px;">ID</th>
                 <th class="tac">Тип транспорту</th>
-                <th style="width: 150px;"></th>
+                <th style="width: 75px;"></th>
             </tr>
             </thead>
             <tbody>
             {#transportTypes}
             <tr id="idr-transport-type-{id}">
                 <th class="tac" scope="row">{id}</th>
-                <td class="tac">{transportTypeName}</td>
+                <td>{transportTypeName}</td>
                 <td class="tac">
                     <a href="#"
-                       class="update-task-type modal-window-link"
+                       class="update-transport-type modal-window-link"
                        data-toggle="modal"
                        data-target="#updateTransportTypeFormModal"
                        data-id="{id}"
@@ -39,10 +39,11 @@
                     </a>
                     {@eq key=typeUser value=1}
                     <a href="#"
-                       class="delete-task-type modal-window-link"
+                       class="delete-transport-type modal-window-link"
                        data-toggle="modal"
                        data-target="#deleteTransportTypeFormModal"
                        data-id="{id}"
+                       data-type-name="{transportTypeName}"
                        title="Видалити тип транспорту">
                         <span class="glyphicon glyphicon-remove" aria-hidden="true" style="font-size: 19px;"/>
                     </a>

@@ -219,6 +219,10 @@ TaskType.createTaskType = function (taskType) {
                     });
                 }
             })
+            .catch(error => {
+                console.warn(error);
+                reject(error);
+            });
     });
 };
 

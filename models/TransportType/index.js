@@ -35,10 +35,30 @@ TransportType.getAllTransportType = function () {
 TransportType.createTransportType = function (data) {
     return new Promise((resolve, reject) => {
         TransportType
-            .build(data)
-            .save()
+            .findAll({
+                where: data
+            })
             .then(result => {
-                resolve(result);
+                if (result.length === 0) {
+                    TransportType
+                        .build(data)
+                        .save()
+                        .then(transportType => {
+                            resolve({
+                                transportType: transportType,
+                                hasResult: true
+                            });
+                        })
+                        .catch(error => {
+                            console.warn(error);
+                            reject(error);
+                        });
+                }
+                else {
+                    resolve({
+                        hasResult: false
+                    });
+                }
             })
             .catch(error => {
                 console.warn(error);

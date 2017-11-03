@@ -151,6 +151,31 @@ module.exports = {
                 next();
             }
         }
+    },
+
+    createAndUpdateTransportType: function (value) {
+        return function (req, res, next) {
+
+            req.checkBody('transportTypeName', '"Назва типу транспорту" - обов\'язкове поле.').notEmpty();
+
+            let errors = req.validationErrors();
+
+            if (errors) {
+                console.warn(errors);
+
+                if (value) {
+                    req.flash('error_alert', true);
+                    req.flash('error_msg', errors);
+                    res.redirect(req.baseUrl + '/transport-type');
+                } else {
+                    res.status(400).send({
+                        errors: errors
+                    });
+                }
+            } else {
+                next();
+            }
+        }
     }
 };
 

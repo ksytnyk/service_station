@@ -1017,6 +1017,7 @@ router.put('/start-request/:id', (req,res) => {
         });
 });
 
+/* ============== TRANSPORT TYPE ============== */
 router.get('/transport-type', (req, res) => {
     TransportType
         .getAllTransportType()
@@ -1029,6 +1030,55 @@ router.get('/transport-type', (req, res) => {
         .catch(error => {
             console.warn(error);
             res.render('roles/admin_moderator/requests/all');
+        });
+});
+
+router.post('/create-transport-type', validation.createAndUpdateTransportType('create'), (req, res) => {
+    TransportType
+        .createTransportType(req.body)
+        .then((result) => {
+            if (result.hasResult) {
+                req.flash('success_alert', true);
+                req.flash('success_msg', 'Додавання типу транспорту пройшло успішно.');
+                res.redirect(req.baseUrl + '/transport-type');
+            }
+            else {
+                var msg = 'Тип транспорту "' + req.body.transportTypeName + '" вже існує. Скористайтеся пошуком.';
+
+                req.flash('error_alert', true);
+                req.flash('error_msg', {msg: msg});
+                res.redirect(req.baseUrl + '/transport-type');
+            }
+        })
+        .catch(error => {
+            console.warn(error);
+            req.flash('error_alert', true);
+            req.flash('error_msg', {msg: 'Виникла помилка при додаванні типу транспорту.'});
+            res.redirect(req.baseUrl + '/transport-type');
+        });
+});
+
+router.put('/update-transport-type/:id', validation.createAndUpdateTransportType(), (req, res) => {
+    TransportType
+        .updateTransportType(req.params.id, req.body)
+        .then(() => {
+            res.status(200).send();
+        })
+        .catch(errors => {
+            console.warn(errors);
+            res.status(400).send({errors: errors});
+        });
+});
+
+router.delete('/delete-transport-type/:id', (req, res) => {
+    TransportType
+        .deleteTransportType(req.params.id)
+        .then(() => {
+            res.status(200).send();
+        })
+        .catch(error => {
+            console.warn(error);
+            res.status(400).send({errors: errors});
         });
 });
 

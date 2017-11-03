@@ -30,6 +30,7 @@
         <link rel="stylesheet" href="/css/styles/chart.css">
         <link rel="stylesheet" href="/css/styles/task_type.css">
         <link rel="stylesheet" href="/css/styles/print.css">
+        <link rel="stylesheet" href="/css/styles/transport.css">
     {/lt}
 
     {@eq key=typeUser value=6}
@@ -95,6 +96,7 @@
     <script src="/js/components/taskType.js"></script>
     <script src="/js/components/setSelect2.js"></script>
     <script src="/js/components/check.js"></script>
+<script src="/js/components/transport.js"></script>
 {/lt}
 
 {@eq key=typeUser value=6}

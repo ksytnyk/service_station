@@ -1,0 +1,11 @@
+.transport_type .update-transport-type,
+.transport_type .delete-transport-type {
+    display: inline-block;
+}
+.transport_type .update-transport-type {
+    margin-right: 25px;
+}
+.transport_type .update-transport-type span,
+.transport_type .delete-transport-type span {
+    margin: 0;
+}
