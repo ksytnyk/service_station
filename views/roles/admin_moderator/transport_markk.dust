@@ -24,9 +24,9 @@
             </thead>
             <tbody>
             {#markks}
-            <tr id="idr-task-type-{id}">
+            <tr id="idr-transport-markk-{id}">
                 <th class="tac" scope="row">{id}</th>
-                <td class="tac">{markkName}</td>
+                <td>{markkName}</td>
                 <td class="tac">
                     <a href="#"
                        class="update-transport-markk modal-window-link"
@@ -36,7 +36,7 @@
                        data-transport-markk-name="{markkName}"
                        data-transport-type-id="{typeID}"
                        title="Редагувати марку">
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true" style="font-size: 17px; margin-right: 10px;"/>
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true" style="font-size: 17px;"/>
                     </a>
                     {@eq key=typeUser value=1}
                     <a href="#"

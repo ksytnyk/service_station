@@ -1131,10 +1131,18 @@ router.post('/create-transport-markk', validation.createAndUpdateTransportMarkk(
         });
 });
 
-router.put('/update-transport-markk', (req, res) => {
+router.put('/update-transport-markk/:id', (req, res) => {
     console.log(req.body);
-    /*TransportMarkk
-        .updateTransportMarkk()*/
+
+    TransportMarkk
+        .updateTransportMarkk(req.params.id, req.body)
+        .then(() => {
+            res.status(200).send();
+        })
+        .catch(errors => {
+            console.warn(errors);
+            res.status(400).send({errors: errors});
+        });
 });
 
 

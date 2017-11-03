@@ -8,7 +8,7 @@
                             aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title text-center">Редагувати модель</h4>
                 </div>
-                <input type="hidden" id="update-form-id" name="id">
+                <input type="hidden" id="transport-markk-id" name="id">
                 <div class="modal-body clearfix">
                     <div class="form-group required col-xs-6">
                         <label>Тип транспорту</label>
@@ -24,8 +24,8 @@
                         <input type="text" class="form-control" id="markkNameUpdate" name="markkName">
                     </div>
                     <div class="form-group col-xs-6" style="margin-top: 25px;">
-                        <button type="submit" class="btn btn-success width transport-markk-update-button agree">
-                            Додати
+                        <button class="btn btn-success width transport-markk-update-button agree">
+                            Змінити
                         </button>
                         <button class="btn btn-danger pull-right width" data-dismiss="modal">
                             Закрити

@@ -105,8 +105,10 @@ $(document).ready(function () {
     $('.update-transport-markk').on('click', function () {
         var markkName = $(this).data('transport-markk-name');
         var typeID = +$(this).data('transport-type-id');
+        var id = +$(this).data('id');
         $('#typeNameUpdate').val(typeID).select2();
         $('#markkNameUpdate').val(markkName);
+        $('#transport-markk-id').val(id);
     });
 
     $('.transport-markk-update-button').on('click', function () {
@@ -114,23 +116,59 @@ $(document).ready(function () {
 
         var typeID = $('#typeNameUpdate').find(":selected").val();
         var markkName = $('#markkNameUpdate').val();
+        var id = +$('#transport-markk-id').val();
 
         var dataArr = {
             markkName: markkName,
             typeID: typeID
         };
 
-        console.log(dataArr);
+        console.log(dataArr, id);
 
-        /*$.ajax({
+        $.ajax({
             url: getRole(window.location.pathname) + '/update-transport-markk/' + id,
             type: 'put',
             data: dataArr,
             success: function (data) {
-                showSuccessAlert('Редагування задачі пройшло успішно.');
+                showSuccessAlert('Редагування марки пройшло успішно.');
+                $('.in .close').click();
 
+                var idr = "#idr-transport-markk-" + id;
+                var newTransportMarkk,
+                    newTransportMarkk1 = '',
+                    newTransportMarkk2 = '</td>';
+
+                newTransportMarkk = '' +
+                    '<th class="tac" scope="row">' + id + '</th>' +
+                    '<td>' + markkName + '</td>' +
+                    '<td class="tac">' +
+                    '<a href="#" class="update-transport-name modal-window-link"' +
+                    ' data-toggle="modal" data-target="#updateTransportMarkkFormModal" title="Редагувати марку транспорту"' +
+                    ' data-id="' + id + '"' +
+                    ' data-type-name="' + markkName + '">' +
+                    '<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="font-size: 17px;"/>' +
+                    '</a>';
+
+                if (getRole(window.location.pathname) === '/admin') {
+                    newTransportMarkk1 = '' +
+                        '<a href="#" class="delete-transport-type modal-window-link"' +
+                        ' data-toggle="modal" data-target="#deleteTransportTypeFormModal" title="Видалити марку транспорту"' +
+                        ' data-id="' + id + '"' +
+                        ' data-type-name="' + markkName + '">' +
+                        '<span class="glyphicon glyphicon-remove" aria-hidden="true" style="font-size: 19px;"></span>' +
+                        '</a>';
+                }
+
+                $(idr).empty().append(newTransportMarkk + newTransportMarkk1 + newTransportMarkk2);
+
+                updateTransportType(idr + ' .update-transport-markk');
+                deleteTransportType(idr + ' .delete-transport-markk');
+            },
+            error: function (err) {
+                $('.in .close').click();
+                showErrorAlert(err);
             }
-        })*/
+        })
     });
 
 
