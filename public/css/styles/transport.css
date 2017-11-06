@@ -1,11 +1,16 @@
 .transport_type .update-transport-type,
-.transport_type .delete-transport-type {
+.transport_type .delete-transport-type,
+.transport_model .update-transport-model,
+.transport_model .delete-transport-model {
     display: inline-block;
 }
-.transport_type .update-transport-type {
+.transport_type .update-transport-type,
+.transport_model .update-transport-model {
     margin-right: 25px;
 }
 .transport_type .update-transport-type span,
-.transport_type .delete-transport-type span {
+.transport_type .delete-transport-type span,
+.transport_model .update-transport-model span,
+.transport_model .delete-transport-model span {
     margin: 0;
 }

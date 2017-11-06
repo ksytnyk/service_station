@@ -20,7 +20,7 @@ $(document).ready(function () {
             type: 'put',
             data: dataArr,
             success: function () {
-                showSuccessAlert('Редагування задачі пройшло успішно.');
+                showSuccessAlert('Редагування типу транспорту пройшло успішно.');
 
                 $('.in .close').click();
 
@@ -79,7 +79,7 @@ $(document).ready(function () {
             url: getRole(window.location.pathname) + '/delete-transport-type/' + transportTypeID,
             type: 'delete',
             success: function () {
-                showSuccessAlert('Видалення задачі пройшло успішно.');
+                showSuccessAlert('Видалення типу транспорту пройшло успішно.');
 
                 $('.in .close').click();
                 var idr = "#idr-transport-type-" + transportTypeID;
@@ -190,6 +190,102 @@ $(document).ready(function () {
 
                 $('.in .close').click();
                 var idr = "#idr-transport-markk-" + transportMarkkID;
+                $(idr).remove();
+            },
+            error: function (err) {
+                $('.in .close').click();
+                showErrorAlert(err);
+            }
+        });
+    });
+
+    /* =============== TRANSPORT MODEL =============== */
+    updateTransportModel('.update-transport-model');
+
+    function updateTransportModel(value) {
+        $(value).on('click', function () {
+            $('#update-form-id').val($(this).data('id'));
+            $('#transportMarkkID').val($(this).data('markk-id')).select2();
+            $('#update-form-model-name').val($(this).data('model-name'));
+        });
+    }
+
+    $('.transport-model-update-button').on('click', function (event) {
+        event.preventDefault();
+
+        var dataArr = $('#transport-model-update-form').serializeArray();
+
+        $.ajax({
+            url: getRole(window.location.pathname) + '/update-transport-model/' + dataArr[0].value,
+            type: 'put',
+            data: dataArr,
+            success: function () {
+                showSuccessAlert('Редагування моделі транспорту пройшло успішно.');
+
+                $('.in .close').click();
+
+                var idr = "#idr-transport-model-" + dataArr[0].value;
+                var newTransportType,
+                    newTransportType1 = '',
+                    newTransportType2 = '</td>';
+
+                console.log( dataArr );
+
+                newTransportType = '' +
+                    '<th class="tac" scope="row">' + dataArr[0].value + '</th>' +
+                    '<td>' + dataArr[2].value + '</td>' +
+                    '<td class="tac">' +
+                    '<a href="#" class="update-transport-model modal-window-link"' +
+                    ' data-toggle="modal" data-target="#updateTransportModelFormModal" title="Редагувати модель транспорту"' +
+                    ' data-id="' + dataArr[0].value + '"' +
+                    ' data-model-name="' + dataArr[2].value + '"' +
+                    ' data-markk-id="' + dataArr[1].value + '">' +
+                    '<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="font-size: 17px;"/>' +
+                    '</a>';
+
+                if (getRole(window.location.pathname) === '/admin') {
+                    newTransportType1 = '' +
+                        '<a href="#" class="delete-transport-model modal-window-link"' +
+                        ' data-toggle="modal" data-target="#deleteTransportModelFormModal" title="Видалити модель транспорту"' +
+                        ' data-id="' + dataArr[0].value + '"' +
+                        ' data-model-name="' + dataArr[2].value + '">' +
+                        '<span class="glyphicon glyphicon-remove" aria-hidden="true" style="font-size: 19px;"></span>' +
+                        '</a>';
+                }
+
+                $(idr).empty().append(newTransportType + newTransportType1 + newTransportType2);
+
+                updateTransportModel(idr + ' .update-transport-model');
+                deleteTransportModel(idr + ' .delete-transport-model');
+            },
+            error: function (err) {
+                $('.in .close').click();
+                showErrorAlert(err);
+            }
+        });
+    });
+
+    deleteTransportModel('.delete-transport-model');
+
+    function deleteTransportModel(value) {
+        $(value).on('click', function () {
+            $('#delete-transport-model-button').attr('transport-model-id', ($(this).data('id')));
+            $('#delete-transport-model-name').html($(this).data('model-name'));
+        });
+    }
+
+    $('#delete-transport-model-button').on('click', function () {
+
+        var transportModelID = $(this).attr('transport-model-id');
+
+        $.ajax({
+            url: getRole(window.location.pathname) + '/delete-transport-model/' + transportModelID,
+            type: 'delete',
+            success: function () {
+                showSuccessAlert('Видалення моделі транспорту пройшло успішно.');
+
+                $('.in .close').click();
+                var idr = "#idr-transport-model-" + transportModelID;
                 $(idr).remove();
             },
             error: function (err) {

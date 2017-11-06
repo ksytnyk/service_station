@@ -200,6 +200,32 @@ module.exports = {
                 next();
             }
         }
+    },
+
+    createAndUpdateTransportModel: function (value) {
+        return function (req, res, next) {
+
+            req.checkBody('transportMarkkID', '"Назва марки транспорту" - обов\'язкове поле.').notEmpty();
+            req.checkBody('transportModelName', '"Назва моделі транспорту" - обов\'язкове поле.').notEmpty();
+
+            let errors = req.validationErrors();
+
+            if (errors) {
+                console.warn(errors);
+
+                if (value) {
+                    req.flash('error_alert', true);
+                    req.flash('error_msg', errors);
+                    res.redirect(req.baseUrl + '/transport-model');
+                } else {
+                    res.status(400).send({
+                        errors: errors
+                    });
+                }
+            } else {
+                next();
+            }
+        }
     }
 };
 

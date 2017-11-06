@@ -7,6 +7,7 @@ const TaskType = require('../../models/TaskType');
 const RequestHistory = require('../../models/RequestHistory');
 const TransportType = require('../../models/TransportType');
 const TransportMarkk = require('../../models/TransportMarkk');
+const TransportModel = require('../../models/TransportModel');
 
 const express = require('express');
 const router = express.Router();
@@ -1077,12 +1078,13 @@ router.delete('/delete-transport-type/:id', (req, res) => {
         .then(() => {
             res.status(200).send();
         })
-        .catch(error => {
-            console.warn(error);
+        .catch(errors => {
+            console.warn(errors);
             res.status(400).send({errors: errors});
         });
 });
 
+/* ============== TRANSPORT MARKK ============== */
 router.get('/transport-markk', (req, res) => {
     TransportMarkk
         .getAllTransportMarkks()
@@ -1114,11 +1116,11 @@ router.post('/create-transport-markk', validation.createAndUpdateTransportMarkk(
 
             if (result.hasResult) {
                 req.flash('success_alert', true);
-                req.flash('success_msg', 'Додавання моделі пройшло успішно.');
+                req.flash('success_msg', 'Додавання марки транспорту пройшло успішно.');
                 res.redirect(req.baseUrl + '/transport-markk');
             }
             else {
-                var msg = 'Модель "' + req.body.markkName + '" вже існує. Скористайтеся пошуком.';
+                var msg = 'Марка транспорту "' + req.body.markkName + '" вже існує. Скористайтеся пошуком.';
                 req.flash('error_alert', true);
                 req.flash('error_msg', {msg: msg});
                 res.redirect(req.baseUrl + '/transport-markk');
@@ -1132,8 +1134,6 @@ router.post('/create-transport-markk', validation.createAndUpdateTransportMarkk(
 });
 
 router.put('/update-transport-markk/:id', (req, res) => {
-    console.log(req.body);
-
     TransportMarkk
         .updateTransportMarkk(req.params.id, req.body)
         .then(() => {
@@ -1157,19 +1157,78 @@ router.delete('/delete-transport-markk/:id', (req, res) => {
         });
 });
 
+/* ============== TRANSPORT MODEL ============== */
 router.get('/transport-model', (req, res) => {
-    // User
-    //     .getAllUsers()
-    //     .then(users => {
-            res.render('roles/admin_moderator/transport_model', {
-                // users: users,
-                typeUser: req.session.passport.user.userTypeID
-            });
-        // })
-        // .catch(error => {
-        //     console.warn(error);
-        //     res.render('roles/admin_moderator/users');
-        // });
+    TransportModel
+        .getAllTransportModel()
+        .then(transportModels => {
+            TransportMarkk
+                .getAllTransportMarkks()
+                .then(transportMarkks => {
+                    res.render('roles/admin_moderator/transport_model', {
+                        transportModels: transportModels,
+                        transportMarkks: transportMarkks,
+                        typeUser: req.session.passport.user.userTypeID
+                    });
+                })
+                .catch(error => {
+                    console.warn(error);
+                    res.render('roles/admin_moderator/requests/all');
+                });
+        })
+        .catch(error => {
+            console.warn(error);
+            res.render('roles/admin_moderator/requests/all');
+        });
+});
+
+router.post('/create-transport-model', validation.createAndUpdateTransportModel('create'), (req, res) => {
+    TransportModel
+        .createTransportModel(req.body)
+        .then((result) => {
+            if (result.hasResult) {
+                req.flash('success_alert', true);
+                req.flash('success_msg', 'Додавання моделі транспорту пройшло успішно.');
+                res.redirect(req.baseUrl + '/transport-model');
+            }
+            else {
+                var msg = 'Модель транспорту "' + req.body.transportTypeName + '" вже існує. Скористайтеся пошуком.';
+
+                req.flash('error_alert', true);
+                req.flash('error_msg', {msg: msg});
+                res.redirect(req.baseUrl + '/transport-model');
+            }
+        })
+        .catch(error => {
+            console.warn(error);
+            req.flash('error_alert', true);
+            req.flash('error_msg', {msg: 'Виникла помилка при додаванні моделі транспорту.'});
+            res.redirect(req.baseUrl + '/transport-model');
+        });
+});
+
+router.put('/update-transport-model/:id', validation.createAndUpdateTransportModel(), (req, res) => {
+    TransportModel
+        .updateTransportModel(req.params.id, req.body)
+        .then(() => {
+            res.status(200).send();
+        })
+        .catch(errors => {
+            console.warn(errors);
+            res.status(400).send({errors: errors});
+        });
+});
+
+router.delete('/delete-transport-model/:id', (req, res) => {
+    TransportModel
+        .deleteTransportModel(req.params.id)
+        .then(() => {
+            res.status(200).send();
+        })
+        .catch(errors => {
+            console.warn(errors);
+            res.status(400).send({errors: errors});
+        });
 });
 
 module.exports = router;

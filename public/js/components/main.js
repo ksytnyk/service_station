@@ -41,7 +41,7 @@ $(document).ready(function () {
     headerFix();
 
     $('.hide_alert').on('click', function () {
-        $('.alert').css('left', '-60vw');
+        $('.alert').css('left', '-65vw');
     });
 
     setTimeout(function () {
@@ -118,6 +118,7 @@ function getRole(pathname) {
 }
 
 function showSuccessAlert(message) {
+    $('.hide_alert').trigger('click');
     $('.alerts-success-info').css({
         "display": "block",
         "left": "15px"
@@ -131,6 +132,7 @@ function showSuccessAlert(message) {
 }
 
 function showErrorAlert(err) {
+    $('.hide_alert').trigger('click');
     $('.alerts-errors-info').css({
         "display": "block",
         "left": "15px"
