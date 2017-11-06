@@ -1,4 +1,4 @@
-{+delete_task_type}
+{+delete_transport_type}
 <div class="modal fade" id="deleteTransportTypeFormModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel">
     <div class="modal-dialog delete_form" role="document">
         <div class="modal-content">
@@ -16,4 +16,4 @@
         </div>
     </div>
 </div>
-{/delete_task_type}
+{/delete_transport_type}

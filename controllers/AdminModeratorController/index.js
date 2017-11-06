@@ -1145,6 +1145,17 @@ router.put('/update-transport-markk/:id', (req, res) => {
         });
 });
 
+router.delete('/delete-transport-markk/:id', (req, res) => {
+    TransportMarkk
+        .deleteTransportMarkk(req.params.id)
+        .then(() => {
+            res.status(200).send();
+        })
+        .catch(error => {
+            console.warn(error);
+            res.status(400).send({errors: errors});
+        });
+});
 
 router.get('/transport-model', (req, res) => {
     // User

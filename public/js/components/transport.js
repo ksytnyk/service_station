@@ -123,8 +123,6 @@ $(document).ready(function () {
             typeID: typeID
         };
 
-        console.log(dataArr, id);
-
         $.ajax({
             url: getRole(window.location.pathname) + '/update-transport-markk/' + id,
             type: 'put',
@@ -171,5 +169,33 @@ $(document).ready(function () {
         })
     });
 
+    deleteTransportMarkk('.delete-transport-markk');
 
+    function deleteTransportMarkk(value) {
+        $(value).on('click', function () {
+            $('#delete-transport-markk-button').attr('transport-markk-id', ($(this).data('id')));
+            $('#delete-transport-markk-name').html($(this).data('markk-name'));
+        });
+    }
+
+    $('#delete-transport-markk-button').on('click', function () {
+
+        var transportMarkkID =  $(this).attr('transport-markk-id');
+
+        $.ajax({
+            url: getRole(window.location.pathname) + '/delete-transport-markk/' + transportMarkkID,
+            type: 'delete',
+            success: function () {
+                showSuccessAlert('Видалення марки пройшло успішно.');
+
+                $('.in .close').click();
+                var idr = "#idr-transport-markk-" + transportMarkkID;
+                $(idr).remove();
+            },
+            error: function (err) {
+                $('.in .close').click();
+                showErrorAlert(err);
+            }
+        });
+    });
 });

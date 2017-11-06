@@ -69,7 +69,6 @@ TransportMarkk.createTransportMarkk = function (data) {
             .then(count => {
                 console.log('resss', count);
                 if(count===0) {
-                    console.log('OKKK!!');
                     TransportMarkk
                         .build(data)
                         .save()

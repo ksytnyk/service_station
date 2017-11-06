@@ -40,10 +40,11 @@
                     </a>
                     {@eq key=typeUser value=1}
                     <a href="#"
-                       class="delete-task-type modal-window-link"
+                       class="delete-transport-markk modal-window-link"
                        data-toggle="modal"
                        data-target="#deleteTransportMarkkFormModal"
                        data-id="{id}"
+                       data-markk-name="{markkName}"
                        title="Видалити марку">
                         <span class="glyphicon glyphicon-remove" aria-hidden="true" style="font-size: 19px;"/>
                     </a>
@@ -59,4 +60,5 @@
 {>"modal_windows/users/create_user"/}
 {>"modal_windows/transport_types/create_transport_markk"/}
 {>"modal_windows/transport_types/update_transport_markk"/}
+{>"modal_windows/transport_types/delete_transport_markk"/}
 {/body}
