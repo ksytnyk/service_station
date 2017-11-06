@@ -1021,6 +1021,7 @@ router.put('/start-request/:id', (req,res) => {
 
 /* ============== TRANSPORT TYPE ============== */
 router.get('/transport-type', (req, res) => {
+    console.log('1111111111111111111');
     TransportType
         .getAllTransportType()
         .then(transportTypes => {
@@ -1228,6 +1229,44 @@ router.delete('/delete-transport-model/:id', (req, res) => {
         .catch(errors => {
             console.warn(errors);
             res.status(400).send({errors: errors});
+        });
+});
+
+//for create request page
+
+router.get('/get-transport-type', (req, res) => {
+    TransportType
+        .getAllTransportType()
+        .then(transportTypes => {
+            res.status(200).send(transportTypes);
+        })
+        .catch(errors => {
+            console.warn(errors);
+            res.status(400).send({errors: errors});
+        });
+});
+
+router.get('/get-transport-markk/:id', (req, res) => {
+    TransportMarkk
+        .getTransportMarkksOfTypeID(req.params.id)
+        .then(markks => {
+            res.status(200).send(markks);
+        })
+        .catch(errors => {
+            console.warn(errors);
+            res.status(400).send({errors: errors});
+        });
+});
+
+router.get('/get-transport-model/:id', (req, res) => {
+    TransportModel
+        .getTransportModelOfMarkkID(req.params.id)
+        .then(transportModels => {
+            res.status(200).send(transportModels)
+        })
+        .catch(errors => {
+            console.warn(errors);
+            res.send(400).send({errors: errors});
         });
 });
 

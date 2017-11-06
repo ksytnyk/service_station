@@ -36,6 +36,24 @@ TransportModel.getAllTransportModel = function () {
     });
 };
 
+TransportModel.getTransportModelOfMarkkID = function (transportMarkkID) {
+    return new Promise((resolve, reject) => {
+        TransportModel
+            .findAll({
+                where: {
+                    transportMarkkID: transportMarkkID
+                }
+            })
+            .then(markks => {
+                resolve(markks);
+            })
+            .catch(error => {
+                console.warn(error);
+                reject(error);
+            });
+    });
+};
+
 TransportModel.createTransportModel = function (data) {
     return new Promise((resolve, reject) => {
         TransportModel

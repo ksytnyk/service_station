@@ -33,26 +33,26 @@ $(document).ready(() => {
 
     function getTypes(idItem) {
         $.ajax({
-            url: "https://api.auto.ria.com/categories"
-        }).done((result) => {
-            renderTypes(result, idItem);
+            url: getRole(window.location.pathname) + '/get-transport-type',
+            type: 'get',
+            headers: {
+                'charset': 'UTF-8',
+                'Content-Type': 'application/json',
+            },
+            success: function (data) {
+                renderTypes(data, idItem);
+            }
         })
     }
 
-    function renderTypes(Types, idItem) {
-        let newTypes = [Types[0], Types[1], Types[5], Types[6]];
+    function renderTypes(types, idItem) {
 
-        newTypes[0].nameUK = "Легкові автомобілі";
-        newTypes[1].nameUK = "Мотоцикли";
-        newTypes[2].nameUK = "Вантажні автомобілі";
-        newTypes[3].nameUK = "Автобуси";
-
-        newTypes.forEach(item => {
-            let option = "<option id='" + item.name + "' value='" + item.name + "' data-id='" + item.value + "'",
+        types.forEach(item => {
+            let option = "<option value='" + item.id + "'",
                 option1 = "",
-                option2 = ">" + item.nameUK + "</option>";
+                option2 = ">" + item.transportTypeName + "</option>";
 
-            if ( $('#typeOfCar').attr('default-value') === item.name ) {
+            if ( $('#typeOfCar').attr('default-value') === item.id ) {
                 option1 = " selected";
             }
 
@@ -60,42 +60,46 @@ $(document).ready(() => {
         });
 
         $("#typeOfCar" + idItem).select2();
-        $("#typeOfCar").change();
     }
 
     let link;
 
     function getMarkks(markk, idItem) {
-        link = "https://api.auto.ria.com/categories/" + $('#' + markk.value).data('id') + "/marks";
-
         $.ajax({
-            url: link
+            url: getRole(window.location.pathname) + '/get-transport-markk/' + markk.value,
+            type: 'get',
         }).done((result) => {
+            console.log(result);
             renderMarkks(result, idItem)
         })
     }
 
-    function renderMarkks(Markk, idItem) {
-        $("#markk" + idItem).append("<option value=''>Оберіть марку транспорту</option>").select2();
+    function renderMarkks(markk, idItem) {
+        $("#markk" + idItem).append("<option value=''>Оберіть марку транспорту</option>");
 
-        Markk.forEach(item => {
-            $("#markk" + idItem).append("<option id='" + item.name.replace(/\s+/g, '-') + "' value='" + item.name.replace(/\s+/g, '-') + "' data-id='" + item.value + "'>" + item.name + "</option>")
+        markk.forEach(item => {
+            $("#markk" + idItem).append("<option value='" + item.id + "'>" + item.markkName + "</option>")
         });
+
+        $("#markk" + idItem).select2();
     }
 
-    function getModels(Model, idItem) {
+    function getModels(model, idItem) {
         $.ajax({
-            url: link + "/" + $('#' + Model.value).data('id') + "/models"
+            url: getRole(window.location.pathname) + '/get-transport-model/' + model.value,
+            type: 'get',
         }).done((result) => {
+            console.log(result);
             renderModels(result, idItem)
         })
     }
 
-    function renderModels(Models, idItem) {
-        $("#model" + idItem).append("<option value=''>Оберіть модель транспорту</option>").select2();
+    function renderModels(models, idItem) {
+        $("#model" + idItem).append("<option value=''>Оберіть модель транспорту</option>");
 
-        Models.forEach(item => {
-            $("#model" + idItem).append("<option value='" + item.name + "' attr-id='" + item.value + "' >" + item.name + "</option>")
+        models.forEach(item => {
+            $("#model" + idItem).append("<option value='" + item.id + "'>" + item.transportModelName + "</option>")
         });
+        $("#model" + idItem).select2();
     }
-});
+})
