@@ -65,13 +65,14 @@ $(document).ready(() => {
     let link;
 
     function getMarkks(markk, idItem) {
-        $.ajax({
-            url: getRole(window.location.pathname) + '/get-transport-markk/' + markk.value,
-            type: 'get',
-        }).done((result) => {
-            console.log(result);
-            renderMarkks(result, idItem)
-        })
+        if ( markk.value !== 'default' ) {
+            $.ajax({
+                url: getRole(window.location.pathname) + '/get-transport-markk/' + markk.value,
+                type: 'get',
+            }).done((result) => {
+                renderMarkks(result, idItem)
+            })
+        }
     }
 
     function renderMarkks(markk, idItem) {
@@ -89,7 +90,6 @@ $(document).ready(() => {
             url: getRole(window.location.pathname) + '/get-transport-model/' + model.value,
             type: 'get',
         }).done((result) => {
-            console.log(result);
             renderModels(result, idItem)
         })
     }

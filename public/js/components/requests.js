@@ -210,6 +210,7 @@ $(document).ready(function () {
     setGiveOut('.set_give_out');
 
     var addNewUser;
+    var addNewTypeOfCar;
     var isFirstUpdateRequestOpen = true;
 
     $('#add_new_user').on('click', function () {
@@ -222,6 +223,17 @@ $(document).ready(function () {
 
     $('.create_request #customers').on('select2:closing', function () {
         addNewUser = $('.select2-search__field')[0].value.split(' ');
+    });
+
+    $('#add_new_type_of_car').on('click', function () {
+        if (addNewTypeOfCar) {
+            $('#createTransportTypeFormModal input[name=transportTypeName]').val(addNewTypeOfCar[0]);
+        }
+        $('#createTransportTypeFormModal').modal('toggle');
+    });
+
+    $('.create_request #typeOfCar').on('select2:closing', function () {
+        addNewTypeOfCar = $('.select2-search__field')[0].value.split(' ');
     });
 
     $('.update_request #customers').on('select2:closing', function () {

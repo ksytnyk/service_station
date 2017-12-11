@@ -8,9 +8,15 @@
     <form class="clearfix" id="createRequestForm">
         <div class="form-group required col-xs-3">
             <label>Тип транспорту</label>
-            <select class="form-control disable_input" name="typeOfCar" id="typeOfCar">
-                <option value="default">Оберіть тип транспорту</option>
-            </select>
+            <div class="input-group">
+                <select class="form-control disable_input" name="typeOfCar" id="typeOfCar" style="width: 99%;">
+                    <option value="default">Оберіть тип транспорту</option>
+                </select>
+                <span class="input-group-addon plus disable_input" id="add_new_type_of_car">
+                <span class="glyphicon glyphicon-plus disable_input" aria-hidden="true" style="margin: 0;"
+                      title="Додати нового користувача"></span>
+            </span>
+            </div>
         </div>
         <div class="form-group required col-xs-3">
             <label>Марка транспорту</label>
@@ -101,5 +107,6 @@
 {>"modal_windows/tasks/update_task"/}
 {>"modal_windows/tasks/delete_task"/}
 {>"modal_windows/print_check"/}
+{>"modal_windows/transport_types/create_transport_type"/}
 
 {/body}

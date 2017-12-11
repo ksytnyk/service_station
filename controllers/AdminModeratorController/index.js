@@ -1021,7 +1021,6 @@ router.put('/start-request/:id', (req,res) => {
 
 /* ============== TRANSPORT TYPE ============== */
 router.get('/transport-type', (req, res) => {
-    console.log('1111111111111111111');
     TransportType
         .getAllTransportType()
         .then(transportTypes => {
@@ -1043,21 +1042,21 @@ router.post('/create-transport-type', validation.createAndUpdateTransportType('c
             if (result.hasResult) {
                 req.flash('success_alert', true);
                 req.flash('success_msg', 'Додавання типу транспорту пройшло успішно.');
-                res.redirect(req.baseUrl + '/transport-type');
+                res.redirect('back');
             }
             else {
                 var msg = 'Тип транспорту "' + req.body.transportTypeName + '" вже існує. Скористайтеся пошуком.';
 
                 req.flash('error_alert', true);
                 req.flash('error_msg', {msg: msg});
-                res.redirect(req.baseUrl + '/transport-type');
+                res.redirect('back');
             }
         })
         .catch(error => {
             console.warn(error);
             req.flash('error_alert', true);
             req.flash('error_msg', {msg: 'Виникла помилка при додаванні типу транспорту.'});
-            res.redirect(req.baseUrl + '/transport-type');
+            res.redirect('back');
         });
 });
 
