@@ -216,6 +216,7 @@ router.get('/create-request', (req, res) => {
 
 router.post('/create-request', validation.createAndUpdateRequest(), (req, res) => {
     req.body.createdBy = req.session.passport.user.id;
+
     Request
         .createRequest(req.body)
         .then((result) => {
@@ -251,7 +252,7 @@ router.get('/requests/update-request/:id', (req, res) => {
                                 .getAllTasksOfRequest(req.params.id)
                                 .then(task => {
                                     TaskType
-                                        .getTaskTypesByCarAttributes(request[0].dataValues.typeOfCar, request[0].dataValues.carMarkk, request[0].dataValues.carModel)
+                                        .getTaskTypesByCarAttributes(request[0].dataValues.transportTypeID, request[0].transportMarkkID, request[0].dataValues.transport_model.dataValues.id)
                                         .then(taskTypes => {
                                             User
                                                 .getUserById(request[0].dataValues.customerID)
@@ -259,6 +260,7 @@ router.get('/requests/update-request/:id', (req, res) => {
                                                     Request
                                                         .getRequestsWithoutCondition()
                                                         .then(requests => {
+
                                                             res.render('roles/admin_moderator/update_request', {
                                                                 requests: requests,
                                                                 customer: customer,
@@ -1129,7 +1131,7 @@ router.get('/transport-markk', (req, res) => {
 
 router.post('/create-transport-markk', validation.createAndUpdateTransportMarkk('create'), (req, res) => {
     TransportMarkk
-        .createTransportMarkk({markkName: req.body.markkName, typeID: +req.body.typeName})
+        .createTransportMarkk({transportMarkkName: req.body.transportMarkkName, transportTypeID: +req.body.transportTypeName})
         .then(result => {
 
             if (result.hasResult) {
@@ -1138,7 +1140,7 @@ router.post('/create-transport-markk', validation.createAndUpdateTransportMarkk(
                 res.redirect('back');
             }
             else {
-                var msg = 'Марка транспорту "' + req.body.markkName + '" вже існує. Скористайтеся пошуком.';
+                var msg = 'Марка транспорту "' + req.body.transportMarkkName + '" вже існує. Скористайтеся пошуком.';
                 req.flash('error_alert', true);
                 req.flash('error_msg', {msg: msg});
                 res.redirect('back');

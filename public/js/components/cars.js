@@ -79,7 +79,7 @@ $(document).ready(() => {
         $("#markk" + idItem).append("<option value=''>Оберіть марку транспорту</option>");
 
         markk.forEach(item => {
-            $("#markk" + idItem).append("<option value='" + item.id + "'>" + item.markkName + "</option>")
+            $("#markk" + idItem).append("<option value='" + item.id + "'>" + item.transportMarkkName + "</option>")
         });
 
         $("#markk" + idItem).select2();

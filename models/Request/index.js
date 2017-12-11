@@ -7,6 +7,9 @@ const Task = require('../Task');
 const RequestHistory = require('../RequestHistory');
 const status = require('../../constants/status');
 const requestTypesFactory = require('../../helpers/requestTypesFactory');
+const transportType = require('../TransportType');
+const transportMarkk = require('../TransportMarkk');
+const transportModel = require('../TransportModel');
 
 const describeRequestTable = {
     customerID: {
@@ -52,17 +55,17 @@ const describeRequestTable = {
         type: Sequelize.INTEGER,
         field: 'created_by'
     },
-    typeOfCar: {
-        type: Sequelize.STRING,
-        field: 'type_of_car'
+    transportTypeID: {
+        type: Sequelize.INTEGER,
+        field: 'transport_type_id'
     },
-    carMarkk: {
-        type: Sequelize.STRING,
-        field: 'car_markk'
+    transportMarkkID: {
+        type: Sequelize.INTEGER,
+        field: 'transport_markk_id'
     },
-    carModel: {
-        type: Sequelize.STRING,
-        field: 'car_model'
+    transportModelID: {
+        type: Sequelize.INTEGER,
+        field: 'transport_model_id'
     },
     hadDeleted: {
         type: Sequelize.BOOLEAN,
@@ -88,16 +91,29 @@ const optionRequestTable = {
 let Request = sequelize.define('request', describeRequestTable, optionRequestTable);
 
 Request.belongsTo(User, {foreignKey: 'customerID'});
-
+Request.belongsTo(transportType, {foreignKey: 'transportTypeID'});
+Request.belongsTo(transportMarkk, {foreignKey: 'transportMarkkID'});
+Request.belongsTo(transportModel, {foreignKey: 'transportModelID'});
 Request.sync();
 
 Request.getAllRequests = function (findBy) {
     return new Promise((resolve, reject) => {
         Request
             .findAll({
-                include: {
-                    model: User
-                },
+                include: [
+                    {
+                        model: User
+                    },
+                    {
+                        model: transportType
+                    },
+                    {
+                        model: transportMarkk
+                    },
+                    {
+                        model: transportModel
+                    }
+                ],
                 where: findBy
             })
             .then(requests => {
@@ -136,9 +152,18 @@ Request.getRequestById = function (id) {
                 where: {
                     id: id
                 },
-                include: {
+                include: [{
                     model: User
-                }
+                },
+                {
+                    model: transportType
+                },
+                {
+                    model: transportMarkk
+                },
+                {
+                    model: transportModel
+                }]
             })
             .then(request => {
                 resolve(request);

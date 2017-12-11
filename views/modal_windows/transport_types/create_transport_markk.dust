@@ -11,7 +11,7 @@
                 <div class="modal-body clearfix">
                     <div class="form-group required col-xs-6">
                         <label>Тип транспорту</label>
-                        <select class="form-control add_select2" name="typeName" id="typeName">
+                        <select class="form-control add_select2" name="transportTypeName" id="typeName">
                             <option value="">Оберіть тип транспорту</option>
                             {#types}
                             <option value="{id}">{transportTypeName}</option>
@@ -20,7 +20,7 @@
                     </div>
                     <div class="form-group required col-xs-6">
                         <label>Назва марки транспорту</label>
-                        <input type="text" class="form-control" id="markkName" name="markkName">
+                        <input type="text" class="form-control" id="markkName" name="transportMarkkName">
                     </div>
                     <div class="form-group col-xs-6" style="margin-top: 25px;">
                         <button type="submit" class="btn btn-success width transport-markk-create-button agree">

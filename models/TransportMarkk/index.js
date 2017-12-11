@@ -5,11 +5,11 @@ const sequelize = require('../connection');
 const TransportType = require('../TransportType');
 
 const describeTransportMarkk = {
-    markkName: {
+    transportMarkkName: {
         type: Sequelize.STRING,
         field: 'transport_markk_name'
     },
-    typeID: {
+    transportTypeID: {
         type: Sequelize.INTEGER,
         field: 'transport_type_id'
     }
@@ -21,7 +21,7 @@ const optionTransportMarkk = {
 
 let TransportMarkk = sequelize.define('transport_markk', describeTransportMarkk, optionTransportMarkk);
 
-TransportMarkk.belongsTo(TransportType, {foreignKey: 'typeID'});
+TransportMarkk.belongsTo(TransportType, {foreignKey: 'transportTypeID'});
 
 TransportMarkk.sync();
 
@@ -44,7 +44,7 @@ TransportMarkk.getTransportMarkksOfTypeID = function (transportTypeID) {
         TransportMarkk
             .findAll({
                 where: {
-                    typeID: transportTypeID
+                    transportTypeID: transportTypeID
                 }
             })
             .then(markks => {
@@ -59,15 +59,13 @@ TransportMarkk.getTransportMarkksOfTypeID = function (transportTypeID) {
 
 TransportMarkk.createTransportMarkk = function (data) {
     return new Promise((resolve, reject) => {
-        console.log('looool');
         TransportMarkk
             .count({
                 where: {
-                    markkName: data.markkName
+                    transportMarkkName: data.transportMarkkName
                 }
             })
             .then(count => {
-                console.log('resss', count);
                 if(count===0) {
                     TransportMarkk
                         .build(data)

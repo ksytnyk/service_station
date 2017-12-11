@@ -12,6 +12,10 @@ module.exports = function (requests, tasks, isHold, requestsHistory) {
             requestsObj[item.id].startTime = formatDate(requestsObj[item.id].startTime);
             requestsObj[item.id].estimatedTime = formatDate(requestsObj[item.id].estimatedTime);
             requestsObj[item.id].user = item.dataValues.user.dataValues;
+            requestsObj[item.id].transportTypeName = item.dataValues.transport_type.dataValues.transportTypeName;
+            requestsObj[item.id].transportMarkkName = item.dataValues.transport_markk.dataValues.transportMarkkName;
+            requestsObj[item.id].transportModelName = item.dataValues.transport_model.dataValues.transportModelName;
+            requestsObj[item.id].transportType = item.dataValues.transport_type.dataValues.transportTypeName;
             requestsObj[item.id].tasks = [];
             requestsObj[item.id].requestsHistory = [];
             if (new Date(item.estimatedTime) - new Date() > 0) {

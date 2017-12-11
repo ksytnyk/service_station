@@ -9,20 +9,20 @@
     <form class="clearfix" id="createRequestForm">
         <div class="form-group required col-xs-3">
             <label>Тип транспорту</label>
-            <select class="form-control disable_input" name="typeOfCar" id="typeOfCar" default-value="{typeOfCar}" disabled>
+            <select class="form-control disable_input" name="typeOfCar" id="typeOfCar" default-value="{transportTypeID}" disabled>
                 <option value="">Оберіть тип транспорту</option>
             </select>
         </div>
         <div class="form-group required col-xs-3">
             <label>Марка транспорту</label>
-            <select class="form-control disable_input" name="carMarkk" id="markk" disabled>
-                <option value="{carMarkk}">{carMarkk}</option>
+            <select class="form-control disable_input" name="transportMarkkID" id="markk" disabled>
+                <option value="{transportMarkkID}">{transportMarkkName}</option>
             </select>
         </div>
         <div class="form-group required col-xs-3">
             <label>Модель транспорту</label>
-            <select class="form-control disable_input" name="carModel" id="model" disabled>
-                <option value="{carModel}">{carModel}</option>
+            <select class="form-control disable_input" name="transportModelID" id="model" disabled>
+                <option value="{transportModelID}">{transportModelName}</option>
             </select>
         </div>
         <div class="form-group required col-xs-3">

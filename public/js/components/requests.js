@@ -249,10 +249,10 @@ $(document).ready(function () {
         var typeOfCar = $('#typeOfCar')[0].value;
 
         if (typeOfCar !== 'default') {
-            $('#createTransportMarkkFormModal select[name=typeName]').val(typeOfCar).select2();
+            $('#createTransportMarkkFormModal select[name=transportTypeName]').val(typeOfCar).select2();
         }
         if (addNewMarkk) {
-            $('#createTransportMarkkFormModal input[name=markkName]').val(addNewMarkk);
+            $('#createTransportMarkkFormModal input[name=transportMarkkName]').val(addNewMarkk);
         }
         $('#createTransportMarkkFormModal').modal('toggle');
     });

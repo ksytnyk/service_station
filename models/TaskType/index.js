@@ -107,6 +107,11 @@ TaskType.deleteTaskType = function (taskTypeID) {
 };
 
 TaskType.getTaskTypesByCarAttributes = function (typeOfCar, carMarkk, carModel) {
+
+    typeOfCar += '';
+    carMarkk += '';
+    carModel += '';
+
     return new Promise((resolve, reject) => {
         TaskType
             .findAll({

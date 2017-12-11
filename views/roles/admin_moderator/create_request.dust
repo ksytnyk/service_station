@@ -9,7 +9,7 @@
         <div class="form-group required col-xs-3">
             <label>Тип транспорту</label>
             <div class="input-group">
-                <select class="form-control disable_input" name="typeOfCar" id="typeOfCar" style="width: 99%;">
+                <select class="form-control disable_input" name="transportTypeID" id="typeOfCar" style="width: 99%;">
                     <option value="default">Оберіть тип транспорту</option>
                 </select>
                 <span class="input-group-addon plus disable_input" id="add_new_type_of_car">
@@ -20,7 +20,7 @@
         <div class="form-group required col-xs-3">
             <label>Марка транспорту</label>
             <div class="input-group">
-                <select class="form-control disable_input" name="carMarkk" id="markk" style="width: 99%; border-radius: 4px;"></select>
+                <select class="form-control disable_input" name="transportMarkkID" id="markk" style="width: 99%; border-radius: 4px;"></select>
                 <span class="input-group-addon plus disable_input" id="add_new_car_markk">
                     <span class="glyphicon glyphicon-plus disable_input" aria-hidden="true" style="margin: 0;" title="Додати нову марку транспорту"></span>
                 </span>
@@ -29,7 +29,7 @@
         <div class="form-group required col-xs-3">
             <label>Модель транспорту</label>
             <div class="input-group">
-                <select class="form-control disable_input" name="carModel" id="model" style="width: 99%; border-radius: 4px;"></select>
+                <select class="form-control disable_input" name="transportModelID" id="model" style="width: 99%; border-radius: 4px;"></select>
                 <span class="input-group-addon plus disable_input" id="add_new_car_model">
                     <span class="glyphicon glyphicon-plus disable_input" aria-hidden="true" style="margin: 0;" title="Додати нову модель транспорту"></span>
                 </span>

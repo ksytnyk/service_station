@@ -7,7 +7,8 @@ module.exports = {
     createAndUpdateTransportMarkk: function (value) {
         return function (req, res, next) {
 
-            req.checkBody('markkName', '"Назва моделі" - обов\'язкове поле.').notEmpty();
+            req.checkBody('transportMarkkName', '"Назва марки транспорту" - обов\'язкове поле.').notEmpty();
+            req.checkBody('transportTypeName', '"Тип транспорту" - обов\'язкове поле.').notEmpty();
 
             let errors = req.validationErrors();
 
@@ -76,8 +77,8 @@ module.exports = {
             req.checkBody('customerID', '"Клієнт" - обов\'язкове поле.').notEmpty();
             req.checkBody('startTime', '"Час початку" - обов\'язкове поле.').notEmpty();
             req.checkBody('estimatedTime', '"Орієнтовний час виконання" - обов\'язкове поле.').notEmpty();
-            req.checkBody('carMarkk', '"Марка автомобіля" - обов\'язкове поле.').notEmpty();
-            req.checkBody('carModel', '"Модель автомобіля" - обов\'язкове поле.').notEmpty();
+            req.checkBody('transportMarkkID', '"Марка автомобіля" - обов\'язкове поле.').notEmpty();
+            req.checkBody('transportModelID', '"Модель автомобіля" - обов\'язкове поле.').notEmpty();
 
             let errors = req.validationErrors();
 

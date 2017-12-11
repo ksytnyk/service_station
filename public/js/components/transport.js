@@ -119,8 +119,8 @@ $(document).ready(function () {
         var id = +$('#transport-markk-id').val();
 
         var dataArr = {
-            markkName: markkName,
-            typeID: typeID
+            transportMarkkName: markkName,
+            transportTypeID: typeID
         };
 
         $.ajax({
@@ -228,8 +228,6 @@ $(document).ready(function () {
                 var newTransportType,
                     newTransportType1 = '',
                     newTransportType2 = '</td>';
-
-                console.log( dataArr );
 
                 newTransportType = '' +
                     '<th class="tac" scope="row">' + dataArr[0].value + '</th>' +

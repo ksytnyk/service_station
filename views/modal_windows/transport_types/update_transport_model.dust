@@ -15,7 +15,7 @@
                         <select class="form-control add_select2" id="transportMarkkID" name="transportMarkkID" style="width: 100%;">
                             <option value="">Оберіть марку транспорту</option>
                             {#transportMarkks}
-                            <option value="{id}">{markkName}</option>
+                            <option value="{id}">{transportMarkkName}</option>
                             {/transportMarkks}
                         </select>
                     </div>
