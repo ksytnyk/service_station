@@ -28,7 +28,12 @@
         </div>
         <div class="form-group required col-xs-3">
             <label>Модель транспорту</label>
-            <select class="form-control disable_input" name="carModel" id="model"></select>
+            <div class="input-group">
+                <select class="form-control disable_input" name="carModel" id="model" style="width: 99%; border-radius: 4px;"></select>
+                <span class="input-group-addon plus disable_input" id="add_new_car_model">
+                    <span class="glyphicon glyphicon-plus disable_input" aria-hidden="true" style="margin: 0;" title="Додати нову модель транспорту"></span>
+                </span>
+            </div>
         </div>
         <div class="form-group required col-xs-3">
             <label>Клієнт</label>
@@ -113,5 +118,6 @@
 {>"modal_windows/print_check"/}
 {>"modal_windows/transport_types/create_transport_type"/}
 {>"modal_windows/transport_types/create_transport_markk"/}
+{>"modal_windows/transport_types/create_transport_model"/}
 
 {/body}

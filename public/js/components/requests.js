@@ -212,6 +212,7 @@ $(document).ready(function () {
     var addNewUser;
     var addNewTypeOfCar;
     var addNewMarkk;
+    var addNewModel;
     var isFirstUpdateRequestOpen = true;
 
     $('#add_new_user').on('click', function () {
@@ -237,16 +238,18 @@ $(document).ready(function () {
 
     $('.create_request #typeOfCar')
         .on('select2:closing', function () {
-            if ($('.select2-search__field')[0].value !== '') {
+            if ($('.select2-search__field')[0].value) {
                 addNewTypeOfCar = $('.select2-search__field')[0].value;
             }
         });
-
+    //
 
     // car markk plus button
     $('#add_new_car_markk').on('click', function () {
-        if ($('#typeOfCar')[0].value !== 'default') {
-            $('#createTransportMarkkFormModal select[name=typeName]').val($('#typeOfCar')[0].value).select2();
+        var typeOfCar = $('#typeOfCar')[0].value;
+
+        if (typeOfCar !== 'default') {
+            $('#createTransportMarkkFormModal select[name=typeName]').val(typeOfCar).select2();
         }
         if (addNewMarkk) {
             $('#createTransportMarkkFormModal input[name=markkName]').val(addNewMarkk);
@@ -257,6 +260,25 @@ $(document).ready(function () {
     $('.create_request #markk').on('select2:closing', function () {
         addNewMarkk = $('.select2-search__field')[0].value;
     });
+    //
+
+    // car model plus button
+    $('#add_new_car_model').on('click', function () {
+        var carMarkk = $('#markk')[0].value;
+
+        if (carMarkk !== 'default') {
+            $('#createTransportModelFormModal select[name=transportMarkkID]').val(carMarkk).select2();
+        }
+        if (addNewModel) {
+            $('#createTransportModelFormModal input[name=transportModelName]').val(addNewModel);
+        }
+        $('#createTransportModelFormModal').modal('toggle');
+    });
+
+    $('.create_request #model').on('select2:closing', function () {
+        addNewModel = $('.select2-search__field')[0].value;
+    });
+    //
 
 
     $('.update_request #customers').on('select2:closing', function () {

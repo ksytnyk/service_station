@@ -186,12 +186,21 @@ router.get('/create-request', (req, res) => {
                     TransportType
                         .getAllTransportType()
                         .then(types => {
-                            res.render('roles/admin_moderator/create_request', {
-                                assignedExecutorUsers: users,
-                                customers: usersCustomers,
-                                typeUser: req.session.passport.user.userTypeID,
-                                types: types,
-                            })
+                            TransportMarkk
+                                .getAllTransportMarkks()
+                                .then(transportMarkks => {
+                                    res.render('roles/admin_moderator/create_request', {
+                                        assignedExecutorUsers: users,
+                                        customers: usersCustomers,
+                                        typeUser: req.session.passport.user.userTypeID,
+                                        types: types,
+                                        transportMarkks: transportMarkks
+                                    })
+                                })
+                                .catch(err => {
+                                    console.warn(err);
+                                    res.render('roles/admin_moderator/create_request');
+                                })
                         })
                         .catch(err => {
                             console.warn(err);
@@ -1198,21 +1207,21 @@ router.post('/create-transport-model', validation.createAndUpdateTransportModel(
             if (result.hasResult) {
                 req.flash('success_alert', true);
                 req.flash('success_msg', 'Додавання моделі транспорту пройшло успішно.');
-                res.redirect(req.baseUrl + '/transport-model');
+                res.redirect('back');
             }
             else {
                 var msg = 'Модель транспорту "' + req.body.transportTypeName + '" вже існує. Скористайтеся пошуком.';
 
                 req.flash('error_alert', true);
                 req.flash('error_msg', {msg: msg});
-                res.redirect(req.baseUrl + '/transport-model');
+                res.redirect('back');
             }
         })
         .catch(error => {
             console.warn(error);
             req.flash('error_alert', true);
             req.flash('error_msg', {msg: 'Виникла помилка при додаванні моделі транспорту.'});
-            res.redirect(req.baseUrl + '/transport-model');
+            res.redirect('back');
         });
 });
 

@@ -86,12 +86,14 @@ $(document).ready(() => {
     }
 
     function getModels(model, idItem) {
-        $.ajax({
-            url: getRole(window.location.pathname) + '/get-transport-model/' + model.value,
-            type: 'get',
-        }).done((result) => {
-            renderModels(result, idItem)
-        })
+        if ( model.value !== 'default' ) {
+            $.ajax({
+                url: getRole(window.location.pathname) + '/get-transport-model/' + model.value,
+                type: 'get',
+            }).done((result) => {
+                renderModels(result, idItem)
+            })
+        }
     }
 
     function renderModels(models, idItem) {
