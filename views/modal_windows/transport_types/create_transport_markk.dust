@@ -20,7 +20,7 @@
                     </div>
                     <div class="form-group required col-xs-6">
                         <label>Назва марки транспорту</label>
-                        <input type="text" class="form-control" id="markkName" name="markkName" disabled>
+                        <input type="text" class="form-control" id="markkName" name="markkName">
                     </div>
                     <div class="form-group col-xs-6" style="margin-top: 25px;">
                         <button type="submit" class="btn btn-success width transport-markk-create-button agree">

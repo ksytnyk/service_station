@@ -13,14 +13,18 @@
                     <option value="default">Оберіть тип транспорту</option>
                 </select>
                 <span class="input-group-addon plus disable_input" id="add_new_type_of_car">
-                <span class="glyphicon glyphicon-plus disable_input" aria-hidden="true" style="margin: 0;"
-                      title="Додати нового користувача"></span>
-            </span>
+                    <span class="glyphicon glyphicon-plus disable_input" aria-hidden="true" style="margin: 0;" title="Додати новий тип транспорту"></span>
+                </span>
             </div>
         </div>
         <div class="form-group required col-xs-3">
             <label>Марка транспорту</label>
-            <select class="form-control disable_input" name="carMarkk" id="markk"></select>
+            <div class="input-group">
+                <select class="form-control disable_input" name="carMarkk" id="markk" style="width: 99%; border-radius: 4px;"></select>
+                <span class="input-group-addon plus disable_input" id="add_new_car_markk">
+                    <span class="glyphicon glyphicon-plus disable_input" aria-hidden="true" style="margin: 0;" title="Додати нову марку транспорту"></span>
+                </span>
+            </div>
         </div>
         <div class="form-group required col-xs-3">
             <label>Модель транспорту</label>
@@ -108,5 +112,6 @@
 {>"modal_windows/tasks/delete_task"/}
 {>"modal_windows/print_check"/}
 {>"modal_windows/transport_types/create_transport_type"/}
+{>"modal_windows/transport_types/create_transport_markk"/}
 
 {/body}

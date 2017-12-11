@@ -183,11 +183,20 @@ router.get('/create-request', (req, res) => {
             User
                 .getAllUsers()
                 .then(users => {
-                    res.render('roles/admin_moderator/create_request', {
-                        assignedExecutorUsers: users,
-                        customers: usersCustomers,
-                        typeUser: req.session.passport.user.userTypeID
-                    })
+                    TransportType
+                        .getAllTransportType()
+                        .then(types => {
+                            res.render('roles/admin_moderator/create_request', {
+                                assignedExecutorUsers: users,
+                                customers: usersCustomers,
+                                typeUser: req.session.passport.user.userTypeID,
+                                types: types,
+                            })
+                        })
+                        .catch(err => {
+                            console.warn(err);
+                            res.render('roles/admin_moderator/create_request');
+                        })
                 })
                 .catch(err => {
                     console.warn(err);
@@ -1117,19 +1126,19 @@ router.post('/create-transport-markk', validation.createAndUpdateTransportMarkk(
             if (result.hasResult) {
                 req.flash('success_alert', true);
                 req.flash('success_msg', 'Додавання марки транспорту пройшло успішно.');
-                res.redirect(req.baseUrl + '/transport-markk');
+                res.redirect('back');
             }
             else {
                 var msg = 'Марка транспорту "' + req.body.markkName + '" вже існує. Скористайтеся пошуком.';
                 req.flash('error_alert', true);
                 req.flash('error_msg', {msg: msg});
-                res.redirect(req.baseUrl + '/transport-markk');
+                res.redirect('back');
             }
         })
         .catch(error => {
             console.warn(error);
 
-            res.redirect(req.baseUrl + '/transport-markk');
+            res.redirect('back');
         });
 });
 

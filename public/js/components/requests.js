@@ -211,6 +211,7 @@ $(document).ready(function () {
 
     var addNewUser;
     var addNewTypeOfCar;
+    var addNewMarkk;
     var isFirstUpdateRequestOpen = true;
 
     $('#add_new_user').on('click', function () {
@@ -225,16 +226,38 @@ $(document).ready(function () {
         addNewUser = $('.select2-search__field')[0].value.split(' ');
     });
 
+
+    // type of car plus button
     $('#add_new_type_of_car').on('click', function () {
         if (addNewTypeOfCar) {
-            $('#createTransportTypeFormModal input[name=transportTypeName]').val(addNewTypeOfCar[0]);
+            $('#createTransportTypeFormModal input[name=transportTypeName]').val(addNewTypeOfCar);
         }
         $('#createTransportTypeFormModal').modal('toggle');
     });
 
-    $('.create_request #typeOfCar').on('select2:closing', function () {
-        addNewTypeOfCar = $('.select2-search__field')[0].value.split(' ');
+    $('.create_request #typeOfCar')
+        .on('select2:closing', function () {
+            if ($('.select2-search__field')[0].value !== '') {
+                addNewTypeOfCar = $('.select2-search__field')[0].value;
+            }
+        });
+
+
+    // car markk plus button
+    $('#add_new_car_markk').on('click', function () {
+        if ($('#typeOfCar')[0].value !== 'default') {
+            $('#createTransportMarkkFormModal select[name=typeName]').val($('#typeOfCar')[0].value).select2();
+        }
+        if (addNewMarkk) {
+            $('#createTransportMarkkFormModal input[name=markkName]').val(addNewMarkk);
+        }
+        $('#createTransportMarkkFormModal').modal('toggle');
     });
+
+    $('.create_request #markk').on('select2:closing', function () {
+        addNewMarkk = $('.select2-search__field')[0].value;
+    });
+
 
     $('.update_request #customers').on('select2:closing', function () {
         addNewUser = $('.select2-search__field')[0].value.split(' ');
