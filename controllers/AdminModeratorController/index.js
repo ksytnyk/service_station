@@ -542,19 +542,20 @@ router.post('/create-task', validation.createAndUpdateTask(), (req, res) => {
             Request
                 .updateRequest(req.body.requestID, {cost: newCost})
                 .then(() => {
-                var search = {
-                    typeName: req.body.name,
-                    typeOfCar: request[0].dataValues.typeOfCar,
-                    carMarkk: request[0].dataValues.carMarkk,
-                    carModel: request[0].dataValues.carModel,
-                    cost: req.body.cost,
-                    estimationTime: req.body.estimationTime,
-                    planedExecutorID: req.body.planedExecutorID
-                };
+                    var search = {
+                        typeName: req.body.name,
+                        typeOfCar: request[0].dataValues.transportTypeID,
+                        carMarkk: request[0].dataValues.transportMarkkID,
+                        carModel: request[0].dataValues.transportModelID,
+                        cost: req.body.cost,
+                        estimationTime: req.body.estimationTime,
+                        planedExecutorID: req.body.planedExecutorID
+                    };
 
-                if (!req.body.typeID) {
-                    search.typeID = true;
-                }
+                    if (!req.body.typeID) {
+                        search.typeID = true;
+                    }
+
                     TaskType
                         .createTaskType(search)
                         .then(result => {
@@ -931,11 +932,29 @@ router.get('/task-type', (req, res) => {
             User
                 .getExecutorUsers()
                 .then(users => {
-                    res.render('roles/admin_moderator/task_type', {
-                        users: users,
-                        taskType: taskType,
-                        typeUser: req.session.passport.user.userTypeID
-                    });
+                    TransportMarkk
+                        .getAllTransportMarkks()
+                        .then(transportMarkk => {
+                            TransportModel
+                                .getAllTransportModel()
+                                .then(transportModel => {
+                                    res.render('roles/admin_moderator/task_type', {
+                                        users: users,
+                                        taskType: taskType,
+                                        typeUser: req.session.passport.user.userTypeID,
+                                        transportMarkk: transportMarkk,
+                                        transportModel: transportModel
+                                    });
+                                })
+                                .catch(error => {
+                                    console.warn(error);
+                                    res.render('roles/admin_moderator/requests/all');
+                                });
+                        })
+                        .catch(error => {
+                            console.warn(error);
+                            res.render('roles/admin_moderator/requests/all');
+                        });
                 })
                 .catch(error => {
                     console.warn(error);
@@ -993,12 +1012,13 @@ router.post('/create-task-type', validation.createAndUpdateTaskType('create'), (
 router.put('/update-task-type/:id', validation.createAndUpdateTaskType(), (req, res) => {
     TaskType
         .updateTaskType(req.params.id, req.body)
-        .then(() => {
+        .then((taskType) => {
             User
                 .getUserById(req.body.planedExecutorID)
                 .then(user => {
                     res.status(200).send({
-                        user: user
+                        user: user,
+                        taskType: taskType[0]
                     });
                 })
                 .catch(errors => {

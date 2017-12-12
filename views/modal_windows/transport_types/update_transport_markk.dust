@@ -23,11 +23,11 @@
                         <label>Назва марки транспорту</label>
                         <input type="text" class="form-control" id="markkNameUpdate" name="markkName">
                     </div>
-                    <div class="form-group col-xs-6" style="margin-top: 25px; position: relative; float: right">
-                        <button class="btn btn-success width transport-markk-update-button agree">
+                    <div class="form-group col-xs-12" style="margin-top: 10px;">
+                        <button class="btn btn-success width transport-markk-update-button agree" style="width: 47%;">
                             Змінити
                         </button>
-                        <button class="btn btn-danger pull-right width" data-dismiss="modal">
+                        <button class="btn btn-danger pull-right width" data-dismiss="modal" style="width: 47%;">
                             Закрити
                         </button>
                     </div>

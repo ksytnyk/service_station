@@ -52,7 +52,7 @@ $(document).ready(() => {
                 option1 = "",
                 option2 = ">" + item.transportTypeName + "</option>";
 
-            if ( $('#typeOfCar').attr('default-value') === item.id ) {
+            if ( +($('#typeOfCar').attr('default-value')) === item.id ) {
                 option1 = " selected";
             }
 
@@ -76,7 +76,7 @@ $(document).ready(() => {
     }
 
     function renderMarkks(markk, idItem) {
-        $("#markk" + idItem).append("<option value=''>Оберіть марку транспорту</option>");
+        $("#markk" + idItem).append("<option value='default'>Оберіть марку транспорту</option>");
 
         markk.forEach(item => {
             $("#markk" + idItem).append("<option value='" + item.id + "'>" + item.transportMarkkName + "</option>")
@@ -97,7 +97,7 @@ $(document).ready(() => {
     }
 
     function renderModels(models, idItem) {
-        $("#model" + idItem).append("<option value=''>Оберіть модель транспорту</option>");
+        $("#model" + idItem).append("<option value='default'>Оберіть модель транспорту</option>");
 
         models.forEach(item => {
             $("#model" + idItem).append("<option value='" + item.id + "'>" + item.transportModelName + "</option>")

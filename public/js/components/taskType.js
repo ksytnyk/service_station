@@ -10,8 +10,15 @@ $(document).ready(function () {
                 $("#typeOfCar #" + $(this).data('type-of-car')).attr('selected', true);
                 $("#typeOfCar").change();
             }
-            $("#markk").append("<option value='" + $(this).data('car-markk') + "'>" + $(this).data('car-markk') + "</option>");
-            $("#model").append("<option value='" + $(this).data('car-model') + "'>" + $(this).data('car-model') + "</option>");
+            $("#typeOfCar").val($(this).data('type-of-car')).select2();
+
+            if ($(this).data('car-markk') !== '') {
+                $("#markk").empty().append("<option value='" + $(this).data('car-markk') + "'>" + $(this).data('car-markk-name') + "</option>");
+            }
+            if ($(this).data('car-model')) {
+                $("#model").empty().append("<option value='" + $(this).data('car-model') + "'>" + $(this).data('car-model-name') + "</option>");
+            }
+
             $('#update-form-planed-executor-id').val($(this).data('planed-executor-id')).change();
             $('#update-form-estimation-time').val($(this).data('estimation-time'));
             $('#update-form-cost').val($(this).data('cost'));
@@ -30,6 +37,22 @@ $(document).ready(function () {
             success: function (data) {
                 showSuccessAlert('Редагування задачі пройшло успішно.');
 
+                if (data.taskType.transportType === null) {
+                    data.taskType.transportType = {
+                        transportTypeName: ''
+                    }
+                }
+                if (data.taskType.transportMarkk === null) {
+                    data.taskType.transportMarkk = {
+                        transportMarkkName: ''
+                    }
+                }
+                if (data.taskType.transportModel === null) {
+                    data.taskType.transportModel = {
+                        transportModelName: ''
+                    }
+                }
+
                 $('.in .close').click();
 
                 var idr = "#idr-task-type-" + dataArr[0].value;
@@ -38,25 +61,25 @@ $(document).ready(function () {
                     newTaskType2 = '</td>';
 
                 newTaskType = '' +
-                    '<th class="tac" scope="row">' + dataArr[0].value + '</th>' +
-                    '<td class="tac">' + dataArr[1].value + '</td>' +
-                    '<td class="tac">' + dataArr[2].value + '</td>' +
-                    '<td class="tac">' + dataArr[3].value + '</td>' +
-                    '<td class="tac">' + dataArr[4].value + '</td>' +
-                    '<td class="tac">' + dataArr[7].value + '</td>' +
+                    '<th class="tac" scope="row">' + data.taskType.id + '</th>' +
+                    '<td class="tac">' + data.taskType.typeName + '</td>' +
+                    '<td class="tac">' + data.taskType.transportType.transportTypeName + '</td>' +
+                    '<td class="tac">' + data.taskType.transportMarkk.transportMarkkName + '</td>' +
+                    '<td class="tac">' + data.taskType.transportModel.transportModelName + '</td>' +
+                    '<td class="tac">' + data.taskType.cost + '</td>' +
                     '<td class="tac">' + data.user.userSurname + ' ' + data.user.userName + '</td>' +
-                    '<td class="tac">' + dataArr[6].value + '</td>' +
+                    '<td class="tac">' + data.taskType.estimationTime + '</td>' +
                     '<td class="tac">' +
                         '<a href="#" class="update-task-type modal-window-link"' +
                         ' data-toggle="modal" data-target="#updateTaskTypeFormModal" title="Редагувати задачу"' +
-                        ' data-id="' + dataArr[0].value + '"' +
-                        ' data-type-name="' + dataArr[1].value + '"' +
-                        ' data-type-of-car="' + dataArr[2].value + '"' +
-                        ' data-car-markk="' + dataArr[3].value + '"' +
-                        ' data-car-model="' + dataArr[4].value + '"' +
-                        ' data-cost="' + dataArr[7].value + '"' +
-                        ' data-planed-executor-id="' + dataArr[5].value + '"' +
-                        ' data-estimation-time="' + dataArr[6].value + '">' +
+                        ' data-id="' + data.taskType.id + '"' +
+                        ' data-type-name="' + data.taskType.typeName + '"' +
+                        ' data-type-of-car="' + data.taskType.transportType.id + '"' +
+                        ' data-car-markk="' + data.taskType.transportMarkk.id + '"' +
+                        ' data-car-model="' + data.taskType.transportModel.id + '"' +
+                        ' data-cost="' + data.taskType.cost + '"' +
+                        ' data-planed-executor-id="' + data.user.id + '"' +
+                        ' data-estimation-time="' + data.taskType.estimationTime + '">' +
                             '<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="font-size: 17px; margin-right: 10px;"/>' +
                         '</a>';
 

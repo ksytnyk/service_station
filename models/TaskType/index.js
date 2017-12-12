@@ -3,6 +3,10 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../connection');
 const User = require('../User');
+const TransportType = require('../TransportType');
+const TransportMarkk = require('../TransportMarkk');
+const TransportModel = require('../TransportModel');
+
 const taskTypesFactory = require('../../helpers/taskTypesFactory');
 
 const describeTaskTypeTable = {
@@ -11,19 +15,19 @@ const describeTaskTypeTable = {
         field: 'type_name'
     },
     typeOfCar: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         field: 'type_of_car',
-        defaultValue: ''
+        defaultValue: null
     },
     carMarkk: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         field: 'car_markk',
-        defaultValue: ''
+        defaultValue: null
     },
     carModel: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         field: 'car_model',
-        defaultValue: ''
+        defaultValue: null
     },
     cost: {
         type: Sequelize.FLOAT,
@@ -46,6 +50,9 @@ const optionTaskTypeTable = {
 let TaskType = sequelize.define('task_type', describeTaskTypeTable, optionTaskTypeTable);
 
 TaskType.belongsTo(User, {foreignKey: 'planedExecutorID', as: 'planedExecutor'});
+TaskType.belongsTo(TransportType, {foreignKey: 'typeOfCar', as: 'transportType'});
+TaskType.belongsTo(TransportMarkk, {foreignKey: 'carMarkk', as: 'transportMarkk'});
+TaskType.belongsTo(TransportModel, {foreignKey: 'carModel', as: 'transportModel'});
 
 TaskType.sync();
 
@@ -53,10 +60,24 @@ TaskType.getAllTaskType = function () {
     return new Promise((resolve, reject) => {
         TaskType
             .findAll({
-                include: {
-                    model: User,
-                    as: 'planedExecutor'
-                }
+                include: [
+                    {
+                        model: User,
+                        as: 'planedExecutor'
+                    },
+                    {
+                        model: TransportType,
+                        as: 'transportType'
+                    },
+                    {
+                        model: TransportMarkk,
+                        as: 'transportMarkk'
+                    },
+                    {
+                        model: TransportModel,
+                        as: 'transportModel'
+                    }
+                ]
             })
             .then(tasks => {
                 resolve(tasks);
@@ -69,6 +90,27 @@ TaskType.getAllTaskType = function () {
 };
 
 TaskType.updateTaskType = function (taskTypeID, params) {
+    if (params.typeOfCar !== 'default' && params.typeOfCar) {
+        params.typeOfCar = +params.typeOfCar;
+    }
+    else {
+        params.typeOfCar = null;
+    }
+
+    if (params.carModel !== 'default' && params.carModel) {
+        params.carModel = +params.carModel;
+    }
+    else {
+        params.carModel = null;
+    }
+
+    if (params.carMarkk !== 'default' && params.carMarkk) {
+        params.carMarkk = +params.carMarkk;
+    }
+    else {
+        params.carMarkk = null;
+    }
+
     return new Promise((resolve, reject) => {
         TaskType
             .update(
@@ -78,8 +120,16 @@ TaskType.updateTaskType = function (taskTypeID, params) {
                     id: taskTypeID
                 }
             })
-            .then(result => {
-                resolve(result);
+            .then(() => {
+                TaskType
+                    .getTaskTypeByID(taskTypeID)
+                    .then(taskType => {
+                        resolve(taskType);
+                    })
+                    .catch(err => {
+                        console.warn(err);
+                        reject(err);
+                    });
             })
             .catch(err => {
                 console.warn(err);
@@ -108,17 +158,13 @@ TaskType.deleteTaskType = function (taskTypeID) {
 
 TaskType.getTaskTypesByCarAttributes = function (typeOfCar, carMarkk, carModel) {
 
-    typeOfCar += '';
-    carMarkk += '';
-    carModel += '';
-
     return new Promise((resolve, reject) => {
         TaskType
             .findAll({
                 where: {
-                    typeOfCar: '',
-                    carMarkk: '',
-                    carModel: ''
+                    typeOfCar: null,
+                    carMarkk: null,
+                    carModel: null
                 }
             })
             .then(taskTypesNoneAttributes => {
@@ -126,8 +172,8 @@ TaskType.getTaskTypesByCarAttributes = function (typeOfCar, carMarkk, carModel) 
                     .findAll({
                         where: {
                             typeOfCar: typeOfCar,
-                            carMarkk: '',
-                            carModel: ''
+                            carMarkk: null,
+                            carModel: null
                         }
                     })
                     .then(taskTypesOneAttributes => {
@@ -136,7 +182,7 @@ TaskType.getTaskTypesByCarAttributes = function (typeOfCar, carMarkk, carModel) 
                                 where: {
                                     typeOfCar: typeOfCar,
                                     carMarkk: carMarkk,
-                                    carModel: ''
+                                    carModel: null
                                 }
                             })
                             .then(taskTypesTwoAttributes => {
@@ -178,23 +224,34 @@ TaskType.getTaskTypesByCarAttributes = function (typeOfCar, carMarkk, carModel) 
 TaskType.createTaskType = function (taskType) {
     return new Promise((resolve, reject) => {
         var search = {
-            typeName: '',
-            typeOfCar: '',
-            carModel: '',
-            carMarkk: ''
+            typeName: taskType.typeName,
+            typeOfCar: null,
+            carModel: null,
+            carMarkk: null
         };
 
-        if (taskType.typeName) {
-            search.typeName = taskType.typeName;
+        if (taskType.typeOfCar !== 'default' && taskType.typeOfCar) {
+            search.typeOfCar = +taskType.typeOfCar;
+            taskType.typeOfCar = +taskType.typeOfCar;
         }
-        if (taskType.typeOfCar) {
-            search.typeOfCar = taskType.typeOfCar;
+        else {
+            delete taskType.typeOfCar;
         }
-        if (taskType.carModel) {
-            search.carModel = taskType.carModel;
+
+        if (taskType.carModel !== 'default' && taskType.carModel) {
+            search.carModel = +taskType.carModel;
+            taskType.carModel = +taskType.carModel;
         }
-        if (taskType.carMarkk) {
-            search.carMarkk = taskType.carMarkk;
+        else {
+            delete taskType.carModel;
+        }
+
+        if (taskType.carMarkk !== 'default' && taskType.carMarkk) {
+            search.carMarkk = +taskType.carMarkk;
+            taskType.carMarkk = +taskType.carMarkk;
+        }
+        else {
+            delete taskType.carMarkk;
         }
 
         TaskType
@@ -234,7 +291,29 @@ TaskType.createTaskType = function (taskType) {
 TaskType.getTaskTypeByID = function (taskTypeID) {
     return new Promise((resolve, reject) => {
         TaskType
-            .findById(taskTypeID)
+            .findAll({
+                where: {
+                    id: taskTypeID
+                },
+                include: [
+                    {
+                        model: User,
+                        as: 'planedExecutor'
+                    },
+                    {
+                        model: TransportType,
+                        as: 'transportType'
+                    },
+                    {
+                        model: TransportMarkk,
+                        as: 'transportMarkk'
+                    },
+                    {
+                        model: TransportModel,
+                        as: 'transportModel'
+                    }
+                ]
+            })
             .then(taskType => {
                 resolve(taskType);
             })

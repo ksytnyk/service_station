@@ -9,7 +9,7 @@
     <form class="clearfix" id="createRequestForm">
         <div class="form-group required col-xs-3">
             <label>Тип транспорту</label>
-            <select class="form-control disable_input" name="typeOfCar" id="typeOfCar" default-value="{transportTypeID}" disabled>
+            <select class="form-control disable_input" name="transportTypeID" id="typeOfCar" default-value="{transportTypeID}" disabled>
                 <option value="">Оберіть тип транспорту</option>
             </select>
         </div>

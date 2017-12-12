@@ -3,18 +3,13 @@ $(document).ready(function () {
     $('#task-type-select').on('change', function () {
 
         if ($(this).val() !== null) {
-            var dataArr = $('.task-type-select').serializeArray();
-            var taskTypeName = $('#taskTypeID' + dataArr[0].value).attr('taskTypeID');
-            dataArr[0].value = taskTypeName;
-
             $.ajax({
-                url: getRole(window.location.pathname) + '/get-task-prise/' + $('.task-type-select').serializeArray()[0].value,
+                url: getRole(window.location.pathname) + '/get-task-prise/' + $('.task-type-select').val(),
                 type: 'post',
-                data: dataArr,
                 success: function (data) {
-                    $('.task-cost').val(data.taskType.cost);
-                    $('.task-estimation-time').val(data.taskType.estimationTime);
-                    $('.task-planed-executor-id').val(data.taskType.planedExecutorID).change();
+                    $('.task-cost').val(data.taskType[0].cost);
+                    $('.task-estimation-time').val(data.taskType[0].estimationTime);
+                    $('.task-planed-executor-id').val(data.taskType[0].planedExecutorID).change();
                 }
             })
         }
@@ -23,19 +18,14 @@ $(document).ready(function () {
     $('#update-form-task-type-select').on('change', function () {
 
         if ($(this).val() !== null) {
-            var dataArr = $('.update-form-task-type-select').serializeArray();
-            var taskTypeName = $('#updateTaskTypeID' + dataArr[0].value).attr('updateTaskTypeID');
-            dataArr[0].value = taskTypeName;
-
             $.ajax({
-                url: getRole(window.location.pathname) + '/get-task-prise/' + $('.update-form-task-type-select').serializeArray()[0].value,
+                url: getRole(window.location.pathname) + '/get-task-prise/' + $('.update-form-task-type-select').val(),
                 type: 'post',
-                data: dataArr,
                 success: function (data) {
                     if (!isFirstUpdateClick) {
-                        $('#update-form-task-cost').val(data.taskType.cost);
-                        $('#update-form-task-estimation-time').val(data.taskType.estimationTime);
-                        $('#update-form-task-planed-executor').val(data.taskType.planedExecutorID).change();
+                        $('#update-form-task-cost').val(data.taskType[0].cost);
+                        $('#update-form-task-estimation-time').val(data.taskType[0].estimationTime);
+                        $('#update-form-task-planed-executor').val(data.taskType[0].planedExecutorID).change();
                     } else {
                         isFirstUpdateClick = false;
                     }
