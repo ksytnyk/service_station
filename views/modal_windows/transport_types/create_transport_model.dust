@@ -2,7 +2,7 @@
 <div class="modal fade" id="createTransportModelFormModal" role="dialog" aria-labelledby="formModalLabel">
     <div class="modal-dialog" role="document" style="margin-top: 100px;">
         <div class="modal-content">
-            <form class="create_task_type" action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/create-transport-model" method="POST">
+            <form class="create_transport_model" action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/create-transport-model" method="POST">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
@@ -11,7 +11,7 @@
                 <div class="modal-body clearfix">
                     <div class="form-group required col-xs-6">
                         <label>Назва марки транспорту</label>
-                        <select class="form-control add_select2" name="transportMarkkID">
+                        <select class="form-control add_select2" name="transportMarkkID" id="markkID" style="width: 100%;">
                             <option value="">Оберіть марку транспорту</option>
                             {#transportMarkks}
                             <option value="{id}">{transportMarkkName}</option>
@@ -23,7 +23,7 @@
                         <input type="text" class="form-control" name="transportModelName">
                     </div>
                     <div class="form-group col-xs-12" style="margin-top: 10px;">
-                        <button class="btn btn-success width task-type-create-button agree" style="width: 47%;">
+                        <button class="btn btn-success width transport-model-create-button agree" style="width: 47%;">
                             Додати
                         </button>
                         <button class="btn btn-danger pull-right width" data-dismiss="modal" style="width: 47%;">

@@ -1,6 +1,13 @@
 $(document).ready(function () {
 
     /* ========================= TRANSPORT TYPE ===============*/
+
+    $('.transport-type-create-button').on('click', function () {
+        setTimeout(function () {
+            location.reload();
+        }, 500)
+    });
+
     updateTransportType('.update-transport-type');
 
     function updateTransportType(value) {
@@ -93,6 +100,13 @@ $(document).ready(function () {
     });
 
     /* ========================= TRANSPORT MARKK===============*/
+
+    $('.transport-markk-create-button').on('click', function () {
+        setTimeout(function () {
+            location.reload();
+        }, 500)
+    });
+
     //disable input field for create markk
     $('#typeName').on('change', function () {
         if($('#typeName').find(":selected").val() !== '') {
@@ -200,6 +214,13 @@ $(document).ready(function () {
     });
 
     /* =============== TRANSPORT MODEL =============== */
+
+    $('.transport-model-create-button').on('click', function () {
+        setTimeout(function () {
+            location.reload();
+        }, 500)
+    });
+
     updateTransportModel('.update-transport-model');
 
     function updateTransportModel(value) {

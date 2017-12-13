@@ -1080,9 +1080,12 @@ router.post('/create-transport-type', validation.createAndUpdateTransportType('c
         .createTransportType(req.body)
         .then((result) => {
             if (result.hasResult) {
-                req.flash('success_alert', true);
-                req.flash('success_msg', 'Додавання типу транспорту пройшло успішно.');
-                res.redirect('back');
+                res.status(200).send({
+                    transportType: result.transportType
+                });
+                // req.flash('success_alert', true);
+                // req.flash('success_msg', 'Додавання типу транспорту пройшло успішно.');
+                // res.redirect('back');
             }
             else {
                 var msg = 'Тип транспорту "' + req.body.transportTypeName + '" вже існує. Скористайтеся пошуком.';
@@ -1151,13 +1154,16 @@ router.get('/transport-markk', (req, res) => {
 
 router.post('/create-transport-markk', validation.createAndUpdateTransportMarkk('create'), (req, res) => {
     TransportMarkk
-        .createTransportMarkk({transportMarkkName: req.body.transportMarkkName, transportTypeID: +req.body.transportTypeName})
+        .createTransportMarkk(req.body)
         .then(result => {
 
             if (result.hasResult) {
-                req.flash('success_alert', true);
-                req.flash('success_msg', 'Додавання марки транспорту пройшло успішно.');
-                res.redirect('back');
+                res.status(200).send({
+                    transportMarkk: result.transportMarkk
+                });
+                // req.flash('success_alert', true);
+                // req.flash('success_msg', 'Додавання марки транспорту пройшло успішно.');
+                // res.redirect('back');
             }
             else {
                 var msg = 'Марка транспорту "' + req.body.transportMarkkName + '" вже існує. Скористайтеся пошуком.';
@@ -1227,9 +1233,13 @@ router.post('/create-transport-model', validation.createAndUpdateTransportModel(
         .createTransportModel(req.body)
         .then((result) => {
             if (result.hasResult) {
-                req.flash('success_alert', true);
-                req.flash('success_msg', 'Додавання моделі транспорту пройшло успішно.');
-                res.redirect('back');
+
+                res.status(200).send({
+                    transportModel: result.transportModel
+                });
+                // req.flash('success_alert', true);
+                // req.flash('success_msg', 'Додавання моделі транспорту пройшло успішно.');
+                // res.redirect('back');
             }
             else {
                 var msg = 'Модель транспорту "' + req.body.transportTypeName + '" вже існує. Скористайтеся пошуком.';

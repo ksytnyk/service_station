@@ -8,7 +8,7 @@ module.exports = {
         return function (req, res, next) {
 
             req.checkBody('transportMarkkName', '"Назва марки транспорту" - обов\'язкове поле.').notEmpty();
-            req.checkBody('transportTypeName', '"Тип транспорту" - обов\'язкове поле.').notEmpty();
+            req.checkBody('transportTypeID', '"Тип транспорту" - обов\'язкове поле.').notEmpty();
 
             let errors = req.validationErrors();
 

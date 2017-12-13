@@ -342,6 +342,128 @@ $(document).ready(function () {
         });
     });
 
+    $('.transport-type-create-button').on('click', function (event) {
+        event.preventDefault();
+
+        var dataArr = $('.create_transport_type').serializeArray();
+
+        $.ajax({
+            url: getRole(window.location.pathname) + '/create-transport-type',
+            type: 'post',
+            data: dataArr,
+            success: function (data) {
+                showSuccessAlert('Додавання типу транспорту пройшло успішно.');
+
+                $('#createTransportTypeFormModal').modal('toggle');
+                $('#typeOfCar')
+                    .append('<option value="' + data.transportType.id + '">' + data.transportType.transportTypeName + '</option>')
+                    .val(data.transportType.id)
+                    .select2();
+                $('#typeName')
+                    .append('<option value="' + data.transportType.id + '">' + data.transportType.transportTypeName + '</option>')
+                    .val(data.transportType.id)
+                    .select2();
+
+                $('#markk')
+                    .empty()
+                    .select2();
+            },
+            error: function (err) {
+                showErrorAlert(err);
+            }
+        });
+    });
+
+    $('.transport-markk-create-button').on('click', function (event) {
+        event.preventDefault();
+
+        var dataArr = $('.create_transport_markk').serializeArray();
+        dataArr[0].name = 'transportTypeID';
+
+        $.ajax({
+            url: getRole(window.location.pathname) + '/create-transport-markk',
+            type: 'post',
+            data: dataArr,
+            success: function (data) {
+                showSuccessAlert('Додавання марки транспорту пройшло успішно.');
+
+                $('#createTransportMarkkFormModal').modal('toggle');
+                $('#markk')
+                    .append('<option value="' + data.transportMarkk.id + '">' + data.transportMarkk.transportMarkkName + '</option>')
+                    .val(data.transportMarkk.id)
+                    .select2();
+                $('#markkID')
+                    .append('<option value="' + data.transportMarkk.id + '">' + data.transportMarkk.transportMarkkName + '</option>')
+                    .val(data.transportMarkk.id)
+                    .select2();
+
+                $('#model')
+                    .empty()
+                    .select2();
+            },
+            error: function (err) {
+                showErrorAlert(err);
+            }
+        });
+    });
+
+    $('.transport-model-create-button').on('click', function (event) {
+        event.preventDefault();
+
+        var dataArr = $('.create_transport_model').serializeArray();
+
+        $.ajax({
+            url: getRole(window.location.pathname) + '/create-transport-model',
+            type: 'post',
+            data: dataArr,
+            success: function (data) {
+                showSuccessAlert('Додавання моделі транспорту пройшло успішно.');
+
+                $('#createTransportModelFormModal').modal('toggle');
+                $('#model')
+                    .append('<option value="' + data.transportModel.id + '">' + data.transportModel.transportModelName + '</option>')
+                    .val(data.transportModel.id)
+                    .select2();
+
+                $(".request-name-select option").remove();
+
+                $.ajax({
+                    url: getRole(window.location.pathname) + '/request-type',
+                    type: 'post',
+                    success: function (data) {
+                        // if (window.location.pathname.includes('update-request')) {
+                        //     $.each(data.requestTypes, function (i, item) {
+                        //         $('.request-name-select').append($('<option>', {
+                        //             value: item.id,
+                        //             text: item.name,
+                        //             updateRequestID: item.name,
+                        //             id: 'updateRequestID' + item.id
+                        //         }));
+                        //     });
+                        // }
+                        // else {
+                            $.each(data.requestTypes, function (i, item) {
+                                $('.request-name-select').append($('<option>', {
+                                    value: item.id,
+                                    text: item.name,
+                                    requestID: item.name,
+                                    id: 'requestID' + item.id
+                                }));
+                            });
+                        // }
+
+                        $('#request-name-select')
+                            .val('')
+                            .select2();
+                    }
+                });
+            },
+            error: function (err) {
+                showErrorAlert(err);
+            }
+        });
+    });
+
 });
 
 function changeRequestStatus(value) {

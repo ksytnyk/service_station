@@ -60,19 +60,17 @@ TransportMarkk.getTransportMarkksOfTypeID = function (transportTypeID) {
 TransportMarkk.createTransportMarkk = function (data) {
     return new Promise((resolve, reject) => {
         TransportMarkk
-            .count({
-                where: {
-                    transportMarkkName: data.transportMarkkName
-                }
+            .findAll({
+                where: data
             })
-            .then(count => {
-                if(count===0) {
+            .then(result => {
+                if (result.length === 0) {
                     TransportMarkk
                         .build(data)
                         .save()
-                        .then(result => {
+                        .then(transportMarkk => {
                             resolve({
-                                result: [result],
+                                transportMarkk: transportMarkk,
                                 hasResult: true
                             });
                         })
@@ -83,7 +81,6 @@ TransportMarkk.createTransportMarkk = function (data) {
                 }
                 else {
                     resolve({
-                        taskTypes: count,
                         hasResult: false
                     });
                 }
