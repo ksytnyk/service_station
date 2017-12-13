@@ -260,16 +260,33 @@ router.get('/requests/update-request/:id', (req, res) => {
                                                     Request
                                                         .getRequestsWithoutCondition()
                                                         .then(requests => {
-
-                                                            res.render('roles/admin_moderator/update_request', {
-                                                                requests: requests,
-                                                                customer: customer,
-                                                                taskTypes: taskTypes,
-                                                                assignedExecutorUsers: users,
-                                                                customers: usersCustomers,
-                                                                typeUser: req.session.passport.user.userTypeID,
-                                                                request: requestsFactory(request, task)
-                                                            })
+                                                            TransportType
+                                                                .getAllTransportType()
+                                                                .then(types => {
+                                                                    TransportMarkk
+                                                                        .getAllTransportMarkks()
+                                                                        .then(transportMarkks => {
+                                                                            res.render('roles/admin_moderator/update_request', {
+                                                                                requests: requests,
+                                                                                customer: customer,
+                                                                                taskTypes: taskTypes,
+                                                                                assignedExecutorUsers: users,
+                                                                                customers: usersCustomers,
+                                                                                typeUser: req.session.passport.user.userTypeID,
+                                                                                request: requestsFactory(request, task),
+                                                                                types: types,
+                                                                                transportMarkks: transportMarkks
+                                                                            })
+                                                                        })
+                                                                        .catch(error => {
+                                                                            console.warn(error);
+                                                                            res.render('roles/admin_moderator/update_request');
+                                                                        });
+                                                                })
+                                                                .catch(error => {
+                                                                    console.warn(error);
+                                                                    res.render('roles/admin_moderator/update_request');
+                                                                });
                                                         })
                                                         .catch(error => {
                                                             console.warn(error);

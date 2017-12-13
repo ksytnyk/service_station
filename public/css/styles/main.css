@@ -106,6 +106,19 @@ span[disabled]{
     opacity: 0.65 !important;
     cursor: not-allowed;
 }
+.disabled {
+    position: relative;
+    cursor: not-allowed;
+}
+.disabled:after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 35px;
+    height: 100%;
+    content: '';
+    background-color: rgba(255, 255, 255, 0);
+}
 .select2-container--disabled span {
     opacity: 0.8;
     cursor: not-allowed;
@@ -401,7 +414,7 @@ thead {
 /* ALERTS */
 .alerts_block {
     position: fixed;
-    z-index: 1;
+    z-index: 5;
     width: 1170px;
 }
 .alerts-errors-info,

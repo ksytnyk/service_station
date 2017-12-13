@@ -3,9 +3,11 @@ $(document).ready(function () {
     /* ========================= TRANSPORT TYPE ===============*/
 
     $('.transport-type-create-button').on('click', function () {
-        setTimeout(function () {
-            location.reload();
-        }, 500)
+        if (!window.location.pathname.includes('create-request') && !window.location.pathname.includes('update-request')) {
+            setTimeout(function () {
+                location.reload();
+            }, 500);
+        }
     });
 
     updateTransportType('.update-transport-type');
@@ -102,9 +104,11 @@ $(document).ready(function () {
     /* ========================= TRANSPORT MARKK===============*/
 
     $('.transport-markk-create-button').on('click', function () {
-        setTimeout(function () {
-            location.reload();
-        }, 500)
+        if (!window.location.pathname.includes('create-request') && !window.location.pathname.includes('update-request')) {
+            setTimeout(function () {
+                location.reload();
+            }, 500);
+        }
     });
 
     //disable input field for create markk
@@ -216,9 +220,11 @@ $(document).ready(function () {
     /* =============== TRANSPORT MODEL =============== */
 
     $('.transport-model-create-button').on('click', function () {
-        setTimeout(function () {
-            location.reload();
-        }, 500)
+        if (!window.location.pathname.includes('create-request') && !window.location.pathname.includes('update-request')) {
+            setTimeout(function () {
+                location.reload();
+            }, 500);
+        }
     });
 
     updateTransportModel('.update-transport-model');

@@ -9,25 +9,40 @@
     <form class="clearfix" id="createRequestForm">
         <div class="form-group required col-xs-3">
             <label>Тип транспорту</label>
-            <select class="form-control disable_input" name="transportTypeID" id="typeOfCar" default-value="{transportTypeID}" disabled>
-                <option value="">Оберіть тип транспорту</option>
-            </select>
+            <div class="input-group disabled-plus disabled">
+                <select class="form-control disable_input" name="transportTypeID" id="typeOfCar" default-value="{transportTypeID}" disabled style="width: 99%;">
+                    <option value="">Оберіть тип транспорту</option>
+                </select>
+                <span class="input-group-addon plus disable_input" id="add_new_type_of_car" disabled>
+                    <span class="glyphicon glyphicon-plus disable_input" aria-hidden="true" style="margin: 0;" title="Додати новий тип транспорту" disabled></span>
+                </span>
+            </div>
         </div>
         <div class="form-group required col-xs-3">
             <label>Марка транспорту</label>
-            <select class="form-control disable_input" name="transportMarkkID" id="markk" disabled>
-                <option value="{transportMarkkID}">{transportMarkkName}</option>
-            </select>
+            <div class="input-group disabled-plus disabled">
+                <select class="form-control disable_input" name="transportMarkkID" id="markk" disabled style="width: 99%; border-radius: 4px;">
+                    <option value="{transportMarkkID}">{transportMarkkName}</option>
+                </select>
+                <span class="input-group-addon plus disable_input" id="add_new_car_markk" disabled>
+                    <span class="glyphicon glyphicon-plus disable_input" aria-hidden="true" style="margin: 0;" title="Додати нову марку транспорту" disabled></span>
+                </span>
+            </div>
         </div>
         <div class="form-group required col-xs-3">
             <label>Модель транспорту</label>
-            <select class="form-control disable_input" name="transportModelID" id="model" disabled>
-                <option value="{transportModelID}">{transportModelName}</option>
-            </select>
+            <div class="input-group disabled-plus disabled">
+                <select class="form-control disable_input" name="transportModelID" id="model" disabled style="width: 99%; border-radius: 4px;">
+                    <option value="{transportModelID}">{transportModelName}</option>
+                </select>
+                <span class="input-group-addon plus disable_input" id="add_new_car_model" disabled>
+                    <span class="glyphicon glyphicon-plus disable_input" aria-hidden="true" style="margin: 0;" title="Додати нову модель транспорту" disabled></span>
+                </span>
+            </div>
         </div>
         <div class="form-group required col-xs-3">
             <label>Клієнт</label>
-            <div class="input-group">
+            <div class="input-group disabled-plus disabled">
                 <select class="form-control add_select2 disable_input" name="customerID" id="customers" disabled>
                     {#customers}
                     <option value="{id}" {@eq key=id value=customer.id}selected{/eq}>{userSurname} {userName}</option>
@@ -45,7 +60,7 @@
             <div class="input-group hidden" id="input-group-update">
                 <select value="{id}" class="form-control add_select2 request-name-select update-request-name-select disable_input" id="update-request-name-select" name="name2">
                     {#requests}
-                    <option value="{id}" updateRequestID="{name}" id="updateRequestID{id}">{name}</option>
+                    <option value="{name}" updateRequestID="{name}" id="updateRequestID{id}">{name}</option>
                     {/requests}
                 </select>
                 <span class="input-group-addon update-new-request-name plus disable_input">
@@ -109,5 +124,8 @@
 {>"modal_windows/tasks/update_task"/}
 {>"modal_windows/tasks/delete_task"/}
 {>"modal_windows/print_check"/}
+{>"modal_windows/transport_types/create_transport_type"/}
+{>"modal_windows/transport_types/create_transport_markk"/}
+{>"modal_windows/transport_types/create_transport_model"/}
 
 {/body}

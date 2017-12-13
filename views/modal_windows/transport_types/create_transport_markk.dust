@@ -11,7 +11,7 @@
                 <div class="modal-body clearfix">
                     <div class="form-group required col-xs-6">
                         <label>Тип транспорту</label>
-                        <select class="form-control add_select2" name="transportTypeName" id="typeName" style="width:100%;">
+                        <select class="form-control add_select2" name="transportTypeName" id="typeName" style="width: 100%;">
                             <option value="">Оберіть тип транспорту</option>
                             {#types}
                             <option value="{id}">{transportTypeName}</option>

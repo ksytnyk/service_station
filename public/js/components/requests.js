@@ -77,8 +77,8 @@ $(document).ready(function () {
     $('#access_update_request').on('click', function () {
 
         if (isFirstUpdateRequestOpen) {
-            $('#update-request-name-select').val($('#update-request-name-input').attr('request-id')).change();
-            isFirstUpdateRequestOpen = false
+            $('#update-request-name-select').val($('#update-request-name-input').val()).change();
+            isFirstUpdateRequestOpen = false;
         }
         $('.update-request-name-input').addClass("hidden");
         $('#input-group-update').removeClass("hidden");
@@ -89,6 +89,7 @@ $(document).ready(function () {
         $('.select2').removeClass('select2-container--disabled');
         $('#access_update_request').hide();
         $('#update_request').show();
+        $('.disabled-plus').removeClass('disabled');
     });
 
     $('#update_request').on('click', function () {
@@ -106,9 +107,10 @@ $(document).ready(function () {
                     }
                 }
             } else {
+                console.log( $('#update-request-name-select').serializeArray() );
+
                 if ($('#update-request-name-select').serializeArray()[0]) {
-                    var updateRequestID = $('#update-request-name-select').serializeArray()[0].value;
-                    var updateRequestName = $('#updateRequestID' + updateRequestID).attr('updateRequestID');
+                    var updateRequestName = $('#update-request-name-select').serializeArray()[0].value;
                     if (dataArr[4].value === '') {
                         dataArr[4].value = updateRequestName;
                     }
@@ -169,6 +171,7 @@ $(document).ready(function () {
                         .attr('start-time', formatDate(dataArr[2].value))
                         .attr('estimated-time', formatDate(dataArr[3].value));
                     $('#access_update_request').show();
+                    $('.disabled-plus').addClass('disabled');
                 },
                 error: function (err) {
                     showErrorAlert(err);
@@ -223,7 +226,7 @@ $(document).ready(function () {
         $('#createUserFormModal').modal('toggle');
     });
 
-    $('.create_request #customers').on('select2:closing', function () {
+    $('#customers').on('select2:closing', function () {
         addNewUser = $('.select2-search__field')[0].value.split(' ');
     });
 
@@ -236,7 +239,7 @@ $(document).ready(function () {
         $('#createTransportTypeFormModal').modal('toggle');
     });
 
-    $('.create_request #typeOfCar')
+    $('#typeOfCar')
         .on('select2:closing', function () {
             if ($('.select2-search__field')[0].value) {
                 addNewTypeOfCar = $('.select2-search__field')[0].value;
@@ -257,7 +260,7 @@ $(document).ready(function () {
         $('#createTransportMarkkFormModal').modal('toggle');
     });
 
-    $('.create_request #markk').on('select2:closing', function () {
+    $('#markk').on('select2:closing', function () {
         addNewMarkk = $('.select2-search__field')[0].value;
     });
     //
@@ -275,7 +278,7 @@ $(document).ready(function () {
         $('#createTransportModelFormModal').modal('toggle');
     });
 
-    $('.create_request #model').on('select2:closing', function () {
+    $('#model').on('select2:closing', function () {
         addNewModel = $('.select2-search__field')[0].value;
     });
     //
@@ -342,6 +345,8 @@ $(document).ready(function () {
         });
     });
 
+
+    // AJAX for transport-type plus button
     $('.transport-type-create-button').on('click', function (event) {
         event.preventDefault();
 
@@ -373,7 +378,9 @@ $(document).ready(function () {
             }
         });
     });
+    //
 
+    // AJAX for transport-markk plus button
     $('.transport-markk-create-button').on('click', function (event) {
         event.preventDefault();
 
@@ -406,7 +413,9 @@ $(document).ready(function () {
             }
         });
     });
+    //
 
+    // AJAX for transport-model plus button
     $('.transport-model-create-button').on('click', function (event) {
         event.preventDefault();
 
@@ -463,6 +472,7 @@ $(document).ready(function () {
             }
         });
     });
+    //
 
 });
 
