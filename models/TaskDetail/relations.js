@@ -14,6 +14,7 @@ Models.TransportModel = require('../TransportModel');
 //Relations
 Models.TaskDetail.belongsTo(Models.Task, {foreignKey: 'taskID'});
 Models.TaskDetail.belongsTo(Models.Detail, {foreignKey: 'detailID'});
+Models.Detail.hasMany(Models.TaskDetail, {foreignKey: 'detailID'});
 Models.Detail.belongsTo(Models.TransportType, {foreignKey: 'transportTypeID'});
 Models.Detail.belongsTo(Models.TransportMarkk, {foreignKey: 'transportMarkkID'});
 Models.Detail.belongsTo(Models.TransportModel, {foreignKey: 'transportModelID'});
@@ -38,6 +39,9 @@ Models.Detail.getAll = () => {
                     },
                     {
                         model: Models.TransportModel
+                    },
+                    {
+                        model: Models.TaskDetail
                     }
                 ]
             })
