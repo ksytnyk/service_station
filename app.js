@@ -11,6 +11,7 @@ const consolidate = require('consolidate');
 const dust = require('dustjs-helpers');
 const expressValidator = require('express-validator');
 const flash = require('connect-flash');
+require('./models/TaskDetail/relations');
 
 const app = express();
 
