@@ -10,6 +10,9 @@
                     <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/users">Користувачі</a>
                 </li>
                 <li class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/task-type">
+                    <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/details">Деталі</a>
+                </li>
+                <li class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/task-type">
                     <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/task-type">Задачі</a>
                 </li>
                 {@eq key=typeUser value=1}

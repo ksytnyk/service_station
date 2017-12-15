@@ -15,9 +15,9 @@ Models.TransportModel = require('../TransportModel');
 Models.TaskDetail.belongsTo(Models.Task, {foreignKey: 'taskID'});
 Models.TaskDetail.belongsTo(Models.Detail, {foreignKey: 'detailID'});
 Models.Detail.hasMany(Models.TaskDetail, {foreignKey: 'detailID'});
-Models.Detail.belongsTo(Models.TransportType, {foreignKey: 'transportTypeID'});
-Models.Detail.belongsTo(Models.TransportMarkk, {foreignKey: 'transportMarkkID'});
-Models.Detail.belongsTo(Models.TransportModel, {foreignKey: 'transportModelID'});
+Models.Detail.belongsTo(Models.TransportType, {foreignKey: 'transportTypeID', as: 'transportType'});
+Models.Detail.belongsTo(Models.TransportMarkk, {foreignKey: 'transportMarkkID', as: 'transportMarkk'});
+Models.Detail.belongsTo(Models.TransportModel, {foreignKey: 'transportModelID', as: 'transportModel'});
 
 //Creating in DB
 Models.Detail.sync();
@@ -32,16 +32,16 @@ Models.Detail.getAll = () => {
             .findAll({
                 include: [
                     {
-                        model: Models.TransportType
+                        model: Models.TransportType,
+                        as: 'transportType'
                     },
                     {
-                        model: Models.TransportMarkk
+                        model: Models.TransportMarkk,
+                        as: 'transportMarkk'
                     },
                     {
-                        model: Models.TransportModel
-                    },
-                    {
-                        model: Models.TaskDetail
+                        model: Models.TransportModel,
+                        as: 'transportModel'
                     }
                 ]
             })
@@ -54,13 +54,13 @@ Models.Detail.getAll = () => {
     })
 };
 
-Models.Detail
+/*Models.Detail
     .getAll()
     .then((Detail) => {
         console.log(Detail);
     })
     .catch((err) => {
         console.error(err);
-    });
+    });*/
 
 module.exports = Models;

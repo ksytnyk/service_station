@@ -8,7 +8,7 @@ const RequestHistory = require('../../models/RequestHistory');
 const TransportType = require('../../models/TransportType');
 const TransportMarkk = require('../../models/TransportMarkk');
 const TransportModel = require('../../models/TransportModel');
-
+const Models = require('../../models/TaskDetail/relations');
 const express = require('express');
 const router = express.Router();
 
@@ -1335,5 +1335,226 @@ router.get('/get-transport-model/:id', (req, res) => {
             res.send(400).send({errors: errors});
         });
 });
+
+/* ============== DETAIL ============== */
+
+router.get('/details', (req, res) => {
+    Models.Detail
+        .getAll()
+        .then(details => {
+            res.render('roles/admin_moderator/details', {
+                typeUser: req.session.passport.user.userTypeID,
+                details: details
+            });
+        })
+        .catch(errors => {
+            console.warn(errors);
+            res.render('roles/admin_moderator/requests/all');
+        });
+});
+
+/*router.post('/create-task', validation.createAndUpdateTask(), (req, res) => {
+    req.body.endTime = countEndTime(req.body.startTime, +req.body.estimationTime);
+
+    Request
+        .getRequestById(req.body.requestID)
+        .then(request => {
+            var newCost = +request[0].dataValues.cost + +req.body.cost;
+
+            Request
+                .updateRequest(req.body.requestID, {cost: newCost})
+                .then(() => {
+                    var search = {
+                        typeName: req.body.name,
+                        typeOfCar: request[0].dataValues.transportTypeID,
+                        carMarkk: request[0].dataValues.transportMarkkID,
+                        carModel: request[0].dataValues.transportModelID,
+                        cost: req.body.cost,
+                        estimationTime: req.body.estimationTime,
+                        planedExecutorID: req.body.planedExecutorID
+                    };
+
+                    if (!req.body.typeID) {
+                        search.typeID = true;
+                    }
+
+                    TaskType
+                        .createTaskType(search)
+                        .then(result => {
+                            if (!req.body.typeID) {
+                                req.body.typeID = result.taskTypes[0].dataValues.id;
+                            }
+
+                            Task
+                                .createTask(req.body)
+                                .then(task => {
+                                    res.status(200).send({result: task});
+                                })
+                                .catch(errors => {
+                                    console.warn(errors);
+                                    res.status(400).send({errors: errors});
+                                });
+                        })
+                        .catch(errors => {
+                            console.warn(errors);
+                            res.status(400).send({errors: errors});
+                        });
+                })
+                .catch(errors => {
+                    console.warn(errors);
+                    res.status(400).send({errors: errors});
+                });
+        })
+        .catch(errors => {
+            console.warn(errors);
+            res.status(400).send({errors: errors});
+        });
+});
+
+router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
+    req.body.endTime = countEndTime(req.body.startTime, +req.body.estimationTime);
+
+    Request
+        .getRequestById(req.body.requestID)
+        .then(request => {
+            var newCost = +request[0].dataValues.cost - +req.body.oldCost + +req.body.cost;
+
+            Request
+                .updateRequest(req.body.requestID, {cost: newCost})
+                .then(() => {
+                    var search = {
+                        typeName: req.body.name,
+                        typeOfCar: request[0].dataValues.typeOfCar,
+                        carMarkk: request[0].dataValues.carMarkk,
+                        carModel: request[0].dataValues.carModel,
+                        cost: req.body.cost,
+                        estimationTime: req.body.estimationTime,
+                        planedExecutorID: req.body.planedExecutorID
+                    };
+
+                    if (!req.body.typeID) {
+                        search.typeID = true;
+                    }
+
+                    TaskType
+                        .createTaskType(search)
+                        .then(result => {
+                            if (!req.body.typeID) {
+                                req.body.typeID = result.taskTypes[0].dataValues.id;
+                            }
+
+                            Task
+                                .updateTask(req.body.id, req.body)
+                                .then(() => {
+                                    Task
+                                        .getTaskById(req.body.id)
+                                        .then(task => {
+                                            Task
+                                                .getAllTasksStatusOfRequest(req.body.requestID)
+                                                .then(allTasks => {
+                                                    var condition = false;
+                                                    var counter = 1;
+                                                    for (var key in allTasks) {
+                                                        if (allTasks[key].dataValues.status !== 3) {
+                                                            break;
+                                                        }
+                                                        if(counter === allTasks.length) {
+                                                            condition = true;
+                                                            Request
+                                                                .changeStatus(req.body.requestID, {status:status.DONE})
+                                                                .then((isDone) => {
+                                                                    nodemailer('done-request', request[0].user.dataValues);
+
+                                                                    res.status(200).send({
+                                                                        isDone: isDone,
+                                                                        request: request,
+                                                                        task: task,
+                                                                        requestID: req.body.requestID,
+                                                                        newCost: newCost
+                                                                    })
+                                                                })
+                                                                .catch(errors => {
+                                                                    console.warn(errors);
+                                                                    res.status(400).send({errors: errors});
+                                                                });
+                                                        }
+                                                        counter++;
+                                                    }
+                                                    if(!condition) {
+                                                        res.status(200).send({
+                                                            request: request,
+                                                            task: task,
+                                                            requestID: req.body.requestID,
+                                                            newCost: newCost
+                                                        })
+                                                    }
+                                                })
+
+                                                .catch(errors => {
+                                                    console.warn(errors);
+                                                    res.status(400).send({errors: errors});
+                                                });
+                                        });
+                                })
+                                .catch(errors => {
+                                    console.warn(errors);
+                                    res.status(400).send({errors: errors});
+                                });
+                        })
+                        .catch(errors => {
+                            console.warn(errors);
+                            res.status(400).send({errors: errors});
+                        })
+
+                })
+                .catch(errors => {
+                    console.warn(errors);
+                    res.status(400).send({errors: errors});
+                });
+        })
+        .catch(errors => {
+            console.warn(errors);
+            res.status(400).send({errors: errors});
+        });
+});
+
+router.delete('/delete-task/:id', (req, res) => {
+    Task
+        .destroy({
+            where: {
+                id: Number(req.params.id)
+            }
+        })
+        .then(() => {
+            Request
+                .getRequestById(req.body.requestID)
+                .then(request => {
+                    var newCost = +request[0].dataValues.cost - +req.body.taskOldCost;
+
+                    Request
+                        .updateRequest(req.body.requestID, {cost: newCost})
+                        .then(() => {
+                            res.status(200).send({
+                                request: request,
+                                id: req.params.id,
+                                requestID: req.body.requestID,
+                                newCost: newCost
+                            });
+                        })
+                        .catch(errors => {
+                            console.warn(errors);
+                            res.status(400).send({errors: errors});
+                        });
+                })
+                .catch(errors => {
+                    console.warn(errors);
+                    res.status(400).send({errors: errors});
+                });
+        })
+        .catch(errors => {
+            console.warn(errors);
+            res.status(400).send({errors: errors});
+        });
+});*/
 
 module.exports = router;

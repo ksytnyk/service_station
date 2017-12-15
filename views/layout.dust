@@ -29,6 +29,7 @@
         <link rel="stylesheet" href="/css/styles/request.css">
         <link rel="stylesheet" href="/css/styles/chart.css">
         <link rel="stylesheet" href="/css/styles/task_type.css">
+        <link rel="stylesheet" href="/css/styles/detail.css">
         <link rel="stylesheet" href="/css/styles/print.css">
         <link rel="stylesheet" href="/css/styles/transport.css">
     {/lt}
