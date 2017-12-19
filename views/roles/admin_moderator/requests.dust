@@ -104,9 +104,9 @@
                     </p>
                     <p><strong>Час початку: </strong>{startTime}</p>
                     <p class="{@eq key=overdue value=1}overdue{/eq}"><strong>Заплан. час: </strong>{estimatedTime}</p>
-                    <p id="typeOfCar{id}" attr-name="{transportTypeName}"><strong>Тип транспорту: </strong>{transportTypeName}</p>
-                    <p id="markk{id}" attr-name="{transportMarkkName}"><strong>Марка: </strong>{transportMarkkName}</p>
-                    <p id="model{id}" attr-name="{transportModelName}"><strong>Модель: </strong>{transportModelName}</p>
+                    <p id="typeOfCar{id}" attr-id="{transportTypeID}"><strong>Тип транспорту: </strong>{transportTypeName}</p>
+                    <p id="markk{id}" attr-id="{transportMarkkID}"><strong>Марка: </strong>{transportMarkkName}</p>
+                    <p id="model{id}" attr-id="{transportModelID}"><strong>Модель: </strong>{transportModelName}</p>
                     <p id="request-comment"><strong>Коментар: </strong>{comment}</p>
                     <div class="requests-status-form">
                         {@eq key=giveOut value="false" type="boolean"}

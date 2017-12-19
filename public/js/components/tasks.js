@@ -770,9 +770,9 @@ function updateTaskOnClick(value) {
                     };
                 } else if (window.location.pathname.includes('requests')) {
                     dataArr = {
-                        typeOfCar: $('#typeOfCar' + $(this).data('request-id')).attr('attr-name'),
-                        carMarkk: $('#markk' + $(this).data('request-id')).attr('attr-name'),
-                        carModel: $('#model' + $(this).data('request-id')).attr('attr-name')
+                        typeOfCar: $('#typeOfCar' + $(this).data('request-id')).attr('attr-id'),
+                        carMarkk: $('#markk' + $(this).data('request-id')).attr('attr-id'),
+                        carModel: $('#model' + $(this).data('request-id')).attr('attr-id')
                     };
                 }
 
