@@ -98,6 +98,7 @@
     <script src="/js/components/taskType.js"></script>
     <script src="/js/components/setSelect2.js"></script>
     <script src="/js/components/check.js"></script>
+    <script src="/js/components/details.js"></script>
 {/lt}
 
 {@eq key=typeUser value=6}

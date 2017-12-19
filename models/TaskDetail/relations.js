@@ -54,13 +54,172 @@ Models.Detail.getAll = () => {
     })
 };
 
-/*Models.Detail
-    .getAll()
-    .then((Detail) => {
-        console.log(Detail);
-    })
-    .catch((err) => {
-        console.error(err);
-    });*/
+Models.Detail.createDetail = function (detail) {
+    return new Promise((resolve, reject) => {
 
+        let search = {
+            detailName: detail.detailName,
+            transportTypeID: null,
+            transportMarkkID: null,
+            transportModelID: null
+        };
+
+        if (detail.typeOfCar !== 'default' && detail.typeOfCar) {
+            search.transportTypeID = +detail.typeOfCar;
+            detail.transportTypeID = +detail.typeOfCar;
+        }
+        else {
+            delete detail.transportTypeID;
+        }
+
+        if (detail.carModel !== 'default' && detail.carModel) {
+            search.transportModelID = +detail.carModel;
+            detail.transportModelID = +detail.carModel;
+        }
+        else {
+            delete detail.transportModelID;
+        }
+
+        if (detail.carMarkk !== 'default' && detail.carMarkk) {
+            search.transportMarkkID = +detail.carMarkk;
+            detail.transportMarkkID = +detail.carMarkk;
+        }
+        else {
+            delete detail.transportMarkkID;
+        }
+
+        Models.Detail
+            .findAll({
+                where: search
+            })
+            .then(result => {
+
+                if (result.length === 0 && detail.typeID) {
+                    Models.Detail
+                        .build(detail)
+                        .save()
+                        .then(detail => {
+                            resolve({
+                                detail: [detail],
+                                hasResult: true
+                            });
+                        })
+                        .catch(error => {
+                            console.warn(error);
+                            reject(error);
+                        });
+                } else {
+                    resolve({
+                        detail: result,
+                        hasResult: false
+                    });
+                }
+            })
+            .catch(error => {
+                console.warn(error);
+                reject(error);
+            });
+    });
+};
+
+Models.Detail.getDetailID = function (detailID) {
+    return new Promise((resolve, reject) => {
+        Models.Detail
+            .findAll({
+                where: {
+                    id: detailID
+                },
+                include: [
+                    {
+                        model: Models.TransportType,
+                        as: 'transportType'
+                    },
+                    {
+                        model: Models.TransportMarkk,
+                        as: 'transportMarkk'
+                    },
+                    {
+                        model: Models.TransportModel,
+                        as: 'transportModel'
+                    }
+                ]
+            })
+            .then(detail => {
+                resolve(detail);
+            })
+            .catch(error => {
+                console.warn(error);
+                reject(error);
+            });
+    });
+};
+
+Models.Detail.updateDetail = function (detailID, params) {
+
+    console.log(111111, detailID, params);
+
+    if (params.typeOfCar !== 'default' && params.typeOfCar) {
+        params.transportTypeID = +params.typeOfCar;
+    }
+    else {
+        params.transportTypeID = null;
+    }
+
+    if (params.carModel !== 'default' && params.carModel) {
+        params.transportModelID = +params.carModel;
+    }
+    else {
+        params.transportModelID = null;
+    }
+
+    if (params.carMarkk !== 'default' && params.carMarkk) {
+        params.transportMarkkID = +params.carMarkk;
+    }
+    else {
+        params.transportMarkkID = null;
+    }
+
+    return new Promise((resolve, reject) => {
+        Models.Detail
+            .update(
+                params,
+                {
+                    where: {
+                        id: detailID
+                    }
+                })
+            .then(() => {
+                Models.Detail
+                    .getDetailID(detailID)
+                    .then(detail => {
+                        resolve(detail);
+                    })
+                    .catch(err => {
+                        console.warn(err);
+                        reject(err);
+                    });
+            })
+            .catch(err => {
+                console.warn(err);
+                reject(err);
+            });
+    });
+};
+Models.Detail.deleteDetail = function (detailID) {
+    return new Promise((resolve, reject) => {
+        Models.Detail
+            .destroy({
+                where: {
+                    id: detailID
+                }
+            })
+            .then(result => {
+                resolve(result);
+            })
+            .catch(err => {
+                console.warn(err);
+                reject(err);
+            });
+    });
+};
 module.exports = Models;

@@ -77,6 +77,8 @@ $(document).ready(function () {
                         ' data-type-of-car="' + data.taskType.transportType.id + '"' +
                         ' data-car-markk="' + data.taskType.transportMarkk.id + '"' +
                         ' data-car-model="' + data.taskType.transportModel.id + '"' +
+                        ' data-car-markk-name="' + data.taskType.transportMarkk.transportMarkkName + '"' +
+                        ' data-car-model-name="' + data.taskType.transportModel.transportModelName + '"' +
                         ' data-cost="' + data.taskType.cost + '"' +
                         ' data-planed-executor-id="' + data.user.id + '"' +
                         ' data-estimation-time="' + data.taskType.estimationTime + '">' +

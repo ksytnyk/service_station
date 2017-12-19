@@ -10,7 +10,7 @@
            data-toggle="modal"
            data-target="#createDetailFormModal"
            title="Додати деталь">
-            Додати задачу
+            Додати деталь
         </a>
     </div>
     <div class="panel panel-default">
@@ -42,10 +42,12 @@
                        data-target="#updateDetailFormModal"
                        data-id="{id}"
                        data-detail-name="{detailName}"
-                       data-transport-type-name="{typeOfCar}"
-                       data-transport-markk-name="{carMarkk}"
-                       data-transport-modal-name="{transportMarkk.transportMarkkName}"
-                       data-cost="{detailPrice}"
+                       data-transport-markk-name="{transportMarkk.transportMarkkName}"
+                       data-transport-model-name="{transportModel.transportModelName}"
+                       data-transport-type-id="{transportType.id}"
+                       data-transport-markk-id="{transportMarkk.id}"
+                       data-transport-model-id="{transportModel.id}"
+                       data-detail-price="{detailPrice}"
                        title="Редагувати деталь">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true" style="font-size: 17px; margin-right: 10px;"/>
                     </a>
@@ -68,8 +70,8 @@
 </div>
 
 {>"modal_windows/users/create_user"/}
-{>"modal_windows/task_types/update_task_type"/}
-{>"modal_windows/task_types/delete_task_type"/}
-{>"modal_windows/task_types/create_task_type"/}
+{>"modal_windows/details/update_detail"/}
+{>"modal_windows/details/delete_detail"/}
+{>"modal_windows/details/create_detail"/}
 
 {/body}

@@ -227,6 +227,33 @@ module.exports = {
                 next();
             }
         }
-    }
+    },
+
+    createAndUpdateDetail: function (value) {
+        return function (req, res, next) {
+
+            req.checkBody('detailName', '"Назва деталі" - обов\'язкове поле.').notEmpty();
+            req.checkBody('detailPrice', '"Вартість" - обов\'язкове поле.').notEmpty();
+            req.checkBody('detailPrice', 'Поле "Вартість" може містити лише цифри.').isFloat();
+
+            let errors = req.validationErrors();
+
+            if (errors) {
+                console.warn(errors);
+
+                if (value) {
+                    req.flash('error_alert', true);
+                    req.flash('error_msg', errors);
+                    res.redirect(req.baseUrl + '/details');
+                } else {
+                    res.status(400).send({
+                        errors: errors
+                    });
+                }
+            } else {
+                next();
+            }
+        }
+    },
 };
 

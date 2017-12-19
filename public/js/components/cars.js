@@ -1,16 +1,18 @@
 "use strict";
 
 $(document).ready(() => {
+
     let linkForCars = window.location.pathname,
         createLink = getRole(linkForCars) + "/create-request",
         createGlobalReq = getRole(linkForCars) + "/create-global-request",
         updateLink = getRole(linkForCars) + "/requests/update-request",
-        taskTypeLink = getRole(linkForCars) + "/task-type";
+        taskTypeLink = getRole(linkForCars) + "/task-type",
+        detailsLink = getRole(linkForCars) + "/details";
 
     let idArray = ['', '1'];
 
     idArray.forEach(idItem => {
-        if (linkForCars == createLink || (linkForCars.indexOf(updateLink) + 1) || linkForCars == createGlobalReq || linkForCars == taskTypeLink) {
+        if (linkForCars == createLink || (linkForCars.indexOf(updateLink) + 1) || linkForCars == createGlobalReq || linkForCars == taskTypeLink || linkForCars == detailsLink) {
             getTypes(idItem);
         }
 
