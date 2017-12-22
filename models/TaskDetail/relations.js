@@ -1,5 +1,5 @@
 "use strict";
-
+const detailsFactory = require('../../helpers/detailsFactory');
 const Models = {};
 
 //getModels
@@ -24,6 +24,69 @@ Models.Detail.sync();
 Models.TaskDetail.sync();
 
 //setMethods
+
+// --- TaskDetail Model ---
+
+/*Models.TaskDetail.findOrCreateTaskDetail = (taskID, array) => {
+    return new Promise((resolve, reject) => {
+        array.forEach(item => {
+            item.taskID = +taskID;
+            Models.TaskDetail
+                .findAll({
+                    where: item
+                })
+                .then((res) => {
+                    if (res.length === 0) {
+                        Models.TaskDetail
+                            .build(item)
+                            .save()
+                            .catch((err) => {
+                                reject(err);
+                            })
+                    }
+                })
+                .catch((err) => {
+                    reject(err);
+                })
+        });
+        resolve();
+    })
+};*/
+
+Models.TaskDetail.createTaskDetail = (taskID, array) => {
+    return new Promise((resolve, reject) => {
+        array.forEach(item => {
+            item.taskID = taskID
+        });
+        Models.TaskDetail
+            .bulkCreate(array)
+            .then(result => {
+                resolve(result);
+            })
+            .catch((err) => {
+                reject(err);
+            })
+    })
+};
+Models.TaskDetail.getTaskDetail = (taskID) => {
+    return new Promise((resolve, reject) => {
+        Models.TaskDetail
+            .findAll({
+                where: {
+                    taskID: taskID
+                },
+                include: {
+                    model: Models.Detail
+                }
+            })
+            .then(result => {
+                resolve(result);
+            })
+            .catch((err) => {
+                reject(err);
+            })
+    })
+};
 
 // --- Detail Model ---
 Models.Detail.getAll = () => {
@@ -156,8 +219,6 @@ Models.Detail.getDetailID = function (detailID) {
 
 Models.Detail.updateDetail = function (detailID, params) {
 
-    console.log(111111, detailID, params);
-
     if (params.typeOfCar !== 'default' && params.typeOfCar) {
         params.transportTypeID = +params.typeOfCar;
     }
@@ -222,4 +283,125 @@ Models.Detail.deleteDetail = function (detailID) {
             });
     });
 };
+
+Models.Detail.getDetailsByCarAttributes = function (typeOfCar, carMarkk, carModel) {
+    return new Promise((resolve, reject) => {
+        Models.Detail
+            .findAll({
+                where: {
+                    transportTypeID: null,
+                    transportMarkkID: null,
+                    transportModelID: null
+                },
+                include: [
+                    {
+                        model: Models.TransportType,
+                        as: 'transportType'
+                    },
+                    {
+                        model: Models.TransportMarkk,
+                        as: 'transportMarkk'
+                    },
+                    {
+                        model: Models.TransportModel,
+                        as: 'transportModel'
+                    }
+                ]
+            })
+            .then(detailsNoneAttributes => {
+                Models.Detail
+                    .findAll({
+                        where: {
+                            transportTypeID: typeOfCar,
+                            transportMarkkID: null,
+                            transportModelID: null
+                        },
+                        include: [
+                            {
+                                model: Models.TransportType,
+                                as: 'transportType'
+                            },
+                            {
+                                model: Models.TransportMarkk,
+                                as: 'transportMarkk'
+                            },
+                            {
+                                model: Models.TransportModel,
+                                as: 'transportModel'
+                            }
+                        ]
+                    })
+                    .then(detailsOneAttributes => {
+                        Models.Detail
+                            .findAll({
+                                where: {
+                                    transportTypeID: typeOfCar,
+                                    transportMarkkID: carMarkk,
+                                    transportModelID: null
+                                },
+                                include: [
+                                    {
+                                        model: Models.TransportType,
+                                        as: 'transportType'
+                                    },
+                                    {
+                                        model: Models.TransportMarkk,
+                                        as: 'transportMarkk'
+                                    },
+                                    {
+                                        model: Models.TransportModel,
+                                        as: 'transportModel'
+                                    }
+                                ]
+                            })
+                            .then(detailsTwoAttributes => {
+                                Models.Detail
+                                    .findAll({
+                                        where: {
+                                            transportTypeID: typeOfCar,
+                                            transportMarkkID: carMarkk,
+                                            transportModelID: carModel
+                                        },
+                                        include: [
+                                            {
+                                                model: Models.TransportType,
+                                                as: 'transportType'
+                                            },
+                                            {
+                                                model: Models.TransportMarkk,
+                                                as: 'transportMarkk'
+                                            },
+                                            {
+                                                model: Models.TransportModel,
+                                                as: 'transportModel'
+                                            }
+                                        ]
+                                    })
+                                    .then(detailsAllAttributes => {
+                                        let result = detailsFactory(detailsNoneAttributes, detailsOneAttributes, detailsTwoAttributes, detailsAllAttributes);
+
+                                        resolve(result);
+                                    })
+                                    .catch(error => {
+                                        console.warn(error);
+                                        reject(error);
+                                    });
+                            })
+                            .catch(error => {
+                                console.warn(error);
+                                reject(error);
+                            });
+                    })
+                    .catch(error => {
+                        console.warn(error);
+                        reject(error);
+                    });
+            })
+            .catch(error => {
+                console.warn(error);
+                reject(error);
+            });
+    });
+};
+
 module.exports = Models;

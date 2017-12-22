@@ -47,18 +47,6 @@ const describeTaskTable = {
         defaultValue: 1,
         field: 'status'
     },
-    parts: {
-        type: Sequelize.TEXT,
-        field: 'parts'
-    },
-    customerParts: {
-        type: Sequelize.TEXT,
-        field: 'customer_parts'
-    },
-    needBuyParts: {
-        type: Sequelize.TEXT,
-        field: 'need_buy_parts'
-    },
     comment: {
         type: Sequelize.TEXT,
         field: 'comment'
@@ -336,7 +324,7 @@ Task.updateTask = function (taskID, params) {
                     Task
                         .getTaskById(taskID)
                         .then(task => {
-                            var data = {
+                            let data = {
                                 'requestID': task.dataValues.requestID,
                                 'status': 4,
                                 'comment': task.dataValues.comment

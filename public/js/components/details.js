@@ -128,4 +128,48 @@ $(document).ready(function () {
             }
         });
     });
+
+    $('#add-default-detail').on('click', function () {
+
+        var detailID = $('#default-detail-type-select').val(),
+            detailQuantity = $('#default-detail-type-input').val(),
+            detailName = $('#detailTypeID' + detailID).attr('detailName');
+
+        if( detailID !== null && detailQuantity !== '') {
+
+            defaultDetailArray.push({
+                detailID: +detailID,
+                detailQuantity: +detailQuantity,
+                detailType: 1,
+                detailName: detailName
+            });
+
+            $('#default-detail-type-tbody').append('<tr><td>' + detailName + '</td><td>' + detailQuantity + '</td></tr>');
+            $('#default-detail-type-select').val('').change();
+            $('#default-detail-type-input').val('');
+        }
+    });
+
+    $('#update-add-default-detail').on('click', function () {
+
+        var detailID = $('#update-default-detail-type-select').val(),
+            detailQuantity = $('#update-default-detail-type-input').val(),
+            detailName = $('#detailTypeID' + detailID).attr('detailName');
+
+        if( detailID !== null && detailQuantity !== '') {
+
+            defaultDetailArray.push({
+                detailID: +detailID,
+                detailQuantity: +detailQuantity,
+                detailType: 1,
+                detailName: detailName
+            });
+
+            $('#update-default-detail-type-tbody').append('<tr><td>' + detailName + '</td><td>' + detailQuantity + '</td></tr>');
+            $('#update-default-detail-type-select').val('').change();
+            $('#update-default-detail-type-input').val('');
+        }
+    });
 });
+
+var defaultDetailArray = [];

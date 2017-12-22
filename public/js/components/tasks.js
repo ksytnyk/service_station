@@ -15,7 +15,9 @@ $(document).ready(function () {
                     carModel: $('#model').val()
                 },
                 success: function (data) {
+
                     $('#task-type-select').find('option').remove();
+                    $('#default-detail-type-select').find('option').remove();
 
                     $.each(data.taskTypes, function (i, item) {
                         var title = setTaskTypesTitle(item);
@@ -28,6 +30,19 @@ $(document).ready(function () {
                             title: title
                         }));
                     });
+
+                    $.each(data.detailTypes, function (i, item) {
+                        var title = setDetailTypesTitle(item);
+
+                        $('#default-detail-type-select').append($('<option>', {
+                            value: item.id,
+                            text: item.detailName + ' (' + title + ')',
+                            id: 'detailTypeID' + item.id,
+                            detailName: item.detailName,
+                            title: title
+                        }));
+                    });
+
                     setDefaultTaskNameOnCreateTask();
                     setDefaultAssignedUserOnCreateTask();
                 }
@@ -72,12 +87,35 @@ $(document).ready(function () {
             dataArr[5].value = setTimeToDate(dataArr[5].value);
         }
 
+        dataArr.push({
+            name: 'defaultDetail',
+            value: JSON.stringify(defaultDetailArray)
+        });
+
         $.ajax({
             url: getRole(window.location.pathname) + '/create-task',
             type: 'post',
             data: dataArr,
             success: function (data) {
                 showSuccessAlert('Додавання задачі пройшло успішно.');
+
+                defaultDetailArray= [];
+
+                var defaultDetails = '',
+                    clientDetails = '',
+                    missingDetails = '';
+
+                data.taskDetail.forEach(item => {
+                    if (item.detailType === 1) {
+                        defaultDetails += ', ' + item.detail.detailName + ' - ' + item.detailQuantity;
+                    }
+                    else if (item.detailType === 2) {
+                        clientDetails += ', ' + item.detail.detailName + ' - ' + item.detailQuantity;
+                    }
+                    else {
+                        missingDetails += + ', ' +  item.detail.detailName + ' - ' + item.detailQuantity;
+                    }
+                });
 
                 $('.check-table tr:last').before('<tr id="idt-' + data.result.id + '">'+
                     '<td>'+data.result.name+'</td>'+
@@ -112,9 +150,9 @@ $(document).ready(function () {
                     '</td>' +
                     '<td class="vat">' +
                     '<p><strong>Опис задачі: </strong>' + data.result.description + '</p>' +
-                    '<p class="bt"><strong>Запчастини: </strong>' + data.result.parts + '</p>' +
-                    '<p><strong>Запчастини кліента: </strong>' + data.result.customerParts + '</p>' +
-                    '<p><strong>Відсутні запчастини: </strong>' + data.result.needBuyParts + '</p>' +
+                    '<p class="bt"><strong>Запчастини: </strong>' + convertDetailsString(defaultDetails) + '</p>' +
+                    '<p><strong>Запчастини кліента: </strong>' + convertDetailsString(clientDetails) + '</p>' +
+                    '<p><strong>Відсутні запчастини: </strong>' + convertDetailsString(missingDetails) + '</p>' +
                     '<p class="bt"><strong>Коментар: </strong>' + data.result.comment + '</p>' +
                     '</td>' +
                     '<td class="tac">' +
@@ -132,9 +170,9 @@ $(document).ready(function () {
                     ' data-task-estimation-time="' + data.result.estimationTime + '"' +
                     ' data-task-start-time="' + formatDate(data.result.startTime) + '"' +
                     ' data-task-end-time="' + formatDate(data.result.endTime) + '"' +
-                    ' data-task-parts="' + data.result.parts + '"' +
-                    ' data-task-customer-parts="' + data.result.customerParts + '"' +
-                    ' data-task-need-buy-parts="' + data.result.needBuyParts + '"' +
+                    ' data-task-parts="' + convertDetailsString(defaultDetails) + '"' +
+                    ' data-task-customer-parts="' + convertDetailsString(clientDetails) + '"' +
+                    ' data-task-need-buy-parts="' + convertDetailsString(missingDetails) + '"' +
                     ' data-task-comment="' + data.result.comment + '"' +
                     ' data-target="#updateTaskFormModal"' +
                     ' style=""> ' +
@@ -211,6 +249,11 @@ $(document).ready(function () {
             dataArr[8].value = checkDateForUpdate(oldStartTime, dataArr[8].value);
         }
 
+        dataArr.push({
+            name: 'defaultDetail',
+            value: JSON.stringify(defaultDetailArray)
+        });
+
         $.ajax({
             url: getRole(window.location.pathname) + '/update-task/' + $('#update-form-task-id').val(),
             type: 'put',
@@ -218,6 +261,24 @@ $(document).ready(function () {
             success: function (data) {
                 showSuccessAlert('Редагування задачі пройшло успішно.');
                 $('.in .close').click();
+
+                defaultDetailArray = [];
+
+                var defaultDetails = '',
+                    clientDetails = '',
+                    missingDetails = '';
+
+                data.details.forEach(item => {
+                    if (item.detailType === 1) {
+                        defaultDetails += ', ' + item.detail.detailName + ' - ' + item.detailQuantity;
+                    }
+                    else if (item.detailType === 2) {
+                        clientDetails += ', ' + item.detail.detailName + ' - ' + item.detailQuantity;
+                    }
+                    else {
+                        missingDetails += + ', ' +  item.detail.detailName + ' - ' + item.detailQuantity;
+                    }
+                });
 
                 var idx = "#idx-task-" + data.task.id;
 
@@ -264,9 +325,9 @@ $(document).ready(function () {
                         '</td>' +
                         '<td class="vat bb' + disableFields(data.task.status) + '"> ' +
                         '<p><strong>Опис задачі: </strong>' + data.task.description + '</p> ' +
-                        '<p class="bt"><strong>Запчастини: </strong>' + data.task.parts + '</p> ' +
-                        '<p><strong>Запчастини клієнта: </strong>' + data.task.customerParts + '</p> ' +
-                        '<p  id="need-buy-parts"><strong>Відсутні запчастини: </strong>' + data.task.needBuyParts + '</p> ' +
+                        '<p class="bt"><strong>Запчастини: </strong>' + convertDetailsString(defaultDetails) + '</p> ' +
+                        '<p><strong>Запчастини клієнта: </strong>' + convertDetailsString(clientDetails) + '</p> ' +
+                        '<p  id="need-buy-parts"><strong>Відсутні запчастини: </strong>' + convertDetailsString(missingDetails) + '</p> ' +
                         '<p class="bt" id="comment"><strong>Коментар: </strong>' + data.task.comment + '</p> ' +
                         '</td>';
 
@@ -623,7 +684,6 @@ $(document).ready(function () {
                     setTaskStatusHold(idx + ' .set-task-status-hold');
                 },
                 error: function (err) {
-                    console.log('ERRORRRR!');
                     console.error(err);
                 }
             })
@@ -749,10 +809,13 @@ $(document).ready(function () {
 
 function clearModalAddTask() {
     $('.create-form-task').val('');
+    $('#detail-type-tbody').empty();
 }
 
 function updateTaskOnClick(value) {
+
     $(value).on('click', function () {
+
         clearModalAddTask();
         setStartTime();
         setOpenTaskNameOnUpdateTask();
@@ -781,8 +844,8 @@ function updateTaskOnClick(value) {
                     type: 'post',
                     data: dataArr,
                     success: function (data) {
-                        $('#update-form-task-type-select').find('option').remove();
 
+                        $('#update-form-task-type-select').find('option').remove();
                         data.taskTypes.forEach(item => {
                             var title = setTaskTypesTitle(item);
 
@@ -795,12 +858,26 @@ function updateTaskOnClick(value) {
                             }));
                         });
 
-                        $('#update-form-task-type-select').val('');
+                        $('#update-default-detail-type-select').find('option').remove();
+                        data.detailTypes.forEach(item => {
+                            var title = setDetailTypesTitle(item);
+
+                            $('#update-default-detail-type-select').append($('<option>', {
+                                value: item.id,
+                                text: item.detailName + ' (' + title + ')',
+                                id: 'detailTypeID' + item.id,
+                                detailName: item.detailName,
+                                title: title
+                            }));
+                        });
+
+                        /*$('#update-form-task-type-select').val('');*/
 
                         isFirstUpdateClick = true;
                         var taskTypeID = $("option[id='updateTaskTypeID" + $(This).data('task-type-id') + "']").val();
 
                         $('#update-form-task-type-select').val(taskTypeID).change();
+                        $('#update-default-detail-type-select').change();
                         $('#update-form-task-old-cost').val($(This).data('task-cost'));
                         $('#update-form-task-cost').val($(This).data('task-cost'));
                     }
@@ -832,11 +909,27 @@ function updateTaskOnClick(value) {
         $('#update-form-task-start-time').val($(this).data('task-start-time').slice(0, 10));
         $('#change-status-update-task').attr('old-start-time', ($(this).data('task-start-time')));
         $('#update-form-task-end-time').val($(this).data('task-end-time'));
-        $('#update-form-task-parts').val($(this).data('task-parts'));
+        /*$('#update-form-task-parts').val($(this).data('task-parts'));
         $('#update-form-task-customer-parts').val($(this).data('task-customer-parts'));
-        $('#update-form-task-need-buy-parts').val($(this).data('task-need-buy-parts'));
+        $('#update-form-task-need-buy-parts').val($(this).data('task-need-buy-parts'));*/
         $('#update-form-task-status').val($(this).data('task-status'));
         $('#update-form-task-comment').val($(this).data('task-comment'));
+
+        $.ajax({
+            url: getRole(window.location.pathname) + '/details-of-task/' + $('#update-form-task-id').val(),
+            type: 'get',
+            success: function (data) {
+
+                $('#update-detail-type-tbody').empty();
+                $('#update-detail-type-input').val('');
+
+                data.details.forEach(function (item) {
+                    $('#update-default-detail-type-tbody').append('<tr><td>' + item.detail.detailName + '</td><td>' + item.detailQuantity + '</td></tr>');
+                });
+
+                $('#update-default-detail-type-select').change();
+            }
+        })
     });
 }
 
@@ -935,6 +1028,27 @@ function setTaskTypesTitle(item) {
     }
 }
 
+function setDetailTypesTitle(item) {
+    switch (item.title) {
+        case '0': {
+            return 'Усі категорії';
+            break;
+        }
+        case '1': {
+            return 'Категорія: ' + item.transportType.transportTypeName;
+            break;
+        }
+        case '2': {
+            return 'Категорія: ' + item.transportType.transportTypeName + ', ' + item.transportMarkk.transportMarkkName;
+            break;
+        }
+        case '3': {
+            return 'Категорія: ' + item.transportType.transportTypeName + ', ' + item.transportMarkk.transportMarkkName + ', ' + item.transportModel.transportModelName;
+            break;
+        }
+    }
+}
+
 setTaskStatusHold('.set-task-status-hold');
 
 function setTaskStatusHold(value) {
@@ -948,4 +1062,11 @@ function setTaskStatusHold(value) {
             $('#change-task-status-comment').val($(this).data('task-comment'));
         }
     });
+}
+
+function convertDetailsString(str) {
+    if (str.substr(0, 1) === ',') {
+        str = str.substr(2);
+    }
+    return str;
 }

@@ -194,7 +194,7 @@ router.get('/create-request', (req, res) => {
                                         customers: usersCustomers,
                                         typeUser: req.session.passport.user.userTypeID,
                                         types: types,
-                                        transportMarkks: transportMarkks
+                                        /*transportMarkks: transportMarkks*/
                                     })
                                 })
                                 .catch(err => {
@@ -535,12 +535,22 @@ router.get('/get-request-check/:id', (req, res) => {
 });
 
 router.post('/get-task-types', (req, res) => {
+
     TaskType
         .getTaskTypesByCarAttributes(req.body.typeOfCar, req.body.carMarkk, req.body.carModel)
         .then(taskTypes => {
-            res.status(200).send({
-                taskTypes: taskTypes
-            });
+            Models.Detail
+                .getDetailsByCarAttributes(req.body.typeOfCar, req.body.carMarkk, req.body.carModel)
+                .then(detailTypes => {
+                    res.status(200).send({
+                        detailTypes: detailTypes,
+                        taskTypes: taskTypes
+                    });
+                })
+                .catch(errors => {
+                    console.warn(errors);
+                    res.status(400).send({errors: errors});
+                });
         })
         .catch(errors => {
             console.warn(errors);
@@ -549,13 +559,13 @@ router.post('/get-task-types', (req, res) => {
 });
 
 router.post('/create-task', validation.createAndUpdateTask(), (req, res) => {
+
     req.body.endTime = countEndTime(req.body.startTime, +req.body.estimationTime);
 
     Request
         .getRequestById(req.body.requestID)
         .then(request => {
             var newCost = +request[0].dataValues.cost + +req.body.cost;
-
             Request
                 .updateRequest(req.body.requestID, {cost: newCost})
                 .then(() => {
@@ -572,18 +582,35 @@ router.post('/create-task', validation.createAndUpdateTask(), (req, res) => {
                     if (!req.body.typeID) {
                         search.typeID = true;
                     }
-
                     TaskType
                         .createTaskType(search)
                         .then(result => {
                             if (!req.body.typeID) {
                                 req.body.typeID = result.taskTypes[0].dataValues.id;
                             }
-
                             Task
                                 .createTask(req.body)
                                 .then(task => {
-                                    res.status(200).send({result: task});
+                                    Models.TaskDetail
+                                        .createTaskDetail(task.id, JSON.parse(req.body.defaultDetail))
+                                        .then(() => {
+                                            Models.TaskDetail
+                                                .getTaskDetail(task.id)
+                                                .then(taskDetail => {
+                                                    res.status(200).send({
+                                                        result: task,
+                                                        taskDetail: taskDetail
+                                                    });
+                                                })
+                                                .catch(errors => {
+                                                    console.warn(errors);
+                                                    res.status(400).send({errors: errors});
+                                                });
+                                        })
+                                        .catch(errors => {
+                                            console.warn(errors);
+                                            res.status(400).send({errors: errors});
+                                        });
                                 })
                                 .catch(errors => {
                                     console.warn(errors);
@@ -647,42 +674,65 @@ router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
                                             Task
                                                 .getAllTasksStatusOfRequest(req.body.requestID)
                                                 .then(allTasks => {
-                                                    var condition = false;
-                                                    var counter = 1;
-                                                    for (var key in allTasks) {
-                                                        if (allTasks[key].dataValues.status !== 3) {
-                                                            break;
-                                                        }
-                                                        if(counter === allTasks.length) {
-                                                            condition = true;
-                                                            Request
-                                                                .changeStatus(req.body.requestID, {status:status.DONE})
-                                                                .then((isDone) => {
-                                                                    nodemailer('done-request', request[0].user.dataValues);
 
-                                                                    res.status(200).send({
-                                                                        isDone: isDone,
-                                                                        request: request,
-                                                                        task: task,
-                                                                        requestID: req.body.requestID,
-                                                                        newCost: newCost
-                                                                    })
+                                                    Models.TaskDetail
+                                                        .createTaskDetail(req.body.id, JSON.parse(req.body.defaultDetail))
+                                                        .then(() => {
+                                                            Models.TaskDetail
+                                                                .getTaskDetail(req.body.id)
+                                                                .then(details => {
+                                                                    var condition = false;
+                                                                    var counter = 1;
+
+                                                                    for (var key in allTasks) {
+                                                                        if (allTasks[key].dataValues.status !== 3) {
+                                                                            break;
+                                                                        }
+                                                                        if(counter === allTasks.length) {
+                                                                            condition = true;
+                                                                            Request
+                                                                                .changeStatus(req.body.requestID, {status:status.DONE})
+                                                                                .then((isDone) => {
+                                                                                    nodemailer('done-request', request[0].user.dataValues);
+
+                                                                                    res.status(200).send({
+                                                                                        isDone: isDone,
+                                                                                        request: request,
+                                                                                        task: task,
+                                                                                        requestID: req.body.requestID,
+                                                                                        newCost: newCost,
+                                                                                        details: details
+                                                                                    })
+                                                                                })
+                                                                                .catch(errors => {
+                                                                                    console.warn(errors);
+                                                                                    res.status(400).send({errors: errors});
+                                                                                });
+                                                                        }
+                                                                        counter++;
+                                                                    }
+
+                                                                    if(!condition) {
+                                                                        res.status(200).send({
+                                                                            request: request,
+                                                                            task: task,
+                                                                            requestID: req.body.requestID,
+                                                                            newCost: newCost,
+                                                                            details: details
+                                                                        })
+                                                                    }
                                                                 })
                                                                 .catch(errors => {
                                                                     console.warn(errors);
                                                                     res.status(400).send({errors: errors});
                                                                 });
-                                                        }
-                                                        counter++;
-                                                    }
-                                                    if(!condition) {
-                                                        res.status(200).send({
-                                                            request: request,
-                                                            task: task,
-                                                            requestID: req.body.requestID,
-                                                            newCost: newCost
+
                                                         })
-                                                    }
+                                                        .catch(errors => {
+                                                            console.warn(errors);
+                                                            res.status(400).send({errors: errors});
+                                                        });
+
                                                 })
 
                                                 .catch(errors => {
@@ -1406,4 +1456,19 @@ router.delete('/delete-detail/:id', (req, res) => {
         });
 });
 
+/* ============== DETAIL TYPE ============== */
+
+router.get('/details-of-task/:id', (req, res) => {
+    Models.TaskDetail
+        .getTaskDetail(req.params.id)
+        .then(details => {
+            res.status(200).send({
+                details: details
+            })
+        })
+        .catch(error => {
+            console.warn(error);
+            res.status(400).send({errors: errors});
+        });
+});
 module.exports = router;

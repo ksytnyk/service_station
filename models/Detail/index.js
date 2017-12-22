@@ -26,14 +26,6 @@ const describeDetailTable = {
         type: Sequelize.INTEGER,
         field: 'transport_model_id',
         defaultValue: null
-    },
-    missingDetail: {
-        type: Sequelize.BOOLEAN,
-        field: 'missing_detail'
-    },
-    clientDetail: {
-        type: Sequelize.BOOLEAN,
-        field: 'client_detail'
     }
 };
 

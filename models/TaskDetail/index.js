@@ -15,6 +15,11 @@ const describeTaskDetailTable = {
     detailQuantity: {
         type: Sequelize.INTEGER,
         field: 'detail_quantity'
+    },
+    detailType: {
+        type: Sequelize.INTEGER,
+        field: 'detail_type',
+        defaultValue: 1
     }
 };
 

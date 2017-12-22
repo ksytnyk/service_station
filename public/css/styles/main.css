@@ -486,3 +486,40 @@ thead {
 .print_check label {
     margin-right: 10px;
 }
+
+/* DETAILS */
+
+.detail-type-table {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    overflow-y: auto;
+    height: 83px;
+}
+.detail-type-table table {
+    width: 100%;
+}
+.detail-type-table td {
+    padding: 3px 10px;
+}
+.detail-type-table td:last-child {
+    width: 75px;
+    text-align: center;
+}
+.detail-type-table td:first-child {
+    border-right: 1px solid #ccc;
+}
+.detail-type-table tr {
+     border-bottom: 1px solid #ccc;
+}
+.red-button-plus,
+.red-button-plus:hover {
+    font-size: 30px;
+    line-height: 1px;
+    height: 34px;
+    width: 100%;
+    padding: 0;
+    color: #d9534f;
+    background-color: #eee;
+    border-color: #ccc;
+}
