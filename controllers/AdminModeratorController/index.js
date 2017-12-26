@@ -186,21 +186,13 @@ router.get('/create-request', (req, res) => {
                     TransportType
                         .getAllTransportType()
                         .then(types => {
-                            TransportMarkk
-                                .getAllTransportMarkks()
-                                .then(transportMarkks => {
-                                    res.render('roles/admin_moderator/create_request', {
-                                        assignedExecutorUsers: users,
-                                        customers: usersCustomers,
-                                        typeUser: req.session.passport.user.userTypeID,
-                                        types: types,
-                                        /*transportMarkks: transportMarkks*/
-                                    })
-                                })
-                                .catch(err => {
-                                    console.warn(err);
-                                    res.render('roles/admin_moderator/create_request');
-                                })
+
+                            res.render('roles/admin_moderator/create_request', {
+                                assignedExecutorUsers: users,
+                                customers: usersCustomers,
+                                typeUser: req.session.passport.user.userTypeID,
+                                types: types
+                            })
                         })
                         .catch(err => {
                             console.warn(err);
@@ -254,29 +246,41 @@ router.get('/requests/update-request/:id', (req, res) => {
                                     TaskType
                                         .getTaskTypesByCarAttributes(request[0].dataValues.transportTypeID, request[0].transportMarkkID, request[0].dataValues.transport_model.dataValues.id)
                                         .then(taskTypes => {
-                                            User
-                                                .getUserById(request[0].dataValues.customerID)
-                                                .then(customer => {
-                                                    Request
-                                                        .getRequestsWithoutCondition()
-                                                        .then(requests => {
-                                                            TransportType
-                                                                .getAllTransportType()
-                                                                .then(types => {
-                                                                    TransportMarkk
-                                                                        .getAllTransportMarkks()
-                                                                        .then(transportMarkks => {
-                                                                            res.render('roles/admin_moderator/update_request', {
-                                                                                requests: requests,
-                                                                                customer: customer,
-                                                                                taskTypes: taskTypes,
-                                                                                assignedExecutorUsers: users,
-                                                                                customers: usersCustomers,
-                                                                                typeUser: req.session.passport.user.userTypeID,
-                                                                                request: requestsFactory(request, task),
-                                                                                types: types,
-                                                                                transportMarkks: transportMarkks
-                                                                            })
+                                            Models.Detail
+                                                .getDetailsByCarAttributes(request[0].dataValues.transportTypeID, request[0].transportMarkkID, request[0].dataValues.transport_model.dataValues.id)
+                                                .then(detailTypes => {
+                                                    User
+                                                        .getUserById(request[0].dataValues.customerID)
+                                                        .then(customer => {
+                                                            Request
+                                                                .getRequestsWithoutCondition()
+                                                                .then(requests => {
+                                                                    TransportType
+                                                                        .getAllTransportType()
+                                                                        .then(types => {
+                                                                            TransportMarkk
+                                                                                .getAllTransportMarkks()
+                                                                                .then(transportMarkks => {
+
+                                                                                    console.log( 1111111111, detailTypes );
+
+                                                                                    res.render('roles/admin_moderator/update_request', {
+                                                                                        requests: requests,
+                                                                                        customer: customer,
+                                                                                        taskTypes: taskTypes,
+                                                                                        assignedExecutorUsers: users,
+                                                                                        customers: usersCustomers,
+                                                                                        typeUser: req.session.passport.user.userTypeID,
+                                                                                        request: requestsFactory(request, task),
+                                                                                        types: types,
+                                                                                        transportMarkks: transportMarkks,
+                                                                                        detailTypes: detailTypes
+                                                                                    })
+                                                                                })
+                                                                                .catch(error => {
+                                                                                    console.warn(error);
+                                                                                    res.render('roles/admin_moderator/update_request');
+                                                                                });
                                                                         })
                                                                         .catch(error => {
                                                                             console.warn(error);
@@ -297,6 +301,7 @@ router.get('/requests/update-request/:id', (req, res) => {
                                                     console.warn(error);
                                                     res.render('roles/admin_moderator/update_request');
                                                 });
+
                                         })
                                         .catch(error => {
                                             console.warn(error);

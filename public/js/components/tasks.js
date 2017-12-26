@@ -17,8 +17,6 @@ $(document).ready(function () {
                 success: function (data) {
 
                     $('#task-type-select').find('option').remove();
-                    $('#default-detail-type-select').find('option').remove();
-
                     $.each(data.taskTypes, function (i, item) {
                         var title = setTaskTypesTitle(item);
 
@@ -31,10 +29,11 @@ $(document).ready(function () {
                         }));
                     });
 
+                    $('#detail-type-select').find('option').remove();
                     $.each(data.detailTypes, function (i, item) {
                         var title = setDetailTypesTitle(item);
 
-                        $('#default-detail-type-select').append($('<option>', {
+                        $('#detail-type-select').append($('<option>', {
                             value: item.id,
                             text: item.detailName + ' (' + title + ')',
                             id: 'detailTypeID' + item.id,
@@ -113,7 +112,7 @@ $(document).ready(function () {
                         clientDetails += ', ' + item.detail.detailName + ' - ' + item.detailQuantity;
                     }
                     else {
-                        missingDetails += + ', ' +  item.detail.detailName + ' - ' + item.detailQuantity;
+                        missingDetails += ', ' +  item.detail.detailName + ' - ' + item.detailQuantity;
                     }
                 });
 
@@ -150,7 +149,7 @@ $(document).ready(function () {
                     '</td>' +
                     '<td class="vat">' +
                     '<p><strong>Опис задачі: </strong>' + data.result.description + '</p>' +
-                    '<p class="bt"><strong>Запчастини: </strong>' + convertDetailsString(defaultDetails) + '</p>' +
+                    '<p class="bt"><strong>Запчастини сервісу: </strong>' + convertDetailsString(defaultDetails) + '</p>' +
                     '<p><strong>Запчастини кліента: </strong>' + convertDetailsString(clientDetails) + '</p>' +
                     '<p><strong>Відсутні запчастини: </strong>' + convertDetailsString(missingDetails) + '</p>' +
                     '<p class="bt"><strong>Коментар: </strong>' + data.result.comment + '</p>' +
@@ -276,7 +275,7 @@ $(document).ready(function () {
                         clientDetails += ', ' + item.detail.detailName + ' - ' + item.detailQuantity;
                     }
                     else {
-                        missingDetails += + ', ' +  item.detail.detailName + ' - ' + item.detailQuantity;
+                        missingDetails += ', ' +  item.detail.detailName + ' - ' + item.detailQuantity;
                     }
                 });
 
@@ -325,7 +324,7 @@ $(document).ready(function () {
                         '</td>' +
                         '<td class="vat bb' + disableFields(data.task.status) + '"> ' +
                         '<p><strong>Опис задачі: </strong>' + data.task.description + '</p> ' +
-                        '<p class="bt"><strong>Запчастини: </strong>' + convertDetailsString(defaultDetails) + '</p> ' +
+                        '<p class="bt"><strong>Запчастини сервісу: </strong>' + convertDetailsString(defaultDetails) + '</p> ' +
                         '<p><strong>Запчастини клієнта: </strong>' + convertDetailsString(clientDetails) + '</p> ' +
                         '<p  id="need-buy-parts"><strong>Відсутні запчастини: </strong>' + convertDetailsString(missingDetails) + '</p> ' +
                         '<p class="bt" id="comment"><strong>Коментар: </strong>' + data.task.comment + '</p> ' +
@@ -733,7 +732,7 @@ $(document).ready(function () {
                     '</td>' +
                     '<td class="vat bb' + disableFields(data.task.status) + '"> ' +
                     '<p><strong>Опис задачі: </strong>' + data.task.description + '</p> ' +
-                    '<p class="bt"><strong>Запчастини: </strong>' + data.task.parts + '</p> ' +
+                    '<p class="bt"><strong>Запчастини сервісу: </strong>' + data.task.parts + '</p> ' +
                     '<p><strong>Запчастини клієнта: </strong>' + data.task.customerParts + '</p> ' +
                     '<p  id="need-buy-parts"><strong>Відсутні запчастини: </strong>' + data.task.needBuyParts + '</p> ' +
                     '<p class="bt" id="comment"><strong>Коментар: </strong>' + data.task.comment + '</p> ' +
@@ -858,11 +857,11 @@ function updateTaskOnClick(value) {
                             }));
                         });
 
-                        $('#update-default-detail-type-select').find('option').remove();
+                        $('#update-detail-type-select').find('option').remove();
                         data.detailTypes.forEach(item => {
                             var title = setDetailTypesTitle(item);
 
-                            $('#update-default-detail-type-select').append($('<option>', {
+                            $('#update-detail-type-select').append($('<option>', {
                                 value: item.id,
                                 text: item.detailName + ' (' + title + ')',
                                 id: 'detailTypeID' + item.id,
@@ -877,7 +876,8 @@ function updateTaskOnClick(value) {
                         var taskTypeID = $("option[id='updateTaskTypeID" + $(This).data('task-type-id') + "']").val();
 
                         $('#update-form-task-type-select').val(taskTypeID).change();
-                        $('#update-default-detail-type-select').change();
+                        $('#update-detail-type-select').val('').change();
+                        $('#update-detail-type').val('').change();
                         $('#update-form-task-old-cost').val($(This).data('task-cost'));
                         $('#update-form-task-cost').val($(This).data('task-cost'));
                     }
@@ -921,13 +921,26 @@ function updateTaskOnClick(value) {
             success: function (data) {
 
                 $('#update-detail-type-tbody').empty();
-                $('#update-detail-type-input').val('');
 
                 data.details.forEach(function (item) {
-                    $('#update-default-detail-type-tbody').append('<tr><td>' + item.detail.detailName + '</td><td>' + item.detailQuantity + '</td></tr>');
+                    var detailTypeName;
+
+                    if ( +item.detailType === 1) {
+                        detailTypeName = 'Сервіс'
+                    }
+                    else if ( +item.detailType === 2 ) {
+                        detailTypeName = 'Клієнт'
+                    }
+                    else {
+                        detailTypeName = 'Відсутня'
+                    }
+
+                    $('#update-detail-type-tbody').append('<tr><td>' + item.detail.detailName + '</td><td>' + detailTypeName + '</td><td>' + item.detailQuantity + '</td></tr>');
                 });
 
-                $('#update-default-detail-type-select').change();
+                $('#update-detail-type-select').val('').change();
+                $('#update-detail-type').val('').change();
+                $('#update-detail-type-input').val('');
             }
         })
     });
@@ -957,7 +970,7 @@ function changeStatus(data) {
     var newStatus = "";
     switch (data) {
         case 1: {
-            newStatus = '<span class="status-task status-bgc-pending"><strong>Задача в очікуванні</strong></span>';
+            newStatus = '<span class="status-task status-bgc-pending"><strong>Задача в очікувані</strong></span>';
             break;
         }
         case 2: {
@@ -992,6 +1005,8 @@ function setDefaultTaskNameOnCreateTask() {
     $('#create_new_task .select2').removeClass("hidden");
     $('.task-type-input').addClass("hidden");
     $('#create_new_task .input-group').removeClass("hidden");
+    $('#detail-type-select').val('').change();
+    $('#detail-type').val('').change();
 }
 
 function setDefaultAssignedUserOnCreateTask() {

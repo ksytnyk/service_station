@@ -494,23 +494,36 @@ thead {
     border-radius: 4px;
     margin-bottom: 10px;
     overflow-y: auto;
-    height: 83px;
+    height: 109px;
 }
 .detail-type-table table {
     width: 100%;
 }
+.detail-type-table th {
+    background-color: #f5f5f5;
+}
+.detail-type-table th,
 .detail-type-table td {
     padding: 3px 10px;
-}
-.detail-type-table td:last-child {
-    width: 75px;
     text-align: center;
+    border-right: 1px solid #ccc;
 }
 .detail-type-table td:first-child {
-    border-right: 1px solid #ccc;
+    text-align: left;
+}
+.detail-type-table th:last-child,
+.detail-type-table td:last-child {
+    border-right: none;
 }
 .detail-type-table tr {
      border-bottom: 1px solid #ccc;
+}
+.detail-type-table tr:last-child {
+    border-bottom: none;
+}
+.detail-type-table tr:first-child,
+.detail-type-table tr:nth-child(2) {
+    border-bottom: 1px solid #ccc;
 }
 .red-button-plus,
 .red-button-plus:hover {

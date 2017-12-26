@@ -51,9 +51,27 @@
         </td>
         <td class="vat bb {@eq key=status value=5}disable-task{/eq}">
             <p><strong>Опис задачі: </strong>{description}</p>
-            <p class="bt"><strong>Запчастини: </strong>{parts}</p>
-            <p><strong>Запчастини клієнта: </strong>{customerParts}</p>
-            <p id="need-buy-parts"><strong>Відсутні запчастини: </strong>{needBuyParts}</p>
+            <p class="bt"><strong>Запчастини сервісу: </strong>
+                {#taskDetails}
+                    {@eq key=detailType value=1}
+                        {detail.detailName} - {detailQuantity},
+                    {/eq}
+                {/taskDetails}
+            </p>
+            <p><strong>Запчастини клієнта: </strong>
+                {#taskDetails}
+                    {@eq key=detailType value=2}
+                        {detail.detailName} - {detailQuantity},
+                    {/eq}
+                {/taskDetails}
+            </p>
+            <p id="need-buy-parts"><strong>Відсутні запчастини: </strong>
+                {#taskDetails}
+                    {@eq key=detailType value=3}
+                        {detail.detailName} - {detailQuantity},
+                    {/eq}
+                {/taskDetails}
+            </p>
             <p class="bt" id="comment"><strong>Коментар: </strong>{comment}</p>
         </td>
         {@lt key=typeUser value=5}

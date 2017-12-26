@@ -6,6 +6,9 @@ const sequelize = require('../connection');
 const Request = require('../Request');
 const User = require('../User');
 const RequestHistory = require('../RequestHistory');
+const TaskDetail = require('../TaskDetail/index');
+const Detail = require('../Detail');
+
 
 const status = require('../../constants/status');
 
@@ -71,6 +74,8 @@ let Task = sequelize.define('task', describeTaskTable, optionTaskTable);
 Task.belongsTo(Request, {foreignKey: 'requestID'});
 Task.belongsTo(User, {foreignKey: 'planedExecutorID', as: 'planedExecutor'});
 Task.belongsTo(User, {foreignKey: 'assignedUserID', as: 'assignedUser'});
+Task.hasMany(TaskDetail, {foreignKey: 'taskID', as: 'taskDetails'});
+TaskDetail.belongsTo(Detail, {foreignKey: 'detailID'});
 
 Task.sync();
 
@@ -86,6 +91,15 @@ Task.getAllTasks = function () {
                     {
                         model: User,
                         as: 'assignedUser'
+                    },
+                    {
+                        model: TaskDetail,
+                        as: 'taskDetails',
+                        include: [
+                            {
+                                model: Detail
+                            }
+                        ]
                     }
                 ]
             })
@@ -114,6 +128,15 @@ Task.getAllHoldTasks = function () {
                     {
                         model: User,
                         as: 'assignedUser'
+                    },
+                    {
+                        model: TaskDetail,
+                        as: 'taskDetails',
+                        include: [
+                            {
+                                model: Detail
+                            }
+                        ]
                     }
                 ]
             })
@@ -142,6 +165,15 @@ Task.getAllTasksOfRequest = function (id) {
                     {
                         model: User,
                         as: 'assignedUser'
+                    },
+                    {
+                        model: TaskDetail,
+                        as: 'taskDetails',
+                        include: [
+                            {
+                                model: Detail
+                            }
+                        ]
                     }
                 ]
             })

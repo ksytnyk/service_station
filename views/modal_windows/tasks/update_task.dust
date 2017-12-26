@@ -113,48 +113,63 @@
                             <span class="input-group-addon">грн</span>
                         </div>
                     </div>
-                    <div class="form-group required col-xs-6">
+                    <div class="form-group required col-xs-7">
 
                         <label>Деталі</label>
                         <div class="detail-type-table">
                             <table>
-                                <tbody id="update-default-detail-type-tbody">
+                                <thead>
+                                <tr>
+                                    <th>Назва деталі</th>
+                                    <th>Тип деталі</th>
+                                    <th style="width: 80px;">Кількість</th>
+                                </tr>
+                                </thead>
+                                <tbody id="update-detail-type-tbody">
 
                                 </tbody>
                             </table>
                         </div>
+
                         <div class="row">
-                            <div class="col-xs-8">
-                                <select class="form-control add_select2" id="update-default-detail-type-select" name="detailID">
+                            <div class="col-xs-7">
+                                <select class="form-control add_select2" id="update-detail-type-select" name="detailID">
                                     {#detailTypes}
-                                    {@eq key=title value="0"}
-                                    <option value="{id}" title="Усі категорії">{detailName} (Усі категорії)</option>
-                                    {/eq}
-                                    {@eq key=title value="1"}
-                                    <option value="{id}" title="Категорія: {transportTypeID}">{detailName} (Категорія:
-                                        {transportTypeID})
-                                    </option>
-                                    {/eq}
-                                    {@eq key=title value="2"}
-                                    <option value="{id}" title="Категорія: {transportTypeID}, {transportMarkkID}">
-                                        {detailName} (Категорія: {transportTypeID}, {transportMarkkID})
-                                    </option>
-                                    {/eq}
-                                    {@eq key=title value="3"}
-                                    <option value="{id}"
-                                            title="Категорія: {transportTypeID}, {transportModelID}, {transportModelID}">
-                                        {detailName} (Категорія: {transportTypeID}, {transportMarkkID},
-                                        {transportModelID})
-                                    </option>
-                                    {/eq}
+                                        {@eq key=title value="0"}
+                                        <option id="detailTypeID{id}" value="{id}" detailName="{detailName}" title="Усі категорії">
+                                            {detailName} (Усі категорії)
+                                        </option>
+                                        {/eq}
+                                        {@eq key=title value="1"}
+                                        <option id="detailTypeID{id}" value="{id}" detailName="{detailName}" title="Категорія: {transportTypeID}">
+                                            {detailName} (Категорія: {transportType.transportTypeName})
+                                        </option>
+                                        {/eq}
+                                        {@eq key=title value="2"}
+                                        <option id="detailTypeID{id}" value="{id}" detailName="{detailName}" title="Категорія: {transportTypeID}, {transportMarkkID}">
+                                            {detailName} (Категорія: {transportType.transportTypeName}, {transportMarkk.transportMarkkName})
+                                        </option>
+                                        {/eq}
+                                        {@eq key=title value="3"}
+                                        <option id="detailTypeID{id}" value="{id}" detailName="{detailName}" title="Категорія: {transportTypeID}, {transportModelID}, {transportModelID}">
+                                            {detailName} (Категорія: {transportType.transportTypeName}, {transportMarkk.transportMarkkName}, {transportModel.transportModelName})
+                                        </option>
+                                        {/eq}
                                     {/detailTypes}
                                 </select>
                             </div>
-                            <div class="col-xs-2 form-group" style="padding: 0">
-                                <input id="update-default-detail-type-input" class="form-control create-form-task" min="1" type="number" name="detailQuantity"/>
+                            <div class="col-xs-2 form-group" style="padding: 0;">
+                                <select class="form-control add_select2" name="detailType" id="update-detail-type">
+                                    <option value="1">Сервіс</option>
+                                    <option value="2">Клієнт</option>
+                                    <option value="3">Відсутня</option>
+                                </select>
                             </div>
                             <div class="col-xs-2 form-group">
-                                <input type="button" id="update-add-default-detail" class="btn btn-default red-button-plus" value="+"/>
+                                <input id="update-detail-type-input" class="form-control create-form-task" min="1" type="number" name="detailQuantity"/>
+                            </div>
+                            <div class="col-xs-1 form-group" style="padding-left: 0;">
+                                <input type="button" id="update-add-detail" class="btn btn-default red-button-plus" value="+"/>
                             </div>
                         </div>
                     </div>
@@ -175,9 +190,9 @@
                         <textarea class="form-control create-form-task" name="needBuyParts" rows="3"
                                   id="update-form-task-need-buy-parts"></textarea>
                     </div>-->
-                    <div class="form-group col-xs-6">
+                    <div class="form-group col-xs-5">
                         <label>Коментар</label>
-                        <textarea class="form-control create-form-task" name="comment" rows="3"
+                        <textarea class="form-control create-form-task" name="comment" rows="7"
                                   id="update-form-task-comment"></textarea>
                     </div>
                         {@lt key=typeUser value=3}

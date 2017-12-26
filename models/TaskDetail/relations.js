@@ -68,6 +68,7 @@ Models.TaskDetail.createTaskDetail = (taskID, array) => {
             })
     })
 };
+
 Models.TaskDetail.getTaskDetail = (taskID) => {
     return new Promise((resolve, reject) => {
         Models.TaskDetail
