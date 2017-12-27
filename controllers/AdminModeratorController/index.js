@@ -262,8 +262,6 @@ router.get('/requests/update-request/:id', (req, res) => {
                                                                                 .getAllTransportMarkks()
                                                                                 .then(transportMarkks => {
 
-                                                                                    console.log( 1111111111, detailTypes );
-
                                                                                     res.render('roles/admin_moderator/update_request', {
                                                                                         requests: requests,
                                                                                         customer: customer,

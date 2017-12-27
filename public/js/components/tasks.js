@@ -309,9 +309,9 @@ $(document).ready(function () {
                     var newTask, newTask1 = '', newTask2, newCost;
 
                     newTask = '' +
-                        '<th class="tac bb" style="background-color:#fff;">' +
+                        '<td class="tac bb">' +
                         data.task.id +
-                        '</th>' +
+                        '</td>' +
                         '<td class="vat bb' + disableFields(data.task.status) + '" style="position: relative; padding-top: 40px;">' +
                         changeStatus(data.task.status) +
                         '<p><strong>Назва задачі: </strong>' + data.task.name + '</p>' +
@@ -1029,15 +1029,15 @@ function setTaskTypesTitle(item) {
             break;
         }
         case '1': {
-            return 'Категорія: ' + item.typeOfCar;
+            return 'Категорія: ' + item.transportType.transportTypeName;
             break;
         }
         case '2': {
-            return 'Категорія: ' + item.typeOfCar + ', ' + item.carMarkk;
+            return 'Категорія: ' + item.transportType.transportTypeName + ', ' + item.transportMarkk.transportMarkkName;
             break;
         }
         case '3': {
-            return 'Категорія: ' + item.typeOfCar + ', ' + item.carMarkk + ', ' + item.carModel;
+            return 'Категорія: ' + item.transportType.transportTypeName + ', ' + item.transportMarkk.transportMarkkName + ', ' + item.transportModel.transportModelName;
             break;
         }
     }

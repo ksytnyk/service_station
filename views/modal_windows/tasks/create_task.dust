@@ -21,13 +21,13 @@
                                 <option value="{id}" taskTypeID="{typeName}" id="taskTypeID{id}" title="Усі категорії">{typeName} (Усі категорії)</option>
                                 {/eq}
                                 {@eq key=title value="1"}
-                                <option value="{id}" taskTypeID="{typeName}" id="taskTypeID{id}" title="Категорія: {typeOfCar}">{typeName} (Категорія: {typeOfCar})</option>
+                                <option value="{id}" taskTypeID="{typeName}" id="taskTypeID{id}" title="Категорія: {typeOfCar}">{typeName} (Категорія: {transportType.transportTypeName})</option>
                                 {/eq}
                                 {@eq key=title value="2"}
-                                <option value="{id}" taskTypeID="{typeName}" id="taskTypeID{id}" title="Категорія: {typeOfCar}, {carMarkk}">{typeName} (Категорія: {typeOfCar}, {carMarkk})</option>
+                                <option value="{id}" taskTypeID="{typeName}" id="taskTypeID{id}" title="Категорія: {typeOfCar}, {carMarkk}">{typeName} (Категорія: {transportType.transportTypeName}, {transportMarkk.transportMarkkName})</option>
                                 {/eq}
                                 {@eq key=title value="3"}
-                                <option value="{id}" taskTypeID="{typeName}" id="taskTypeID{id}" title="Категорія: {typeOfCar}, {carMarkk}, {carModel}">{typeName} (Категорія: {typeOfCar}, {carMarkk}, {carModel})</option>
+                                <option value="{id}" taskTypeID="{typeName}" id="taskTypeID{id}" title="Категорія: {typeOfCar}, {carMarkk}, {carModel}">{typeName} (Категорія: {transportType.transportTypeName}, {transportMarkk.transportMarkkName}, {transportModel.transportModelName})</option>
                                 {/eq}
                                 {/taskTypes}
                             </select>

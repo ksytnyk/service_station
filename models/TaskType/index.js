@@ -174,7 +174,13 @@ TaskType.getTaskTypesByCarAttributes = function (typeOfCar, carMarkk, carModel) 
                             typeOfCar: typeOfCar,
                             carMarkk: null,
                             carModel: null
-                        }
+                        },
+                        include: [
+                            {
+                                model: TransportType,
+                                as: 'transportType'
+                            }
+                        ]
                     })
                     .then(taskTypesOneAttributes => {
                         TaskType
@@ -183,7 +189,17 @@ TaskType.getTaskTypesByCarAttributes = function (typeOfCar, carMarkk, carModel) 
                                     typeOfCar: typeOfCar,
                                     carMarkk: carMarkk,
                                     carModel: null
-                                }
+                                },
+                                include: [
+                                    {
+                                        model: TransportType,
+                                        as: 'transportType'
+                                    },
+                                    {
+                                        model: TransportMarkk,
+                                        as: 'transportMarkk'
+                                    }
+                                ]
                             })
                             .then(taskTypesTwoAttributes => {
                                 TaskType
@@ -192,7 +208,21 @@ TaskType.getTaskTypesByCarAttributes = function (typeOfCar, carMarkk, carModel) 
                                             typeOfCar: typeOfCar,
                                             carMarkk: carMarkk,
                                             carModel: carModel
-                                        }
+                                        },
+                                        include: [
+                                            {
+                                                model: TransportType,
+                                                as: 'transportType'
+                                            },
+                                            {
+                                                model: TransportMarkk,
+                                                as: 'transportMarkk'
+                                            },
+                                            {
+                                                model: TransportModel,
+                                                as: 'transportModel'
+                                            }
+                                        ]
                                     })
                                     .then(taskTypesAllAttributes => {
                                         var result = taskTypesFactory(taskTypesNoneAttributes, taskTypesOneAttributes, taskTypesTwoAttributes, taskTypesAllAttributes);
