@@ -99,6 +99,13 @@ button:focus {
 .glyphicon-remove:hover {
     color: rgba(217, 83, 79, 1);
 }
+
+/* For detail-delete button in task update/create window */
+#detail-type-tbody span.glyphicon-remove,
+#update-detail-type-tbody span.glyphicon-remove {
+    margin: 0;
+}
+/* */
 input[disabled],
 textarea[disabled],
 select[disabled],

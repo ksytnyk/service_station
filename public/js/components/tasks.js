@@ -1,6 +1,9 @@
 $(document).ready(function () {
 
     $('#create_task').on('click', function () {
+
+        customDetailID = 999999;
+
         $('#requestIDForTask').val($("#update_request").attr("request-id"));
         clearModalAddTask();
         setStartTime();
@@ -87,8 +90,8 @@ $(document).ready(function () {
         }
 
         dataArr.push({
-            name: 'defaultDetail',
-            value: JSON.stringify(defaultDetailArray)
+            name: 'detail',
+            value: JSON.stringify(detailArray)
         });
 
         $.ajax({
@@ -98,7 +101,7 @@ $(document).ready(function () {
             success: function (data) {
                 showSuccessAlert('Додавання задачі пройшло успішно.');
 
-                defaultDetailArray= [];
+                detailArray = [];
 
                 var defaultDetails = '',
                     clientDetails = '',
@@ -134,9 +137,9 @@ $(document).ready(function () {
 
                 var editDeleteButtons = '' +
                     '<tr id="idx-task-' + data.result.id + '">' +
-                    '<th class="tac" style="background-color: #fff;">' +
+                    '<td class="tac"><strong>' +
                     data.result.id +
-                    '</th>' +
+                    '</strong></td>' +
                     '<td class="vat" style="position: relative; padding-top: 40px;">' +
                     changeStatus(data.result.status) +
                     '<p><strong>Назва задачі: </strong>' + data.result.name + '</p>' +
@@ -224,7 +227,6 @@ $(document).ready(function () {
         var dataArr = $('#update-form-task').serializeArray();
         var oldStartTime = $('#change-status-update-task').attr('old-start-time');
 
-
         if ( getRole(window.location.pathname) === '/executor') {
             dataArr[6].value = checkDateForUpdate(oldStartTime, dataArr[6].value);
 
@@ -248,20 +250,28 @@ $(document).ready(function () {
             dataArr[8].value = checkDateForUpdate(oldStartTime, dataArr[8].value);
         }
 
-        dataArr.push({
-            name: 'defaultDetail',
-            value: JSON.stringify(defaultDetailArray)
-        });
+        dataArr.push(
+            {
+                name: 'detail',
+                value: JSON.stringify(detailArray)
+            },
+            {
+                name: 'deleteDetail',
+                value: JSON.stringify(deleteDetailArray)
+            }
+        );
 
         $.ajax({
             url: getRole(window.location.pathname) + '/update-task/' + $('#update-form-task-id').val(),
             type: 'put',
             data: dataArr,
             success: function (data) {
+
                 showSuccessAlert('Редагування задачі пройшло успішно.');
                 $('.in .close').click();
 
-                defaultDetailArray = [];
+                detailArray = [];
+                deleteDetailArray = [];
 
                 var defaultDetails = '',
                     clientDetails = '',
@@ -309,9 +319,9 @@ $(document).ready(function () {
                     var newTask, newTask1 = '', newTask2, newCost;
 
                     newTask = '' +
-                        '<td class="tac bb">' +
+                        '<td class="tac bb"><strong>' +
                         data.task.id +
-                        '</td>' +
+                        '</strong></td>' +
                         '<td class="vat bb' + disableFields(data.task.status) + '" style="position: relative; padding-top: 40px;">' +
                         changeStatus(data.task.status) +
                         '<p><strong>Назва задачі: </strong>' + data.task.name + '</p>' +
@@ -920,9 +930,12 @@ function updateTaskOnClick(value) {
             type: 'get',
             success: function (data) {
 
+                customDetailID = 999999;
+
                 $('#update-detail-type-tbody').empty();
 
                 data.details.forEach(function (item) {
+
                     var detailTypeName;
 
                     if ( +item.detailType === 1) {
@@ -935,14 +948,46 @@ function updateTaskOnClick(value) {
                         detailTypeName = 'Відсутня'
                     }
 
-                    $('#update-detail-type-tbody').append('<tr><td>' + item.detail.detailName + '</td><td>' + detailTypeName + '</td><td>' + item.detailQuantity + '</td></tr>');
+                    $('#update-detail-type-tbody').append('' +
+                        '<tr id="idr-' + item.id + '"><td>' + item.detail.detailName + '</td>' +
+                        '<td>' +detailTypeName + '</td>' +
+                        '<td>' + item.detailQuantity + '</td>' +
+                        '<td><a' +
+                        ' class="delete-detail-from-modal"' +
+                        ' title="Видалити деталь" ' +
+                        ' detail-id="' + item.id + '"' +
+                        ' style=""> ' +
+                        '<span class="glyphicon glyphicon-remove" aria-hidden="true"/> ' +
+                        '</a>' +
+                        '</td>' +
+                        '</tr>');
                 });
+
+                deleteDetailFromModal('.delete-detail-from-modal');
 
                 $('#update-detail-type-select').val('').change();
                 $('#update-detail-type').val('').change();
                 $('#update-detail-type-input').val('');
             }
         })
+    });
+}
+
+function deleteDetailFromModal(value) {
+
+    var element;
+
+    $(value).on('click', function () {
+        element = $(this).attr('detail-id');
+        $('#idr-' + element).remove();
+
+        for(var i = 0; i < detailArray.length; i++) {
+            if (detailArray[i].customDetailID === +element) {
+                detailArray.splice(i, 1);
+                return;
+            }
+        }
+        deleteDetailArray.push(element);
     });
 }
 

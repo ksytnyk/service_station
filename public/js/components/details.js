@@ -149,17 +149,35 @@ $(document).ready(function () {
 
         if( detailID !== null && detailQuantity !== '' && detailType !== null) {
 
-            defaultDetailArray.push({
+            detailArray.push({
                 detailID: +detailID,
                 detailQuantity: +detailQuantity,
                 detailType: detailType,
-                detailName: detailName
+                detailName: detailName,
+                customDetailID: customDetailID
             });
 
-            $('#detail-type-tbody').append('<tr><td>' + detailName + '</td><td>' + detailTypeName + '</td><td>' + detailQuantity + '</td></tr>');
+            $('#detail-type-tbody').append('' +
+                '<tr id="idr-' + customDetailID + '">' +
+                '<td>' + detailName + '</td>' +
+                '<td>' + detailTypeName + '</td>' +
+                '<td>' + detailQuantity + '</td>' +
+                '<td><a' +
+                ' class="delete-detail-from-modal"' +
+                ' title="Видалити деталь" ' +
+                ' detail-id="' + customDetailID + '"' +
+                ' style=""> ' +
+                '<span class="glyphicon glyphicon-remove" aria-hidden="true"/> ' +
+                '</a>' +
+                '</td>' +
+                '</tr>');
+
             $('#detail-type-select').val('').change();
             $('#detail-type').val('').change();
             $('#detail-type-input').val('');
+
+            deleteDetailFromModal('#idr-' + customDetailID + ' .delete-detail-from-modal');
+            customDetailID--;
         }
     });
 
@@ -183,19 +201,39 @@ $(document).ready(function () {
 
         if ( detailID !== null && detailQuantity !== '' && detailType !== null) {
 
-            defaultDetailArray.push({
+            detailArray.push({
                 detailID: +detailID,
                 detailQuantity: +detailQuantity,
                 detailType: detailType,
-                detailName: detailName
+                detailName: detailName,
+                customDetailID: customDetailID
             });
 
-            $('#update-detail-type-tbody').append('<tr><td>' + detailName + '</td><td>' + detailTypeName + '</td><td>' + detailQuantity + '</td></tr>');
+            $('#update-detail-type-tbody').append('' +
+                '<tr id="idr-' + customDetailID + '">' +
+                '<td>' + detailName + '</td>' +
+                '<td>' + detailTypeName + '</td>' +
+                '<td>' + detailQuantity + '</td>' +
+                '<td><a' +
+                ' class="delete-detail-from-modal"' +
+                ' title="Видалити деталь" ' +
+                ' detail-id="' + customDetailID + '"' +
+                ' style=""> ' +
+                '<span class="glyphicon glyphicon-remove" aria-hidden="true"/> ' +
+                '</a>' +
+                '</td>' +
+                '</tr>');
+
             $('#update-detail-type-select').val('').change();
             $('#update-detail-type').val('').change();
             $('#update-detail-type-input').val('');
+
+            deleteDetailFromModal('#idr-' + customDetailID + ' .delete-detail-from-modal');
+            customDetailID--;
         }
     });
 });
 
-var defaultDetailArray = [];
+var detailArray = [];
+var deleteDetailArray = [];
+var customDetailID;

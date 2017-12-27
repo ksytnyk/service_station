@@ -98,8 +98,9 @@
                                 <thead>
                                     <tr>
                                         <th>Назва деталі</th>
-                                        <th>Тип деталі</th>
+                                        <th style="width: 100px;">Тип деталі</th>
                                         <th style="width: 80px;">Кількість</th>
+                                        <th style="width: 40px;"></th>
                                     </tr>
                                 </thead>
                                 <tbody id="detail-type-tbody">

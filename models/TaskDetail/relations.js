@@ -27,31 +27,22 @@ Models.TaskDetail.sync();
 
 // --- TaskDetail Model ---
 
-/*Models.TaskDetail.findOrCreateTaskDetail = (taskID, array) => {
+Models.TaskDetail.deleteTaskDetail = (array) => {
     return new Promise((resolve, reject) => {
-        array.forEach(item => {
-            item.taskID = +taskID;
-            Models.TaskDetail
-                .findAll({
-                    where: item
-                })
-                .then((res) => {
-                    if (res.length === 0) {
-                        Models.TaskDetail
-                            .build(item)
-                            .save()
-                            .catch((err) => {
-                                reject(err);
-                            })
-                    }
-                })
-                .catch((err) => {
-                    reject(err);
-                })
-        });
-        resolve();
-    })
-};*/
+        Models.TaskDetail
+            .destroy({
+                where: {
+                    id: array
+                }
+            })
+            .then(() => {
+                resolve();
+            })
+            .catch((err) => {
+                reject(err);
+            })
+    });
+};
 
 Models.TaskDetail.createTaskDetail = (taskID, array) => {
     return new Promise((resolve, reject) => {
