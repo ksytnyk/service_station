@@ -110,10 +110,6 @@ module.exports = {
                 req.checkBody('assignedUserID', '"Доручити задачу" - обов\'язкове поле.').notEmpty();
             }
 
-            else if (req.baseUrl === '/store-keeper'){
-                req.checkBody('needBuyParts', '"Відсутні запчастини" - обов\'язкове поле.').notEmpty();
-            }
-
             let errors = req.validationErrors();
 
             if (errors) {

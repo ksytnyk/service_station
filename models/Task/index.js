@@ -225,7 +225,6 @@ Task.getTaskByExecutorId = function (id) {
                 include: [
                     {
                         model: Request,
-
                         where: {
                             $or: [
                                 {
@@ -239,10 +238,27 @@ Task.getTaskByExecutorId = function (id) {
                                 },
                             ]
                         }
+                    },
+                    {
+                        model: User,
+                        as: 'planedExecutor'
+                    },
+                    {
+                        model: User,
+                        as: 'assignedUser'
+                    },
+                    {
+                        model: TaskDetail,
+                        as: 'taskDetails',
+                        include: [
+                            {
+                                model: Detail
+                            }
+                        ]
                     }
                 ],
                 where: {
-                    assignedUserID: id,
+                    planedExecutorID: id,
                     $or: [
                         {
                             status: status.PENDING
@@ -295,6 +311,15 @@ Task.getAllTasksForStore = function (storeID) {
                                 }
                             ]
                         }
+                    },
+                    {
+                        model: TaskDetail,
+                        as: 'taskDetails',
+                        include: [
+                            {
+                                model: Detail
+                            }
+                        ]
                     }
                 ],
                 where: {

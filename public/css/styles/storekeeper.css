@@ -27,3 +27,6 @@
     width: 600px;
     box-sizing: border-box;
 }
+.update_task.update-task-modal-store-keeper {
+    width: 400px;
+}

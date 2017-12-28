@@ -250,16 +250,18 @@ $(document).ready(function () {
             dataArr[8].value = checkDateForUpdate(oldStartTime, dataArr[8].value);
         }
 
-        dataArr.push(
-            {
-                name: 'detail',
-                value: JSON.stringify(detailArray)
-            },
-            {
-                name: 'deleteDetail',
-                value: JSON.stringify(deleteDetailArray)
-            }
-        );
+        if (getRole(window.location.pathname) !== '/store-keeper') {
+            dataArr.push(
+                {
+                    name: 'detail',
+                    value: JSON.stringify(detailArray)
+                },
+                {
+                    name: 'deleteDetail',
+                    value: JSON.stringify(deleteDetailArray)
+                }
+            );
+        }
 
         $.ajax({
             url: getRole(window.location.pathname) + '/update-task/' + $('#update-form-task-id').val(),
@@ -620,6 +622,8 @@ $(document).ready(function () {
                             }
                         };
 
+                        $('#setTaskStatusHoldModal').modal('toggle');
+
                         return showErrorAlert(err);
                     }
                     else {
@@ -812,7 +816,7 @@ $(document).ready(function () {
     });
 
     $('#update-form-task-planed-executor').on('change', function () {
-        $('#update-form-task-assigned-user').val($(this).val()).select2();
+        $('#update-form-task-assigned-user').val($(this).val()).change();
     });
 });
 
@@ -829,7 +833,7 @@ function updateTaskOnClick(value) {
         setStartTime();
         setOpenTaskNameOnUpdateTask();
         if (!window.location.pathname.includes('update-request')) {
-            if (window.location.pathname.includes('create-request') || window.location.pathname.includes('requests')) {
+            if (window.location.pathname.includes('create-request') || window.location.pathname.includes('requests') || window.location.pathname.includes('executor') ) {
 
                 var dataArr;
                 var This = this;
@@ -846,6 +850,10 @@ function updateTaskOnClick(value) {
                         carMarkk: $('#markk' + $(this).data('request-id')).attr('attr-id'),
                         carModel: $('#model' + $(this).data('request-id')).attr('attr-id')
                     };
+                } else if (window.location.pathname.includes('executor')) {
+                    dataArr = {
+                        requestID: $(this).data('request-id')
+                    };
                 }
 
                 $.ajax({
@@ -854,18 +862,24 @@ function updateTaskOnClick(value) {
                     data: dataArr,
                     success: function (data) {
 
-                        $('#update-form-task-type-select').find('option').remove();
-                        data.taskTypes.forEach(item => {
-                            var title = setTaskTypesTitle(item);
+                        if(getRole(window.location.pathname) !== '/executor') {
+                            $('#update-form-task-type-select').find('option').remove();
+                            data.taskTypes.forEach(item => {
+                                var title = setTaskTypesTitle(item);
 
-                            $('#update-form-task-type-select').append($('<option>', {
-                                value: item.id,
-                                text: item.typeName + ' (' + title + ')',
-                                updateTaskTypeID: item.typeName,
-                                id: 'updateTaskTypeID' + item.id,
-                                title: title
-                            }));
-                        });
+                                $('#update-form-task-type-select').append($('<option>', {
+                                    value: item.id,
+                                    text: item.typeName + ' (' + title + ')',
+                                    updateTaskTypeID: item.typeName,
+                                    id: 'updateTaskTypeID' + item.id,
+                                    title: title
+                                }));
+                            });
+
+                            var taskTypeID = $("option[id='updateTaskTypeID" + $(This).data('task-type-id') + "']").val();
+
+                            $('#update-form-task-type-select').val(taskTypeID).change();
+                        }
 
                         $('#update-detail-type-select').find('option').remove();
                         data.detailTypes.forEach(item => {
@@ -880,12 +894,8 @@ function updateTaskOnClick(value) {
                             }));
                         });
 
-                        /*$('#update-form-task-type-select').val('');*/
-
                         isFirstUpdateClick = true;
-                        var taskTypeID = $("option[id='updateTaskTypeID" + $(This).data('task-type-id') + "']").val();
 
-                        $('#update-form-task-type-select').val(taskTypeID).change();
                         $('#update-detail-type-select').val('').change();
                         $('#update-detail-type').val('').change();
                         $('#update-form-task-old-cost').val($(This).data('task-cost'));
@@ -894,6 +904,7 @@ function updateTaskOnClick(value) {
                 });
 
             } else {
+
                 isFirstUpdateClick = true;
                 var taskTypeID = $("option[id='updateTaskTypeID" + $(this).data('task-type-id') + "']").val();
 
@@ -925,51 +936,69 @@ function updateTaskOnClick(value) {
         $('#update-form-task-status').val($(this).data('task-status'));
         $('#update-form-task-comment').val($(this).data('task-comment'));
 
-        $.ajax({
-            url: getRole(window.location.pathname) + '/details-of-task/' + $('#update-form-task-id').val(),
-            type: 'get',
-            success: function (data) {
+        if(getRole(window.location.pathname) !== '/store-keeper') {
 
-                customDetailID = 999999;
+            $.ajax({
+                url: getRole(window.location.pathname) + '/details-of-task/' + $('#update-form-task-id').val(),
+                type: 'get',
+                success: function (data) {
 
-                $('#update-detail-type-tbody').empty();
+                    customDetailID = 999999;
 
-                data.details.forEach(function (item) {
+                    $('#update-detail-type-tbody').empty();
 
-                    var detailTypeName;
+                    data.details.forEach(function (item) {
 
-                    if ( +item.detailType === 1) {
-                        detailTypeName = 'Сервіс'
-                    }
-                    else if ( +item.detailType === 2 ) {
-                        detailTypeName = 'Клієнт'
-                    }
-                    else {
-                        detailTypeName = 'Відсутня'
-                    }
+                        var detailTypeName;
 
-                    $('#update-detail-type-tbody').append('' +
-                        '<tr id="idr-' + item.id + '"><td>' + item.detail.detailName + '</td>' +
-                        '<td>' +detailTypeName + '</td>' +
-                        '<td>' + item.detailQuantity + '</td>' +
-                        '<td><a' +
-                        ' class="delete-detail-from-modal"' +
-                        ' title="Видалити деталь" ' +
-                        ' detail-id="' + item.id + '"' +
-                        ' style=""> ' +
-                        '<span class="glyphicon glyphicon-remove" aria-hidden="true"/> ' +
-                        '</a>' +
-                        '</td>' +
-                        '</tr>');
-                });
+                        if (+item.detailType === 1) {
+                            detailTypeName = 'Сервіс'
+                        }
+                        else if (+item.detailType === 2) {
+                            detailTypeName = 'Клієнт'
+                        }
+                        else {
+                            detailTypeName = 'Відсутня'
+                        }
 
-                deleteDetailFromModal('.delete-detail-from-modal');
+                        var detailTemplate1 = '' +
+                            '<tr id="idr-' + item.id + '"><td>' + item.detail.detailName + '</td>' +
+                            '<td>' + detailTypeName + '</td>' +
+                            '<td>' + item.detailQuantity + '</td>' +
+                            '<td>';
 
-                $('#update-detail-type-select').val('').change();
-                $('#update-detail-type').val('').change();
-                $('#update-detail-type-input').val('');
-            }
-        })
+
+                        var detailTemplate2 = '';
+
+                        if (getRole(window.location.pathname) === '/admin' || getRole(window.location.pathname) === '/moderator') {
+                            detailTemplate2 = '' +
+                                '<a class="delete-detail-from-modal" title="Видалити деталь" ' +
+                                ' detail-id="' + item.id + '">' +
+                                '<span class="glyphicon glyphicon-remove" aria-hidden="true"/></a>';
+                        }
+                        else {
+                            if (+item.detailType !== 2) {  //emit when modal render
+                                detailTemplate2 = '' +
+                                    '<a class="delete-detail-from-modal" title="Видалити деталь" ' +
+                                    ' detail-id="' + item.id + '">' +
+                                    '<span class="glyphicon glyphicon-remove" aria-hidden="true"/></a>';
+                            }
+                        }
+
+
+                        var detailTemplate3 = '</td></tr>';
+
+                        $('#update-detail-type-tbody').append(detailTemplate1 + detailTemplate2 + detailTemplate3);
+                    });
+
+                    deleteDetailFromModal('.delete-detail-from-modal');
+
+                    $('#update-detail-type-select').val('').change();
+                    $('#update-detail-type').val('').change();
+                    $('#update-detail-type-input').val('');
+                }
+            })
+        }
     });
 }
 

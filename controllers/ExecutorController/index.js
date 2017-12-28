@@ -9,6 +9,7 @@ const formatDate = require('../../helpers/formatDate');
 const countEndTime = require('../../helpers/countEndTime');
 const validation = require('../../middleware/validation');
 const status = require('../../constants/status');
+const Models = require('../../models/TaskDetail/relations');
 
 router.get('/', (req, res) => {
     Task
@@ -52,10 +53,35 @@ router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
                     Task
                         .getTaskById(req.body.id)
                         .then(task => {
-                            res.status(200).send({
-                                request: request,
-                                task: task
-                            });
+                            Models.TaskDetail
+                                .createTaskDetail(req.body.id, JSON.parse(req.body.detail))
+                                .then(() => {
+                                    Models.TaskDetail
+                                        .deleteTaskDetail(JSON.parse(req.body.deleteDetail))
+                                        .then(() => {
+                                            Models.TaskDetail
+                                                .getTaskDetail(req.body.id)
+                                                .then(details => {
+                                                    res.status(200).send({
+                                                        request: request,
+                                                        task: task,
+                                                        details: details
+                                                    });
+                                                })
+                                                .catch(errors => {
+                                                    console.warn(errors);
+                                                    res.status(400).send({errors: errors});
+                                                });
+                                        })
+                                        .catch(errors => {
+                                            console.warn(errors);
+                                            res.status(400).send({errors: errors});
+                                        });
+                                })
+                                .catch(errors => {
+                                    console.warn(errors);
+                                    res.status(400).send({errors: errors});
+                                });
                         })
                         .catch(errors => {
                             console.warn(errors);
@@ -106,6 +132,45 @@ router.put('/set-task-status/:id', (req, res) => {
                             console.warn(errors);
                             res.status(400).send({errors: errors});
                         });
+                })
+                .catch(errors => {
+                    console.warn(errors);
+                    res.status(400).send({errors: errors});
+                });
+        })
+        .catch(errors => {
+            console.warn(errors);
+            res.status(400).send({errors: errors});
+        });
+});
+
+/* ============== DETAIL TYPE ============== */
+
+router.get('/details-of-task/:id', (req, res) => {
+    Models.TaskDetail
+        .getTaskDetail(req.params.id)
+        .then(details => {
+            res.status(200).send({
+                details: details
+            })
+        })
+        .catch(error => {
+            console.warn(error);
+            res.status(400).send({errors: errors});
+        });
+});
+
+
+router.post('/get-task-types', (req, res) => {
+    Request
+        .getRequestById(req.body.requestID)
+        .then((request) => {
+            Models.Detail
+                .getDetailsByCarAttributes(request[0].transportTypeID, request[0].transportMarkkID, request[0].transportModelID)
+                .then(detailTypes => {
+                    res.status(200).send({
+                        detailTypes: detailTypes
+                    });
                 })
                 .catch(errors => {
                     console.warn(errors);

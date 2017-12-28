@@ -157,20 +157,36 @@ $(document).ready(function () {
                 customDetailID: customDetailID
             });
 
-            $('#detail-type-tbody').append('' +
-                '<tr id="idr-' + customDetailID + '">' +
-                '<td>' + detailName + '</td>' +
-                '<td>' + detailTypeName + '</td>' +
+            var detailTemplate1 = '' + //emit on plus button clicked
+                '<tr id="idr-' + customDetailID + '"><td>' + detailName + '</td>' +
+                '<td>' +detailTypeName + '</td>' +
                 '<td>' + detailQuantity + '</td>' +
-                '<td><a' +
-                ' class="delete-detail-from-modal"' +
-                ' title="Видалити деталь" ' +
-                ' detail-id="' + customDetailID + '"' +
-                ' style=""> ' +
-                '<span class="glyphicon glyphicon-remove" aria-hidden="true"/> ' +
-                '</a>' +
-                '</td>' +
-                '</tr>');
+                '<td>';
+
+
+            var detailTemplate2 = '';
+
+            if (getRole(window.location.pathname) === '/admin' || getRole(window.location.pathname) === '/moderator') {
+                detailTemplate2 = '' +
+                    '<a class="delete-detail-from-modal" title="Видалити деталь" ' +
+                    ' detail-id="' + customDetailID + '">' +
+                    '<span class="glyphicon glyphicon-remove" aria-hidden="true"/></a>';
+            }
+            else {
+                if(+detailType !== 2) {
+                    detailTemplate2 = '' +
+                        '<a class="delete-detail-from-modal" title="Видалити деталь" ' +
+                        ' detail-id="' + customDetailID + '">' +
+                        '<span class="glyphicon glyphicon-remove" aria-hidden="true"/></a>';
+                }
+            }
+
+
+
+            var detailTemplate3 = '</td></tr>';
+
+
+            $('#detail-type-tbody').append(detailTemplate1 + detailTemplate2 + detailTemplate3);
 
             $('#detail-type-select').val('').change();
             $('#detail-type').val('').change();
@@ -209,20 +225,33 @@ $(document).ready(function () {
                 customDetailID: customDetailID
             });
 
-            $('#update-detail-type-tbody').append('' +
-                '<tr id="idr-' + customDetailID + '">' +
-                '<td>' + detailName + '</td>' +
-                '<td>' + detailTypeName + '</td>' +
+            var detailTemplate1 = '' + //emit on plus button clicked
+                '<tr id="idr-' + customDetailID + '"><td>' + detailName + '</td>' +
+                '<td>' +detailTypeName + '</td>' +
                 '<td>' + detailQuantity + '</td>' +
-                '<td><a' +
-                ' class="delete-detail-from-modal"' +
-                ' title="Видалити деталь" ' +
-                ' detail-id="' + customDetailID + '"' +
-                ' style=""> ' +
-                '<span class="glyphicon glyphicon-remove" aria-hidden="true"/> ' +
-                '</a>' +
-                '</td>' +
-                '</tr>');
+                '<td>';
+
+
+            var detailTemplate2 = '';
+
+            if (getRole(window.location.pathname) === '/admin' || getRole(window.location.pathname) === '/moderator') {
+                detailTemplate2 = '' +
+                    '<a class="delete-detail-from-modal" title="Видалити деталь" ' +
+                    ' detail-id="' + customDetailID + '">' +
+                    '<span class="glyphicon glyphicon-remove" aria-hidden="true"/></a>';
+            }
+            else {
+                if(+detailType !== 2) {
+                    detailTemplate2 = '' +
+                        '<a class="delete-detail-from-modal" title="Видалити деталь" ' +
+                        ' detail-id="' + customDetailID + '">' +
+                        '<span class="glyphicon glyphicon-remove" aria-hidden="true"/></a>';
+                }
+            }
+
+            var detailTemplate3 = '</td></tr>';
+
+            $('#update-detail-type-tbody').append(detailTemplate1 + detailTemplate2 + detailTemplate3);
 
             $('#update-detail-type-select').val('').change();
             $('#update-detail-type').val('').change();

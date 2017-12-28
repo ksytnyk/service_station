@@ -79,6 +79,7 @@
         <td class="tac">
             <div class="tasks-status-form">
                 {@eq key=typeUser value=3}
+                {@eq key=planedExecutor.dataValues.id value=assignedUser.dataValues.id}
                     {@eq key=status value=1}
                     <input class="status btn btn-primary task-form-status task-status-button"
                            id="taskProcessing"
@@ -107,6 +108,7 @@
                            data-status="3"
                     />
                     {/eq}
+                {/eq}
                 {/eq}
                 {@eq key=typeUser value=4}
                 {@lt key=status value=2}

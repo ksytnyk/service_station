@@ -6,6 +6,7 @@ const Task = require('../../models/Task');
 const Request = require('../../models/Request');
 const formatDate = require('../../helpers/formatDate');
 const validation = require('../../middleware/validation');
+const Models = require('../../models/TaskDetail/relations');
 
 router.get('/', (req, res) => {
     Task
@@ -37,10 +38,19 @@ router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
                     Task
                         .getTaskById(req.body.id)
                         .then(task => {
-                            res.status(200).send({
-                                request: request,
-                                task: task
-                            });
+                            Models.TaskDetail
+                                .getTaskDetail(req.body.id)
+                                .then(details => {
+                                    res.status(200).send({
+                                        request: request,
+                                        task: task,
+                                        details: details
+                                    });
+                                })
+                                .catch(errors => {
+                                    console.warn(errors);
+                                    res.status(400).send({errors: errors});
+                                });
                         })
                         .catch(errors => {
                             console.warn(errors);

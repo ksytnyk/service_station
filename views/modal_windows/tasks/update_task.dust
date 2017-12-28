@@ -1,6 +1,6 @@
 {+update_task}
 <div class="modal fade" id="updateTaskFormModal" role="dialog" aria-labelledby="formModalLabel">
-    <div class="modal-dialog update_task" role="document">
+    <div class="modal-dialog update_task {@eq key=typeUser value=4}update-task-modal-store-keeper{/eq}" role="document">
         <div class="modal-content">
             <form id="update-form-task" class="create">
                 <div class="modal-header">
@@ -162,7 +162,9 @@
                             <div class="col-xs-2 form-group" style="padding: 0;">
                                 <select class="form-control add_select2" name="detailType" id="update-detail-type">
                                     <option value="1">Сервіс</option>
+                                    {@lt key=typeUser value=3}
                                     <option value="2">Клієнт</option>
+                                    {/lt}
                                     <option value="3">Відсутня</option>
                                 </select>
                             </div>
@@ -174,7 +176,7 @@
                             </div>
                         </div>
                     </div>
-
+                    {/lt}
                     <!--<div class="form-group col-xs-6">
                         <label>Запчастини</label>
                         <textarea class="form-control create-form-task" name="parts" rows="3"
@@ -185,15 +187,15 @@
                         <textarea class="form-control create-form-task" name="customerParts" rows="3"
                                   id="update-form-task-customer-parts"></textarea>
                     </div>
-                    {/lt}
+
                     <div class="form-group {@eq key=typeUser value=4}required{/eq} col-xs-6">
                         <label>Відсутні запчастини</label>
                         <textarea class="form-control create-form-task" name="needBuyParts" rows="3"
                                   id="update-form-task-need-buy-parts"></textarea>
                     </div>-->
-                    <div class="form-group col-xs-5">
+                    <div class="form-group {@eq key=typeUser value=4}col-xs-12{:else}col-xs-5{/eq}">
                         <label>Коментар</label>
-                        <textarea class="form-control create-form-task" name="comment" rows="7"
+                        <textarea class="form-control create-form-task" name="comment" rows="{@eq key=typeUser value=4}3{:else}7{/eq}"
                                   id="update-form-task-comment"></textarea>
                     </div>
                         {@lt key=typeUser value=3}
@@ -217,7 +219,7 @@
                         </button>
                         {/lt}
                         {@gt key=typeUser value=2}
-                        <div class='form-group col-xs-6 col-xs-offset-6'>
+                        <div class='form-group {@eq key=typeUser value=4}col-xs-12{:else}col-xs-6 col-xs-offset-6{/eq}'>
                         <button class="btn btn-success width task-update-button agree" id="change-status-update-task">
                             Оновити
                         </button>
