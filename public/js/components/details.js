@@ -134,18 +134,7 @@ $(document).ready(function () {
         var detailID = $('#detail-type-select').val(),
             detailQuantity = $('#detail-type-input').val(),
             detailType = $('#detail-type').val(),
-            detailName = $('#detailTypeID' + detailID).attr('detailName'),
-            detailTypeName;
-
-        if (+detailType === 1) {
-            detailTypeName = 'Сервіс'
-        }
-        else if (+detailType === 2) {
-            detailTypeName = 'Клієнт'
-        }
-        else {
-            detailTypeName = 'Відсутня'
-        }
+            detailName = $('#detailTypeID' + detailID).attr('detailName');
 
         if( detailID !== null && detailQuantity !== '' && detailType !== null) {
 
@@ -157,42 +146,56 @@ $(document).ready(function () {
                 customDetailID: customDetailID
             });
 
-            var detailTemplate1 = '' + //emit on plus button clicked
-                '<tr id="idr-' + customDetailID + '"><td>' + detailName + '</td>' +
-                '<td>' +detailTypeName + '</td>' +
-                '<td>' + detailQuantity + '</td>' +
-                '<td>';
+            // Emit on plus button clicked (create task modal)
+            var detailTemplate0 = '<tr id="idr-' + customDetailID + '"><td>' + detailName + '</td><td>';
 
+            var detailTemplate1 = 'Клієнт';
 
-            var detailTemplate2 = '';
+            var detailTemplate2 = '</td><td>' + detailQuantity + '</td><td>';
+
+            var detailTemplate3 = '';
 
             if (getRole(window.location.pathname) === '/admin' || getRole(window.location.pathname) === '/moderator') {
-                detailTemplate2 = '' +
+                detailTemplate1 = '' +
+                    '<select detail-id="' + customDetailID + '" class="change-detail-type-select">' +
+                    '<option value="1">Сервіс</option>' +
+                    '<option value="2">Клієнт</option>' +
+                    '<option value="3">Відсутня</option>' +
+                    '</select>';
+
+                detailTemplate3 = '' +
                     '<a class="delete-detail-from-modal" title="Видалити деталь" ' +
                     ' detail-id="' + customDetailID + '">' +
                     '<span class="glyphicon glyphicon-remove" aria-hidden="true"/></a>';
             }
             else {
-                if(+detailType !== 2) {
-                    detailTemplate2 = '' +
+                if (+detailType !== 2) {
+
+                    detailTemplate1 = '' +
+                        '<select detail-id="' + customDetailID + '" class="change-detail-type-select">' +
+                        '<option value="1">Сервіс</option>' +
+                        '<option value="3">Відсутня</option>' +
+                        '</select>';
+
+                    detailTemplate3 = '' +
                         '<a class="delete-detail-from-modal" title="Видалити деталь" ' +
                         ' detail-id="' + customDetailID + '">' +
                         '<span class="glyphicon glyphicon-remove" aria-hidden="true"/></a>';
                 }
             }
 
+            var detailTemplate4 = '</td></tr>';
 
+            $('#detail-type-tbody').append(detailTemplate0 + detailTemplate1 + detailTemplate2 + detailTemplate3 + detailTemplate4);
 
-            var detailTemplate3 = '</td></tr>';
-
-
-            $('#detail-type-tbody').append(detailTemplate1 + detailTemplate2 + detailTemplate3);
+            $('#idr-' + customDetailID + ' .change-detail-type-select').val(detailType);
 
             $('#detail-type-select').val('').change();
             $('#detail-type').val('').change();
             $('#detail-type-input').val('');
 
             deleteDetailFromModal('#idr-' + customDetailID + ' .delete-detail-from-modal');
+            changeDetailTypeSelect('#idr-' + customDetailID + ' .change-detail-type-select');
             customDetailID--;
         }
     });
@@ -202,18 +205,8 @@ $(document).ready(function () {
         var detailID = $('#update-detail-type-select').val(),
             detailType = $('#update-detail-type').val(),
             detailQuantity = $('#update-detail-type-input').val(),
-            detailName = $('#detailTypeID' + detailID).attr('detailName'),
-            detailTypeName;
+            detailName = $('#detailTypeID' + detailID).attr('detailName');
 
-        if (+detailType === 1) {
-            detailTypeName = 'Сервіс'
-        }
-        else if (+detailType === 2) {
-            detailTypeName = 'Клієнт'
-        }
-        else {
-            detailTypeName = 'Відсутня'
-        }
 
         if ( detailID !== null && detailQuantity !== '' && detailType !== null) {
 
@@ -225,44 +218,99 @@ $(document).ready(function () {
                 customDetailID: customDetailID
             });
 
-            var detailTemplate1 = '' + //emit on plus button clicked
-                '<tr id="idr-' + customDetailID + '"><td>' + detailName + '</td>' +
-                '<td>' +detailTypeName + '</td>' +
-                '<td>' + detailQuantity + '</td>' +
-                '<td>';
+            // Emit on plus button clicked (update task modal)
+            var detailTemplate0 = '<tr id="idr-' + customDetailID + '"><td>' + detailName + '</td><td>';
 
+            var detailTemplate1 = 'Клієнт';
 
-            var detailTemplate2 = '';
+            var detailTemplate2 = '</td><td>' + detailQuantity + '</td><td>';
+
+            var detailTemplate3 = '';
 
             if (getRole(window.location.pathname) === '/admin' || getRole(window.location.pathname) === '/moderator') {
-                detailTemplate2 = '' +
+                detailTemplate1 = '' +
+                    '<select detail-id="' + customDetailID + '" class="change-detail-type-select">' +
+                    '<option value="1">Сервіс</option>' +
+                    '<option value="2">Клієнт</option>' +
+                    '<option value="3">Відсутня</option>' +
+                    '</select>';
+
+                detailTemplate3 = '' +
                     '<a class="delete-detail-from-modal" title="Видалити деталь" ' +
                     ' detail-id="' + customDetailID + '">' +
                     '<span class="glyphicon glyphicon-remove" aria-hidden="true"/></a>';
             }
             else {
-                if(+detailType !== 2) {
-                    detailTemplate2 = '' +
+                if (+detailType !== 2) {
+
+                    detailTemplate1 = '' +
+                        '<select detail-id="' + customDetailID + '" class="change-detail-type-select">' +
+                        '<option value="1">Сервіс</option>' +
+                        '<option value="3">Відсутня</option>' +
+                        '</select>';
+
+                    detailTemplate3 = '' +
                         '<a class="delete-detail-from-modal" title="Видалити деталь" ' +
                         ' detail-id="' + customDetailID + '">' +
                         '<span class="glyphicon glyphicon-remove" aria-hidden="true"/></a>';
                 }
             }
 
-            var detailTemplate3 = '</td></tr>';
+            var detailTemplate4 = '</td></tr>';
 
-            $('#update-detail-type-tbody').append(detailTemplate1 + detailTemplate2 + detailTemplate3);
+            $('#update-detail-type-tbody').append(detailTemplate0 + detailTemplate1 + detailTemplate2 + detailTemplate3 + detailTemplate4);
+
+            $('#idr-' + customDetailID + ' .change-detail-type-select').val(detailType);
 
             $('#update-detail-type-select').val('').change();
             $('#update-detail-type').val('').change();
             $('#update-detail-type-input').val('');
 
             deleteDetailFromModal('#idr-' + customDetailID + ' .delete-detail-from-modal');
+            changeDetailTypeSelect('#idr-' + customDetailID + ' .change-detail-type-select');
             customDetailID--;
         }
     });
 });
 
-var detailArray = [];
-var deleteDetailArray = [];
-var customDetailID;
+function changeDetailTypeSelect (value) {
+    $(value).on('change', function () {
+        var element = $(this).attr('detail-id');
+
+        for (var i = 0; i < detailArray.length; i++) {
+            if (detailArray[i].customDetailID === +element) {
+                detailArray[i].detailType = $(this).val();
+
+                console.log( 1, 'detailArray', detailArray);
+                console.log( 1, 'changeDetailArray', changeDetailArray);
+                return;
+            }
+        }
+
+        if (changeDetailArray.length > 0) {
+            for (var i = 0; i < changeDetailArray.length; i++) {
+
+                if (changeDetailArray[i].id === element) {
+                    changeDetailArray[i].detailType = $(this).val();
+                    return;
+                }
+            }
+
+            changeDetailArray.push({
+                id: element,
+                detailType: $(this).val()
+            });
+        }
+        else {
+            changeDetailArray.push({
+                id: element,
+                detailType: $(this).val()
+            });
+        }
+    });
+}
+
+var detailArray = [],
+    deleteDetailArray = [],
+    changeDetailArray = [],
+    customDetailID;

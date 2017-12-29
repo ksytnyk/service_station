@@ -107,25 +107,31 @@ $(document).ready(function () {
                     clientDetails = '',
                     missingDetails = '';
 
+                detailsCost = 0;
+
                 data.taskDetail.forEach(item => {
+
+                    detailsCost += (item.detail.detailPrice * item.detailQuantity);
+
                     if (item.detailType === 1) {
-                        defaultDetails += ', ' + item.detail.detailName + ' - ' + item.detailQuantity;
+                        defaultDetails += ',&#8195;' + item.detail.detailName + ' - ' + item.detailQuantity;
                     }
                     else if (item.detailType === 2) {
-                        clientDetails += ', ' + item.detail.detailName + ' - ' + item.detailQuantity;
+                        clientDetails += ',&#8195;' + item.detail.detailName + ' - ' + item.detailQuantity;
                     }
                     else {
-                        missingDetails += ', ' +  item.detail.detailName + ' - ' + item.detailQuantity;
+                        missingDetails += ',&#8195;' +  item.detail.detailName + ' - ' + item.detailQuantity;
                     }
                 });
 
                 $('.check-table tr:last').before('<tr id="idt-' + data.result.id + '">'+
                     '<td>'+data.result.name+'</td>'+
                     '<td class="tac">'+data.result.cost+'</td>'+
-                    '<td>'+data.result.needBuyParts+'</td>'+
-                    '<td class="tac"></td>'+
+                    '<td>' + convertDetailsString(defaultDetails + clientDetails + missingDetails) + '</td>'+
+                    '<td class="tac">' + detailsCost + '</td>'+
                     '</tr>');
 
+                summaryDetailsCost += detailsCost;
 
                 $('.in .close').click();
 
@@ -153,7 +159,7 @@ $(document).ready(function () {
                     '<td class="vat">' +
                     '<p><strong>Опис задачі: </strong>' + data.result.description + '</p>' +
                     '<p class="bt"><strong>Запчастини сервісу: </strong>' + convertDetailsString(defaultDetails) + '</p>' +
-                    '<p><strong>Запчастини кліента: </strong>' + convertDetailsString(clientDetails) + '</p>' +
+                    '<p><strong>Запчастини клієнта: </strong>' + convertDetailsString(clientDetails) + '</p>' +
                     '<p><strong>Відсутні запчастини: </strong>' + convertDetailsString(missingDetails) + '</p>' +
                     '<p class="bt"><strong>Коментар: </strong>' + data.result.comment + '</p>' +
                     '</td>' +
@@ -259,6 +265,10 @@ $(document).ready(function () {
                 {
                     name: 'deleteDetail',
                     value: JSON.stringify(deleteDetailArray)
+                },
+                {
+                    name: 'changeDetail',
+                    value: JSON.stringify(changeDetailArray)
                 }
             );
         }
@@ -274,6 +284,7 @@ $(document).ready(function () {
 
                 detailArray = [];
                 deleteDetailArray = [];
+                changeDetailArray = [];
 
                 var defaultDetails = '',
                     clientDetails = '',
@@ -281,20 +292,20 @@ $(document).ready(function () {
 
                 data.details.forEach(item => {
                     if (item.detailType === 1) {
-                        defaultDetails += ', ' + item.detail.detailName + ' - ' + item.detailQuantity;
+                        defaultDetails += ',&#8195;' + item.detail.detailName + ' - ' + item.detailQuantity;
                     }
                     else if (item.detailType === 2) {
-                        clientDetails += ', ' + item.detail.detailName + ' - ' + item.detailQuantity;
+                        clientDetails += ',&#8195;' + item.detail.detailName + ' - ' + item.detailQuantity;
                     }
                     else {
-                        missingDetails += ', ' +  item.detail.detailName + ' - ' + item.detailQuantity;
+                        missingDetails += ',&#8195;' +  item.detail.detailName + ' - ' + item.detailQuantity;
                     }
                 });
 
                 var idx = "#idx-task-" + data.task.id;
 
                 if (getRole(window.location.pathname) === '/executor' && planedExecutorChanged) {
-                    /*$(idx).empty();*/
+                    $(idx).remove();
                 }
                 else {
                     $('#idt-' + data.task.id + '').empty();
@@ -367,7 +378,6 @@ $(document).ready(function () {
                                 ' value="Відсутні запчастини"' +
                                 ' data-task-id="' + data.task.id + '"' +
                                 ' data-task-comment="' + data.task.comment + '"' +
-                                ' data-task-need-buy-parts="' + data.task.needBuyParts + '"' +
                                 ' data-target="#setTaskStatusHoldModal"' +
                                 '/>' +
                                 '<input class="status btn btn-success task-form-status task-status-button"' +
@@ -588,31 +598,7 @@ $(document).ready(function () {
             if (statusID === 4) {
                 var dataArr = $('#change-task-status-form').serializeArray();
 
-                if (window.location.pathname.includes('executor')) {
-                    if (dataArr[1].value.length === 0 || dataArr[2].value.length === 0) {
-                        var err = {
-                            responseJSON: {
-                                errors: []
-                            }
-                        };
-
-                        if (dataArr[1].value.length === 0) {
-                            err.responseJSON.errors.push({'msg': '"Відсутні запчастини" -  обов\'язкове поле.'})
-                        }
-
-                        if (dataArr[2].value.length === 0) {
-                            err.responseJSON.errors.push({'msg': '"Коментар" -  обов\'язкове поле.'})
-                        }
-
-                        return showErrorAlert(err);
-                    }
-                    else {
-                        data.needBuyParts = dataArr[1].value;
-                        data.comment = dataArr[2].value;
-                    }
-                }
-
-                if (window.location.pathname.includes('store-keeper')) {
+                if (window.location.pathname.includes('executor') || window.location.pathname.includes('store-keeper')) {
                     if (dataArr[1].value.length === 0) {
                         var err = {
                             responseJSON: {
@@ -622,15 +608,16 @@ $(document).ready(function () {
                             }
                         };
 
-                        $('#setTaskStatusHoldModal').modal('toggle');
-
                         return showErrorAlert(err);
                     }
                     else {
                         data.comment = dataArr[1].value;
                     }
                 }
+
                 taskID = dataArr[0].value;
+
+                console.log( taskID );
             }
 
             $.ajax({
@@ -652,8 +639,7 @@ $(document).ready(function () {
                         ' type="button"' +
                         ' value="Відсутні запчастини"' +
                         ' data-task-id="' + taskID + '"' +
-                        ' data-task-comment="' + $('#comment')[0].lastChild.data + '"' +
-                        ' data-task-need-buy-parts="' + $('#need-buy-parts')[0].lastChild.data + '"' +
+                        ' data-task-comment="' + $('#idx-task-' + taskID + ' #comment')[0].lastChild.data + '"' +
                         ' data-target="#setTaskStatusHoldModal"' +
                         '/>';
 
@@ -691,6 +677,7 @@ $(document).ready(function () {
                             $(idx + ' .status-task').removeClass().addClass(newTaskStatusClasses).empty().append(newTaskStatusText);
                             $(idx + ' .tasks-status-form').empty();
                             $(idx + ' td:last-child').empty();
+                            $('#idx-task-' + taskID + ' #comment').empty().append('<strong>Коментар: </strong>' + data.comment);
                             break;
                     }
 
@@ -949,49 +936,52 @@ function updateTaskOnClick(value) {
 
                     data.details.forEach(function (item) {
 
-                        var detailTypeName;
+                        // Emit when modal render
+                        var detailTemplate0 = '<tr id="idr-' + item.id + '"><td>' + item.detail.detailName + '</td><td>';
 
-                        if (+item.detailType === 1) {
-                            detailTypeName = 'Сервіс'
-                        }
-                        else if (+item.detailType === 2) {
-                            detailTypeName = 'Клієнт'
-                        }
-                        else {
-                            detailTypeName = 'Відсутня'
-                        }
+                        var detailTemplate1 = 'Клієнт';
 
-                        var detailTemplate1 = '' +
-                            '<tr id="idr-' + item.id + '"><td>' + item.detail.detailName + '</td>' +
-                            '<td>' + detailTypeName + '</td>' +
-                            '<td>' + item.detailQuantity + '</td>' +
-                            '<td>';
+                        var detailTemplate2 = '</td><td>' + item.detailQuantity + '</td><td>';
 
-
-                        var detailTemplate2 = '';
+                        var detailTemplate3 = '';
 
                         if (getRole(window.location.pathname) === '/admin' || getRole(window.location.pathname) === '/moderator') {
-                            detailTemplate2 = '' +
+                            detailTemplate1 = '' +
+                                '<select detail-id="' + item.id + '" class="change-detail-type-select">' +
+                                    '<option value="1">Сервіс</option>' +
+                                    '<option value="2">Клієнт</option>' +
+                                    '<option value="3">Відсутня</option>' +
+                                '</select>';
+
+                            detailTemplate3 = '' +
                                 '<a class="delete-detail-from-modal" title="Видалити деталь" ' +
                                 ' detail-id="' + item.id + '">' +
                                 '<span class="glyphicon glyphicon-remove" aria-hidden="true"/></a>';
                         }
                         else {
-                            if (+item.detailType !== 2) {  //emit when modal render
-                                detailTemplate2 = '' +
+                            if (+item.detailType !== 2) {
+                                detailTemplate1 = '' +
+                                    '<select detail-id="' + item.id + '" class="change-detail-type-select">' +
+                                        '<option value="1">Сервіс</option>' +
+                                        '<option value="3">Відсутня</option>' +
+                                    '</select>';
+
+                                detailTemplate3 = '' +
                                     '<a class="delete-detail-from-modal" title="Видалити деталь" ' +
                                     ' detail-id="' + item.id + '">' +
                                     '<span class="glyphicon glyphicon-remove" aria-hidden="true"/></a>';
                             }
                         }
 
+                        var detailTemplate4 = '</td></tr>';
 
-                        var detailTemplate3 = '</td></tr>';
+                        $('#update-detail-type-tbody').append(detailTemplate0 + detailTemplate1 + detailTemplate2 + detailTemplate3 + detailTemplate4);
 
-                        $('#update-detail-type-tbody').append(detailTemplate1 + detailTemplate2 + detailTemplate3);
+                        $('#idr-' + item.id + ' .change-detail-type-select').val(item.detailType);
                     });
 
                     deleteDetailFromModal('.delete-detail-from-modal');
+                    changeDetailTypeSelect('.change-detail-type-select');
 
                     $('#update-detail-type-select').val('').change();
                     $('#update-detail-type').val('').change();
@@ -1010,7 +1000,7 @@ function deleteDetailFromModal(value) {
         element = $(this).attr('detail-id');
         $('#idr-' + element).remove();
 
-        for(var i = 0; i < detailArray.length; i++) {
+        for (var i = 0; i < detailArray.length; i++) {
             if (detailArray[i].customDetailID === +element) {
                 detailArray.splice(i, 1);
                 return;
@@ -1144,9 +1134,6 @@ function setTaskStatusHold(value) {
     $(value).on('click', function () {
         $('#change-task-status-id').val($(this).data('task-id'));
 
-        if ('' + $(this).data('task-need-buy-parts') !== 'undefined') {
-            $('#change-task-status-need-buy-parts').val($(this).data('task-need-buy-parts'));
-        }
         if ('' + $(this).data('task-comment') !== 'undefined') {
             $('#change-task-status-comment').val($(this).data('task-comment'));
         }
@@ -1154,8 +1141,11 @@ function setTaskStatusHold(value) {
 }
 
 function convertDetailsString(str) {
-    if (str.substr(0, 1) === ',') {
-        str = str.substr(2);
+    if (str.substr(0, 8) === ',&#8195;') {
+        str = str.substr(8);
     }
     return str;
 }
+
+var summaryDetailsCost;
+var detailsCost;

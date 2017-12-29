@@ -113,7 +113,7 @@
                             <span class="input-group-addon">грн</span>
                         </div>
                     </div>
-                    <div class="form-group required col-xs-7">
+                    <div class="form-group required col-xs-8">
 
                         <label>Деталі</label>
                         <div class="detail-type-table">
@@ -121,8 +121,8 @@
                                 <thead>
                                 <tr>
                                     <th>Назва деталі</th>
-                                    <th style="width: 100px;">Тип деталі</th>
-                                    <th style="width: 80px;">Кількість</th>
+                                    <th style="width: 80px;">Тип</th>
+                                    <th style="width: 60px;">К-сть</th>
                                     <th style="width: 40px;"></th>
                                 </tr>
                                 </thead>
@@ -193,7 +193,7 @@
                         <textarea class="form-control create-form-task" name="needBuyParts" rows="3"
                                   id="update-form-task-need-buy-parts"></textarea>
                     </div>-->
-                    <div class="form-group {@eq key=typeUser value=4}col-xs-12{:else}col-xs-5{/eq}">
+                    <div class="form-group {@eq key=typeUser value=4}col-xs-12{:else}col-xs-4{/eq}">
                         <label>Коментар</label>
                         <textarea class="form-control create-form-task" name="comment" rows="{@eq key=typeUser value=4}3{:else}7{/eq}"
                                   id="update-form-task-comment"></textarea>

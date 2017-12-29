@@ -7,6 +7,7 @@ const Request = require('../../models/Request');
 const formatDate = require('../../helpers/formatDate');
 const validation = require('../../middleware/validation');
 const Models = require('../../models/TaskDetail/relations');
+const status = require('../../constants/status');
 
 router.get('/', (req, res) => {
     Task
@@ -73,7 +74,21 @@ router.put('/set-task-status/:id', (req, res) => {
     Task
         .updateTask(req.params.id, req.body)
         .then(() => {
-            res.status(200).send();
+
+            if (+req.body.status === status.PENDING) {
+                Models.TaskDetail
+                    .updateDetailTypeStatus(req.params.id)
+                    .then(() => {
+                        res.status(200).send();
+                    })
+                    .catch(errors => {
+                        console.warn(errors);
+                        res.status(400).send({errors: errors});
+                    });
+            }
+            else {
+                res.status(200).send();
+            }
         })
         .catch(errors => {
             console.warn(errors);

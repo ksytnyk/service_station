@@ -47,26 +47,41 @@ router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
     Task
         .updateTask(req.body.id, req.body)
         .then(() => {
+
             Request
                 .getRequestById(req.body.requestID)
                 .then(request => {
+
                     Task
                         .getTaskById(req.body.id)
                         .then(task => {
+
                             Models.TaskDetail
                                 .createTaskDetail(req.body.id, JSON.parse(req.body.detail))
                                 .then(() => {
+
                                     Models.TaskDetail
-                                        .deleteTaskDetail(JSON.parse(req.body.deleteDetail))
+                                        .updateDetailType(JSON.parse(req.body.changeDetail))
                                         .then(() => {
+
                                             Models.TaskDetail
-                                                .getTaskDetail(req.body.id)
-                                                .then(details => {
-                                                    res.status(200).send({
-                                                        request: request,
-                                                        task: task,
-                                                        details: details
-                                                    });
+                                                .deleteTaskDetail(JSON.parse(req.body.deleteDetail))
+                                                .then(() => {
+
+                                                    Models.TaskDetail
+                                                        .getTaskDetail(req.body.id)
+                                                        .then(details => {
+
+                                                            res.status(200).send({
+                                                                request: request,
+                                                                task: task,
+                                                                details: details
+                                                            });
+                                                        })
+                                                        .catch(errors => {
+                                                            console.warn(errors);
+                                                            res.status(400).send({errors: errors});
+                                                        });
                                                 })
                                                 .catch(errors => {
                                                     console.warn(errors);

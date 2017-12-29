@@ -15,6 +15,7 @@ $(document).ready(function () {
                 $('#start-date').text(formatDate(data.request[0].startTime));
                 $('#end-date').text(formatDate(data.request[0].estimatedTime));
                 $('#all-sum').text(data.request[0].cost);
+                $('#components-sum').text(summaryDetailsCost);
             }
         })
     });

@@ -4,6 +4,7 @@ $(document).ready(function () {
 
     $('#create_request').on('click', function () {
 
+        summaryDetailsCost = 0;
         var dataArr = $('#createRequestForm').serializeArray();
 
         if (dataArr.length >= 9) {

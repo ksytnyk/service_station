@@ -258,6 +258,59 @@ Models.Detail.updateDetail = function (detailID, params) {
             });
     });
 };
+
+Models.TaskDetail.updateDetailType = function (array) {
+    return new Promise((resolve, reject) => {
+
+        if (array.length > 0) {
+            array.forEach((item, index) => {
+                Models.TaskDetail
+                    .update(
+                        item
+                        , {
+                            where: {
+                                id: item.id
+                            }
+                        })
+                    .then(() => {
+                        if (index === (array.length - 1))
+                            resolve();
+                    })
+                    .catch(err => {
+                        console.warn(err);
+                        reject(err);
+                    });
+            });
+        }
+        else {
+            resolve();
+        }
+    });
+};
+
+Models.TaskDetail.updateDetailTypeStatus = function (taskID) {
+    return new Promise((resolve, reject) => {
+
+                Models.TaskDetail
+                    .update(
+                        {
+                            detailType: 1
+                        }
+                        , {
+                            where: {
+                                taskID: taskID
+                            }
+                        })
+                    .then(() => {
+                        resolve();
+                    })
+                    .catch(err => {
+                        console.warn(err);
+                        reject(err);
+                    });
+    });
+};
+
 Models.Detail.deleteDetail = function (detailID) {
     return new Promise((resolve, reject) => {
         Models.Detail

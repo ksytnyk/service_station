@@ -54,21 +54,21 @@
             <p class="bt"><strong>Запчастини сервісу: </strong>
                 {#taskDetails}
                     {@eq key=detailType value=1}
-                        {detail.detailName} - {detailQuantity},
+                        {detail.detailName} - {detailQuantity},&#8195;
                     {/eq}
                 {/taskDetails}
             </p>
             <p><strong>Запчастини клієнта: </strong>
                 {#taskDetails}
                     {@eq key=detailType value=2}
-                        {detail.detailName} - {detailQuantity},
+                        {detail.detailName} - {detailQuantity},&#8195;
                     {/eq}
                 {/taskDetails}
             </p>
             <p id="need-buy-parts"><strong>Відсутні запчастини: </strong>
                 {#taskDetails}
                     {@eq key=detailType value=3}
-                        {detail.detailName} - {detailQuantity},
+                        {detail.detailName} - {detailQuantity},&#8195;
                     {/eq}
                 {/taskDetails}
             </p>
@@ -97,7 +97,6 @@
                            value="Відсутні запчастини"
                            data-task-id="{id}"
                            data-task-comment="{comment}"
-                           data-task-need-buy-parts="{needBuyParts}"
                            data-target="#setTaskStatusHoldModal"
                     />
                     <input class="status btn btn-success task-form-status task-status-button"
