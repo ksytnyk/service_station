@@ -36,11 +36,13 @@ $(document).ready(function () {
             url: getRole(window.location.pathname) + '/get-request-check/' + requestID,
             type: 'get',
             success: function (data) {
+
                 $('#number-or-request').text(data.request[0].id);
                 $('#customer-phone').text($('#print_check_update_request').attr('customer-phone'));
                 $('#start-date').text(formatDate(data.request[0].startTime));
                 $('#end-date').text(formatDate(data.request[0].estimatedTime));
                 $('#all-sum').text(data.request[0].cost);
+                $('#components-sum').text(summaryDetailsCost);
             }
         })
     });

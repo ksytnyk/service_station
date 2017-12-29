@@ -128,7 +128,7 @@ $(document).ready(function () {
                     '<td>'+data.result.name+'</td>'+
                     '<td class="tac">'+data.result.cost+'</td>'+
                     '<td>' + convertDetailsString(defaultDetails + clientDetails + missingDetails) + '</td>'+
-                    '<td class="tac">' + detailsCost + '</td>'+
+                    '<td class="tac detail-price">' + detailsCost + '</td>'+
                     '</tr>');
 
                 summaryDetailsCost += detailsCost;
@@ -282,6 +282,9 @@ $(document).ready(function () {
                 showSuccessAlert('Редагування задачі пройшло успішно.');
                 $('.in .close').click();
 
+                detailsCost = 0;
+                summaryDetailsCost = 0;
+
                 detailArray = [];
                 deleteDetailArray = [];
                 changeDetailArray = [];
@@ -291,6 +294,9 @@ $(document).ready(function () {
                     missingDetails = '';
 
                 data.details.forEach(item => {
+
+                    detailsCost += (item.detail.detailPrice * item.detailQuantity);
+
                     if (item.detailType === 1) {
                         defaultDetails += ',&#8195;' + item.detail.detailName + ' - ' + item.detailQuantity;
                     }
@@ -304,6 +310,7 @@ $(document).ready(function () {
 
                 var idx = "#idx-task-" + data.task.id;
 
+
                 if (getRole(window.location.pathname) === '/executor' && planedExecutorChanged) {
                     $(idx).remove();
                 }
@@ -312,11 +319,13 @@ $(document).ready(function () {
                     $('#idt-' + data.task.id + '').append('' +
                         '<td>' + data.task.name + '</td>' +
                         '<td class="tac">' + data.task.cost + '</td>' +
-                        '<td>' + data.task.needBuyParts + '</td>' +
-                        '<td class="tac"></td>');
+                        '<td>' + convertDetailsString(defaultDetails + clientDetails + missingDetails) + '</td>' +
+                        '<td class="tac detail-price">' + detailsCost + '</td>');
 
                     $('.update-form-task-type-input').addClass("hidden");
                     $('#update_new_task .select2').removeClass("hidden");
+
+                    summaryDetailsCost += detailsCost;
 
                     var idr = "#idr-cost-" + data.requestID;
                     var idrr = "#idr-request-" + data.requestID;
@@ -569,6 +578,14 @@ $(document).ready(function () {
                 var newCost = '<strong>Вартість: ' + data.newCost + ' грн <span>'+ payed+ '</span></strong>';
 
                 $(idr).append(newCost);
+
+                if ($('#idt-' + data.id + ' .detail-price')[0]) {
+                    summaryDetailsCost -= +$('#idt-' + data.id + ' .detail-price')[0].textContent;
+                } else {
+                    console.error('problem!');
+                }
+
+                $('#idt-' + data.id).remove();
             },
             error: function (err) {
                 $('.in .close').click();
@@ -616,8 +633,6 @@ $(document).ready(function () {
                 }
 
                 taskID = dataArr[0].value;
-
-                console.log( taskID );
             }
 
             $.ajax({
@@ -1016,6 +1031,8 @@ function deleteTaskOnClick(value) {
         $('#delete-button').attr('request-id', ($(this).data('request-id')));
         $('#delete-button').attr('task-old-cost', ($(this).data('task-old-cost')));
         $('#delete-task-id').html($(this).data('id'));
+
+
     });
 }
 
