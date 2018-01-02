@@ -78,7 +78,7 @@
                    class="btn btn-warning col-xs-9"/>
             <input type="button" id="update_request" value="Зберегти зміни"
                    class="btn btn-success col-xs-9"/>
-            <button type="button" id="print_check" value="Друк" class="print_check_button btn btn-danger modal-window-link col-xs-offset-1 col-xs-2"
+            <button type="button" value="Друк" class="btn print_check_button btn-danger modal-window-link col-xs-offset-1 col-xs-2"
                     data-toggle="modal" data-target="#printCheckFormModal" title="Друк">
                 <span class="glyphicon glyphicon-print" aria-hidden="true" style="margin: 3px 0;"></span>
             </button>
@@ -96,7 +96,7 @@
         <div class="form-group col-xs-12" style="margin: 50px 0 -25px;">
             <input type="button" id="create_task" value="Додати задачу" class="btn btn-primary modal-window-link"
                    data-toggle="modal" data-target="#createTaskFormModal" style="width: 255px; float: right; position: relative; z-index: 1;"/>
-            <input type="button" id="start_and_print_request" value="Почати" class="print_check_button btn btn-primary modal-window-link print_check_button"
+            <input type="button" id="start_and_print_request" value="Почати" class="print_check_button btn btn-primary modal-window-link"
                    data-toggle="modal" data-target="#printCheckFormModal" style="width: 100px; position: relative; float: right; z-index: 1; margin-right: 20px;"/>
 
         </div>

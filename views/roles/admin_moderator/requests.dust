@@ -161,12 +161,13 @@
                         {/ne}
                         {@eq key=typeUser value=6}
                         {@eq key=payed value="false" type="boolean"}
-                            <input class="btn btn-warning set_payed_true"
+                            <input class="btn print_check_button btn-warning set_payed_true"
                                    type="button"
                                    value="Розрахувати"
                                    data-request-id="{id}"
                                    data-payed="true"
                                    title="Розрахувати"
+                                   customer-phone="{user.userPhone}"
                                    data-toggle="modal"
                                    data-target="#printCheckFormModal"
                                    request-start-time="{startTime}"
@@ -177,12 +178,13 @@
                         {/eq}
                         {@ne key=status value=1}
                         {@eq key=typeUser value=1}
-                            <input class='btn btn-warning set_payed_true {@eq key=payed value="true" type="boolean"}hide{/eq}'
+                            <input class='btn btn-warning set_payed_true print_check_button {@eq key=payed value="true" type="boolean"}hide{/eq}'
                                    type="button"
                                    value="Розрахувати"
                                    data-request-id="{id}"
                                    data-payed="true"
                                    title="Розрахувати"
+                                   customer-phone="{user.userPhone}"
                                    data-toggle="modal"
                                    data-target="#printCheckFormModal"
                                    request-start-time="{startTime}"

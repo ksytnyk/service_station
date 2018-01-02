@@ -353,7 +353,7 @@ thead {
 }
 .create_request #access_update_request,
 .create_request #update_request,
-.create_request #print_check {
+.create_request .print_check_button {
     display: none;
 }
 .create_request #print_check_global {
@@ -475,6 +475,15 @@ thead {
 
 
 /* PRINT */
+.check-table p:last-child {
+    margin: 8px 0 0;
+}
+.check-table .detail-service {
+    border-bottom: 1px solid #bbb;
+    margin: 0 0 0 -8px;
+    padding: 0 0 8px 8px;
+    width: calc(100% + 16px);
+}
 .print_check .table {
     border: 1px solid #bbb;
 }

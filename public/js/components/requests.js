@@ -4,7 +4,6 @@ $(document).ready(function () {
 
     $('#create_request').on('click', function () {
 
-        summaryDetailsCost = 0;
         var dataArr = $('#createRequestForm').serializeArray();
 
         if (dataArr.length >= 9) {
@@ -31,12 +30,9 @@ $(document).ready(function () {
                 success: function (data) {
                     showSuccessAlert('Додавання замовлення пройшло успішно.');
 
-                    $('#print_check')
-                        .attr('data-customer-phone', data.customer.userPhone)
-                        .attr('data-request-id', data.result.id);
                     $('.print_check_button')
-                        .attr('data-customer-phone', data.customer.userPhone)
-                        .attr('data-request-id', data.result.id);
+                        .attr('customer-phone', data.customer.userPhone)
+                        .attr('request-id', data.result.id);
 
                     var input = $('#request-name-input')[0].className;
                     if (!input.includes('hidden')) {
@@ -60,7 +56,7 @@ $(document).ready(function () {
                         .attr('estimated-time', formatDate(dataArr[3].value));
                     $('#create_request').hide();
                     $('#access_update_request').show();
-                    $('#print_check').show();
+                    $('.print_check_button').show();
                 },
                 error: function (err) {
                     showErrorAlert(err);
@@ -108,8 +104,6 @@ $(document).ready(function () {
                     }
                 }
             } else {
-                console.log( $('#update-request-name-select').serializeArray() );
-
                 if ($('#update-request-name-select').serializeArray()[0]) {
                     var updateRequestName = $('#update-request-name-select').serializeArray()[0].value;
                     if (dataArr[4].value === '') {
@@ -135,7 +129,7 @@ $(document).ready(function () {
                 success: function (data) {
                     showSuccessAlert('Редагування замовлення пройшло успішно.');
 
-                    $('#print_check_update_request').attr('customer-phone', data.customer.userPhone);
+                    $('.print_check_button').attr('customer-phone', data.customer.userPhone);
 
                     if (window.location.pathname.includes('create-request')) {
 
@@ -473,8 +467,6 @@ $(document).ready(function () {
             }
         });
     });
-    //
-
 });
 
 function changeRequestStatus(value) {
@@ -525,7 +517,7 @@ function changeRequestStatus(value) {
                 var idr = "#idr-request-" + data.requestID;
 
                 if (data.status == 5) {
-                    $('#request-comment').empty().append('<strong>Коментар: </strong>' + data.request[0].comment);
+                    $(idr + ' #request-comment').empty().append('<strong>Коментар: </strong>' + data.request[0].comment);
                 }
 
                 if (window.location.pathname.split('/')[3] === 'all' || window.location.pathname.split('/')[3] === 'hold') {
@@ -579,7 +571,7 @@ function changeRequestStatus(value) {
                         }
 
                         requestPayedButton = '' +
-                            '<input class="btn btn-warning set_payed_true ' + set_payed_true + '"' +
+                            '<input class="btn btn-warning set_payed_true print_check_button' + set_payed_true + '"' +
                             ' id="requestCanceled" type="button" value="Розрахувати"' +
                             ' data-request-id="' + data.requestID + '"' +
                             ' data-payed="true" title="Розрахувати" data-toggle="modal"\n' +
@@ -591,8 +583,6 @@ function changeRequestStatus(value) {
                             ' request-id="' + data.requestID + '"' +
                             ' payed="false" style="padding: 6px;" title="Відмінити розрахунок"/>';
                     }
-
-                    // console.log( data.status );
 
                     switch (data.status) {
                         case "2":

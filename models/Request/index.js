@@ -131,9 +131,20 @@ Request.getAllRequestsByCustomerId = function (findBy) {
         Request
             .findAll({
                 where: findBy,
-                include: {
-                    model: User
-                }
+                include: [
+                    {
+                        model: User
+                    },
+                    {
+                        model: transportType
+                    },
+                    {
+                        model: transportMarkk
+                    },
+                    {
+                        model: transportModel
+                    }
+                ]
             })
             .then(requests => {
                 resolve(requests);
@@ -259,6 +270,8 @@ Request.changeStatus = function (idRequest, params) {
         if (params.status == status.PROCESSING) {
             params.hadStarted = true;
         }
+
+        console.log(params);
 
         Request
             .update(

@@ -131,7 +131,7 @@ router.put('/set-task-status/:id', (req, res) => {
                                }
                                if(counter === tasks.length) {
                                    Request
-                                       .changeStatus(task.requestID, status.DONE)
+                                       .changeStatus(task.requestID, {status:status.DONE})
                                        .then(() => {})
                                        .catch(errors => {
                                            console.warn(errors);

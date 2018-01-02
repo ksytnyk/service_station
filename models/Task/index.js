@@ -414,13 +414,15 @@ Task.updateTask = function (taskID, params) {
 
 Task.updateAllTasksStatusOfRequest = function (tasksArray, status) {
 
-    var params;
-    if (status.status === "2") {
+    let params;
+    if (status === "2") {
         params = {
             status: "1"
-        }
+        };
     } else {
-        params = status;
+        params = {
+            status: status
+        };
     }
 
     return new Promise((resolve, reject) => {
@@ -440,7 +442,6 @@ Task.updateAllTasksStatusOfRequest = function (tasksArray, status) {
                     reject(err);
                 });
         });
-
         resolve(200);
     });
 };

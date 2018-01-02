@@ -394,6 +394,7 @@ router.delete('/delete-request/:id', (req, res) => {
 });
 
 router.put('/change-request-status/:id', (req, res) => {
+
     Request
         .changeStatus(req.params.id, req.body)
         .then(() => {
@@ -402,7 +403,7 @@ router.put('/change-request-status/:id', (req, res) => {
             .then(tasks => {
 
                 Task
-                    .updateAllTasksStatusOfRequest(tasks, req.body)
+                    .updateAllTasksStatusOfRequest(tasks, req.body.status)
                     .then(() => {
 
                         Request

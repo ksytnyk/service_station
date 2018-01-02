@@ -36,27 +36,25 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {#request}
-                                {#tasks}
+
                                 <tr id="idt-{id}">
-                                    <td>{name}</td>
-                                    <td class="tac">{cost}</td>
-                                    <td>{needBuyParts}</td>
+                                    <td></td>
+                                    <td class="tac"></td>
+                                    <td></td>
                                     <td class="tac"></td>
                                 </tr>
-                                {/tasks}
-                                {/request}
                                 <tr>
                                     <th class="tar">Разом:</th>
                                     <td class="tac" id="all-sum"></td>
                                     <th class="tar">Разом:</th>
                                     <td class="tac" id="components-sum"></td>
                                 </tr>
+
                             </tbody>
                         </table>
                     </div>
                     <div class="form-group noprint col-xs-6 checkbox-block" style="margin-top: 6px; float: left">
-                        <label>Друкувати</label>
+                        <label for="checkbox-print">Друкувати</label>
                         <input id="checkbox-print" type="checkbox" value="" checked/>
                     </div>
 
