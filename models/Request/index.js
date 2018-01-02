@@ -271,8 +271,6 @@ Request.changeStatus = function (idRequest, params) {
             params.hadStarted = true;
         }
 
-        console.log(params);
-
         Request
             .update(
                 params,

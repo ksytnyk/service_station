@@ -1,6 +1,7 @@
 "use strict";
 const detailsFactory = require('../../helpers/detailsFactory');
 const Models = {};
+const detailTypes = require('../../constants/detailType');
 
 //getModels
 Models.Detail = require('../Detail');
@@ -294,11 +295,12 @@ Models.TaskDetail.updateDetailTypeStatus = function (taskID) {
                 Models.TaskDetail
                     .update(
                         {
-                            detailType: 1
+                            detailType: detailTypes.DEFAULT
                         }
                         , {
                             where: {
-                                taskID: taskID
+                                taskID: taskID,
+                                detailType: detailTypes.MISSING
                             }
                         })
                     .then(() => {
