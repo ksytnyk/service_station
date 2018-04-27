@@ -51,9 +51,8 @@ router.post('/create-user', validation.createAndUpdateUser('create'), (req, res)
             res.redirect('back');
         })
         .catch(error => {
-            console.warn(error);
             req.flash('error_alert', true);
-            req.flash('error_msg', {msg: 'Виникла помилка при додаванні користувача.'});
+            req.flash('error_msg', {msg: `В системы вже існує користувач з поштою: "${req.body.userEmail}".`});
             res.redirect('back');
         });
 });
