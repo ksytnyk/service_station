@@ -1,0 +1,16 @@
+{>"layout" /}
+
+{<body}
+
+{>"header/index"/}
+
+<div class="col-xs-12 store-keeper">
+    <div class="panel panel-default">
+        {>"task_table/index"/}
+    </div>
+</div>
+
+{>"modal_windows/tasks/update_task"/}
+{>"modal_windows/set_status/set_task_status_hold"/}
+
+{/body}

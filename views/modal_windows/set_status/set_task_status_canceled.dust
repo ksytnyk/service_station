@@ -1,0 +1,31 @@
+{+set_task_status_canceled}
+<div class="modal fade" id="setTaskStatusCanceledModal" role="dialog" aria-labelledby="formModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form id="change-task-status-form">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title text-center">Анулювати задачу</h4>
+                </div>
+                <input type="hidden" id="change-task-status-id" name="id">
+                <div class="modal-body clearfix">
+                    <div class="form-group required col-xs-12">
+                        <label>Коментар</label>
+                        <textarea class="form-control create-form-task" name="comment" rows="3"
+                                  id="change-task-status-comment"></textarea>
+                    </div>
+                    <div class='form-group col-xs-12'>
+                        <button class="btn btn-success task-status-canceled-button width agree" data-dismiss="modal" data-status="5">
+                            Підтвердити
+                        </button>
+                        <button class="btn btn-danger pull-right width" data-dismiss="modal">
+                            Закрити
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{/set_task_status_canceled}

@@ -1,0 +1,79 @@
+{>"layout" /}
+
+{<body}
+
+{>"header/index"/}
+
+<div class="col-xs-12 users">
+    <div class="panel panel-default">
+        <table class="table dtable">
+            <thead>
+            <tr>
+                <th class="tac" style="width: 15px;">ID</th>
+                <th class="tac">Загальна інформація</th>
+                <th style="width: 10px;"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {#users}
+            <tr id="idr-user-{id}">
+                <th class="tac" scope="row">{id}</th>
+                <td class="pr">
+                    <div class="col-xs-4"><strong>Прізвище Ім'я: </strong>{userSurname} {userName}</div>
+                    <div class="col-xs-4"><strong>Адреса: </strong>{userAddress}</div>
+                    <div class="col-xs-4"><strong>Логін: </strong>{userLogin}</div>
+                    <div class="col-xs-4"><strong>Контактний номер: </strong>{userPhone}</div>
+                    <div class="col-xs-4"><strong>Email: </strong>{userEmail}</div>
+                    <div class="col-xs-4"><strong>Пароль: </strong>{userPassword}</div>
+                    <div class="col-xs-4"><strong>Компанія: </strong>{userCompanyName}</div>
+                    <div class="col-xs-4"><strong>Роль: </strong>{user_type.dataValues.userTypeName}</div>
+                </td>
+                <td class="tac">
+                    {@lt key=typeUser value=3}
+                    <a href="#"
+                       class="update-user modal-window-link"
+                       data-type-user="{typeUser}"
+                       data-toggle="modal"
+                       data-target="#updateUserFormModal"
+                       data-id="{id}"
+                       data-name="{userName}"
+                       data-surname="{userSurname}"
+                       data-company="{userCompanyName}"
+                       data-address="{userAddress}"
+                       data-phone="{userPhone}"
+                       data-login="{userLogin}"
+                       data-email="{userEmail}"
+                       data-role="{userTypeID}"
+                       data-password="{userPassword}"
+                       title="Редагувати користувача">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true" style="font-size: 17px;"/>
+                    </a>
+                    {@eq key=typeUser value=1}
+                    {@ne key=userTypeID value=1}
+                    <a href="#"
+                       class="delete-user modal-window-link"
+                       data-type-user="{typeUser}"
+                       data-toggle="modal"
+                       data-target="#deleteUserFormModal"
+                       data-id="{id}"
+                       data-user-name="{userName}"
+                       data-user-surname="{userSurname}"
+                       title="Видалити користувача">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true" style="margin-top: 15px; font-size: 19px;"/>
+                    </a>
+                    {/ne}
+                    {/eq}
+                    {/lt}
+                </td>
+            </tr>
+            {/users}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{>"modal_windows/users/create_user"/}
+{>"modal_windows/users/update_user"/}
+{>"modal_windows/users/delete_user"/}
+
+{/body}

@@ -1,0 +1,184 @@
+{+create_task}
+<div class="modal fade" id="createTaskFormModal" role="dialog" aria-labelledby="formModalLabel">
+    <div class="modal-dialog create_task" role="document">
+        <div class="modal-content">
+            <form action="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/create-task"
+                  method="POST" class="create" id="createTaskForm">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title text-center">Додати задачу</h4>
+                </div>
+                <div class="modal-body clearfix">
+                    <input type="hidden" name="requestID" id="requestIDForTask">
+                    <div class="form-group required col-xs-4" id="create_new_task">
+                        <label>Назва задачі</label>
+                        <input type="text" class="form-control create-form-task hidden task-type-input" id="task-type-input" name="name">
+                        <div class="input-group">
+                            <select class="form-control add_select2 create-form-task task-type-select" id="task-type-select" name="name2">
+                                {#taskTypes}
+                                {@eq key=title value="0"}
+                                <option value="{id}" taskTypeID="{typeName}" id="taskTypeID{id}" title="Усі категорії">{typeName} (Усі категорії)</option>
+                                {/eq}
+                                {@eq key=title value="1"}
+                                <option value="{id}" taskTypeID="{typeName}" id="taskTypeID{id}" title="Категорія: {typeOfCar}">{typeName} (Категорія: {transportType.transportTypeName})</option>
+                                {/eq}
+                                {@eq key=title value="2"}
+                                <option value="{id}" taskTypeID="{typeName}" id="taskTypeID{id}" title="Категорія: {typeOfCar}, {carMarkk}">{typeName} (Категорія: {transportType.transportTypeName}, {transportMarkk.transportMarkkName})</option>
+                                {/eq}
+                                {@eq key=title value="3"}
+                                <option value="{id}" taskTypeID="{typeName}" id="taskTypeID{id}" title="Категорія: {typeOfCar}, {carMarkk}, {carModel}">{typeName} (Категорія: {transportType.transportTypeName}, {transportMarkk.transportMarkkName}, {transportModel.transportModelName})</option>
+                                {/eq}
+                                {/taskTypes}
+                            </select>
+                            <span class="input-group-addon add-new-task-type-button">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true" style="margin: 0;" title="Додати нову задачу"/>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group required col-xs-4">
+                        <label>Виконавець</label>
+                        <select class="form-control add_select2 task-planed-executor-id" name="planedExecutorID">
+                            {#assignedExecutorUsers}
+                            {@eq key=userTypeID value=3}
+                            <option value="{id}" executorFullName="{userSurname} {userName}" id="option{id}">{userSurname} {userName}</option>
+                            {/eq}
+                            {/assignedExecutorUsers}
+                        </select>
+                    </div>
+                    <div class="form-group required col-xs-4">
+                        <button type="button" class="btn btn-primary create-assign-task-button col-xs-12"
+                                style="margin-top: 25px;">Доручити задачу
+                        </button>
+                        <div class="hidden create-assign-task-select">
+                            <label>Доручити задачу</label>
+                            <select class="form-control add_select2 task-assigned-user-id" name="assignedUserID" style="width: 100%;">
+                                {#assignedExecutorUsers}
+                                {@eq key=userTypeID value=4}
+                                <option value="{id}" assignedUserFullName="{userSurname} {userName}"
+                                        id="optionAE{id}">(Зав. складом) {userSurname} {userName}
+                                </option>
+                                {/eq}
+                                {@eq key=userTypeID value=3}
+                                <option value="{id}" assignedUserFullName="{userSurname} {userName}"
+                                        id="optionAE{id}">(Інженер) {userSurname} {userName}
+                                </option>
+                                {/eq}
+                                {/assignedExecutorUsers}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-4">
+                        <label>Опис задачі</label>
+                        <input type="text" class="form-control create-form-task" name="description">
+                    </div>
+                    <div class="form-group required col-xs-4">
+                        <label>Час початку</label>
+                        <input type="text" class="form-control create-form-task datetimepickerN startTime" name="startTime">
+                    </div>
+                    <div class="form-group required col-xs-2">
+                        <label>Час виконання</label>
+                        <div class="input-group">
+                            <input type="number" min="1" class="form-control create-form-task task-estimation-time" name="estimationTime">
+                            <span class="input-group-addon">год</span>
+                        </div>
+                    </div>
+                    <div class="form-group required col-xs-2">
+                        <label>Вартість</label>
+                        <div class="input-group">
+                            <input type="number" min="1" class="form-control create-form-task task-cost" name="cost">
+                            <span class="input-group-addon">грн</span>
+                        </div>
+                    </div>
+                    <div class="form-group required col-xs-7">
+
+                        <label>Деталі</label>
+                        <div class="detail-type-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Назва деталі</th>
+                                        <th style="width: 100px;">Тип деталі</th>
+                                        <th style="width: 80px;">Кількість</th>
+                                        <th style="width: 40px;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="detail-type-tbody">
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-7">
+                                <select class="form-control add_select2" id="detail-type-select" name="detailID">
+                                    {#detailTypes}
+                                        {@eq key=title value="0"}
+                                        <option id="detailTypeID{id}" value="{id}" detailName="{detailName}" title="Усі категорії">
+                                            {detailName} (Усі категорії)
+                                        </option>
+                                        {/eq}
+                                        {@eq key=title value="1"}
+                                        <option id="detailTypeID{id}" value="{id}" detailName="{detailName}" title="Категорія: {transportTypeID}">
+                                            {detailName} (Категорія: {transportType.transportTypeName})
+                                        </option>
+                                        {/eq}
+                                        {@eq key=title value="2"}
+                                        <option id="detailTypeID{id}" value="{id}" detailName="{detailName}" title="Категорія: {transportTypeID}, {transportMarkkID}">
+                                            {detailName} (Категорія: {transportType.transportTypeName}, {transportMarkk.transportMarkkName})
+                                        </option>
+                                        {/eq}
+                                        {@eq key=title value="3"}
+                                        <option id="detailTypeID{id}" value="{id}" detailName="{detailName}" title="Категорія: {transportTypeID}, {transportModelID}, {transportModelID}">
+                                            {detailName} (Категорія: {transportType.transportTypeName}, {transportMarkk.transportMarkkName}, {transportModel.transportModelName})
+                                        </option>
+                                        {/eq}
+                                    {/detailTypes}
+                                </select>
+                            </div>
+                            <div class="col-xs-2 form-group" style="padding: 0 ">
+                                <select class="form-control add_select2" name="detailType" id="detail-type">
+                                    <option value="1">Сервіс</option>
+                                    <option value="2">Клієнт</option>
+                                    <option value="3">Відсутня</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-2 form-group">
+                                <input id="detail-type-input" class="form-control create-form-task" min="1" type="number" name="detailQuantity"/>
+                            </div>
+                            <div class="col-xs-1 form-group" style="padding-left: 0;">
+                                <input type="button" id="add-detail" class="btn btn-default red-button-plus" value="+"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--<div class="form-group col-xs-6">
+                        <label>Запчастини</label>
+                        <textarea class="form-control create-form-task" name="parts" rows="3"></textarea>
+                    </div>
+                    <div class="form-group col-xs-6">
+                        <label>Запчастини клієнта</label>
+                        <textarea class="form-control create-form-task" name="customerParts" rows="3"></textarea>
+                    </div>
+                    <div class="form-group col-xs-6">
+                        <label>Відсутні запчастини</label>
+                        <textarea class="form-control create-form-task" name="needBuyParts" rows="3"></textarea>
+                    </div>-->
+                    <div class="form-group col-xs-5">
+                        <label>Коментар</label>
+                        <textarea class="form-control create-form-task" name="comment" rows="7"></textarea>
+                    </div>
+                    <div class='form-group col-xs-6 col-xs-offset-6'>
+                        <button type="button" id="taskAddButton" class="btn btn-success width agree">
+                            Додати
+                        </button>
+                        <button type="button" class="btn btn-danger pull-right width" id="taskCancelAddButton" data-dismiss="modal">
+                            Відмінити
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+{/create_task}

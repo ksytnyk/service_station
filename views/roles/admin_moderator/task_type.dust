@@ -1,0 +1,83 @@
+{>"layout" /}
+
+{<body}
+
+{>"header/index"/}
+
+<div class="col-xs-12 task_type">
+    <div class="col-xs-6" style="padding-left: 0;">
+        <a class="btn btn-primary modal-window-link"
+           data-toggle="modal"
+           data-target="#createTaskTypeFormModal"
+           title="Додати задачу">
+            Додати задачу
+        </a>
+    </div>
+    <div class="panel panel-default">
+        <table class="table dtable-task-type">
+            <thead>
+            <tr>
+                <th class="tac" style="width: 15px;">ID</th>
+                <th class="tac">Назва задачі</th>
+                <th class="tac" title="Тип транспорту" style="width: 75px;">Тип тр.</th>
+                <th class="tac" title="Марка транспорту">Марка тр.</th>
+                <th class="tac" title="Модель транспорту">Модель тр.</th>
+                <th class="tac" style="width: 65px;">Вартість</th>
+                <th class="tac">Виконавець</th>
+                <th class="tac" style="width: 40px;">Час</th>
+                <th style="width: 50px;"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {#taskType}
+            <tr id="idr-task-type-{id}">
+                <th class="tac" scope="row">{id}</th>
+                <td class="tac">{typeName}</td>
+                <td class="tac">{transportType.transportTypeName}</td>
+                <td class="tac">{transportMarkk.transportMarkkName}</td>
+                <td class="tac">{transportModel.transportModelName}</td>
+                <td class="tac">{cost}</td>
+                <td class="tac">{planedExecutor.userSurname} {planedExecutor.userName}</td>
+                <td class="tac">{estimationTime}</td>
+                <td class="tac">
+                    <a href="#"
+                       class="update-task-type modal-window-link"
+                       data-toggle="modal"
+                       data-target="#updateTaskTypeFormModal"
+                       data-id="{id}"
+                       data-type-name="{typeName}"
+                       data-type-of-car="{typeOfCar}"
+                       data-car-markk="{carMarkk}"
+                       data-car-markk-name="{transportMarkk.transportMarkkName}"
+                       data-car-model="{carModel}"
+                       data-car-model-name="{transportModel.transportModelName}"
+                       data-cost="{cost}"
+                       data-planed-executor-id="{planedExecutorID}"
+                       data-estimation-time="{estimationTime}"
+                       title="Редагувати задачу">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true" style="font-size: 17px; margin-right: 10px;"/>
+                    </a>
+                    {@eq key=typeUser value=1}
+                    <a href="#"
+                       class="delete-task-type modal-window-link"
+                       data-toggle="modal"
+                       data-target="#deleteTaskTypeFormModal"
+                       data-id="{id}"
+                       title="Видалити задачу">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true" style="font-size: 19px;"/>
+                    </a>
+                    {/eq}
+                </td>
+            </tr>
+            {/taskType}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{>"modal_windows/users/create_user"/}
+{>"modal_windows/task_types/update_task_type"/}
+{>"modal_windows/task_types/delete_task_type"/}
+{>"modal_windows/task_types/create_task_type"/}
+
+{/body}

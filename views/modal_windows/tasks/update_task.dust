@@ -1,0 +1,236 @@
+{+update_task}
+<div class="modal fade" id="updateTaskFormModal" role="dialog" aria-labelledby="formModalLabel">
+    <div class="modal-dialog update_task {@eq key=typeUser value=4}update-task-modal-store-keeper{/eq}" role="document">
+        <div class="modal-content">
+            <form id="update-form-task" class="create">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title text-center">Редагувати задачу</h4>
+                </div>
+                <input type="hidden" id="update-form-task-id" name="id">
+                <input type="hidden" id="update-form-request-id" name="requestID">
+                <input type="hidden" id="update-form-task-old-cost" name="oldCost">
+                {@eq key=typeUser value=3}
+                <input type="hidden" id="update-form-task-planed-executor" name="planedExecutorID">
+                {/eq}
+
+                <div class="modal-body clearfix">
+                    {@lt key=typeUser value=4}
+                    {@lt key=typeUser value=3}
+                    <div class="form-group required col-xs-4" id="update_new_task">
+                        <label>Назва задачі</label>
+                        <input type="text" class="form-control create-form-task hidden update-form-task-type-input" id="update-form-task-type-input" name="name">
+                        <div class="input-group">
+                            <select class="form-control add_select2 create-form-task update-form-task-type-select" id="update-form-task-type-select" name="name2">
+                                {#taskTypes}
+                                {@eq key=title value="0"}
+                                <option value="{id}" updateTaskTypeID="{typeName}" id="updateTaskTypeID{id}" title="Усі категорії">{typeName} (Усі категорії)</option>
+                                {/eq}
+                                {@eq key=title value="1"}
+                                <option value="{id}" updateTaskTypeID="{typeName}" id="updateTaskTypeID{id}" title="Категорія: {typeOfCar}">{typeName} (Категорія: {transportType.transportTypeName})</option>
+                                {/eq}
+                                {@eq key=title value="2"}
+                                <option value="{id}" updateTaskTypeID="{typeName}" id="updateTaskTypeID{id}" title="Категорія: {typeOfCar}, {carMarkk}">{typeName} (Категорія: {transportType.transportTypeName}, {transportMarkk.transportMarkkName})</option>
+                                {/eq}
+                                {@eq key=title value="3"}
+                                <option value="{id}" updateTaskTypeID="{typeName}" id="updateTaskTypeID{id}" title="Категорія: {typeOfCar}, {carMarkk}, {carModel}">{typeName} (Категорія: {transportType.transportTypeName}, {transportMarkk.transportMarkkName}, {transportModel.transportModelName})</option>
+                                {/eq}
+                                {/taskTypes}
+                            </select>
+                            <span class="input-group-addon update-add-new-task-type-button">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true" style="margin: 0;" title="Додати нову задачу"/>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group required col-xs-4">
+                        <label>Виконавець</label>
+                        <select class="form-control add_select2 create-form-task" name="planedExecutorID"
+                                id="update-form-task-planed-executor">
+                            {#assignedExecutorUsers}
+                            {@eq key=userTypeID value=3}
+                            <option value="{id}" executorFullName="{userSurname} {userName}" id="option{id}">{userSurname} {userName}
+                            </option>
+                            {/eq}
+                            {/assignedExecutorUsers}
+                        </select>
+                    </div>
+                    {/lt}
+                    <div class="form-group required {@lt key=typeUser value=3}col-xs-4{/lt}{@eq key=typeUser value=3}col-xs-3{/eq}">
+                        {@lt key=typeUser value=3}
+                        <button type="button" class="btn btn-primary update-assign-task-button col-xs-12"
+                                style="margin-top: 25px;">Доручити задачу
+                        </button>
+                        {/lt}
+                        <div class="hidden update-assign-task-select">
+                            <label>Доручити задачу</label>
+                            <select class="form-control add_select2 create-form-task" name="assignedUserID"
+                                    id="update-form-task-assigned-user" style="width: 100%;">
+                                {#assignedExecutorUsers}
+                                {@lt key=typeUser value=3}
+                                {@eq key=userTypeID value=4}
+                                <option value="{id}" assignedUserFullName="{userSurname} {userName}"
+                                        id="optionAE{id}">
+                                    (Зав. складом) {userSurname} {userName}
+                                </option>
+                                {/eq}
+                                {/lt}
+                                {@eq key=userTypeID value=3}
+                                <option value="{id}" assignedUserFullName="{userSurname} {userName}"
+                                        id="optionAE{id}">
+                                    {@lt key=typeUser value=3}(Інженер) {/lt}{userSurname} {userName}
+                                </option>
+                                {/eq}
+                                {/assignedExecutorUsers}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group {@lt key=typeUser value=3}col-xs-4{/lt}{@eq key=typeUser value=3}col-xs-3{/eq}">
+                        <label>Опис задачі</label>
+                        <input type="text" class="form-control create-form-task" name="description" id="update-form-task-description">
+                    </div>
+                    <div class="form-group required {@lt key=typeUser value=3}col-xs-4{/lt}{@eq key=typeUser value=3}col-xs-2{/eq}">
+                        <label>Час початку</label>
+                        <input type="text" class="form-control create-form-task datetimepickerN" name="startTime"
+                               id="update-form-task-start-time">
+                    </div>
+                    <div class="form-group required col-xs-2">
+                        <label>Час виконання</label>
+                        <div class="input-group">
+                            <input type="number" min="1" class="form-control create-form-task" name="estimationTime"
+                               id="update-form-task-estimation-time">
+                            <span class="input-group-addon">год</span>
+                        </div>
+                    </div>
+                    <div class="form-group required col-xs-2">
+                        <label>Вартість</label>
+                        <div class="input-group">
+                            {@eq key=typeUser value=1}
+                            <input type="number" min="1" class="form-control create-form-task" name="cost" id="update-form-task-cost">
+                            {:else}
+                            <input type="number" min="1" class="form-control create-form-task" name="cost" id="update-form-task-cost" readonly style="cursor: not-allowed;">
+                            {/eq}
+                            <span class="input-group-addon">грн</span>
+                        </div>
+                    </div>
+                    <div class="form-group required col-xs-8">
+
+                        <label>Деталі</label>
+                        <div class="detail-type-table">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>Назва деталі</th>
+                                    <th style="width: 80px;">Тип</th>
+                                    <th style="width: 60px;">К-сть</th>
+                                    <th style="width: 40px;"></th>
+                                </tr>
+                                </thead>
+                                <tbody id="update-detail-type-tbody">
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-7">
+                                <select class="form-control add_select2" id="update-detail-type-select" name="detailID">
+                                    {#detailTypes}
+                                        {@eq key=title value="0"}
+                                        <option id="detailTypeID{id}" value="{id}" detailName="{detailName}" title="Усі категорії">
+                                            {detailName} (Усі категорії)
+                                        </option>
+                                        {/eq}
+                                        {@eq key=title value="1"}
+                                        <option id="detailTypeID{id}" value="{id}" detailName="{detailName}" title="Категорія: {transportTypeID}">
+                                            {detailName} (Категорія: {transportType.transportTypeName})
+                                        </option>
+                                        {/eq}
+                                        {@eq key=title value="2"}
+                                        <option id="detailTypeID{id}" value="{id}" detailName="{detailName}" title="Категорія: {transportTypeID}, {transportMarkkID}">
+                                            {detailName} (Категорія: {transportType.transportTypeName}, {transportMarkk.transportMarkkName})
+                                        </option>
+                                        {/eq}
+                                        {@eq key=title value="3"}
+                                        <option id="detailTypeID{id}" value="{id}" detailName="{detailName}" title="Категорія: {transportTypeID}, {transportModelID}, {transportModelID}">
+                                            {detailName} (Категорія: {transportType.transportTypeName}, {transportMarkk.transportMarkkName}, {transportModel.transportModelName})
+                                        </option>
+                                        {/eq}
+                                    {/detailTypes}
+                                </select>
+                            </div>
+                            <div class="col-xs-2 form-group" style="padding: 0;">
+                                <select class="form-control add_select2" name="detailType" id="update-detail-type">
+                                    <option value="1">Сервіс</option>
+                                    {@lt key=typeUser value=3}
+                                    <option value="2">Клієнт</option>
+                                    {/lt}
+                                    <option value="3">Відсутня</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-2 form-group">
+                                <input id="update-detail-type-input" class="form-control create-form-task" min="1" type="number" name="detailQuantity"/>
+                            </div>
+                            <div class="col-xs-1 form-group" style="padding-left: 0;">
+                                <input type="button" id="update-add-detail" class="btn btn-default red-button-plus" value="+"/>
+                            </div>
+                        </div>
+                    </div>
+                    {/lt}
+                    <!--<div class="form-group col-xs-6">
+                        <label>Запчастини</label>
+                        <textarea class="form-control create-form-task" name="parts" rows="3"
+                                  id="update-form-task-parts"></textarea>
+                    </div>
+                    <div class="form-group col-xs-6">
+                        <label>Запчастини клієнта</label>
+                        <textarea class="form-control create-form-task" name="customerParts" rows="3"
+                                  id="update-form-task-customer-parts"></textarea>
+                    </div>
+
+                    <div class="form-group {@eq key=typeUser value=4}required{/eq} col-xs-6">
+                        <label>Відсутні запчастини</label>
+                        <textarea class="form-control create-form-task" name="needBuyParts" rows="3"
+                                  id="update-form-task-need-buy-parts"></textarea>
+                    </div>-->
+                    <div class="form-group {@eq key=typeUser value=4}col-xs-12{:else}col-xs-4{/eq}">
+                        <label>Коментар</label>
+                        <textarea class="form-control create-form-task" name="comment" rows="{@eq key=typeUser value=4}3{:else}7{/eq}"
+                                  id="update-form-task-comment"></textarea>
+                    </div>
+                        {@lt key=typeUser value=3}
+                        <div class='form-group col-xs-6 col-xs-offset-6'>
+                        <input type="hidden" name="status" id="update-form-task-status">
+                        <button class="buttons-update-task-modal btn btn-success task-form-status task-update-button"
+                                id="change-status-done-task" data-dismiss="modal">
+                            Завершити задачу
+                        </button>
+                        <button class="buttons-update-task-modal btn btn-warning task-update-button agree"
+                                id="change-status-update-task" data-dismiss="modal">
+                            Оновити задачу
+                        </button>
+                        <button class="buttons-update-task-modal btn btn-danger pull-right"
+                                id="change-status-cancel-task"
+                                data-dismiss="modal"
+                                data-toggle="modal"
+                                data-target="#setTaskStatusCanceledModal"
+                                style="margin-right:0">
+                            Анулювати задачу
+                        </button>
+                        {/lt}
+                        {@gt key=typeUser value=2}
+                        <div class='form-group {@eq key=typeUser value=4}col-xs-12{:else}col-xs-6 col-xs-offset-6{/eq}'>
+                        <button class="btn btn-success width task-update-button agree" id="change-status-update-task">
+                            Оновити
+                        </button>
+                        <button class="btn btn-danger pull-right width" data-dismiss="modal">
+                            Закрити
+                        </button>
+                        {/gt}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{/update_task}

@@ -1,0 +1,123 @@
+{>"layout" /}
+
+{<body}
+
+{>"header/index"/}
+
+<div class="col-xs-12 create_request noprint">
+    <form class="clearfix" id="createRequestForm">
+        <div class="form-group required col-xs-3">
+            <label>Тип транспорту</label>
+            <div class="input-group">
+                <select class="form-control disable_input" name="transportTypeID" id="typeOfCar" style="width: 99%;">
+                    <option value="default">Оберіть тип транспорту</option>
+                </select>
+                <span class="input-group-addon plus disable_input" id="add_new_type_of_car">
+                    <span class="glyphicon glyphicon-plus disable_input" aria-hidden="true" style="margin: 0;" title="Додати новий тип транспорту"></span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group required col-xs-3">
+            <label>Марка транспорту</label>
+            <div class="input-group">
+                <select class="form-control disable_input" name="transportMarkkID" id="markk" style="width: 99%; border-radius: 4px;"></select>
+                <span class="input-group-addon plus disable_input" id="add_new_car_markk">
+                    <span class="glyphicon glyphicon-plus disable_input" aria-hidden="true" style="margin: 0;" title="Додати нову марку транспорту"></span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group required col-xs-3">
+            <label>Модель транспорту</label>
+            <div class="input-group">
+                <select class="form-control disable_input" name="transportModelID" id="model" style="width: 99%; border-radius: 4px;"></select>
+                <span class="input-group-addon plus disable_input" id="add_new_car_model">
+                    <span class="glyphicon glyphicon-plus disable_input" aria-hidden="true" style="margin: 0;" title="Додати нову модель транспорту"></span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group required col-xs-3">
+            <label>Клієнт</label>
+            <div class="input-group">
+                <select class="form-control add_select2 disable_input" name="customerID" id="customers">
+                    {#customers}
+                    <option value="{id}">{userName} {userSurname}</option>
+                    {/customers}
+                </select>
+                <span class="input-group-addon plus disable_input" id="add_new_user">
+                    <span class="glyphicon glyphicon-plus disable_input" aria-hidden="true" style="margin: 0;" title="Додати нового користувача"></span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group required col-xs-3" id="request-name">
+            <label>Назва замовлення</label>
+            <input type="text" class="form-control request-name-input hidden disable_input" id="request-name-input" name="name">
+
+            <div class="input-group">
+                <select class="form-control request-name-select disable_input" id="request-name-select" name="name2" style="width:99%; border-radius: 4px;"></select>
+                <span class="input-group-addon new-request-name plus disable_input">
+                    <span class="glyphicon glyphicon-plus disable_input" aria-hidden="true" style="margin: 0;" title="Додати нове замовлення"></span>
+                </span>
+            </div>
+
+        </div>
+
+        <div class="form-group required col-xs-3">
+                <label>Час початку</label>
+                <input type="text" class="form-control datetimepickerN startTime disable_input" name="startTime" id="startDate"
+                       style="margin-bottom: 5px;">
+        </div>
+        <div class="form-group required col-xs-3">
+            <label>Орієнтовний час виконання</label>
+            <input type="text" class="form-control datetimepickerN endTime disable_input" name="estimatedTime" id="endDate"
+                   style="margin-bottom: 5px;">
+        </div>
+        <div class="form-group col-xs-3" style="margin-top: 25px; margin-bottom: 20px;">
+            <input type="button" id="create_request" value="Додати замовлення"
+                   class="btn btn-success col-xs-12 disable_input"/>
+            <input type="button" id="access_update_request" value="Редагувати замовлення"
+                   class="btn btn-warning col-xs-9"/>
+            <input type="button" id="update_request" value="Зберегти зміни"
+                   class="btn btn-success col-xs-9"/>
+            <button type="button" value="Друк" class="btn print_check_button btn-danger modal-window-link col-xs-offset-1 col-xs-2"
+                    data-toggle="modal" data-target="#printCheckFormModal" title="Друк">
+                <span class="glyphicon glyphicon-print" aria-hidden="true" style="margin: 3px 0;"></span>
+            </button>
+        </div>
+        <div class="form-group col-xs-3">
+            <label>Опис замовлення</label>
+            <textarea class="form-control disable_input" name="description" rows="4" style="height: 108px;"></textarea>
+        </div>
+        <div class="form-group col-xs-3">
+            <label>Коментар</label>
+            <textarea class="form-control disable_input" name="comment" rows="4" style="height: 108px;"></textarea>
+        </div>
+    </form>
+    <div id="step" class="clearfix">
+        <div class="form-group col-xs-12" style="margin: 50px 0 -25px;">
+            <input type="button" id="create_task" value="Додати задачу" class="btn btn-primary modal-window-link"
+                   data-toggle="modal" data-target="#createTaskFormModal" style="width: 255px; float: right; position: relative; z-index: 1;"/>
+            <input type="button" id="start_and_print_request" value="Почати" class="print_check_button btn btn-primary modal-window-link"
+                   data-toggle="modal" data-target="#printCheckFormModal" style="width: 100px; position: relative; float: right; z-index: 1; margin-right: 20px;"/>
+
+        </div>
+        <div class="form-group col-xs-12" style="margin: 0;">
+            <h4>Список завдань</h4>
+        </div>
+        <div class="form-group col-xs-12">
+            <div class="panel panel-default">
+                {>"task_table/index"/}
+            </div>
+        </div>
+    </div>
+</div>
+
+{>"modal_windows/users/create_user"/}
+{>"modal_windows/tasks/create_task"/}
+{>"modal_windows/tasks/update_task"/}
+{>"modal_windows/tasks/delete_task"/}
+{>"modal_windows/print_check"/}
+{>"modal_windows/transport_types/create_transport_type"/}
+{>"modal_windows/transport_types/create_transport_markk"/}
+{>"modal_windows/transport_types/create_transport_model"/}
+
+{/body}

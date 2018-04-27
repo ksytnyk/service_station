@@ -1,0 +1,10 @@
+.detail a {
+    display: inline-block;"
+}
+.detail a span {
+    margin: 5px;
+}
+.create_detail .select2,
+.update_detail .select2 {
+    width: 100% !important;
+}

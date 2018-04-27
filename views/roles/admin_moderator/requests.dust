@@ -1,0 +1,257 @@
+{>"layout" /}
+
+{<body}
+
+{>"header/index"/}
+<div class="col-xs-12 requests noprint">
+
+    <ul class="col-xs-9 nav nav-pills">
+        <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/all">
+            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/all">Усі</a>
+        </li>
+        {@lt key=typeUser value=3}
+        <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/pending">
+            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/pending">Не початі</a>
+        </li>
+        <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/processing">
+            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/processing">Виконуються</a>
+        </li>
+        <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/hold">
+            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/hold">Очікують запчастини</a>
+        </li>
+        <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/canceled">
+            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/canceled">Анульовані</a>
+        </li>
+        <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/give-out">
+            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/give-out">Видані</a>
+        </li>
+        {/lt}
+        <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/done">
+            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/done">Виконані</a>
+        </li>
+        <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/payed">
+            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/payed">Розраховані</a>
+        </li>
+        {@lt key=typeUser value=3}
+        <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/trash" title="Видалені замовлення">
+            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/trash"><span class="glyphicon glyphicon-trash" style="margin: 3px 0;"></span></a>
+        </li>
+        {:else}
+        <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/not-payed">
+            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/not-payed">Нерозраховані</a>
+        </li>
+        {/lt}
+    </ul>
+    <div class="panel panel-default">
+        <table class="table dtable-requests">
+            <thead>
+            <tr>
+                <th class="tac" style="width: 15px;">№</th>
+                <th class="tac" style="width: 235px;">Інформація про замовлення</th>
+                <th class="tac">Завдання</th>
+            </tr>
+            </thead>
+            <tbody>
+            {#requests}
+            <tr id="idr-request-{id}">
+                <th class="tac" style="position: relative;">
+                    <span class="requests_id">{id}</span>
+                    {@ne key=typeUser value=6}
+                    <a href="update-request/{id}"
+                       title="Редагувати замовлення"
+                       style="font-size: 17px;"
+                        class="update-all-request-button">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"/>
+                    </a>
+                    {@eq key=typeUser value=1}
+                    <a href="#"
+                       class="delete-request modal-window-link"
+                       data-current="{typeUser}"
+                       data-id="{id}"
+                       data-had-deleted="{hadDeleted}"
+                       data-toggle="modal"
+                       data-target="#deleteRequestFormModal"
+                       title="Видалити замовлення">
+                        <span class="glyphicon glyphicon-remove icon-margin" aria-hidden="true" style="font-size: 19px;"/>
+                    </a>
+                    {/eq}
+                    {/ne}
+                </th>
+                <td class="vat {@eq key=status value=5}disable-task{/eq}" style="position: relative; padding-top: 40px; padding-bottom: 15px;">
+                    {@eq key=giveOut value="false" type="boolean"}
+                    {@eq key=status value=1}
+                    <span class="status-requests status-bgc-pending"><strong>Замовлення в очікувані</strong></span>
+                    {/eq}
+                    {@eq key=status value=2}
+                    <span class="status-requests status-bgc-processing"><strong>Замовлення виконується</strong></span>
+                    {/eq}
+                    {@eq key=status value=3}
+                    <span class="status-requests status-bgc-done"><strong>Замовлення виконано</strong></span>
+                    {/eq}
+                    {@eq key=status value=5}
+                    <span class="status-requests status-bgc-canceled"><strong>Замовлення анульовано</strong></span>
+                    {/eq}
+                    {/eq}
+                    {@eq key=giveOut value="true" type="boolean"}
+                    <span class="status-requests status-bgc-give-out"><strong>Замовлення видано</strong></span>
+                    {/eq}
+                    <p><strong>Назва замовлення: </strong>{name}</p>
+                    <p><strong>Опис замовлення: </strong>{description}</p>
+                    <p><strong>Клієнт: </strong>{user.userSurname} {user.userName}</p>
+                    <p><strong>Телефон: </strong>{user.userPhone}</p>
+                    <p id="idr-cost-{id}" class='request_payed {@eq key=payed value="true" type="boolean"}request_payed_true{/eq}'>
+                        <strong>Вартість: {cost} грн <span>({@eq key=payed value="true" type="boolean"}Розраховано{/eq}{@eq key=payed value="false" type="boolean"}Не розраховано{/eq})</span></strong>
+                    </p>
+                    <p><strong>Час початку: </strong>{startTime}</p>
+                    <p class="{@eq key=overdue value=1}overdue{/eq}"><strong>Заплан. час: </strong>{estimatedTime}</p>
+                    <p id="typeOfCar{id}" attr-id="{transportTypeID}"><strong>Тип транспорту: </strong>{transportTypeName}</p>
+                    <p id="markk{id}" attr-id="{transportMarkkID}"><strong>Марка: </strong>{transportMarkkName}</p>
+                    <p id="model{id}" attr-id="{transportModelID}"><strong>Модель: </strong>{transportModelName}</p>
+                    <p id="request-comment"><strong>Коментар: </strong>{comment}</p>
+                    <div class="requests-status-form">
+                        {@eq key=giveOut value="false" type="boolean"}
+                        {@ne key=typeUser value=6}
+                        {@ne key=status value=2}
+                        <input class="btn btn-primary request-form-status request-status-button"
+                               id="requestProcessing"
+                               type="button"
+                               value='{@eq key=hadStarted value="true" type="boolean"}Доопрацювати{:else}Почати{/eq}'
+                               data-request-id="{id}"
+                               data-status="2"
+                               title='{@eq key=hadStarted value="true" type="boolean"}Доопрацювати{:else}Почати{/eq}'
+                        />
+                        {/ne}
+                        {@ne key=status value=3}
+                        {@ne key=status value=1}
+                        {@ne key=status value=5}
+                        <input class="btn btn-success request-form-status request-status-button"
+                               id="requestDone"
+                               type="button"
+                               value="Завершити"
+                               data-request-id="{id}"
+                               data-status="3"
+                               title="Завершити"
+                        />
+                        {/ne}
+                        {/ne}
+                        {/ne}
+                        {@ne key=status value=5}
+                        {@ne key=status value=1}
+                        <input class="btn request-form-status status-requests-canceled modal-window-link"
+                               data-toggle="modal"
+                               id="requestCanceled"
+                               type="button"
+                               value="Анулювати"
+                               data-request-id="{id}"
+                               data-request-comment="{comment}"
+                               title="Анулювати"
+                               data-target="#setRequestStatusCanceledModal"
+                        />
+                        {/ne}
+                        {/ne}
+                        {@eq key=giveOut value="false" type="boolean"}
+                        <input class='btn request-form-status set_give_out {@ne key=status value=3}hide{/ne}'
+                               type="button"
+                               value="Видати"
+                               data-request-id="{id}"
+                               data-give-out="true"
+                               title="Видати"
+                        />
+                        {/eq}
+                        {/ne}
+                        {@eq key=typeUser value=6}
+                        {@eq key=payed value="false" type="boolean"}
+                            <input class="btn print_check_button btn-warning set_payed_true"
+                                   type="button"
+                                   value="Розрахувати"
+                                   data-request-id="{id}"
+                                   data-payed="true"
+                                   title="Розрахувати"
+                                   customer-phone="{user.userPhone}"
+                                   data-toggle="modal"
+                                   data-target="#printCheckFormModal"
+                                   request-start-time="{startTime}"
+                                   request-estimate-time="{estimatedTime}"
+                            />
+                        {/eq}
+                        {/eq}
+                        {/eq}
+                        {@ne key=status value=1}
+                        {@eq key=typeUser value=1}
+                            <input class='btn btn-warning set_payed_true print_check_button {@eq key=payed value="true" type="boolean"}hide{/eq}'
+                                   type="button"
+                                   value="Розрахувати"
+                                   data-request-id="{id}"
+                                   data-payed="true"
+                                   title="Розрахувати"
+                                   customer-phone="{user.userPhone}"
+                                   data-toggle="modal"
+                                   data-target="#printCheckFormModal"
+                                   request-start-time="{startTime}"
+                                   request-estimate-time="{estimatedTime}"
+                            />
+                            <input class='btn btn-danger set_payed_false set_payed {@eq key=payed value="false" type="boolean"}hide{/eq}'
+                                   type="button"
+                                   value="Відмін. розрах."
+                                   request-id="{id}"
+                                   payed="false"
+                                   style="padding: 6px;"
+                                   title="Відмінити розрахунок"
+                            />
+                        {/eq}
+                        {/ne}
+                    </div>
+                </td>
+                <td style="padding: 0; vertical-align: top; position: relative;" class="{@eq key=status value=5}disable-task{/eq}">
+                    {>"task_table/index"/}
+                    <div class="border"></div>
+                    <div class="request_history">
+                        <table class="table">
+                            <tbody>
+                            {#requestsHistory}
+                            <tr>
+                                <td>
+                                    {@eq key=status value=1}
+                                    <p>Замовлення в очікувані</p>
+                                    {/eq}
+                                    {@eq key=status value=2}
+                                    <p>Замовлення виконується</p>
+                                    {/eq}
+                                    {@eq key=status value=3}
+                                    <p>Замовлення виконано</p>
+                                    {/eq}
+                                    {@eq key=status value=4}
+                                    <p>Задачу зупинено</p>
+                                    {/eq}
+                                    {@eq key=status value=5}
+                                    <p>Замовлення анульовано</p>
+                                    {/eq}
+                                </td>
+                                <td>
+                                    <p>{comment}</p>
+                                </td>
+                                <td>
+                                    <p>{createdAt}</p>
+                                </td>
+                            </tr>
+                            {/requestsHistory}
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            {/requests}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{>"modal_windows/print_check"/}
+{>"modal_windows/users/create_user"/}
+{>"modal_windows/tasks/update_task"/}
+{>"modal_windows/tasks/delete_task"/}
+{>"modal_windows/requests/delete_request"/}
+{>"modal_windows/set_status/set_request_status_canceled"/}
+{>"modal_windows/set_status/set_task_status_canceled"/}
+
+{/body}

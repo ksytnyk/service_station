@@ -1,0 +1,130 @@
+{>"layout" /}
+
+{<body}
+
+{>"header/index"/}
+
+<div class="col-xs-12 update_request noprint">
+    {#request}
+    <form class="clearfix" id="createRequestForm">
+        <div class="form-group required col-xs-3">
+            <label>Тип транспорту</label>
+            <div class="input-group disabled-plus disabled">
+                <select class="form-control disable_input" name="transportTypeID" id="typeOfCar" default-value="{transportTypeID}" disabled style="width: 99%;">
+                    <option value="">Оберіть тип транспорту</option>
+                </select>
+                <span class="input-group-addon plus disable_input" id="add_new_type_of_car" disabled>
+                    <span class="glyphicon glyphicon-plus disable_input" aria-hidden="true" style="margin: 0;" title="Додати новий тип транспорту" disabled></span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group required col-xs-3">
+            <label>Марка транспорту</label>
+            <div class="input-group disabled-plus disabled">
+                <select class="form-control disable_input" name="transportMarkkID" id="markk" disabled style="width: 99%; border-radius: 4px;">
+                    <option value="{transportMarkkID}">{transportMarkkName}</option>
+                </select>
+                <span class="input-group-addon plus disable_input" id="add_new_car_markk" disabled>
+                    <span class="glyphicon glyphicon-plus disable_input" aria-hidden="true" style="margin: 0;" title="Додати нову марку транспорту" disabled></span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group required col-xs-3">
+            <label>Модель транспорту</label>
+            <div class="input-group disabled-plus disabled">
+                <select class="form-control disable_input" name="transportModelID" id="model" disabled style="width: 99%; border-radius: 4px;">
+                    <option value="{transportModelID}">{transportModelName}</option>
+                </select>
+                <span class="input-group-addon plus disable_input" id="add_new_car_model" disabled>
+                    <span class="glyphicon glyphicon-plus disable_input" aria-hidden="true" style="margin: 0;" title="Додати нову модель транспорту" disabled></span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group required col-xs-3">
+            <label>Клієнт</label>
+            <div class="input-group disabled-plus disabled">
+                <select class="form-control add_select2 disable_input" name="customerID" id="customers" disabled>
+                    {#customers}
+                    <option value="{id}" {@eq key=id value=customer.id}selected{/eq}>{userSurname} {userName}</option>
+                    {/customers}
+                </select>
+                <span class="input-group-addon disable_input plus" id="add_new_user" disabled>
+                    <span class="glyphicon glyphicon-plus disable_input" aria-hidden="true" style="margin: 0;"
+                          title="Додати нового користувача" disabled></span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group required col-xs-3">
+            <label>Назва замовлення</label>
+            <input type="text" class="form-control disable_input update-request-name-input" request-id="{id}" name="name" value="{name}" id="update-request-name-input" disabled>
+            <div class="input-group hidden" id="input-group-update">
+                <select value="{id}" class="form-control add_select2 request-name-select update-request-name-select disable_input" id="update-request-name-select" name="name2">
+                    {#requests}
+                    <option value="{name}" updateRequestID="{name}" id="updateRequestID{id}">{name}</option>
+                    {/requests}
+                </select>
+                <span class="input-group-addon update-new-request-name plus disable_input">
+                    <span class="glyphicon glyphicon-plus disable_input" aria-hidden="true" style="margin: 0;" title="Додати нове замовлення"></span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group required col-xs-3">
+            <label>Час початку</label>
+            <input type="text" class="form-control datetimepickerN startTime disable_input" name="startTime" style="margin-bottom: 5px;" value="{startTime}" disabled>
+        </div>
+        <div class="form-group required col-xs-3">
+            <label>Орієнтовний час виконання</label>
+            <input type="text" class="form-control datetimepickerN disable_input" name="estimatedTime"
+                   style="margin-bottom: 5px;" value="{estimatedTime}" disabled>
+        </div>
+        <div class="form-group col-xs-3" style="margin-top: 25px; margin-bottom: 20px;">
+            <input type="button" id="access_update_request" value="Редагувати замовлення"
+                   class="btn btn-warning col-xs-9"/>
+            <input type="button" id="update_request" value="Зберегти зміни" request-id="{id}"
+                   class="btn btn-success col-xs-9" start-time="{startTime}" estimated-time="{estimatedTime}"/>
+            <button type="button"
+                    title="Друк"
+                    class="btn print_check_button btn-danger modal-window-link col-xs-offset-1 col-xs-2"
+                    data-toggle="modal"
+                    data-target="#printCheckFormModal"
+                    customer-phone="{customer.userPhone}">
+                <span class="glyphicon glyphicon-print" aria-hidden="true" style="margin: 3px 0;"></span>
+            </button>
+        </div>
+        <div class="form-group col-xs-3">
+            <label>Опис замовлення</label>
+            <textarea class="form-control disable_input" name="description" rows="4" style="height: 108px;" disabled>{description}</textarea>
+        </div>
+        <div class="form-group col-xs-3">
+            <label>Коментар</label>
+            <textarea class="form-control disable_input" name="comment" rows="4" style="height: 108px;" disabled>{comment}</textarea>
+        </div>
+    </form>
+
+    <div class="clearfix">
+        <div class="form-group col-xs-12" style="margin: 30px 0 -15px;">
+            <input type="button" id="create_task" value="Додати задачу" class="btn btn-primary modal-window-link"
+                   data-toggle="modal" data-target="#createTaskFormModal" style="width: 255px; float: right; position: relative; z-index: 1;"/>
+        </div>
+        <div class="form-group col-xs-12" style="margin: 0;">
+            <label>Список замовлень</label>
+        </div>
+        <div class="form-group col-xs-12">
+            <div class="panel panel-default">
+                {>"task_table/index"/}
+            </div>
+        </div>
+    </div>
+    {/request}
+</div>
+
+{>"modal_windows/users/create_user"/}
+{>"modal_windows/tasks/create_task"/}
+{>"modal_windows/tasks/update_task"/}
+{>"modal_windows/tasks/delete_task"/}
+{>"modal_windows/print_check"/}
+{>"modal_windows/transport_types/create_transport_type"/}
+{>"modal_windows/transport_types/create_transport_markk"/}
+{>"modal_windows/transport_types/create_transport_model"/}
+
+{/body}

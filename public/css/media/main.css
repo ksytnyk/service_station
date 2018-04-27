@@ -1,0 +1,11 @@
+@media (min-width: 320px) {
+    .container {
+        width: 1170px;
+    }
+    .white_block {
+        padding: 0;
+    }
+    .white_block .navbar {
+        width: 100%;
+    }
+}

@@ -1,0 +1,64 @@
+{>"layout" /}
+
+{<body}
+
+{>"header/index"/}
+
+<div class="col-xs-12 transport_type">
+    <div class="col-xs-6" style="padding-left: 0;">
+        <a class="btn btn-primary modal-window-link"
+           data-toggle="modal"
+           data-target="#createTransportTypeFormModal"
+           title="Додати тип транспорту">
+            Додати тип транспорту
+        </a>
+    </div>
+    <div class="panel panel-default">
+        <table class="table dtable-task-type">
+            <thead>
+            <tr>
+                <th class="tac" style="width: 15px;">ID</th>
+                <th class="tac">Тип транспорту</th>
+                <th style="width: 75px;"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {#transportTypes}
+            <tr id="idr-transport-type-{id}">
+                <th class="tac" scope="row">{id}</th>
+                <td>{transportTypeName}</td>
+                <td class="tac">
+                    <a href="#"
+                       class="update-transport-type modal-window-link"
+                       data-toggle="modal"
+                       data-target="#updateTransportTypeFormModal"
+                       data-id="{id}"
+                       data-type-name="{transportTypeName}"
+                       title="Редагувати тип транспорту">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true" style="font-size: 17px;"/>
+                    </a>
+                    {@eq key=typeUser value=1}
+                    <a href="#"
+                       class="delete-transport-type modal-window-link"
+                       data-toggle="modal"
+                       data-target="#deleteTransportTypeFormModal"
+                       data-id="{id}"
+                       data-type-name="{transportTypeName}"
+                       title="Видалити тип транспорту">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true" style="font-size: 19px;"/>
+                    </a>
+                    {/eq}
+                </td>
+            </tr>
+            {/transportTypes}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{>"modal_windows/users/create_user"/}
+{>"modal_windows/transport_types/update_transport_type"/}
+{>"modal_windows/transport_types/delete_transport_type"/}
+{>"modal_windows/transport_types/create_transport_type"/}
+
+{/body}

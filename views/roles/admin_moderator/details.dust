@@ -1,0 +1,77 @@
+{>"layout" /}
+
+{<body}
+
+{>"header/index"/}
+
+<div class="col-xs-12 detail">
+    <div class="col-xs-6" style="padding-left: 0;">
+        <a class="btn btn-primary modal-window-link"
+           data-toggle="modal"
+           data-target="#createDetailFormModal"
+           title="Додати деталь">
+            Додати деталь
+        </a>
+    </div>
+    <div class="panel panel-default">
+        <table class="table dtable-detail">
+            <thead>
+            <tr>
+                <th class="tac" style="width: 15px;">ID</th>
+                <th class="tac">Назва Деталі</th>
+                <th class="tac" title="Тип транспорту" style="width: 75px;">Тип тр.</th>
+                <th class="tac" title="Марка транспорту">Марка тр.</th>
+                <th class="tac" title="Модель транспорту">Модель тр.</th>
+                <th class="tac" style="width: 65px;">Вартість</th>
+                <th style="width: 50px;"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {#details}
+            <tr id="idr-detail-{id}">
+                <th class="tac" scope="row">{id}</th>
+                <td class="tac">{detailName}</td>
+                <td class="tac">{transportType.transportTypeName}</td>
+                <td class="tac">{transportMarkk.transportMarkkName}</td>
+                <td class="tac">{transportModel.transportModelName}</td>
+                <td class="tac">{detailPrice}</td>
+                <td class="tac">
+                    <a href="#"
+                       class="update-detail modal-window-link"
+                       data-toggle="modal"
+                       data-target="#updateDetailFormModal"
+                       data-id="{id}"
+                       data-detail-name="{detailName}"
+                       data-transport-markk-name="{transportMarkk.transportMarkkName}"
+                       data-transport-model-name="{transportModel.transportModelName}"
+                       data-transport-type-id="{transportType.id}"
+                       data-transport-markk-id="{transportMarkk.id}"
+                       data-transport-model-id="{transportModel.id}"
+                       data-detail-price="{detailPrice}"
+                       title="Редагувати деталь">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true" style="font-size: 17px; margin-right: 10px;"/>
+                    </a>
+                    {@eq key=typeUser value=1}
+                    <a href="#"
+                       class="delete-detail modal-window-link"
+                       data-toggle="modal"
+                       data-target="#deleteDetailFormModal"
+                       data-id="{id}"
+                       title="Видалити деталь">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true" style="font-size: 19px;"/>
+                    </a>
+                    {/eq}
+                </td>
+            </tr>
+            {/details}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{>"modal_windows/users/create_user"/}
+{>"modal_windows/details/update_detail"/}
+{>"modal_windows/details/delete_detail"/}
+{>"modal_windows/details/create_detail"/}
+
+{/body}

@@ -1,0 +1,15 @@
+@media print {
+    .noprint {
+        display: none;
+    }
+
+    .noprint .modal-header {
+        border-bottom: none;
+    }
+
+    .section-to-print {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+}

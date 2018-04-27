@@ -1,0 +1,70 @@
+{+header}
+<nav class="col-xs-12 white_block">
+    <div class="container">
+        <ul class="col-xs-12 navbar nav navbar-nav navbar-inverse role{user.dataValues.idTypeUser}">
+            {@lt key=typeUser value=3}
+                <li class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/all requests_link">
+                    <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/all">Замовлення</a>
+                </li>
+                <li class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/users">
+                    <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/users">Користувачі</a>
+                </li>
+                <li class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/details">
+                    <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/details">Деталі</a>
+                </li>
+                <li class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/task-type">
+                    <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/task-type">Задачі</a>
+                </li>
+                {@eq key=typeUser value=1}
+                <li class="/admin/chart">
+                    <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/chart">Статистика</a>
+                </li>
+            <li>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    Транспортні засоби <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/transport-type">Тип транспортного засобу</a>
+                    </li>
+                    <li>
+                        <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/transport-markk">Марка транспортного засобу</a>
+                    </li>
+                    <li>
+                    <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/transport-model">Модель транспортного засобу</a>
+                    </li>
+                </ul>
+            </li>
+                {/eq}
+                <li>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        Додати <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#" class="modal-window-link" data-toggle="modal" data-target="#createUserFormModal">Користувача</a>
+                        </li>
+                        <li>
+                            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/create-request">Замовлення</a>
+                        </li>
+                        <!--<li>-->
+                            <!--<a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/create-global-request">Замовлення</a>-->
+                        <!--</li>-->
+                    </ul>
+                </li>
+            {/lt}
+            {@eq key=typeUser value=6}
+                <li class="active">
+                    <a>Замовлення</a>
+                </li>
+            {/eq}
+            <li class="logout pull-right" role="presentation">
+                <a href="/logout" class="last">Вийти</a>
+            </li>
+            <li id="headerName" {@gt key=typeUser value=2}{@ne key=typeUser value=6} style="background-color: #333; float: left;"{/ne}{/gt}>
+                <a>{user.userName} {user.userSurname}</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+{/header}
