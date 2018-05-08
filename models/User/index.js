@@ -34,8 +34,7 @@ const describeUserTable = {
     },
     userEmail: {
         type: Sequelize.STRING,
-        field: 'user_email',
-        unique: true
+        field: 'user_email'
     },
     userTypeID: {
         type: Sequelize.INTEGER,
@@ -52,7 +51,7 @@ const optionUserTable = {
     indexes: [
         {
             unique: true,
-            fields: ['user_login', 'user_email']
+            fields: ['user_login']
         }
     ]
 };
@@ -163,7 +162,7 @@ User.createUser = function (user) {
                 resolve(result);
             })
             .catch(error => {
-                console.warn(error);
+                console.warn(11111111, error);
                 reject(error);
             });
     });
