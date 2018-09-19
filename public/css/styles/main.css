@@ -253,8 +253,24 @@ span[disabled]{
     box-shadow: none;
 }
 .panel div.dataTables_wrapper div.dataTables_filter input {
-    font-size: 14px;
-    width: 200px;
+    font-size: 18px;
+    height: 40px;
+    width: 80%;
+}
+.panel div.dataTables_wrapper div.dataTables_filter label{
+    width:100%;
+}
+a.clean-search{
+    width: 2%;
+    position: absolute;
+    right:32px;
+    top:6px;
+    z-index: 1;
+}
+a.clean-search span.glyphicon.glyphicon-remove{
+    width: 40px;
+    font-size:24px !important;
+    margin:0 !important;
 }
 table.dataTable {
     border: 1px solid #ccc;

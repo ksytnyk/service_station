@@ -44,6 +44,15 @@ $(document).ready(function () {
         $('.alert').css('left', '-65vw');
     });
 
+    $('.clean-search').on('click', () => {
+        var table = $('.dtable').DataTable();
+        table
+            .search( '' )
+            .columns().search( '' )
+            .draw();
+        $('input[type=search]').val('');
+    });
+
     setTimeout(function () {
         $('.hide_alert').trigger('click');
     }, TIME_FOR_FLASH);
