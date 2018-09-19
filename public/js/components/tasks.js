@@ -336,41 +336,45 @@ $(document).ready(function () {
                         '</td>';
 
                     if (getRole(window.location.pathname) === "/executor") {
-                        if (data.task.status === 1) {
-                            newTask1 = '' +
-                                '<td class="tac">' +
-                                '<div class="tasks-status-form">' +
-                                '<input class="status btn btn-primary task-form-status task-status-button"' +
-                                ' id="taskProcessing"' +
-                                ' type="button"' +
-                                ' value="Почати задачу"' +
-                                ' data-task-id="' + data.task.id + '"' +
-                                ' data-status="2"' +
-                                '/>' +
-                                '</div>' +
-                                '</td>'
+                        if (data.task.status !== 4) {
+                            if (data.task.status === 1) {
+                                newTask1 = '' +
+                                    '<td class="tac">' +
+                                    '<div class="tasks-status-form">' +
+                                    '<input class="status btn btn-primary task-form-status task-status-button"' +
+                                    ' id="taskProcessing"' +
+                                    ' type="button"' +
+                                    ' value="Почати задачу"' +
+                                    ' data-task-id="' + data.task.id + '"' +
+                                    ' data-status="2"' +
+                                    '/>' +
+                                    '</div>' +
+                                    '</td>'
+                            } else {
+                                newTask1 = '' +
+                                    '<td class="tac">' +
+                                    '<div class="tasks-status-form">' +
+                                    '<input class="status btn btn-danger set-task-status-hold modal-window-link"' +
+                                    ' data-toggle="modal"' +
+                                    ' id="taskHold"' +
+                                    ' type="button"' +
+                                    ' value="Відсутні запчастини"' +
+                                    ' data-task-id="' + data.task.id + '"' +
+                                    ' data-task-comment="' + data.task.comment + '"' +
+                                    ' data-target="#setTaskStatusHoldModal"' +
+                                    '/>' +
+                                    '<input class="status btn btn-success task-form-status task-status-button"' +
+                                    ' id="taskDone"' +
+                                    ' type="button"' +
+                                    ' value="Завершити задачу"' +
+                                    ' data-task-id="' + data.task.id + '"' +
+                                    ' data-status="3"' +
+                                    '/>' +
+                                    '</div>' +
+                                    '</td>'
+                            }
                         } else {
-                            newTask1 = '' +
-                                '<td class="tac">' +
-                                '<div class="tasks-status-form">' +
-                                '<input class="status btn btn-danger set-task-status-hold modal-window-link"' +
-                                ' data-toggle="modal"' +
-                                ' id="taskHold"' +
-                                ' type="button"' +
-                                ' value="Відсутні запчастини"' +
-                                ' data-task-id="' + data.task.id + '"' +
-                                ' data-task-comment="' + data.task.comment + '"' +
-                                ' data-target="#setTaskStatusHoldModal"' +
-                                '/>' +
-                                '<input class="status btn btn-success task-form-status task-status-button"' +
-                                ' id="taskDone"' +
-                                ' type="button"' +
-                                ' value="Завершити задачу"' +
-                                ' data-task-id="' + data.task.id + '"' +
-                                ' data-status="3"' +
-                                '/>' +
-                                '</div>' +
-                                '</td>'
+                            newTask1 = '<td class="tac"></td>';
                         }
                     }
                     if (getRole(window.location.pathname) === '/store-keeper') {
