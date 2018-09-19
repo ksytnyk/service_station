@@ -45,7 +45,7 @@ $(document).ready(function () {
     });
 
     $('.clean-search').on('click', () => {
-        var table = $('.dtable').DataTable();
+        var table = $('#DataTables_Table_0').DataTable();
         table
             .search( '' )
             .columns().search( '' )
