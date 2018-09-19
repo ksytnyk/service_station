@@ -46,10 +46,11 @@ $(document).ready(function () {
 
     $('.clean-search').on('click', () => {
         var table = $('#DataTables_Table_0').DataTable();
-        table
-            .search( '' )
-            .columns().search( '' )
-            .draw();
+        var taskTable = $('#tasks-table').DataTable();
+
+        table.search( '' ).columns().search( '' ).draw();
+        taskTable.search('').columns().search('').draw();
+
         $('input[type=search]').val('');
     });
 

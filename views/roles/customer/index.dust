@@ -6,7 +6,7 @@
 
 <div class="col-xs-12 customer">
 
-    <ul class="col-xs-9 nav nav-pills">
+    <ul class="col-xs-6 nav nav-pills">
         <li role="presentation" class="/customer/active">
             <a href="/customer/active">Активні</a>
         </li>
@@ -16,6 +16,11 @@
     </ul>
 
     <div class="panel panel-default">
+    <a href="#"
+       class="clean-search"
+       title="Очистити пошук">
+        <span class="glyphicon glyphicon-remove" aria-hidden="true" style="margin-top: 15px; font-size: 19px;"/>
+    </a>
         <table class="table dtable">
             <thead>
             <tr>
