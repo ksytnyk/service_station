@@ -5,7 +5,7 @@
 {>"header/index"/}
 <div class="col-xs-12 requests noprint">
 
-    <ul class="col-xs-9 nav nav-pills">
+    <ul class="col-xs-6 nav nav-pills">
         <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/all">
             <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/all">Усі</a>
         </li>
@@ -43,6 +43,11 @@
         {/lt}
     </ul>
     <div class="panel panel-default">
+    <a href="#"
+       class="clean-search"
+       title="Очистити пошук">
+        <span class="glyphicon glyphicon-remove" aria-hidden="true" style="margin-top: 15px; font-size: 19px;"/>
+    </a>
         <table class="table dtable-requests">
             <thead>
             <tr>

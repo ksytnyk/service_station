@@ -112,8 +112,12 @@
     min-width: 48%;
 }
 .requests .panel > div:first-child .row:first-child div {
-    width: 25%;
+    width: 50%;
     padding-right: 4px;
+}
+
+.requests .panel > div:first-child .row:first-child label {
+    width: 100%;
 }
 .requests .panel > div:first-child .row:first-child div .dataTables_filter {
     width: 100%;
