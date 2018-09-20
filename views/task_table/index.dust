@@ -48,6 +48,13 @@
             <p><strong>Час виконання: </strong>{estimationTime} год</p>
             <p><strong>Час початку: </strong>{startTime}</p>
             <p><strong>Кінцевий час: </strong>{endTime}</p>
+            <p><strong>Номер клієнта: </strong>{customer.userPhone}</p>
+            {#transportType}
+                        {@eq key=id value=request.transportTypeID}
+                            <p><strong>Тип авто: </strong>{transportTypeName}</p>
+                        {/eq}
+            {/transportType}
+            <p><strong>Номер замовлення: </strong>{request.id}</p>
         </td>
         <td class="vat bb {@eq key=status value=5}disable-task{/eq}">
             <p><strong>Опис задачі: </strong>{description}</p>

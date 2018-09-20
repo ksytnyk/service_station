@@ -3,6 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const Task = require('../../models/Task');
+const TransportType = require('../../models/TransportType');
 const Request = require('../../models/Request');
 const User = require('../../models/User');
 const formatDate = require('../../helpers/formatDate');
@@ -23,10 +24,19 @@ router.get('/', (req, res) => {
             User
                 .getAllUsers()
                 .then(users => {
-                    res.render('roles/executor', {
-                        typeUser: req.session.passport.user.userTypeID,
-                        tasks: result,
-                        assignedExecutorUsers: users
+                  //  console.log(result[0].dataValues);
+                    User.getUserById(result[0].dataValues.request.dataValues.customerID).then((customer) => {
+                        TransportType.getAllTransportType().then((transportType) => {
+                            console.log(result.request);
+                            res.render('roles/executor', {
+                                typeUser: req.session.passport.user.userTypeID,
+                                tasks: result,
+                                assignedExecutorUsers: users,
+                                customer: customer,
+                                transportType: transportType
+                            });
+                        });
+
                     });
                 })
                 .catch(errors => {
