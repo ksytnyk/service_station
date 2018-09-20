@@ -45,13 +45,13 @@ $(document).ready(function () {
     });
 
     $('.clean-search').on('click', () => {
-        var table = $('#DataTables_Table_0').DataTable();
-        var taskTable = $('#tasks-table').DataTable();
-
-        table.search( '' ).columns().search( '' ).draw();
-        taskTable.search('').columns().search('').draw();
-
-        $('input[type=search]').val('');
+            var table = $('#DataTables_Table_0').DataTable();
+            let executorTable = $('.executor').find('#tasks-table').DataTable();
+            let storeKeepre = $('.store-keeper').find('#tasks-table').DataTable();
+                table.search( '' ).columns().search( '' ).draw();
+                executorTable.search('').columns().search().draw();
+                storeKeepre.search('').columns().search().draw();
+                $('input[type=serarch]').val('');
     });
 
     setTimeout(function () {
