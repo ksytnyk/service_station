@@ -25,22 +25,32 @@
         <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/give-out">
             <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/give-out">Видані</a>
         </li>
-        {/lt}
         <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/done">
             <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/done">Виконані</a>
         </li>
         <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/payed">
             <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/payed">Розраховані</a>
         </li>
+        {/lt}
         {@lt key=typeUser value=3}
-        <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/trash" title="Видалені замовлення">
-            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/trash"><span class="glyphicon glyphicon-trash" style="margin: 3px 0;"></span></a>
-        </li>
-        {:else}
         <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/not-payed">
             <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/not-payed">Нерозраховані</a>
         </li>
+        <li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/trash" title="Видалені замовлення">
+            <a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/trash"><span class="glyphicon glyphicon-trash" style="margin: 3px 0;"></span></a>
+        </li>
         {/lt}
+        {@eq key=typeUser value=6}
+                <li role="presentation" class="/{@eq key=typeUser value=6}book-keeper{/eq}/requests/done-not-payed">
+                     <a href="/{@eq key=typeUser value=6}book-keeper{/eq}/requests/done-not-payed">Виконані та нерозраховані</a>
+                 </li>
+                <li role="presentation" class="/{@eq key=typeUser value=6}book-keeper{/eq}/requests/done-and-payed">
+                    <a href="/{@eq key=typeUser value=6}book-keeper{/eq}/requests/done-and-payed">Виконані і розраховані</a>
+                </li>
+                <li role="presentation" class="/{@eq key=typeUser value=6}book-keeper{/eq}/requests/not-done">
+                    <a href="/{@eq key=typeUser value=6}book-keeper{/eq}/requests/not-done">Не виконані</a>
+                </li>
+        {/eq}
     </ul>
     <div class="panel panel-default">
     <a href="#"

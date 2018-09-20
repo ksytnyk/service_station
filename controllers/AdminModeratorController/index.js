@@ -139,6 +139,25 @@ router.get('/requests/:status', (req, res) => {
             hadDeleted: true
         }
     }
+    else if (req.params.status === 'done-not-payed'){
+        findBy = {
+            status: status.DONE,
+            payed: false
+        }
+    }
+    else if (req.params.status === 'done-and-payed'){
+        findBy = {
+            status: status.DONE,
+            payed: true
+        }
+    }
+    else if (req.params.status === 'not-done') {
+        findBy = {
+            status: {
+                $ne: status.DONE
+            }
+        }
+    }
 
     Request
         .getAllRequests(findBy)
