@@ -44,11 +44,11 @@ module.exports = {
             req.checkBody('userName', '"Ім\'я" - обов\'язкове поле.').notEmpty();
             req.checkBody('userSurname', '"Прізвище" - обов\'язкове поле.').notEmpty();
             req.checkBody('userCompanyName', '"Компанія" - обов\'язкове поле.').notEmpty();
-            req.checkBody('userAddress', '"Адреса" - обов\'язкове поле.').notEmpty();
+            // req.checkBody('userAddress', '"Адреса" - обов\'язкове поле.').notEmpty();
             req.checkBody('userPhone', '"Контактний номер" - обов\'язкове поле.').isLength({ min: 13 });
             req.checkBody('userLogin', '"Логін" - обов\'язкове поле.').notEmpty();
-            req.checkBody('userEmail', '"Email" - обов\'язкове поле.').notEmpty();
-            req.checkBody('userEmail', '"Email" - помилковий формат.').isEmail();
+            // req.checkBody('userEmail', '"Email" - обов\'язкове поле.').notEmpty();
+            // req.checkBody('userEmail', '"Email" - помилковий формат.').isEmail();
             req.checkBody('userPassword', '"Пароль" - обов\'язкове поле.').notEmpty();
 
             let errors = req.validationErrors();

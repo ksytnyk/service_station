@@ -140,4 +140,12 @@ $(document).ready(function () {
         }
     }
 
+    $('#createUserFormModal input.bfh-phone').keypress(function(){
+        let phone = $('#createUserFormModal input.bfh-phone').val();
+        let password = $('input[name=userLogin]');
+        let login = $('input[name=userPassword]');
+        password.val(phone);
+        login.val(phone);
+    })
+
 });
