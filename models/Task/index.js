@@ -218,7 +218,8 @@ Task.getTaskById = function (id) {
             });
     });
 };
-Task.getTaskByExecutorId = function (id) {
+Task.getTaskByExecutorId = function (findBy) {
+    console.log(findBy.toString());
     return new Promise((resolve, reject) => {
         Task
             .findAll({
@@ -257,28 +258,10 @@ Task.getTaskByExecutorId = function (id) {
                         ]
                     }
                 ],
-                where: {
-                    planedExecutorID: id,
-                    $or: [
-                        {
-                            status: status.PENDING
-                        },
-                        {
-                            status: status.PROCESSING
-                        },
-                        {
-                            status: status.HOLD
-                        },
-                        {
-                            status: status.DONE
-                        },
-                        {
-                            status: status.CANCELED
-                        },
-                    ]
-                }
+                where: findBy
             })
             .then(result => {
+                console.log(result);
                 resolve(result)
             })
             .catch(err => {

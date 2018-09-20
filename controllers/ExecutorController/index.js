@@ -12,9 +12,36 @@ const validation = require('../../middleware/validation');
 const status = require('../../constants/status');
 const Models = require('../../models/TaskDetail/relations');
 
-router.get('/', (req, res) => {
+router.get('/tasks/:status', (req, res) => {
+    let findBy;
+    if (req.params.status === 'all') {
+        findBy =  {
+            status:{
+                $between: [1, 5]
+            },
+            planedExecutorID: req.session.passport.user.id
+        }
+    }
+    else if (req.params.status === 'hold') {
+        findBy = {
+            status:status.HOLD,
+            planedExecutorID: req.session.passport.user.id,
+        }
+    }
+    else if (req.params.status === 'processing'){
+        findBy = {
+            status: status.PROCESSING,
+            planedExecutorID: req.session.passport.user.id,
+        }
+    }
+    else if (req.params.status === 'done'){
+        findBy ={
+            status: status.DONE,
+            planedExecutorID: req.session.passport.user.id,
+        }
+    }
     Task
-        .getTaskByExecutorId(req.session.passport.user.id)
+        .getTaskByExecutorId(findBy)
         .then(result => {
             for (var i = 0; i < result.length; i++) {
                 result[i].dataValues.startTime = formatDate(result[i].dataValues.startTime);
@@ -24,10 +51,8 @@ router.get('/', (req, res) => {
             User
                 .getAllUsers()
                 .then(users => {
-                  //  console.log(result[0].dataValues);
                     User.getUserById(result[0].dataValues.request.dataValues.customerID).then((customer) => {
                         TransportType.getAllTransportType().then((transportType) => {
-                            console.log(result.request);
                             res.render('roles/executor', {
                                 typeUser: req.session.passport.user.userTypeID,
                                 tasks: result,
@@ -35,10 +60,20 @@ router.get('/', (req, res) => {
                                 customer: customer,
                                 transportType: transportType
                             });
+                        }).catch(error => {
+                            console.warn(error);
+                            res.render('roles/executor', {
+                                typeUser: req.session.passport.user.userTypeID
+                            });
                         });
 
                     });
-                })
+                }).catch(error => {
+                    console.warn(error);
+                    res.render('roles/executor', {
+                        typeUser: req.session.passport.user.userTypeID,
+                    });
+            })
                 .catch(errors => {
                     console.warn(errors);
                     res.status(400).send({errors: errors});
@@ -47,7 +82,9 @@ router.get('/', (req, res) => {
         })
         .catch(errors => {
             console.warn(errors);
-            res.status(400).send({errors: errors});
+           res.render('roles/executor', {
+               typeUser: req.session.passport.user.userTypeID
+           });
         });
 });
 

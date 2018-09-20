@@ -13,7 +13,7 @@ module.exports = function _checkIdentification(req, res, userTypeID) {
             break;
         }
         case roles.EXECUTOR: {
-            res.redirect('/executor');
+            res.redirect('/executor/tasks/all');
             break;
         }
         case roles.STOREKEEPER: {

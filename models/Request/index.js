@@ -97,6 +97,7 @@ Request.belongsTo(transportModel, {foreignKey: 'transportModelID'});
 Request.sync();
 
 Request.getAllRequests = function (findBy) {
+    console.log(findBy);
     return new Promise((resolve, reject) => {
         Request
             .findAll({

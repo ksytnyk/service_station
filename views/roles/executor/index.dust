@@ -5,6 +5,34 @@
 {>"header/index"/}
 
 <div class="col-xs-12 executor">
+<ul class="col-xs-6 nav nav-pills">
+        <li role="presentation" class="/{@eq key=typeUser value=3}executor{/eq}/tasks/all">
+            <a href="/{@eq key=typeUser value=3}executor{/eq}/tasks/all">Усі</a>
+        </li>
+        <li role="presentation" class="/{@eq key=typeUser value=3}executor{/eq}/tasks/hold">
+            <a href="/{@eq key=typeUser value=3}executor{/eq}/tasks/hold">Очікують запчастини</a>
+        </li>
+
+        {!<li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/pending">!}
+            {!<a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/pending">Не початі</a>!}
+        {!</li>!}
+        <li role="presentation" class="/{@eq key=typeUser value=3}executor{/eq}/tasks/processing">
+            <a href="/{@eq key=typeUser value=3}executor{/eq}/tasks/processing">Виконуються</a>
+        </li>
+
+        {!<li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/canceled">!}
+            {!<a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/canceled">Анульовані</a>!}
+        {!</li>!}
+        {!<li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/give-out">!}
+            {!<a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/give-out">Видані</a>!}
+        {!</li>!}
+        <li role="presentation" class="/{@eq key=typeUser value=3}executor{/eq}/tasks/done">
+            <a href="/{@eq key=typeUser value=3}executor{/eq}/tasks/done">Виконані</a>
+        </li>
+        {!<li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/payed">!}
+            {!<a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}{@eq key=typeUser value=6}book-keeper{/eq}/requests/payed">Розраховані</a>!}
+        {!</li>!}
+</ul>
     <a href="#"
        class="clean-search"
        title="Очистити пошук">
