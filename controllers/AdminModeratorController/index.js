@@ -45,7 +45,9 @@ router.post('/create-user', validation.createAndUpdateUser('create'), (req, res)
     User
         .createUser(req.body)
         .then(() => {
-            nodemailer('create-user', req.body);
+            if(req.body.userEmail)
+                nodemailer('create-user', req.body);
+
             req.flash('success_alert', true);
             req.flash('success_msg', 'Додавання користувача пройшло успішно.');
             res.redirect('back');
@@ -215,7 +217,9 @@ router.post('/create-request', validation.createAndUpdateRequest(), (req, res) =
             User
                 .getUserById(req.body.customerID)
                 .then(customer => {
-                    nodemailer('create-request', customer);
+                    if(customer.userEmail)
+                        nodemailer('create-request', customer);
+
                     res.status(200).send({
                         result: result,
                         customer: customer
@@ -415,8 +419,8 @@ router.put('/change-request-status/:id', (req, res) => {
                                     Request
                                         .getRequestById(req.params.id)
                                         .then((result) => {
-
-                                            nodemailer('done-request', result[0].user.dataValues);
+                                            if(result[0].user.dataValues.userEmail)
+                                                nodemailer('done-request', result[0].user.dataValues);
                                         })
                                         .catch(error => {
                                             console.warn(error);
@@ -474,7 +478,8 @@ router.put('/set-payed/:id', (req, res) => {
                         .getAllAdmins()
                         .then(admins => {
                             if (req.body.payed) {
-                                nodemailer('set-payed', admins, request[0].dataValues);
+                                if(admins.userEmail)
+                                    nodemailer('set-payed', admins, request[0].dataValues);
                             } else {
                                 if (req.body.giveOut) {
                                     User
@@ -483,8 +488,8 @@ router.put('/set-payed/:id', (req, res) => {
                                             bookkeepers.forEach(item => {
                                                 admins.push(item);
                                             });
-
-                                            nodemailer('give-out', admins, request[0].dataValues);
+                                            if(admins.userEmail)
+                                                nodemailer('give-out', admins, request[0].dataValues);
                                         })
                                         .catch(errors => {
                                             console.warn(errors);
@@ -707,7 +712,8 @@ router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
                                                                                             Request
                                                                                                 .changeStatus(req.body.requestID, {status:status.DONE})
                                                                                                 .then((isDone) => {
-                                                                                                    nodemailer('done-request', request[0].user.dataValues);
+                                                                                                    if(request[0].user.dataValues.userEmail)
+                                                                                                        nodemailer('done-request', request[0].user.dataValues);
 
                                                                                                     res.status(200).send({
                                                                                                         isDone: isDone,
