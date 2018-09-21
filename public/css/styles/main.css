@@ -274,6 +274,8 @@ a.clean-search span.glyphicon.glyphicon-remove{
 }
 table.dataTable {
     border: 1px solid #ccc;
+    margin-top:0 !important;
+    margin-bottom: 85px !important;
     border-radius: 3px;
 }
 .table {
