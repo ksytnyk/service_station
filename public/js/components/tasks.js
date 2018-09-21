@@ -139,7 +139,7 @@ $(document).ready(function () {
                     '<p><strong>Виконавець: </strong>' + executorNameSurname + '</p>' +
                     '<p><strong>Доручити задачу: </strong>' + assignedNameSurname + '</p>' +
                     '<p><strong>Вартість: </strong>' + data.result.cost + ' грн</p>' +
-                    '<p><strong>Час виконання: </strong>' + data.result.estimationTime + ' год</p>' +
+                    '<p><strong>Час виконання: </strong>' + data.result.estimationTime + ' хв.</p>' +
                     '<p><strong>Час початку: </strong>' + formatDate(data.result.startTime) + '</p>' +
                     '<p><strong>Кінцевий час: </strong>' + formatDate(data.result.endTime) + '</p>' +
                     '</td>' +
@@ -323,7 +323,7 @@ $(document).ready(function () {
                         '<p class="executor_name_surname"><strong>Виконавець: </strong>' + executorNameSurname + '</p> ' +
                         '<p class="assigned_name_surname"><strong>Доручити задачу: </strong>' + assignedNameSurname + '</p>' +
                         '<p><strong>Вартість: </strong>' + data.task.cost + ' грн</p>' +
-                        '<p><strong>Час виконання: </strong>' + data.task.estimationTime + ' год</p>' +
+                        '<p><strong>Час виконання: </strong>' + data.task.estimationTime + ' хв.</p>' +
                         '<p><strong>Час початку: </strong>' + formatDate(data.task.startTime) + '</p> ' +
                         '<p><strong>Кінцевий час: </strong>' + formatDate(data.task.endTime) + '</p> ' +
                         '</td>' +
@@ -714,7 +714,7 @@ $(document).ready(function () {
                     '<p class="executor_name_surname"><strong>Виконавець: </strong>' + executorNameSurname + '</p> ' +
                     '<p class="assigned_name_surname"><strong>Доручити задачу: </strong>' + assignedNameSurname + '</p>' +
                     '<p><strong>Вартість: </strong>' + data.task.cost + ' грн</p>' +
-                    '<p><strong>Час виконання: </strong>' + data.task.estimationTime + ' год</p>' +
+                    '<p><strong>Час виконання: </strong>' + data.task.estimationTime + ' хв.</p>' +
                     '<p><strong>Час початку: </strong>' + formatDate(data.task.startTime) + '</p> ' +
                     '<p><strong>Кінцевий час: </strong>' + formatDate(data.task.endTime) + '</p> ' +
                     '</td>' +

@@ -45,7 +45,7 @@
                 <p class="assign-user-name" assign-name="{assignedUser.dataValues.userSurname} {assignedUser.dataValues.userName}"><strong>Доручити задачу: </strong>{assignedUser.dataValues.userSurname} {assignedUser.dataValues.userName}</p>
             {/lt}
             <p><strong>Вартість: </strong>{cost} грн</p>
-            <p><strong>Час виконання: </strong>{estimationTime} год</p>
+            <p><strong>Час виконання: </strong>{estimationTime} хв</p>
             <p><strong>Час початку: </strong>{startTime}</p>
             <p><strong>Кінцевий час: </strong>{endTime}</p>
             <p><strong>Номер клієнта: </strong>{customer.userPhone}</p>

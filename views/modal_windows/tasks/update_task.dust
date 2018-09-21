@@ -99,7 +99,7 @@
                         <div class="input-group">
                             <input type="number" min="1" class="form-control create-form-task" name="estimationTime"
                                id="update-form-task-estimation-time">
-                            <span class="input-group-addon">год</span>
+                            <span class="input-group-addon">хв.</span>
                         </div>
                     </div>
                     <div class="form-group required col-xs-2">

@@ -40,7 +40,7 @@
                         <label>Час виконання</label>
                         <div class="input-group">
                             <input type="number" min="1" class="form-control" name="estimationTime" id="update-form-estimation-time">
-                            <span class="input-group-addon">год</span>
+                            <span class="input-group-addon">хв.</span>
                         </div>
                     </div>
                     <div class="form-group required col-xs-6">
