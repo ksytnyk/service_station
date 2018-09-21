@@ -285,6 +285,10 @@ table.dataTable {
 }
 #tasks-table th:after {
    content:none;
+
+}
+#tasks-table th.tac.width-id.sorting_asc {
+    padding-right:8px;
 }
 
 thead {
