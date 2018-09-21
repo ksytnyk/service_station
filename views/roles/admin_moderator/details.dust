@@ -24,6 +24,7 @@
             <tr>
                 <th class="tac" style="width: 15px;">ID</th>
                 <th class="tac">Назва Деталі</th>
+                <th class="tac">Код деталі</th>
                 <th class="tac" title="Тип транспорту" style="width: 75px;">Тип тр.</th>
                 <th class="tac" title="Марка транспорту">Марка тр.</th>
                 <th class="tac" title="Модель транспорту">Модель тр.</th>
@@ -36,6 +37,7 @@
             <tr id="idr-detail-{id}">
                 <th class="tac" scope="row">{id}</th>
                 <td class="tac">{detailName}</td>
+                <td class="tac">{detailCode}</td>
                 <td class="tac">{transportType.transportTypeName}</td>
                 <td class="tac">{transportMarkk.transportMarkkName}</td>
                 <td class="tac">{transportModel.transportModelName}</td>
@@ -47,6 +49,7 @@
                        data-target="#updateDetailFormModal"
                        data-id="{id}"
                        data-detail-name="{detailName}"
+                       data-detail-code="{detailCode}"
                        data-transport-markk-name="{transportMarkk.transportMarkkName}"
                        data-transport-model-name="{transportModel.transportModelName}"
                        data-transport-type-id="{transportType.id}"

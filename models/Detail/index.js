@@ -8,6 +8,10 @@ const describeDetailTable = {
         type: Sequelize.STRING,
         field: 'detail_name'
     },
+    detailCode: {
+        type: Sequelize.STRING,
+        field: 'detail_code'
+    },
     detailPrice: {
         type: Sequelize.FLOAT,
         field: 'detail_price'

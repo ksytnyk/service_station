@@ -1439,6 +1439,7 @@ router.get('/details', (req, res) => {
     Models.Detail
         .getAll()
         .then(details => {
+            console.log(details);
             res.render('roles/admin_moderator/details', {
                 typeUser: req.session.passport.user.userTypeID,
                 details: details

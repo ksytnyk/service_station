@@ -5,6 +5,7 @@ $(document).ready(function () {
     function updateDetail(value) {
         $(value).on('click', function () {
             $('#update-form-id').val($(this).data('id'));
+            $('#update-form-detail-code').val($(this).data('detail-code'));
             $('#update-form-detail-name').val($(this).data('detail-name'));
             if ($(this).data('transport-type-id')) {
                 $("#typeOfCar #" + $(this).data('transport-type-id')).attr('selected', true);
@@ -61,6 +62,7 @@ $(document).ready(function () {
                 newDetail = '' +
                     '<th class="tac" scope="row">' + data.detail.id + '</th>' +
                     '<td class="tac">' + data.detail.detailName + '</td>' +
+                    '<td class="tac">' + data.detail.detailCode + '</td>' +
                     '<td class="tac">' + data.detail.transportType.transportTypeName + '</td>' +
                     '<td class="tac">' + data.detail.transportMarkk.transportMarkkName + '</td>' +
                     '<td class="tac">' + data.detail.transportModel.transportModelName + '</td>' +
@@ -70,6 +72,7 @@ $(document).ready(function () {
                     ' data-toggle="modal" data-target="#updateDetailFormModal" title="Редагувати деталь"' +
                     ' data-id="' + data.detail.id + '"' +
                     ' data-detail-name="' + data.detail.detailName + '"' +
+                    ' data-detail-name="' + data.detail.detailCode + '"' +
                     ' data-transport-markk-name="' + data.detail.transportMarkk.transportMarkkName + '"' +
                     ' data-transport-model-name="' + data.detail.transportModel.transportModelName + '"' +
                     ' data-transport-type-id="' + data.detail.transportType.id + '"' +
@@ -205,7 +208,8 @@ $(document).ready(function () {
         var detailID = $('#update-detail-type-select').val(),
             detailType = $('#update-detail-type').val(),
             detailQuantity = $('#update-detail-type-input').val(),
-            detailName = $('#detailTypeID' + detailID).attr('detailName');
+            detailName = $('#detailTypeID' + detailID).attr('detailName'),
+            detailCode = $('#update-detail-code').val();
 
 
         if ( detailID !== null && detailQuantity !== '' && detailType !== null) {
@@ -215,6 +219,7 @@ $(document).ready(function () {
                 detailQuantity: +detailQuantity,
                 detailType: detailType,
                 detailName: detailName,
+                detailCode: detailCode,
                 customDetailID: customDetailID
             });
 

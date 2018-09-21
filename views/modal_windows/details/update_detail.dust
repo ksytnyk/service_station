@@ -14,6 +14,10 @@
                         <label>Назва деталі</label>
                         <input type="text" class="form-control" id="update-form-detail-name" name="detailName">
                     </div>
+                    <div class="form-group required col-xs-6">
+                        <label>Код деталі</label>
+                        <input type="text" class="form-control" id="update-form-detail-code" name="detailCode">
+                    </div>
                     <div class="form-group col-xs-6">
                         <label>Тип транспорту</label>
                         <select class="form-control" name="typeOfCar" id="typeOfCar">
