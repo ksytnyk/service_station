@@ -283,6 +283,10 @@ table.dataTable {
 .table th {
     word-wrap: break-word;
 }
+#tasks-table th:after {
+   content:none;
+}
+
 thead {
     background-color: #ddd;
     border-bottom: none;

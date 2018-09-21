@@ -75,12 +75,21 @@ $(document).ready(function () {
         "bInfo" : false
     });
 
-    $('#DataTables_Table_0').find('#tasks-table').DataTable({
+    $('tr[class^="idr-request-"]').find('#tasks-table').DataTable({
         "orderFixed": [ 0, 'asc' ],
         "bPaginate": false,
         "bInfo": false,
         "searching": false,
     });
+
+
+    $('#idr-request-11').find('#tasks-table').DataTable({
+        "orderFixed": [ 0, 'asc' ],
+        "bPaginate": false,
+        "bInfo": false,
+        "searching": false,
+    });
+
 
 
     $('.dtable-markk').DataTable({

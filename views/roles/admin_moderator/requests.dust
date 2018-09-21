@@ -68,7 +68,7 @@
             </thead>
             <tbody>
             {#requests}
-            <tr id="idr-request-{id}">
+            <tr id="idr-request-{id}" class="idr-request-{id}">
                 <th class="tac" style="position: relative;">
                     <span class="requests_id">{id}</span>
                     {@ne key=typeUser value=6}
