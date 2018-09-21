@@ -1,6 +1,6 @@
 {+print_check}
 <div class="modal fade printCheckFormModal section-to-print" id="printCheckFormModal" role="dialog" aria-labelledby="formModalLabel">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog print-popup" role="document">
         <div class="modal-content">
             <div class="print_check">
                 <div class="modal-header">
@@ -9,23 +9,55 @@
                     <h4 class="modal-title text-center">Квитанція</h4>
                 </div>
                 <div class="modal-body clearfix">
+                    {!Request!}
                     <div class="form-group col-xs-12">
                         <label>№</label>
                         <span id="number-or-request"></span>
                     </div>
-                    <div class="form-group col-xs-12">
-                        <label>Дата прийняття:</label>
+                    <div class="form-group pull-left col-xs-12">
+                        <label>Назва замовлення:</label>
+                        <span id="request-name"></span>
+                    </div>
+                    <div class="form-group pull-left col-xs-5">
+                        <label>Прийнято:</label>
                         <span id="start-date"></span>
                     </div>
-                    <div class="form-group col-xs-12">
+                    <div class="form-group col-xs-7">
                         <label>Орієнтована дата завершення:</label>
                         <span id="end-date"></span>
                     </div>
-                    <div class="form-group col-xs-12">
+                    {!Client!}
+                    <div class="form-group pull-left col-xs-5">
+                        <label>Клієнт:</label>
+                        <span id="client-name"></span>
+                    </div>
+                    <div class="form-group col-xs-7">
                         <label>Телефон клієнта (для довідок):</label>
                         <span id="customer-phone"></span>
                     </div>
+                    {!Transport!}
+                    <div class="form-group col-xs-7">
+                        <label>Тип транспорту:</label>
+                        <span id="car-type"></span>
+                    </div>
+                    <div class="form-group col-xs-5">
+                        <label>Марка:</label>
+                        <span id="car-mark"></span>
+                    </div>
+                    <div class="form-group pull-left col-xs-5">
+                        <label>Модель:</label>
+                        <span id="car-model"></span>
+                    </div>
                     <div class="form-group col-xs-12">
+                        <label>Коментар:</label>
+                        <span id="request-comment"></span>
+                    </div>
+                    <div class="form-group col-xs-12">
+                        <label>Опис замовлення:</label>
+                        <span id="request-description"></span>
+                    </div>
+
+                    <div class="form-group">
                         <table class="table check-table">
                             <thead>
                                 <tr>
@@ -36,7 +68,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-
                                 <tr id="idt-{id}">
                                     <td></td>
                                     <td class="tac"></td>

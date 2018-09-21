@@ -51,11 +51,19 @@ function printOnClick(value) {
             url: getRole(window.location.pathname) + '/get-request-check/' + requestID,
             type: 'get',
             success: function (data) {
+                console.log(data);
 
                 $('#number-or-request').text(data.request[0].id);
+                $('#request-name').text(data.request[0].name);
+                $('#request-description').text(data.request[0].description);
+                $('#request-comment').text(data.request[0].comment);
+                $('#client-name').text(data.request[0].user.userName + " " + data.request[0].user.userSurname);
                 $('#customer-phone').text($('.print_check_button').attr('customer-phone'));
                 $('#start-date').text(formatDate(data.request[0].startTime));
                 $('#end-date').text(formatDate(data.request[0].estimatedTime));
+                $('#car-type').text(data.request[0].transport_type.transportTypeName);
+                $('#car-model').text(data.request[0].transport_model.transportModelName);
+                $('#car-mark').text(data.request[0].transport_markk.transportMarkkName);
 
                 $('.check-table tbody').empty();
 
@@ -86,9 +94,15 @@ function printOnClick(value) {
                     detailsService = detailsService.slice(0, (detailsService.length - 2));
 
                     summaryDetailsCost += detailsCost;
-
+                        console.log(task);
                     $('.check-table tbody').append('<tr>'+
-                        '<td>' + task.name + '</td>'+
+                        '<td>' +
+                        '<p><label>Назва:</label>' + task.name + '</p>' +
+                        '<p><label>Виконавець:</label>' + task.assignedUser.userName + ' ' + task.assignedUser.userSurname + '</p>'+
+                        '<p><label>Час виконання:</label>' + task.estimationTime + '</p>' +
+                        '<p><label>Початок:</label>' + task.startTime + '</p>' +
+                        '<p><label>Кінець:</label>' + task.endTime + '</p>' +
+                        '</td>'+
                         '<td class="tac">' + task.cost + '</td>'+
                         '<td><p class="detail-service"><strong>Сервіс: </strong>' + detailsService + '</p><p><strong>Клієнт: </strong>' + detailsClient + '</p></td>'+
                         '<td class="tac vat">' + detailsCost + '</td>'+

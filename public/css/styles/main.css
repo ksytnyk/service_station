@@ -452,7 +452,35 @@ thead {
     margin-right: 2%;
     width: 32%;
 }
+.check-table p{
+    margin-top:0;
+    margin-bottom:0;
+}
+.check-table p:last-child{
+    margin-top:0 !important;
+    margin-bottom:0 !important;
+}
+.check-table th{
+    padding-top:5px !important;
+    padding-bottom: 5px !important;
+}
+.check-table td{
+    padding:5px 8px !important;
+}
 
+.print_check .modal-body{
+    padding: 5px 15px !important;
+}
+.print_check label{
+    margin-bottom:0;
+}
+
+.print-popup{
+    width:702px;
+}
+.print-popup .modal-header{
+    padding:5px 15px;
+}
 /* ALERTS */
 .alerts_block {
     position: fixed;
@@ -532,7 +560,7 @@ thead {
 .print_check .modal-body div {
     position: relative;
     float: right;
-    margin-bottom: 5px;
+    margin-bottom: 0;
 }
 .print_check label {
     margin-right: 10px;
