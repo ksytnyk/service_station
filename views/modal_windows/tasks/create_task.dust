@@ -98,6 +98,7 @@
                                 <thead>
                                     <tr>
                                         <th>Назва деталі / Код деталі</th>
+                                        <th>Ціна грн./одн.</th>
                                         <th style="width: 100px;">Тип деталі</th>
                                         <th style="width: 80px;">Кількість</th>
                                         <th style="width: 40px;"></th>

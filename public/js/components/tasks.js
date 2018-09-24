@@ -924,7 +924,7 @@ function updateTaskOnClick(value) {
                     data.details.forEach(function (item) {
 
                         // Emit when modal render
-                        var detailTemplate0 = '<tr id="idr-' + item.id + '"><td>' + item.detail.detailName + " / " + item.detail.detailCode + '</td><td>';
+                        var detailTemplate0 = '<tr id="idr-' + item.id + '"><td>' + item.detail.detailName + " / " + item.detail.detailCode + '</td><td>'+ item.detail.detailPrice +'</td><td>';
 
                         var detailTemplate1 = 'Клієнт';
 
