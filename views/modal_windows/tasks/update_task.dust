@@ -120,7 +120,7 @@
                             <table>
                                 <thead>
                                 <tr>
-                                    <th>Назва деталі</th>
+                                    <th>Назва деталі / Код деталі</th>
                                     <th style="width: 80px;">Тип</th>
                                     <th style="width: 60px;">К-сть</th>
                                     <th style="width: 40px;"></th>

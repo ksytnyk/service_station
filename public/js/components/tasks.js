@@ -38,9 +38,9 @@ $(document).ready(function () {
 
                         $('#detail-type-select').append($('<option>', {
                             value: item.id,
-                            text: item.detailName + ' (' + title + ')',
+                            text: item.detailName + " / " + item.detailCode  + ' (' + title + ')',
                             id: 'detailTypeID' + item.id,
-                            detailName: item.detailName,
+                            detailName: item.detailName + " / " + item.detailCode,
                             title: title
                         }));
                     });
@@ -861,9 +861,9 @@ function updateTaskOnClick(value) {
 
                             $('#update-detail-type-select').append($('<option>', {
                                 value: item.id,
-                                text: item.detailName + ' (' + title + ')',
+                                text: item.detailName + " / " + item.detailCode + ' (' + title + ')',
                                 id: 'detailTypeID' + item.id,
-                                detailName: item.detailName,
+                                detailName: item.detailName + " / " + item.detailCode,
                                 title: title
                             }));
                         });
@@ -924,7 +924,7 @@ function updateTaskOnClick(value) {
                     data.details.forEach(function (item) {
 
                         // Emit when modal render
-                        var detailTemplate0 = '<tr id="idr-' + item.id + '"><td>' + item.detail.detailName + '</td><td>';
+                        var detailTemplate0 = '<tr id="idr-' + item.id + '"><td>' + item.detail.detailName + " / " + item.detail.detailCode + '</td><td>';
 
                         var detailTemplate1 = 'Клієнт';
 

@@ -224,7 +224,7 @@ $(document).ready(function () {
             });
 
             // Emit on plus button clicked (update task modal)
-            var detailTemplate0 = '<tr id="idr-' + customDetailID + '"><td>' + detailName + '</td><td>';
+            var detailTemplate0 = '<tr id="idr-' + customDetailID + '"><td>' + detailName +  '</td><td>';
 
             var detailTemplate1 = 'Клієнт';
 
