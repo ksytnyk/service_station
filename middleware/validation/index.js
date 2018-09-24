@@ -230,6 +230,7 @@ module.exports = {
 
             req.checkBody('detailName', '"Назва деталі" - обов\'язкове поле.').notEmpty();
             req.checkBody('detailPrice', '"Вартість" - обов\'язкове поле.').notEmpty();
+            req.checkBody('detailCode','"Код деталі" - обов\'язкове поле.').notEmpty();
             req.checkBody('detailPrice', 'Поле "Вартість" може містити лише цифри.').isFloat();
 
             let errors = req.validationErrors();
