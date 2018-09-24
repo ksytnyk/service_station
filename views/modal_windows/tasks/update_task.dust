@@ -137,23 +137,23 @@
                                 <select class="form-control add_select2" id="update-detail-type-select" name="detailID">
                                     {#detailTypes}
                                         {@eq key=title value="0"}
-                                        <option id="detailTypeID{id}" value="{id}" detailName="{detailName}" title="Усі категорії">
-                                            {detailName} (Усі категорії)
+                                        <option id="detailTypeID{id}" value="{id}" detailName="{detailName} / {detailCode}" title="Усі категорії">
+                                            {detailName} / {detailCode} (Усі категорії)
                                         </option>
                                         {/eq}
                                         {@eq key=title value="1"}
-                                        <option id="detailTypeID{id}" value="{id}" detailName="{detailName}" title="Категорія: {transportTypeID}">
-                                            {detailName} (Категорія: {transportType.transportTypeName})
+                                        <option id="detailTypeID{id}" value="{id}" detailName="{detailName} / {detailCode}" title="Категорія: {transportTypeID}">
+                                            {detailName} / {detailCode} (Категорія: {transportType.transportTypeName})
                                         </option>
                                         {/eq}
                                         {@eq key=title value="2"}
-                                        <option id="detailTypeID{id}" value="{id}" detailName="{detailName}" title="Категорія: {transportTypeID}, {transportMarkkID}">
-                                            {detailName} (Категорія: {transportType.transportTypeName}, {transportMarkk.transportMarkkName})
+                                        <option id="detailTypeID{id}" value="{id}" detailName="{detailName} / {detailCode}" title="Категорія: {transportTypeID}, {transportMarkkID}">
+                                            {detailName} / {detailCode} (Категорія: {transportType.transportTypeName}, {transportMarkk.transportMarkkName})
                                         </option>
                                         {/eq}
                                         {@eq key=title value="3"}
-                                        <option id="detailTypeID{id}" value="{id}" detailName="{detailName}" title="Категорія: {transportTypeID}, {transportModelID}, {transportModelID}">
-                                            {detailName} (Категорія: {transportType.transportTypeName}, {transportMarkk.transportMarkkName}, {transportModel.transportModelName})
+                                        <option id="detailTypeID{id}" value="{id}" detailName="{detailName} / {detailCode}" title="Категорія: {transportTypeID}, {transportModelID}, {transportModelID}">
+                                            {detailName} / {detailCode} (Категорія: {transportType.transportTypeName}, {transportMarkk.transportMarkkName}, {transportModel.transportModelName})
                                         </option>
                                         {/eq}
                                     {/detailTypes}
