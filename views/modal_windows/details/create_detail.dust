@@ -34,7 +34,7 @@
                     <div class="form-group required col-xs-6">
                         <label>Вартість</label>
                         <div class="input-group">
-                            <input type="number" min="1" class="form-control" name="detailPrice">
+                            <input type="number" min="1" class="form-control" id="detailPrice" name="detailPrice">
                             <span class="input-group-addon">грн</span>
                         </div>
                     </div>

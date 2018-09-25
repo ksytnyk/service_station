@@ -41,6 +41,7 @@ $(document).ready(function () {
                             text: item.detailName + " / " + item.detailCode  + ' (' + title + ')',
                             id: 'detailTypeID' + item.id,
                             detailName: item.detailName + " / " + item.detailCode,
+                            detailPrice: item.detailPrice,
                             title: title
                         }));
                     });
@@ -858,12 +859,13 @@ function updateTaskOnClick(value) {
                         $('#update-detail-type-select').find('option').remove();
                         data.detailTypes.forEach(item => {
                             var title = setDetailTypesTitle(item);
-
+                           // console.log(item.detailPrice);
                             $('#update-detail-type-select').append($('<option>', {
                                 value: item.id,
                                 text: item.detailName + " / " + item.detailCode + ' (' + title + ')',
                                 id: 'detailTypeID' + item.id,
                                 detailName: item.detailName + " / " + item.detailCode,
+                                detailPrice: item.detailPrice,
                                 title: title
                             }));
                         });
@@ -925,7 +927,7 @@ function updateTaskOnClick(value) {
 
                         // Emit when modal render
                         var detailTemplate0 = '<tr id="idr-' + item.id + '"><td>' + item.detail.detailName + " / " + item.detail.detailCode + '</td><td>'+ item.detail.detailPrice +'</td><td>';
-
+                     //   console.log("detail price " + item.detail.detailPrice);
                         var detailTemplate1 = 'Клієнт';
 
                         var detailTemplate2 = '</td><td>' + item.detailQuantity + '</td><td>';

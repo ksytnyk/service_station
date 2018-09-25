@@ -137,7 +137,8 @@ $(document).ready(function () {
         var detailID = $('#detail-type-select').val(),
             detailQuantity = $('#detail-type-input').val(),
             detailType = $('#detail-type').val(),
-            detailName = $('#detailTypeID' + detailID).attr('detailName');
+            detailName = $('#detailTypeID' + detailID).attr('detailName'),
+           detailPrice = $('#detailTypeID' + detailID).attr('detailPrice');
 
         if( detailID !== null && detailQuantity !== '' && detailType !== null) {
 
@@ -150,7 +151,7 @@ $(document).ready(function () {
             });
 
             // Emit on plus button clicked (create task modal)
-            var detailTemplate0 = '<tr id="idr-' + customDetailID + '"><td>' + detailName + '</td><td>cost</td><td>';
+            var detailTemplate0 = '<tr id="idr-' + customDetailID + '"><td>' + detailName + '</td><td>'+detailPrice + '</td><td>';
 
             var detailTemplate1 = 'Клієнт';
 
@@ -209,7 +210,8 @@ $(document).ready(function () {
             detailType = $('#update-detail-type').val(),
             detailQuantity = $('#update-detail-type-input').val(),
             detailName = $('#detailTypeID' + detailID).attr('detailName'),
-            detailCode = $('#update-detail-code').val();
+            detailCode = $('#update-detail-code').val(),
+            detailPrice = $('#detailTypeID' + detailID).attr('detailPrice');
 
 
         if ( detailID !== null && detailQuantity !== '' && detailType !== null) {
@@ -220,12 +222,12 @@ $(document).ready(function () {
                 detailType: detailType,
                 detailName: detailName,
                 detailCode: detailCode,
-                customDetailID: customDetailID
+                customDetailID: customDetailID,
+                detailPrice: detailPrice
             });
 
             // Emit on plus button clicked (update task modal)
-            var detailTemplate0 = '<tr id="idr-' + customDetailID + '"><td>' + detailName +  '</td><td>cost </td><td>';
-
+            var detailTemplate0 = '<tr id="idr-' + customDetailID + '"><td>' + detailName +  '</td><td>'+ detailPrice +'</td><td>';
             var detailTemplate1 = 'Клієнт';
 
             var detailTemplate2 = '</td><td>' + detailQuantity + '</td><td>';
@@ -286,8 +288,8 @@ function changeDetailTypeSelect (value) {
             if (detailArray[i].customDetailID === +element) {
                 detailArray[i].detailType = $(this).val();
 
-                console.log( 1, 'detailArray', detailArray);
-                console.log( 1, 'changeDetailArray', changeDetailArray);
+               // console.log( 1, 'detailArray', detailArray);
+               // console.log( 1, 'changeDetailArray', changeDetailArray);
                 return;
             }
         }
