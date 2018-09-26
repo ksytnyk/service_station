@@ -50,8 +50,8 @@
     <link rel="stylesheet" href="/css/media/main.css">
 
 </head>
-<body>
-<div class="container">
+<body class="noprint">
+<div class="container noprint">
     <div class="row">
         {>"errors/index"/}
         {+body /}

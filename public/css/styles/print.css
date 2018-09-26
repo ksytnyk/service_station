@@ -1,4 +1,9 @@
 @media print {
+    body.noprint {
+        margin-top: 0;
+        display: block;
+    }
+
     .noprint {
         display: none;
     }

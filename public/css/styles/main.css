@@ -548,7 +548,7 @@ thead {
     border-right: 1px solid #bbb;
 }
 .print_check .table tbody tr:nth-child(2n) {
-    background-color: #fff;
+    background-color: #ECECEC;
 }
 .print_check .table > thead > tr > th {
     background-color: #eee;

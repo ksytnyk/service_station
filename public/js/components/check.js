@@ -2,15 +2,23 @@ $(document).ready(function () {
 
     $('#agree-print-check').on('click', function () {
 
-        if($('#checkbox-print').is(':checked')) {
-            window.scrollTo(0,0);
+
+        if ($('#checkbox-print').is(':checked')) {
+            window.onafterprint = () => {
+                let el = document.querySelector("#print_check");
+                window.document.querySelector("#print-content").appendChild(el);
+            };
+            var doc = document.getElementById('print_check');
+            window.document.body.appendChild(doc);
+            window.scrollTo(0, 0);
             window.print();
         }
     });
 
+
     printOnClick('.print_check_button');
 
-    //handler for start request
+    // handler for start request
     $('#start_and_print_request').on('click', function () {
         var requestID = $(this).attr('request-id');
 
@@ -33,7 +41,7 @@ function printOnClick(value) {
 
         var requestID;
 
-        if(window.location.pathname.includes('update-request')) {
+        if (window.location.pathname.includes('update-request')) {
             requestID = window.location.pathname.split('/')[4];
         }
         else if (window.location.pathname.includes('create-request')) {
@@ -79,7 +87,6 @@ function printOnClick(value) {
                     summaryTasksCost += task.cost;
 
                     task.taskDetails.forEach(taskDetail => {
-
                         if (taskDetail.detailType === 2) {
                             detailsClient += taskDetail.detail.detailName + '-' + taskDetail.detailQuantity + ', ';
 
@@ -90,27 +97,28 @@ function printOnClick(value) {
                         }
                     });
 
-                    detailsClient = detailsClient.slice(0, (detailsClient.length -2));
+                    detailsClient = detailsClient.slice(0, (detailsClient.length - 2));
                     detailsService = detailsService.slice(0, (detailsService.length - 2));
 
                     summaryDetailsCost += detailsCost;
-                        console.log(task);
-                    $('.check-table tbody').append('<tr>'+
+                    console.log(task);
+
+                    $('.check-table tbody').append('<tr>' +
                         '<td>' +
                         '<p><label>Назва:</label>' + task.name + '</p>' +
-                        '<p><label>Виконавець:</label>' + task.assignedUser.userName + ' ' + task.assignedUser.userSurname + '</p>'+
+                        '<p><label>Виконавець:</label>' + task.assignedUser.userName + ' ' + task.assignedUser.userSurname + '</p>' +
                         '<p><label>Час виконання:</label>' + task.estimationTime + '</p>' +
-                        '<p><label>Початок:</label>' + task.startTime + '</p>' +
-                        '<p><label>Кінець:</label>' + task.endTime + '</p>' +
-                        '</td>'+
-                        '<td class="tac">' + task.cost + '</td>'+
-                        '<td><p class="detail-service"><strong>Сервіс: </strong>' + detailsService + '</p><p><strong>Клієнт: </strong>' + detailsClient + '</p></td>'+
-                        '<td class="tac vat">' + detailsCost + '</td>'+
+                        '<p><label>Початок:</label>' + formatDate(task.startTime) + '</p>' +
+                        '<p><label>Кінець:</label>' + formatDate(task.endTime) + '</p>' +
+                        '</td>' +
+                        '<td class="tac">' + task.cost + '</td>' +
+                        '<td><p class="detail-service"><strong>Сервіс: </strong>' + detailsService + '</p><p><strong>Клієнт: </strong>' + detailsClient + '</p></td>' +
+                        '<td class="tac vat">' + detailsCost + '</td>' +
                         '</tr>');
 
                 });
 
-                $('.check-table tbody').append('<tr>'+
+                $('.check-table tbody').append('<tr>' +
                     '<th class="tar">Разом:</th>' +
                     '<td class="tac" id="all-sum">' + summaryTasksCost + '</td>' +
                     '<th class="tar">Разом:</th>' +
@@ -118,4 +126,6 @@ function printOnClick(value) {
             }
         })
     });
+
+
 }
