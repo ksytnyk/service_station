@@ -681,6 +681,7 @@ $(document).ready(function () {
     $('#change-status-cancel-task').on('click', function () {
         $('#change-task-status-id').val($('#update-form-task-id').val());
         $('#change-task-status-comment').val($('#update-form-task-comment').val());
+        $('#setRequestStatusCanceledModal').modal('show');
     });
 
     $('.task-status-canceled-button').on('click', function () {
