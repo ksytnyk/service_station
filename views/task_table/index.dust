@@ -97,7 +97,15 @@
                     />
                     {/eq}
                     {@eq key=status value=2}
-                    <input class="status btn btn-danger set-task-status-hold modal-window-link"
+                <button class="status buttons-update-task-modal btn btn-danger pull-right"
+                        id="change-status-cancel-task"
+                        data-dismiss="modal"
+                        data-toggle="modal"
+                        data-target="#setTaskStatusCanceledModal"
+                        style="margin-right:0">
+                    Анулювати задачу
+                </button>
+                <input class="status btn btn-danger set-task-status-hold modal-window-link"
                            data-toggle="modal"
                            id="taskHold"
                            type="button"
@@ -236,3 +244,5 @@
     </tbody>
 </table>
 {/task_table}
+
+{>"modal_windows/set_status/set_request_status_canceled"/}

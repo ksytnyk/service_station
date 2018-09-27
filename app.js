@@ -12,7 +12,6 @@ const dust = require('dustjs-helpers');
 const expressValidator = require('express-validator');
 const flash = require('connect-flash');
 require('./models/TaskDetail/relations');
-require('./models/TaskTypeDetail/relations');
 
 const app = express();
 
