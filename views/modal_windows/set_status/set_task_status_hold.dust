@@ -2,19 +2,35 @@
 <div class="modal fade" id="setTaskStatusHoldModal" role="dialog" aria-labelledby="formModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form id="change-task-status-form">
+            <form id="change-task-status-form-to-hold">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title text-center">{@eq key=typeUser value=3}Відсутні запчастини{/eq}{@eq key=typeUser value=4}Анулювати{/eq}</h4>
                 </div>
-                <input type="hidden" id="change-task-status-id" name="id">
+                <input type="hidden" id="change-task-status-id-to-hold" name="id">
                 <div class="modal-body clearfix">
                     <div class="form-group required col-xs-12">
                         <label>Коментар</label>
                         <textarea class="form-control create-form-task" name="comment" rows="3"
-                                  id="change-task-status-comment"></textarea>
+                                  id="change-task-status-comment-to-hold"></textarea>
                     </div>
+                    {@eq key=typeUser value=3}
+                    <div class="form-group required col-xs-12">
+                        <label>Доручити задачу</label>
+                        <select class="form-control add_select2 create-form-task" name="assignedUserID"
+                                id="canceled-form-task-assigned-user" style="width: 100%;">
+                        {#assignedExecutorUsers}
+                        {@eq key=userTypeID value=4}
+                                <option value="{id}" assignedUserFullName="{userSurname} {userName}"
+                                        id="optionAE{id}">
+                            (Зав. складом) {userSurname} {userName}
+                        </option>
+                        {/eq}
+                        {/assignedExecutorUsers}
+                        </select>
+                    </div>
+                    {/eq}
                     <div class='form-group col-xs-12'>
                         <button class="btn btn-success width task-status-button agree" data-status="4" id="change-status-update-task">
                             Підтвердити

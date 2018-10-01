@@ -594,7 +594,7 @@ $(document).ready(function () {
             }
 
             if (statusID === 4) {
-                var dataArr = $('#change-task-status-form').serializeArray();
+                var dataArr = $('#change-task-status-form-to-hold').serializeArray();
 
                 if (window.location.pathname.includes('executor') || window.location.pathname.includes('store-keeper')) {
                     if (dataArr[1].value.length === 0) {
@@ -611,6 +611,13 @@ $(document).ready(function () {
                     else {
                         data.comment = dataArr[1].value;
                     }
+                }
+
+                if (window.location.pathname.includes('executor')) {
+                    data.assignedUserID = dataArr[2].value;
+                    // if status === 'HOLD' -> Storer can't do anything with task
+                    data.status = 1;
+                    statusID = 1;
                 }
 
                 taskID = dataArr[0].value;
@@ -660,7 +667,11 @@ $(document).ready(function () {
 
                     switch (statusID) {
                         case 1:
-                            $(idx).empty();
+                            newTaskStatusClasses += 'status-bgc-pending';
+                            newTaskStatusText = '<strong>Задача в очікуванні</strong>';
+                            $(idx + ' .status-task').removeClass().addClass(newTaskStatusClasses).empty().append(newTaskStatusText);
+                            $(idx + ' .tasks-status-form').empty();
+                            $(idx + ' .update-task').empty();
                             break;
                         case 2:
                             newTaskStatusClasses += 'status-bgc-processing';
@@ -720,8 +731,6 @@ $(document).ready(function () {
             type: 'put',
             data: dataArr,
             success: function (data) {
-                console.log(data);
-
                 showSuccessAlert('Анулювання задачі пройшло успішно.');
 
                 var newTask, newTask1 = '', newTask2;
@@ -747,7 +756,6 @@ $(document).ready(function () {
                 });
 
                 if (getRole(window.location.pathname) === "/executor") {
-
                     taskDescriptionPart = '' +
                         '<p><strong>Номер клієнта: </strong>' + data.request.user.userPhone + '</p> ' +
                         '<p><strong>Тип авто: </strong>' + data.request.transport_type.transportTypeName + '</p> ' +
@@ -756,7 +764,7 @@ $(document).ready(function () {
 
 
                 newTask = '' +
-                    '<th class="tac bb" style="background-color:#fff;">' +
+                    '<th class="tac bb" style="vertical-align: middle">' +
                     data.task.id +
                     '</th>' +
                     '<td class="vat bb' + disableFields(data.task.status) + '" style="position: relative; padding-top: 40px;">' +
@@ -827,7 +835,8 @@ $(document).ready(function () {
                     if(getRole(window.location.pathname) === "/moderator"){
                         newTask2 = '' +
                             '<td></td>'
-                    }else{
+                    }
+                    else{
                         newTask2 = '' +
                             '<td class="tac bb"></td><td></td>'
                     }
@@ -1197,10 +1206,10 @@ setTaskStatusHold('.set-task-status-hold');
 
 function setTaskStatusHold(value) {
     $(value).on('click', function () {
-        $('#change-task-status-id').val($(this).data('task-id'));
+        $('#change-task-status-id-to-hold').val($(this).data('task-id'));
 
         if ('' + $(this).data('task-comment') !== 'undefined') {
-            $('#change-task-status-comment').val($(this).data('task-comment'));
+            $('#change-task-status-comment-to-hold').val($(this).data('task-comment'));
         }
     });
 }

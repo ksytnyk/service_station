@@ -51,6 +51,8 @@ router.get('/tasks/:status', (req, res) => {
             User
                 .getAllUsers()
                 .then(users => {
+                 //   console.log( 111, users );
+
                     User.getUserById(result[0].dataValues.request.dataValues.customerID).then((customer) => {
                         TransportType.getAllTransportType().then((transportType) => {
                             res.render('roles/executor', {
@@ -200,6 +202,8 @@ router.put('/cancel-task/:id', (req, res) => {
 });
 
 router.put('/set-task-status/:id', (req, res) => {
+    console.log(22222222, req.body);
+
     Task
         .updateTask(req.params.id, req.body)
         .then(() => {
@@ -210,10 +214,12 @@ router.put('/set-task-status/:id', (req, res) => {
                         .getAllTasksStatusOfRequest(task.requestID)
                         .then(tasks => {
                             var counter = 1;
+
                             for (var key in tasks) {
                                if (tasks[key].dataValues.status !== 3) {
                                    break;
                                }
+
                                if(counter === tasks.length) {
                                    Request
                                        .changeStatus(task.requestID, {status:status.DONE})
