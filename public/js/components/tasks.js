@@ -720,6 +720,7 @@ $(document).ready(function () {
             type: 'put',
             data: dataArr,
             success: function (data) {
+                console.log(data);
 
                 showSuccessAlert('Анулювання задачі пройшло успішно.');
 
@@ -733,38 +734,24 @@ $(document).ready(function () {
                 var serviceDetail = '';
                 var missingDetail = '';
                 var taskDescriptionPart = '';
-                var detailsBlock = '';
-
+                data.detail.forEach(detailItem => {
+                    if (detailItem.detailType === 2) {
+                        clientDetail += detailItem.detail.detailName + ' - ' + detailItem.detailQuantity + ', ';
+                    }
+                    else if (detailItem.detailType === 1) {
+                        serviceDetail += detailItem.detail.detailName + ' - ' + detailItem.detailQuantity + ', ';
+                    }
+                    else if (detailItem.detailType === 3) {
+                        missingDetail += detailItem.detail.detailName + ' - ' + detailItem.detailQuantity + ', ';
+                    }
+                });
 
                 if (getRole(window.location.pathname) === "/executor") {
-                    console.log(data.detail);
-
-                    data.detail.forEach(detailItem => {
-                        if (detailItem.detailType === 2) {
-                            clientDetail += detailItem.detail.detailName + ' - ' + detailItem.detailQuantity + ', ';
-                        }
-                        else if (detailItem.detailType === 1) {
-                            serviceDetail += detailItem.detail.detailName + ' - ' + detailItem.detailQuantity + ', ';
-                        }
-                        else if (detailItem.detailType === 3) {
-                            missingDetail += detailItem.detail.detailName + ' - ' + detailItem.detailQuantity + ', ';
-                        }
-                    });
 
                     taskDescriptionPart = '' +
                         '<p><strong>Номер клієнта: </strong>' + data.request.user.userPhone + '</p> ' +
                         '<p><strong>Тип авто: </strong>' + data.request.transport_type.transportTypeName + '</p> ' +
                         '<p><strong>Номер замовлення: </strong>' + data.request.id + '</p> ';
-
-                    detailsBlock = '<p class="bt"><strong>Запчастини сервісу: </strong>' + serviceDetail + '</p> ' +
-                        '<p><strong>Запчастини клієнта: </strong>' + clientDetail + '</p> ' +
-                        '<p  id="need-buy-parts"><strong>Відсутні запчастини: </strong>' + missingDetail + '</p> ';
-                }
-                else if (getRole(window.location.pathname) === "/admin") {
-                    detailsBlock = '' +
-                        '<p class="bt"><strong>Запчастини сервісу: </strong>' + data.task.parts + '</p> ' +
-                        '<p><strong>Запчастини клієнта: </strong>' + data.task.customerParts + '</p> ' +
-                        '<p  id="need-buy-parts"><strong>Відсутні запчастини: </strong>' + data.task.needBuyParts + '</p> ';
                 }
 
 
@@ -785,7 +772,9 @@ $(document).ready(function () {
                     '</td>' +
                     '<td class="vat bb' + disableFields(data.task.status) + '"> ' +
                     '<p><strong>Опис задачі: </strong>' + data.task.description + '</p> ' +
-                    detailsBlock +
+                    '<p class="bt"><strong>Запчастини сервісу: </strong>' + serviceDetail + '</p> ' +
+                    '<p><strong>Запчастини клієнта: </strong>' + clientDetail + '</p> ' +
+                    '<p  id="need-buy-parts"><strong>Відсутні запчастини: </strong>' + missingDetail + '</p> '+
                     '<p class="bt" id="comment"><strong>Коментар: </strong>' + data.task.comment + '</p> ' +
                     '</td>';
 
@@ -835,8 +824,13 @@ $(document).ready(function () {
                     }
                 }
                 else {
-                    newTask2 = '' +
-                        '<td class="tac bb"></td><td></td>'
+                    if(getRole(window.location.pathname) === "/moderator"){
+                        newTask2 = '' +
+                            '<td></td>'
+                    }else{
+                        newTask2 = '' +
+                            '<td class="tac bb"></td><td></td>'
+                    }
                 }
 
                 $(idx).append(newTask + newTask1 + newTask2);

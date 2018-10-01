@@ -45,7 +45,7 @@ router.post('/create-user', validation.createAndUpdateUser('create'), (req, res)
     User
         .createUser(req.body)
         .then(() => {
-            if(req.body.userEmail)
+            if (req.body.userEmail)
                 nodemailer('create-user', req.body);
 
             req.flash('success_alert', true);
@@ -139,13 +139,13 @@ router.get('/requests/:status', (req, res) => {
             hadDeleted: true
         }
     }
-    else if (req.params.status === 'done-not-payed'){
+    else if (req.params.status === 'done-not-payed') {
         findBy = {
             status: status.DONE,
             payed: false
         }
     }
-    else if (req.params.status === 'done-and-payed'){
+    else if (req.params.status === 'done-and-payed') {
         findBy = {
             status: status.DONE,
             payed: true
@@ -236,7 +236,7 @@ router.post('/create-request', validation.createAndUpdateRequest(), (req, res) =
             User
                 .getUserById(req.body.customerID)
                 .then(customer => {
-                    if(customer.userEmail)
+                    if (customer.userEmail)
                         nodemailer('create-request', customer);
 
                     res.status(200).send({
@@ -421,64 +421,64 @@ router.put('/change-request-status/:id', (req, res) => {
     Request
         .changeStatus(req.params.id, req.body)
         .then(() => {
-        Task
-            .getAllTasksOfRequest(req.params.id)
-            .then(tasks => {
+            Task
+                .getAllTasksOfRequest(req.params.id)
+                .then(tasks => {
 
-                Task
-                    .updateAllTasksStatusOfRequest(tasks, req.body.status)
-                    .then(() => {
+                    Task
+                        .updateAllTasksStatusOfRequest(tasks, req.body.status)
+                        .then(() => {
 
-                        Request
-                            .getRequestById(req.params.id)
-                            .then(request => {
+                            Request
+                                .getRequestById(req.params.id)
+                                .then(request => {
 
-                                if (+req.body.status === status.DONE) {
+                                    if (+req.body.status === status.DONE) {
 
-                                    Request
-                                        .getRequestById(req.params.id)
-                                        .then((result) => {
-                                            if(result[0].user.dataValues.userEmail)
-                                                nodemailer('done-request', result[0].user.dataValues);
-                                        })
-                                        .catch(error => {
-                                            console.warn(error);
-                                        });
-                                }
+                                        Request
+                                            .getRequestById(req.params.id)
+                                            .then((result) => {
+                                                if (result[0].user.dataValues.userEmail)
+                                                    nodemailer('done-request', result[0].user.dataValues);
+                                            })
+                                            .catch(error => {
+                                                console.warn(error);
+                                            });
+                                    }
 
-                                if (req.body.hadDeleted){
-                                    var params = {
-                                        hadDeleted: false
-                                    };
+                                    if (req.body.hadDeleted) {
+                                        var params = {
+                                            hadDeleted: false
+                                        };
 
-                                    Request
-                                        .updateRequest(req.params.id, params)
-                                        .then()
-                                        .catch(errors => {
-                                            console.warn(errors);
-                                            res.status(400).send({errors: errors});
-                                        });
-                                }
-                                res.status(200).send({
-                                    status: req.body.status,
-                                    requestID: req.params.id,
-                                    request: request
+                                        Request
+                                            .updateRequest(req.params.id, params)
+                                            .then()
+                                            .catch(errors => {
+                                                console.warn(errors);
+                                                res.status(400).send({errors: errors});
+                                            });
+                                    }
+                                    res.status(200).send({
+                                        status: req.body.status,
+                                        requestID: req.params.id,
+                                        request: request
+                                    });
+                                })
+                                .catch(errors => {
+                                    console.warn(errors);
+                                    res.status(400).send({errors: errors});
                                 });
-                            })
-                            .catch(errors => {
-                                console.warn(errors);
-                                res.status(400).send({errors: errors});
-                            });
-                    })
-                    .catch(errors => {
-                        console.warn(errors);
-                        res.status(400).send({errors: errors});
-                    });
-            })
-            .catch(errors => {
-                console.warn(errors);
-                res.status(400).send({errors: errors});
-            });
+                        })
+                        .catch(errors => {
+                            console.warn(errors);
+                            res.status(400).send({errors: errors});
+                        });
+                })
+                .catch(errors => {
+                    console.warn(errors);
+                    res.status(400).send({errors: errors});
+                });
         })
         .catch(errors => {
             console.warn(errors);
@@ -497,7 +497,7 @@ router.put('/set-payed/:id', (req, res) => {
                         .getAllAdmins()
                         .then(admins => {
                             if (req.body.payed) {
-                                if(admins.userEmail)
+                                if (admins.userEmail)
                                     nodemailer('set-payed', admins, request[0].dataValues);
                             } else {
                                 if (req.body.giveOut) {
@@ -507,7 +507,7 @@ router.put('/set-payed/:id', (req, res) => {
                                             bookkeepers.forEach(item => {
                                                 admins.push(item);
                                             });
-                                            if(admins.userEmail)
+                                            if (admins.userEmail)
                                                 nodemailer('give-out', admins, request[0].dataValues);
                                         })
                                         .catch(errors => {
@@ -726,12 +726,12 @@ router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
                                                                                         if (allTasks[key].dataValues.status !== 3) {
                                                                                             break;
                                                                                         }
-                                                                                        if(counter === allTasks.length) {
+                                                                                        if (counter === allTasks.length) {
                                                                                             condition = true;
                                                                                             Request
-                                                                                                .changeStatus(req.body.requestID, {status:status.DONE})
+                                                                                                .changeStatus(req.body.requestID, {status: status.DONE})
                                                                                                 .then((isDone) => {
-                                                                                                    if(request[0].user.dataValues.userEmail)
+                                                                                                    if (request[0].user.dataValues.userEmail)
                                                                                                         nodemailer('done-request', request[0].user.dataValues);
 
                                                                                                     res.status(200).send({
@@ -751,7 +751,7 @@ router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
                                                                                         counter++;
                                                                                     }
 
-                                                                                    if(!condition) {
+                                                                                    if (!condition) {
                                                                                         res.status(200).send({
                                                                                             request: request,
                                                                                             task: task,
@@ -856,9 +856,25 @@ router.put('/cancel-task/:id', (req, res) => {
             Task
                 .getTaskById(req.params.id)
                 .then(task => {
-                    res.status(200).send({
-                        task: task
+                    Models.TaskDetail
+                        .getTaskDetail(task.dataValues.id).then(detail => {
+                        Request.getRequestById(task.requestID).then(request => {
+                            res.status(200).send({
+                                task: task,
+                                detail: detail,
+                                request: request[0]
+                            })
+                        })
+                            .catch(errors => {
+                                console.warn(errors);
+                                res.status(400).send({errors: errors});
+                            });
                     })
+                        .catch(errors => {
+                            console.warn(errors);
+                            res.status(400).send({errors: errors});
+                        });
+
                 })
                 .catch(errors => {
                     console.warn(errors);
@@ -1084,7 +1100,7 @@ router.get('/task-type', (req, res) => {
 router.post('/request-type', (req, res) => {
     Request
         .getRequestsWithoutCondition()
-        .then(requestTypes  => {
+        .then(requestTypes => {
             res.status(200).send({
                 requestTypes: requestTypes
             });
@@ -1158,7 +1174,7 @@ router.delete('/delete-task-type/:id', (req, res) => {
         });
 });
 
-router.put('/start-request/:id', (req,res) => {
+router.put('/start-request/:id', (req, res) => {
 
     Request
         .changeStatus(req.params.id, {status: status.PROCESSING})

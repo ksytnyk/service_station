@@ -178,13 +178,19 @@ router.put('/cancel-task/:id', (req, res) => {
                                 detail: detail,
                                 request: request[0]
                             })
-                        })
+                        }).catch(errors => {
+                            console.warn(errors);
+                            res.status(400).send({errors: errors});
+                        });
                     })
                     .catch(errors => {
                         console.warn(errors);
                         res.status(400).send({errors: errors});
                     });
-            })
+            }).catch(errors => {
+                console.warn(errors);
+                res.status(400).send({errors: errors});
+            });
 
         })
         .catch(errors => {
