@@ -161,6 +161,38 @@ router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
         });
 });
 
+router.put('/cancel-task/:id', (req, res) => {
+    Task
+        .updateTask(req.params.id, req.body)
+        .then(() => {
+            Task.getTaskById(req.params.id)
+                .then(task =>{
+                    console.log('task', task);
+                    Models.TaskDetail
+                    .getTaskDetail(task.dataValues.id)
+                    .then(detail => {
+                        console.log('detail', detail);
+                        Request.getRequestById(task.requestID).then(request => {
+                            res.status(200).send({
+                                task: task,
+                                detail: detail,
+                                request: request[0]
+                            })
+                        })
+                    })
+                    .catch(errors => {
+                        console.warn(errors);
+                        res.status(400).send({errors: errors});
+                    });
+            })
+
+        })
+        .catch(errors => {
+            console.warn(errors);
+            res.status(400).send({errors: errors});
+        });
+});
+
 router.put('/set-task-status/:id', (req, res) => {
     Task
         .updateTask(req.params.id, req.body)

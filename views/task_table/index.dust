@@ -97,14 +97,15 @@
                     />
                     {/eq}
                     {@eq key=status value=2}
-                <button class="status buttons-update-task-modal btn btn-danger pull-right"
-                        id="change-status-cancel-task"
-                        data-dismiss="modal"
-                        data-toggle="modal"
-                        data-target="#setTaskStatusCanceledModal"
-                        style="margin-right:0">
-                    Анулювати задачу
-                </button>
+                    <input class="status btn btn-danger taskCanceledExecutorAnton modal-window-link"
+                           data-toggle="modal"
+                           type="button"
+                           value="Анулювати задачу"
+                     data-task-id="{id}"
+                           data-task-comment="{comment}"
+                           data-target="#setTaskStatusCanceledModal"
+            />
+
                 <input class="status btn btn-danger set-task-status-hold modal-window-link"
                            data-toggle="modal"
                            id="taskHold"
@@ -245,4 +246,4 @@
 </table>
 {/task_table}
 
-{>"modal_windows/set_status/set_request_status_canceled"/}
+{>"modal_windows/set_status/set_task_status_canceled"/}

@@ -38,7 +38,7 @@ $(document).ready(function () {
 
                         $('#detail-type-select').append($('<option>', {
                             value: item.id,
-                            text: item.detailName + " / " + item.detailCode  + ' (' + title + ')',
+                            text: item.detailName + " / " + item.detailCode + ' (' + title + ')',
                             id: 'detailTypeID' + item.id,
                             detailName: item.detailName + " / " + item.detailCode,
                             detailPrice: item.detailPrice,
@@ -117,7 +117,7 @@ $(document).ready(function () {
                         clientDetails += ',&#8195;' + item.detail.detailName + ' - ' + item.detailQuantity;
                     }
                     else {
-                        missingDetails += ',&#8195;' +  item.detail.detailName + ' - ' + item.detailQuantity;
+                        missingDetails += ',&#8195;' + item.detail.detailName + ' - ' + item.detailQuantity;
                     }
                 });
 
@@ -175,8 +175,8 @@ $(document).ready(function () {
                     '<span class="glyphicon glyphicon-pencil" aria-hidden="true"/> ' +
                     '</a> ';
 
-                if(getRole(window.location.pathname)==='/admin') {
-                    editDeleteButtons += ''+
+                if (getRole(window.location.pathname) === '/admin') {
+                    editDeleteButtons += '' +
                         '<a href="#" class="delete-task modal-window-link" title="Видалити задачу" data-toggle="modal" data-current="' + getIdRole(window.location.pathname) + '" data-id="' + data.result.id + '"' +
                         ' data-target="#deleteTaskFormModal"' +
                         ' data-request-id="' + data.result.requestID + '"' +
@@ -186,7 +186,7 @@ $(document).ready(function () {
                         '</td>' +
                         '</tr>';
                 } else {
-                    editDeleteButtons += ''+
+                    editDeleteButtons += '' +
                         '</td>' +
                         '</tr>';
                 }
@@ -221,7 +221,7 @@ $(document).ready(function () {
         var dataArr = $('#update-form-task').serializeArray();
         var oldStartTime = $('#change-status-update-task').attr('old-start-time');
 
-        if ( getRole(window.location.pathname) === '/executor') {
+        if (getRole(window.location.pathname) === '/executor') {
             dataArr[6].value = checkDateForUpdate(oldStartTime, dataArr[6].value);
 
             if (dataArr[3].value !== dataArr[4].value) {
@@ -286,7 +286,7 @@ $(document).ready(function () {
                         clientDetails += ',&#8195;' + item.detail.detailName + ' - ' + item.detailQuantity;
                     }
                     else {
-                        missingDetails += ',&#8195;' +  item.detail.detailName + ' - ' + item.detailQuantity;
+                        missingDetails += ',&#8195;' + item.detail.detailName + ' - ' + item.detailQuantity;
                     }
                 });
 
@@ -355,6 +355,14 @@ $(document).ready(function () {
                                 newTask1 = '' +
                                     '<td class="tac">' +
                                     '<div class="tasks-status-form">' +
+                                    '<button class="status buttons-update-task-modal btn btn-danger pull-right"' +
+                                    'id="change-status-cancel-task"' +
+                                    'data-dismiss="modal"' +
+                                    'data-toggle="modal"' +
+                                    'data-target="#setTaskStatusCanceledModal"' +
+                                    'style="margin-right:0">' +
+                                    'Анулювати задачу' +
+                                    '</button>' +
                                     '<input class="status btn btn-danger set-task-status-hold modal-window-link"' +
                                     ' data-toggle="modal"' +
                                     ' id="taskHold"' +
@@ -550,11 +558,11 @@ $(document).ready(function () {
 
                 var payed = '(Не розраховано)';
 
-                if(data.request.payed) {
+                if (data.request.payed) {
                     payed = '(Розраховано)';
                 }
 
-                var newCost = '<strong>Вартість: ' + data.newCost + ' грн <span>'+ payed+ '</span></strong>';
+                var newCost = '<strong>Вартість: ' + data.newCost + ' грн <span>' + payed + '</span></strong>';
 
                 $(idr).append(newCost);
 
@@ -631,7 +639,16 @@ $(document).ready(function () {
                         ' data-target="#setTaskStatusHoldModal"' +
                         '/>';
 
-                    var taskDoneButton = '' +
+                    var taskRevertButton = '' +
+                    '<input class="status btn btn-danger taskCanceledExecutorAnton modal-window-link"' +
+                        ' data-toggle="modal"' +
+                        ' type="button"' +
+                        ' value="Анулювати задачу"' +
+                        ' data-task-id="{id}"' +
+                        ' data-task-comment="{comment}"' +
+                        ' data-target="#setTaskStatusCanceledModal"'+
+                           ' />' ;
+             var taskDoneButton = '' +
                         '<input class="status btn btn-success task-form-status task-status-button"' +
                         ' id="taskDone"' +
                         ' type="button"' +
@@ -647,7 +664,7 @@ $(document).ready(function () {
                         case 2:
                             newTaskStatusClasses += 'status-bgc-processing';
                             newTaskStatusText = '<strong>Задача виконується</strong>';
-                            newTaskButtons = taskHoldButton + taskDoneButton;
+                            newTaskButtons = taskRevertButton + taskHoldButton + taskDoneButton ;
                             $(idx + ' .status-task').removeClass().addClass(newTaskStatusClasses).empty().append(newTaskStatusText);
                             $(idx + ' .tasks-status-form').empty().append(newTaskButtons);
                             changeTaskStatus(idx + ' .task-status-button');
@@ -681,8 +698,14 @@ $(document).ready(function () {
     $('#change-status-cancel-task').on('click', function () {
         $('#change-task-status-id').val($('#update-form-task-id').val());
         $('#change-task-status-comment').val($('#update-form-task-comment').val());
-        $('#setRequestStatusCanceledModal').modal('show');
+        // $('#setTaskStatusCanceledModal').modal('show');
     });
+
+    $('.taskCanceledExecutorAnton').on('click', function () {
+        $('#change-task-status-id').val($(this).data('task-id'));
+        $('#change-task-status-comment').val($(this).data('task-comment'));
+    });
+
 
     $('.task-status-canceled-button').on('click', function () {
 
@@ -700,6 +723,18 @@ $(document).ready(function () {
 
                 showSuccessAlert('Анулювання задачі пройшло успішно.');
 
+                var clientDetail = '';
+                var serviceDetail = '';
+                data.detail.forEach(detailItem => {
+                    if(detailItem.detailType === 2){
+                        console.log('type 2');
+                        clientDetail = clientDetail + detailItem.detail.detailName + '-' + detailItem.detailQuantity+ ', ';
+                    }
+                    if(detailItem.detailType === 1){
+                        console.log('type 1');
+                        serviceDetail = serviceDetail + detailItem.detail.detailName + '-' + detailItem.detailQuantity + ', ';
+                    }
+                });
                 var newTask, newTask1 = '', newTask2;
                 var executorNameSurname = $(idx + ' .executor-name').attr('exec-name');
                 var assignedNameSurname = $(idx + ' .assign-user-name').attr('assign-name');
@@ -719,42 +754,46 @@ $(document).ready(function () {
                     '<p><strong>Час виконання: </strong>' + data.task.estimationTime + ' хв.</p>' +
                     '<p><strong>Час початку: </strong>' + formatDate(data.task.startTime) + '</p> ' +
                     '<p><strong>Кінцевий час: </strong>' + formatDate(data.task.endTime) + '</p> ' +
+                    '<p><strong>Номер клієнта: </strong>' + data.request.user.userPhone + '</p> ' +
+                    '<p><strong>Тип авто: </strong>' + data.request.transport_type.transportTypeName + '</p> ' +
+                    '<p><strong>Номер замовлення: </strong>' + data.request.id + '</p> ' +
                     '</td>' +
                     '<td class="vat bb' + disableFields(data.task.status) + '"> ' +
                     '<p><strong>Опис задачі: </strong>' + data.task.description + '</p> ' +
-                    '<p class="bt"><strong>Запчастини сервісу: </strong>' + data.task.parts + '</p> ' +
-                    '<p><strong>Запчастини клієнта: </strong>' + data.task.customerParts + '</p> ' +
-                    '<p  id="need-buy-parts"><strong>Відсутні запчастини: </strong>' + data.task.needBuyParts + '</p> ' +
+                    '<p class="bt"><strong>Запчастини сервісу: </strong>' + serviceDetail + '</p> ' +
+                    '<p><strong>Запчастини клієнта: </strong>' + clientDetail + '</p> ' +
+                    '<p  id="need-buy-parts"><strong>Відсутні запчастини: </strong>' + ' ' + '</p> ' +
                     '<p class="bt" id="comment"><strong>Коментар: </strong>' + data.task.comment + '</p> ' +
                     '</td>';
 
                 newTask2 = '' +
-                    '<td class="tac bb"> ' +
-                    '<a class="update-task modal-window-link"' +
-                    ' title="Редагувати задачу"' +
-                    ' data-toggle="modal"' +
-                    ' data-id="' + data.task.id + '"' +
-                    ' data-request-id="' + data.task.requestID + '"' +
-                    ' data-task-description="' + data.task.description + '"' +
-                    ' data-task-name="' + data.task.name + '"' +
-                    ' data-task-type-id="' + data.task.typeID + '"' +
-                    ' data-task-assigned-user="' + data.task.assignedUserID + '"' +
-                    ' data-task-planed-executor="' + data.task.planedExecutorID + '"' +
-                    ' data-task-cost="' + data.task.cost + '"' +
-                    ' data-task-estimation-time="' + data.task.estimationTime + '"' +
-                    ' data-task-start-time="' + formatDate(data.task.startTime) + '"' +
-                    ' data-task-end-time="' + formatDate(data.task.endTime) + '"' +
-                    ' data-task-parts="' + data.task.parts + '"' +
-                    ' data-task-customer-parts="' + data.task.customerParts + '"' +
-                    ' data-task-need-buy-parts="' + data.task.needBuyParts + '"' +
-                    ' data-task-comment="' + data.task.comment + '"' +
-                    ' data-target="#updateTaskFormModal"' +
-                    ' style=""> ' +
-                    '<span class="glyphicon glyphicon-pencil" aria-hidden="true"/> ' +
-                    '</a> ';
+                    '<td></td>' +
+                    '<td class="tac bb"> ' ;
+                    // '<a class="update-task modal-window-link"' +
+                    // ' title="Редагувати задачу"' +
+                    // ' data-toggle="modal"' +
+                    // ' data-id="' + data.task.id + '"' +
+                    // ' data-request-id="' + data.task.requestID + '"' +
+                    // ' data-task-description="' + data.task.description + '"' +
+                    // ' data-task-name="' + data.task.name + '"' +
+                    // ' data-task-type-id="' + data.task.typeID + '"' +
+                    // ' data-task-assigned-user="' + data.task.assignedUserID + '"' +
+                    // ' data-task-planed-executor="' + data.task.planedExecutorID + '"' +
+                    // ' data-task-cost="' + data.task.cost + '"' +
+                    // ' data-task-estimation-time="' + data.task.estimationTime + '"' +
+                    // ' data-task-start-time="' + formatDate(data.task.startTime) + '"' +
+                    // ' data-task-end-time="' + formatDate(data.task.endTime) + '"' +
+                    // ' data-task-parts="' + data.task.parts + '"' +
+                    // ' data-task-customer-parts="' + data.task.customerParts + '"' +
+                    // ' data-task-need-buy-parts="' + data.task.needBuyParts + '"' +
+                    // ' data-task-comment="' + data.task.comment + '"' +
+                    // ' data-target="#updateTaskFormModal"' +
+                    // ' style=""> ' +
+                    // '<span class="glyphicon glyphicon-pencil" aria-hidden="true"/> ' +
+                    // '</a> ';
 
                 if (getRole(window.location.pathname) === "/admin") {
-                    newTask2 += ''+
+                    newTask2 += '' +
                         '<a href="#"' +
                         ' class="delete-task modal-window-link"' +
                         ' title="Видалити задачу" data-toggle="modal"' +
@@ -767,7 +806,7 @@ $(document).ready(function () {
                         '</a>' +
                         '</td>';
                 } else {
-                    newTask2 += ''+
+                    newTask2 += '' +
                         '</a>' +
                         '</td>';
                 }
@@ -809,7 +848,7 @@ function updateTaskOnClick(value) {
         setStartTime();
         setOpenTaskNameOnUpdateTask();
         if (!window.location.pathname.includes('update-request')) {
-            if (window.location.pathname.includes('create-request') || window.location.pathname.includes('requests') || window.location.pathname.includes('executor') ) {
+            if (window.location.pathname.includes('create-request') || window.location.pathname.includes('requests') || window.location.pathname.includes('executor')) {
 
                 var dataArr;
                 var This = this;
@@ -838,7 +877,7 @@ function updateTaskOnClick(value) {
                     data: dataArr,
                     success: function (data) {
 
-                        if(getRole(window.location.pathname) !== '/executor') {
+                        if (getRole(window.location.pathname) !== '/executor') {
                             $('#update-form-task-type-select').find('option').remove();
                             data.taskTypes.forEach(item => {
                                 var title = setTaskTypesTitle(item);
@@ -860,7 +899,7 @@ function updateTaskOnClick(value) {
                         $('#update-detail-type-select').find('option').remove();
                         data.detailTypes.forEach(item => {
                             var title = setDetailTypesTitle(item);
-                           // console.log(item.detailPrice);
+                            // console.log(item.detailPrice);
                             $('#update-detail-type-select').append($('<option>', {
                                 value: item.id,
                                 text: item.detailName + " / " + item.detailCode + ' (' + title + ')',
@@ -913,7 +952,7 @@ function updateTaskOnClick(value) {
         $('#update-form-task-status').val($(this).data('task-status'));
         $('#update-form-task-comment').val($(this).data('task-comment'));
 
-        if(getRole(window.location.pathname) !== '/store-keeper') {
+        if (getRole(window.location.pathname) !== '/store-keeper') {
 
             $.ajax({
                 url: getRole(window.location.pathname) + '/details-of-task/' + $('#update-form-task-id').val(),
@@ -927,8 +966,8 @@ function updateTaskOnClick(value) {
                     data.details.forEach(function (item) {
 
                         // Emit when modal render
-                        var detailTemplate0 = '<tr id="idr-' + item.id + '"><td>' + item.detail.detailName + " / " + item.detail.detailCode + '</td><td>'+ item.detail.detailPrice +'</td><td>';
-                     //   console.log("detail price " + item.detail.detailPrice);
+                        var detailTemplate0 = '<tr id="idr-' + item.id + '"><td>' + item.detail.detailName + " / " + item.detail.detailCode + '</td><td>' + item.detail.detailPrice + '</td><td>';
+                        //   console.log("detail price " + item.detail.detailPrice);
                         var detailTemplate1 = 'Клієнт';
 
                         var detailTemplate2 = '</td><td>' + item.detailQuantity + '</td><td>';
@@ -938,9 +977,9 @@ function updateTaskOnClick(value) {
                         if (getRole(window.location.pathname) === '/admin' || getRole(window.location.pathname) === '/moderator') {
                             detailTemplate1 = '' +
                                 '<select detail-id="' + item.id + '" class="change-detail-type-select">' +
-                                    '<option value="1">Сервіс</option>' +
-                                    '<option value="2">Клієнт</option>' +
-                                    '<option value="3">Відсутня</option>' +
+                                '<option value="1">Сервіс</option>' +
+                                '<option value="2">Клієнт</option>' +
+                                '<option value="3">Відсутня</option>' +
                                 '</select>';
 
                             detailTemplate3 = '' +
@@ -952,8 +991,8 @@ function updateTaskOnClick(value) {
                             if (+item.detailType !== 2) {
                                 detailTemplate1 = '' +
                                     '<select detail-id="' + item.id + '" class="change-detail-type-select">' +
-                                        '<option value="1">Сервіс</option>' +
-                                        '<option value="3">Відсутня</option>' +
+                                    '<option value="1">Сервіс</option>' +
+                                    '<option value="3">Відсутня</option>' +
                                     '</select>';
 
                                 detailTemplate3 = '' +
@@ -1121,6 +1160,18 @@ function setDetailTypesTitle(item) {
 }
 
 setTaskStatusHold('.set-task-status-hold');
+// setTaskStatusCanceled('.set-task-status-canceled');
+//
+//
+// function setTaskStatusCanceled(value) {
+//     $(value).on('click', function () {
+//         $('#change-task-status-id').val($(this).data('task-id'));
+//
+//         if ('' + $(this).data('task-comment') !== 'undefined') {
+//             $('#change-task-status-comment').val($(this).data('task-comment'));
+//         }
+//     });
+// }
 
 function setTaskStatusHold(value) {
     $(value).on('click', function () {

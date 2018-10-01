@@ -59,7 +59,6 @@ function printOnClick(value) {
             url: getRole(window.location.pathname) + '/get-request-check/' + requestID,
             type: 'get',
             success: function (data) {
-                console.log(data);
 
                 $('#number-or-request').text(data.request[0].id);
                 $('#request-name').text(data.request[0].name);
@@ -101,7 +100,7 @@ function printOnClick(value) {
                     detailsService = detailsService.slice(0, (detailsService.length - 2));
 
                     summaryDetailsCost += detailsCost;
-                    console.log(task);
+                   // console.log(task);
 
                     $('.check-table tbody').append('<tr>' +
                         '<td>' +
