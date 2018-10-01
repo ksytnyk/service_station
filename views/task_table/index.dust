@@ -97,7 +97,7 @@
                     />
                     {/eq}
                     {@eq key=status value=2}
-                    <input class="status btn btn-danger taskCanceledExecutorAnton modal-window-link"
+                    <input class="status btn taskCanceledExecutorAnton modal-window-link"
                            data-toggle="modal"
                            type="button"
                            value="Анулювати задачу"

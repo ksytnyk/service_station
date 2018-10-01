@@ -640,7 +640,7 @@ $(document).ready(function () {
                         '/>';
 
                     var taskRevertButton = '' +
-                    '<input class="status btn btn-danger taskCanceledExecutorAnton modal-window-link"' +
+                    '<input class="status btn taskCanceledExecutorAnton modal-window-link"' +
                         ' data-toggle="modal"' +
                         ' type="button"' +
                         ' value="Анулювати задачу"' +
@@ -725,6 +725,15 @@ $(document).ready(function () {
 
                 var clientDetail = '';
                 var serviceDetail = '';
+
+                // var detailBlockExecutor = '<p class="bt"><strong>Запчастини сервісу: </strong>' + serviceDetail + '</p> ' +
+                //     '<p><strong>Запчастини клієнта: </strong>' + clientDetail + '</p> ' +
+                //     '<p  id="need-buy-parts"><strong>Відсутні запчастини: </strong>' + ' ' + '</p> ';
+
+                var detailBlockAdmin = '<p class="bt"><strong>Запчастини сервісу: </strong>' + data.task.parts + '</p> ' +
+                    '<p><strong>Запчастини клієнта: </strong>' + data.task.customerParts + '</p> ' +
+                    '<p  id="need-buy-parts"><strong>Відсутні запчастини: </strong>' + data.task.needBuyParts + '</p>';
+
                 data.detail.forEach(detailItem => {
                     if(detailItem.detailType === 2){
                         console.log('type 2');
@@ -760,9 +769,8 @@ $(document).ready(function () {
                     '</td>' +
                     '<td class="vat bb' + disableFields(data.task.status) + '"> ' +
                     '<p><strong>Опис задачі: </strong>' + data.task.description + '</p> ' +
-                    '<p class="bt"><strong>Запчастини сервісу: </strong>' + serviceDetail + '</p> ' +
-                    '<p><strong>Запчастини клієнта: </strong>' + clientDetail + '</p> ' +
-                    '<p  id="need-buy-parts"><strong>Відсутні запчастини: </strong>' + ' ' + '</p> ' +
+                    detailBlockAdmin +
+                    // getRole(window.location.pathname) === 'executor' ? detailBlockExecutor : detailBlockAdmin +
                     '<p class="bt" id="comment"><strong>Коментар: </strong>' + data.task.comment + '</p> ' +
                     '</td>';
 
