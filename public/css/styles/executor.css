@@ -2,7 +2,7 @@
     margin: 5px 0 0 -8px;
     border-top: 1px solid #ccc;
     padding: 5px 8px 0;
-    width: 600px;
+    width: 540px;
 }
 .executor p {
     margin: 3px 0;
@@ -12,9 +12,6 @@
 .executor .assigned_name_surname,
 .executor .delete-task {
     display: none;
-}
-.executor .bt {
-    width: 530px;
 }
 .executor .table .bb {
     border-bottom: none;

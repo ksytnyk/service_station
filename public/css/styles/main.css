@@ -272,6 +272,10 @@ a.clean-search span.glyphicon.glyphicon-remove{
     font-size:24px !important;
     margin:0 !important;
 }
+#change-task-status-comment{
+    width: 100%;
+    margin-bottom: 10px;
+}
 table.dataTable {
     border: 1px solid #ccc;
     margin-top:0 !important;

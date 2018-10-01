@@ -48,13 +48,15 @@
             <p><strong>Час виконання: </strong>{estimationTime} хв</p>
             <p><strong>Час початку: </strong>{startTime}</p>
             <p><strong>Кінцевий час: </strong>{endTime}</p>
-            <p><strong>Номер клієнта: </strong>{customer.userPhone}</p>
-            {#transportType}
-                        {@eq key=id value=request.transportTypeID}
-                            <p><strong>Тип авто: </strong>{transportTypeName}</p>
-                        {/eq}
-            {/transportType}
-            <p><strong>Номер замовлення: </strong>{request.id}</p>
+            {@eq key=typeUser value=3}
+                <p><strong>Номер клієнта: </strong>{customer.userPhone}</p>
+                {#transportType}
+                            {@eq key=id value=request.transportTypeID}
+                                <p><strong>Тип авто: </strong>{transportTypeName}</p>
+                            {/eq}
+                {/transportType}
+                <p><strong>Номер замовлення: </strong>{request.id}</p>
+            {/eq}
         </td>
         <td class="vat bb {@eq key=status value=5}disable-task{/eq}">
             <p><strong>Опис задачі: </strong>{description}</p>
@@ -97,7 +99,7 @@
                     />
                     {/eq}
                     {@eq key=status value=2}
-                    <input class="status btn taskCanceledExecutorAnton modal-window-link"
+                    <input class="status btn status-requests-canceled taskCanceledExecutorAnton modal-window-link"
                            data-toggle="modal"
                            type="button"
                            value="Анулювати задачу"
@@ -152,52 +154,29 @@
         <td class="tac bb">
             {@gt key=typeUser value=2}
                 {@lt key=status value=3}
-                <a class="update-task modal-window-link"
-                   title="Редагувати задачу"
-                   data-toggle="modal"
-                   data-id="{id}"
-                   data-request-id="{requestID}"
-                   data-task-description="{description}"
-                   data-task-name="{name}"
-                   data-task-type-id="{typeID}"
-                   data-task-assigned-user="{assignedUserID}"
-                   data-task-planed-executor="{planedExecutorID}"
-                   data-task-cost="{cost}"
-                   data-task-estimation-time="{estimationTime}"
-                   data-task-start-time="{startTime}"
-                   data-task-end-time="{endTime}"
-                   data-task-parts="{parts}"
-                   data-task-customer-parts="{customerParts}"
-                   data-task-need-buy-parts="{needBuyParts}"
-                   data-task-comment="{comment}"
-                   data-task-status="{status}"
-                   data-target="#updateTaskFormModal">
-                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"/>
-                </a>
-                {:else}
-                    {@eq key=status value=4}
-                        <a class="update-task modal-window-link"
-                           title="Редагувати задачу"
-                           data-toggle="modal"
-                           data-id="{id}"
-                           data-request-id="{requestID}"
-                           data-task-description="{description}"
-                           data-task-name="{name}"
-                           data-task-type-id="{typeID}"
-                           data-task-assigned-user="{assignedUserID}"
-                           data-task-planed-executor="{planedExecutorID}"
-                           data-task-cost="{cost}"
-                           data-task-estimation-time="{estimationTime}"
-                           data-task-start-time="{startTime}"
-                           data-task-end-time="{endTime}"
-                           data-task-parts="{parts}"
-                           data-task-customer-parts="{customerParts}"
-                           data-task-need-buy-parts="{needBuyParts}"
-                           data-task-comment="{comment}"
-                           data-task-status="{status}"
-                           data-target="#updateTaskFormModal">
-                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"/>
-                        </a>
+                    {@eq key=assignedUserID value=planedExecutorID}
+                    <a class="update-task modal-window-link"
+                       title="Редагувати задачу"
+                       data-toggle="modal"
+                       data-id="{id}"
+                       data-request-id="{requestID}"
+                       data-task-description="{description}"
+                       data-task-name="{name}"
+                       data-task-type-id="{typeID}"
+                       data-task-assigned-user="{assignedUserID}"
+                       data-task-planed-executor="{planedExecutorID}"
+                       data-task-cost="{cost}"
+                       data-task-estimation-time="{estimationTime}"
+                       data-task-start-time="{startTime}"
+                       data-task-end-time="{endTime}"
+                       data-task-parts="{parts}"
+                       data-task-customer-parts="{customerParts}"
+                       data-task-need-buy-parts="{needBuyParts}"
+                       data-task-comment="{comment}"
+                       data-task-status="{status}"
+                       data-target="#updateTaskFormModal">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"/>
+                    </a>
                     {/eq}
                 {/lt}
             {:else}
