@@ -6,6 +6,7 @@ $(document).ready(function () {
         $(value).on('click', function () {
             $('#update-form-id').val($(this).data('id'));
             $('#update-form-type-name').val($(this).data('type-name'));
+            $('#update-form-type-article').val($(this).data('article-code'));
 
             // if ($(this).data('type-of-car')) {
             //     console.log(  111, "#typeOfCar #" + $(this).data('type-of-car') );
@@ -27,6 +28,8 @@ $(document).ready(function () {
         event.preventDefault();
 
         var dataArr = $('#task-type-update-form').serializeArray();
+
+        console.log(dataArr);
 
         $.ajax({
             url: getRole(window.location.pathname) + '/update-task-type/' + dataArr[0].value,
@@ -61,6 +64,7 @@ $(document).ready(function () {
                 newTaskType = '' +
                     '<th class="tac" scope="row">' + data.taskType.id + '</th>' +
                     '<td class="tac">' + data.taskType.typeName + '</td>' +
+                    '<td class="tac">' + data.taskType.articleCode + '</td>' +
                     '<td class="tac">' + data.taskType.transportType.transportTypeName + '</td>' +
                     '<td class="tac">' + data.taskType.transportMarkk.transportMarkkName + '</td>' +
                     '<td class="tac">' + data.taskType.transportModel.transportModelName + '</td>' +
