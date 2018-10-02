@@ -18,21 +18,23 @@
             </label>
             <input class="form-control datetimepickerN" id="to-date-for-statistic" name="toDateChart">
         </div>
-        <div class="form-group col-xs-2">
-            <button type="button" class="btn btn-primary col-xs-12" id="chart-request" style="margin-top: 25px;">
-                Замовлення
-            </button>
-        </div>
-        <div class="form-group col-xs-2">
-            <button type="button" class="btn btn-warning col-xs-12" id="chart-tasks" style="margin-top: 25px;">
-                Задачі
-            </button>
-        </div>
-        <div class="form-group col-xs-2">
-            <button type="button" class="btn btn-success col-xs-12" id="chart-finances" style="margin-top: 25px;">
-                Фінанси
-            </button>
-        </div>
+        {@ne key=typeUser value=2}
+            <div class="form-group col-xs-2">
+                <button type="button" class="btn btn-primary col-xs-12" id="chart-request" style="margin-top: 25px;">
+                    Замовлення
+                </button>
+            </div>
+            <div class="form-group col-xs-2">
+                <button type="button" class="btn btn-warning col-xs-12" id="chart-tasks" style="margin-top: 25px;">
+                    Задачі
+                </button>
+            </div>
+            <div class="form-group col-xs-2">
+                <button type="button" class="btn btn-success col-xs-12" id="chart-finances" style="margin-top: 25px;">
+                    Фінанси
+                </button>
+            </div>
+        {/ne}
         <div class="form-group col-xs-2">
             <button type="button" class="btn col-xs-12" id="chart-real-profit" style="margin-top: 25px;">
                 Прибуток

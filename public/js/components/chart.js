@@ -8,7 +8,11 @@ $(document).ready(function () {
         $('#from-date-for-statistic').val(formatDate(fromDate));
         $('#to-date-for-statistic').val(formatDate(toDate));
         setTimeout(function () {
-            $('#chart-finances').click();
+            if(getRole(window.location.pathname) === "/admin"){
+                $('#chart-finances').click();
+            }else{
+                $('#chart-real-profit').click();
+            }
         }, 1);
     }
 
@@ -165,7 +169,7 @@ $(document).ready(function () {
 
         if (checkSequence(newData)) {
             $.ajax({
-                url: "/admin/chart/profit",
+                url: getRole(window.location.pathname)+  "/chart/profit",
                 type: 'post',
                 data: newData,
                 success: function (response) {
