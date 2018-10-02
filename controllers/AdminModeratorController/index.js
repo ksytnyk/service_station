@@ -1140,6 +1140,7 @@ router.post('/create-task-type', validation.createAndUpdateTaskType('create'), (
 });
 
 router.put('/update-task-type/:id', validation.createAndUpdateTaskType(), (req, res) => {
+
     TaskType
         .updateTaskType(req.params.id, req.body)
         .then((taskType) => {

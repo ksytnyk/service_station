@@ -6,18 +6,16 @@ $(document).ready(function () {
         $(value).on('click', function () {
             $('#update-form-id').val($(this).data('id'));
             $('#update-form-type-name').val($(this).data('type-name'));
-            if ($(this).data('type-of-car')) {
-                $("#typeOfCar #" + $(this).data('type-of-car')).attr('selected', true);
-                $("#typeOfCar").change();
-            }
-            $("#typeOfCar").val($(this).data('type-of-car')).select2();
 
-            if ($(this).data('car-markk') !== '') {
-                $("#markk").empty().append("<option value='" + $(this).data('car-markk') + "'>" + $(this).data('car-markk-name') + "</option>");
-            }
-            if ($(this).data('car-model')) {
-                $("#model").empty().append("<option value='" + $(this).data('car-model') + "'>" + $(this).data('car-model-name') + "</option>");
-            }
+            // if ($(this).data('type-of-car')) {
+            //     console.log(  111, "#typeOfCar #" + $(this).data('type-of-car') );
+            //     $("#typeOfCar #" + $(this).data('type-of-car')).attr('selected', true);
+            //     $("#typeOfCar").change();
+            // }
+
+            $("#typeOfCar").val($(this).data('type-of-car')).select2();
+            $("#markk").empty().append("<option value='" + $(this).data('car-markk') + "'>" + $(this).data('car-markk-name') + "</option>");
+            $("#model").empty().append("<option value='" + $(this).data('car-model') + "'>" + $(this).data('car-model-name') + "</option>");
 
             $('#update-form-planed-executor-id').val($(this).data('planed-executor-id')).change();
             $('#update-form-estimation-time').val($(this).data('estimation-time'));

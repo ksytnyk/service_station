@@ -150,6 +150,12 @@ module.exports = {
     createAndUpdateTaskType: function (value) {
         return function (req, res, next) {
 
+            for (let key in req.body) {
+                if (({}).hasOwnProperty.call(req.body, key) && req.body[key] === '') {
+                    req.body[key] = null
+                }
+            }
+
             req.checkBody('typeName', '"Назва задачі" - обов\'язкове поле.').notEmpty();
             /*req.checkBody('cost', '"Вартість" - обов\'язкове поле.').notEmpty();
             req.checkBody('cost', 'Поле "Вартість" може містити лише цифри.').isFloat();*/

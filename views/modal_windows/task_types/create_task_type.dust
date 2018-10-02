@@ -30,6 +30,7 @@
                     <div class="form-group col-xs-6">
                         <label>Виконавець</label>
                         <select class="form-control add_select2 task-planed-executor-id" name="planedExecutorID">
+                            <option value="">(Виконавець відсутній)</option>
                             {#users}
                             <option value="{id}">{userSurname} {userName}</option>
                             {/users}
