@@ -31,15 +31,18 @@ const describeTaskTypeTable = {
     },
     cost: {
         type: Sequelize.FLOAT,
-        field: 'cost'
+        field: 'cost',
+        defaultValue: null
     },
     estimationTime: {
         type: Sequelize.FLOAT,
-        field: 'estimation_time'
+        field: 'estimation_time',
+        defaultValue: null
     },
     planedExecutorID: {
         type: Sequelize.INTEGER,
-        field: 'planed_executor_id'
+        field: 'planed_executor_id',
+        defaultValue: null
     },
 };
 

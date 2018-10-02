@@ -151,8 +151,8 @@ module.exports = {
         return function (req, res, next) {
 
             req.checkBody('typeName', '"Назва задачі" - обов\'язкове поле.').notEmpty();
-            req.checkBody('cost', '"Вартість" - обов\'язкове поле.').notEmpty();
-            req.checkBody('cost', 'Поле "Вартість" може містити лише цифри.').isFloat();
+            /*req.checkBody('cost', '"Вартість" - обов\'язкове поле.').notEmpty();
+            req.checkBody('cost', 'Поле "Вартість" може містити лише цифри.').isFloat();*/
 
             let errors = req.validationErrors();
 

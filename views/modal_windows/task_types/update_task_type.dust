@@ -28,7 +28,7 @@
                         <label>Модель автомобіля</label>
                         <select class="form-control" name="carModel" id="model"></select>
                     </div>
-                    <div class="form-group required col-xs-6">
+                    <div class="form-group col-xs-6">
                         <label>Виконавець</label>
                         <select class="form-control add_select2" name="planedExecutorID" id="update-form-planed-executor-id">
                             {#users}
@@ -36,14 +36,14 @@
                             {/users}
                         </select>
                     </div>
-                    <div class="form-group required col-xs-6">
+                    <div class="form-group col-xs-6">
                         <label>Час виконання</label>
                         <div class="input-group">
                             <input type="number" min="1" class="form-control" name="estimationTime" id="update-form-estimation-time">
                             <span class="input-group-addon">хв.</span>
                         </div>
                     </div>
-                    <div class="form-group required col-xs-6">
+                    <div class="form-group col-xs-6">
                         <label>Вартість</label>
                         <div class="input-group">
                             {@eq key=typeUser value=1}
