@@ -166,35 +166,12 @@ $(document).ready(function () {
                 url: "/admin/chart/profit",
                 type: 'post',
                 data: newData,
-                success: function (result) {
-                    console.log(result);
-
-                    var totalProfitHead = '' +
-                        '<h4>Прибуток</h4>' +
-                        '<div class="panel panel-default">' +
-                        '<table class="table">' +
-                        '<thead>' +
-                        '<tr>' +
-                        '<th class="tac">Від</th>' +
-                        '<th class="tac status status-bgc-pending">До</th>' +
-                        '<th class="tac status status-bgc-processing">Виконано задач</th>' +
-                        '<th class="tac status">Прибуток</th>' +
-                        '</tr>' +
-                        '</thead>' +
-                        '<tbody>';
-
-                    var totalProfitBody1 = '' +
-                            '<tr>' +
-                            '<td class="tac" class="tac"> 02.10.2018 </td>' +
-                            '<td class="tac status-bgc-pending"> 03.10.2018 </td>' +
-                            '<td class="tac status-bgc-processing"> 32 </td>' +
-                            '<td class="tac"> 24433 грн</td>' +
-                            '</tr>';
-
-                    var totalProfitBody2 = '' +
-                        '</tbody>' +
-                        '</table>' +
-                        '</div>';
+                success: function (response) {
+                    var dates = response.data.dates,
+                        money = response.data.money,
+                        counts = response.data.conunts;
+                    var totalCount = 0;
+                    var totalSumm = 0;
 
                     var profitByDayHead =  '' +
                         '<h4>Прибуток по дням</h4>' +
@@ -208,13 +185,45 @@ $(document).ready(function () {
                         '</tr>' +
                         '</thead>' +
                         '<tbody>';
-                    var profitByDayBody1 = '' +
-                        '<tr>' +
-                        '<td class="tac" class="tac"> 02.10.2018 </td>' +
-                        '<td class="tac status-bgc-processing"> 5 </td>' +
-                        '<td class="tac"> 1200 грн</td>' +
-                        '</tr>';
+
+
+                    var profitByDayBody1 = '';
+                     for(var i = 0; i < dates.length; i++){
+                         totalCount += counts[i];
+                         totalSumm += money[i];
+                         profitByDayBody1 +=   '<tr>' +
+                         '<td class="tac" class="tac">'+ dates[i] +'</td>' +
+                         '<td class="tac status-bgc-processing"> '+ counts[i] +' </td>' +
+                         '<td class="tac">'+ money[i] +'грн</td>' +
+                         '</tr>';
+                     }
+
                     var profitByDayBody2 = '' +
+                        '</tbody>' +
+                        '</table>' +
+                        '</div>';
+
+                    var totalProfitHead = '' +
+                        '<h4>Прибуток</h4>' +
+                        '<div class="panel panel-default">' +
+                        '<table class="table">' +
+                        '<thead>' +
+                        '<tr>' +
+                        '<th class="tac">Від - До</th>' +
+                        '<th class="tac status status-bgc-processing">Виконано задач</th>' +
+                        '<th class="tac status">Прибуток</th>' +
+                        '</tr>' +
+                        '</thead>' +
+                        '<tbody>';
+
+                    var totalProfitBody1 = '' +
+                        '<tr>' +
+                        '<td class="tac" class="tac">'+ formatDate(setTimeToDate(data[0].value)) + ' - ' + formatDate(setTimeToDate(data[1].value))+'</td>' +
+                        '<td class="tac status-bgc-processing"> '+ totalCount +' </td>' +
+                        '<td class="tac"> '+ totalSumm +' грн</td>' +
+                        '</tr>';
+
+                    var totalProfitBody2 = '' +
                         '</tbody>' +
                         '</table>' +
                         '</div>';

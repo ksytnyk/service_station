@@ -17,6 +17,7 @@ const validation = require('../../middleware/validation');
 const requestsFactory = require('../../helpers/requestsFactory');
 const countRequestHistory = require('../../helpers/countRequestHistory');
 const countMoney = require('../../helpers/countMoney');
+const countDoneTaskMoney = require('../../helpers/countDoneTaskMoney');
 const countTasks = require('../../helpers/countTasks');
 const nodemailer = require('../../helpers/nodemailer');
 const countEndTime = require('../../helpers/countEndTime');
@@ -946,8 +947,7 @@ router.post('/chart/tasks', (req, res) => {
 router.post('/chart/profit', (req, res) => {
     console.log(req.body);
     Task.getAllTasksForChart(req.body).then(tasks => {
-        // console.log(tasks);
-        res.status(200).send({data: tasks});
+        res.status(200).send({data: countDoneTaskMoney(req.body, tasks)});
     }).catch(error => {
         console.log(error);
         res.status(400).send({error: error});
