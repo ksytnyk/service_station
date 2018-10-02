@@ -32,6 +32,10 @@ $(document).ready(function () {
         chartFinances();
         lastChart = '#chart-finances';
     });
+    $('#chart-real-profit').on('click', () => {
+        realProfit();
+        lastChart = '#chart-real-profit';
+    });
 
     function chartRequest() {
         var data = $('#between-dates').serializeArray();
@@ -148,6 +152,92 @@ $(document).ready(function () {
             $('#div-for-chart1').empty();
             $('#div-for-chart2').empty();
             $('#div-for-chart').empty();
+        }
+    }
+
+   function realProfit(){
+        var data = $('#between-dates').serializeArray();
+        var newData = {
+            fromDateChart: setTimeToDate(data[0].value),
+            toDateChart: setTimeToDate(data[1].value)
+        };
+        if (checkSequence(newData)) {
+            $.ajax({
+                url: "/admin/chart/profit",
+                type: 'post',
+                data: newData,
+                success: function (result) {
+                    console.log(result);
+
+                    var totalProfitHead = '' +
+                        '<h4>Прибуток</h4>' +
+                        '<div class="panel panel-default">' +
+                        '<table class="table">' +
+                        '<thead>' +
+                        '<tr>' +
+                        '<th class="tac">Від</th>' +
+                        '<th class="tac status status-bgc-pending">До</th>' +
+                        '<th class="tac status status-bgc-processing">Виконано задач</th>' +
+                        '<th class="tac status">Прибуток</th>' +
+                        '</tr>' +
+                        '</thead>' +
+                        '<tbody>';
+
+                    var totalProfitBody1 = '' +
+                            '<tr>' +
+                            '<td class="tac" class="tac"> 02.10.2018 </td>' +
+                            '<td class="tac status-bgc-pending"> 03.10.2018 </td>' +
+                            '<td class="tac status-bgc-processing"> 32 </td>' +
+                            '<td class="tac"> 24433 грн</td>' +
+                            '</tr>';
+
+                    var totalProfitBody2 = '' +
+                        '</tbody>' +
+                        '</table>' +
+                        '</div>';
+
+                    var profitByDayHead =  '' +
+                        '<h4>Прибуток по дням</h4>' +
+                        '<div class="panel panel-default">' +
+                        '<table class="table">' +
+                        '<thead>' +
+                        '<tr>' +
+                        '<th class="tac">День</th>' +
+                        '<th class="tac status status-bgc-pending">Виконано задач</th>' +
+                        '<th class="tac status">Прибуток</th>' +
+                        '</tr>' +
+                        '</thead>' +
+                        '<tbody>';
+                    var profitByDayBody1 = '' +
+                        '<tr>' +
+                        '<td class="tac" class="tac"> 02.10.2018 </td>' +
+                        '<td class="tac status-bgc-processing"> 5 </td>' +
+                        '<td class="tac"> 1200 грн</td>' +
+                        '</tr>';
+                    var profitByDayBody2 = '' +
+                        '</tbody>' +
+                        '</table>' +
+                        '</div>';
+
+
+                    var profitTable = totalProfitHead + totalProfitBody1 + totalProfitBody2;
+                    var profitByDay = profitByDayHead + profitByDayBody1 + profitByDayBody2;
+
+                    $('#div-for-chart1').empty();
+                    $('#div-for-chart2').empty();
+                    $('#div-for-chart').empty().append(profitTable, profitByDay);
+                }
+            });
+        } else {
+        //     showErrorAlert({
+        //         responseJSON: {
+        //             errors: [{msg: 'Неправильний порядок дат.'}]
+        //         }
+        //     });
+        //
+        //     $('#div-for-chart').empty();
+        //     $('#div-for-chart1').empty();
+        //     $('#div-for-chart2').empty();
         }
     }
 
