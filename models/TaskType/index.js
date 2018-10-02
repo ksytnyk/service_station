@@ -262,9 +262,9 @@ TaskType.createTaskType = function (taskType) {
             carModel: null,
             carMarkk: null
         };
-
+        */
         if (taskType.typeOfCar !== 'default' && taskType.typeOfCar) {
-            search.typeOfCar = +taskType.typeOfCar;
+            /*search.typeOfCar = +taskType.typeOfCar;*/
             taskType.typeOfCar = +taskType.typeOfCar;
         }
         else {
@@ -272,7 +272,7 @@ TaskType.createTaskType = function (taskType) {
         }
 
         if (taskType.carModel !== 'default' && taskType.carModel) {
-            search.carModel = +taskType.carModel;
+            /*search.carModel = +taskType.carModel;*/
             taskType.carModel = +taskType.carModel;
         }
         else {
@@ -280,12 +280,12 @@ TaskType.createTaskType = function (taskType) {
         }
 
         if (taskType.carMarkk !== 'default' && taskType.carMarkk) {
-            search.carMarkk = +taskType.carMarkk;
+            /*search.carMarkk = +taskType.carMarkk;*/
             taskType.carMarkk = +taskType.carMarkk;
         }
         else {
             delete taskType.carMarkk;
-        }*/
+        }
 
         /*TaskType
             .findAll({
