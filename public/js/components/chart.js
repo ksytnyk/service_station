@@ -8,7 +8,11 @@ $(document).ready(function () {
         $('#from-date-for-statistic').val(formatDate(fromDate));
         $('#to-date-for-statistic').val(formatDate(toDate));
         setTimeout(function () {
-            $('#chart-finances').click();
+            if(getRole(window.location.pathname) === "/admin"){
+                $('#chart-finances').click();
+            }else{
+                $('#chart-real-profit').click();
+            }
         }, 1);
     }
 
@@ -31,6 +35,10 @@ $(document).ready(function () {
     $('#chart-finances').on('click', function () {
         chartFinances();
         lastChart = '#chart-finances';
+    });
+    $('#chart-real-profit').on('click', () => {
+        realProfit();
+        lastChart = '#chart-real-profit';
     });
 
     function chartRequest() {
@@ -148,6 +156,115 @@ $(document).ready(function () {
             $('#div-for-chart1').empty();
             $('#div-for-chart2').empty();
             $('#div-for-chart').empty();
+            $('#div-for-chart3').empty();
+        }
+    }
+
+   function realProfit(){
+        var data = $('#between-dates').serializeArray();
+        var newData = {
+            fromDateChart: setTimeToDate(data[0].value),
+            toDateChart: setTimeToDate(data[1].value)
+        };
+
+        if (checkSequence(newData)) {
+            $.ajax({
+                url: getRole(window.location.pathname)+  "/chart/profit",
+                type: 'post',
+                data: newData,
+                success: function (response) {
+                    var dates = response.data.dates,
+                        money = response.data.money,
+                        counts = response.data.conunts;
+                    var totalCount = 0;
+                    var totalSumm = 0;
+                    var today = new Date();
+
+                    var profitByDayHead =  '' +
+                        '<h4>Прибуток по дням</h4>' +
+                        '<div class="panel panel-default">' +
+                        '<table class="table">' +
+                        '<thead>' +
+                        '<tr>' +
+                        '<th class="tac">День</th>' +
+                        '<th class="tac">Виконано задач</th>' +
+                        '<th class="tac">Прибуток</th>' +
+                        '</tr>' +
+                        '</thead>' +
+                        '<tbody>';
+
+
+
+                    var profitByDayBody1 = '';
+                     for(var i = dates.length-1; i >= 0; i--){
+                         totalCount += counts[i];
+                         totalSumm += money[i];
+                         profitByDayBody1 +=
+                             formatDate(today, true) === dates[i] ?
+                                 '<tr class="status-bgc-done">' +
+                         '<td class="tac">'+ dates[i] +'</td>' +
+                         '<td class="tac"> '+ counts[i] +' </td>' +
+                         '<td class="tac">'+ money[i] +'грн</td>' +
+                         '</tr>'
+                             :
+                             '<tr>' +
+                             '<td class="tac" class="tac">'+ dates[i] +'</td>' +
+                             '<td class="tac"> '+ counts[i] +' </td>' +
+                             '<td class="tac">'+ money[i] +'грн</td>' +
+                             '</tr>';
+                     }
+
+                    var profitByDayBody2 = '' +
+                        '</tbody>' +
+                        '</table>' +
+                        '</div>';
+
+                    var totalProfitHead = '' +
+                        '<h4>Прибуток</h4>' +
+                        '<div class="panel panel-default">' +
+                        '<table class="table">' +
+                        '<thead>' +
+                        '<tr>' +
+                        '<th class="tac">Від - До</th>' +
+                        '<th class="tac">Виконано задач</th>' +
+                        '<th class="tac">Прибуток</th>' +
+                        '</tr>' +
+                        '</thead>' +
+                        '<tbody>';
+
+                    var totalProfitBody1 = '' +
+                        '<tr>' +
+                        '<td class="tac" >'+ formatDate(newData.fromDateChart, true) + ' - ' + formatDate(newData.toDateChart, true)+'</td>' +
+                        '<td class="tac"> '+ totalCount +' </td>' +
+                        '<td class="tac"> '+ totalSumm +' грн</td>' +
+                        '</tr>';
+
+                    var totalProfitBody2 = '' +
+                        '</tbody>' +
+                        '</table>' +
+                        '</div>';
+
+
+                    var profitTable = '<div class="profitChart">' + totalProfitHead + totalProfitBody1 + totalProfitBody2 + '</div>';
+                    var profitByDay =  '<div class="profitChart">' + profitByDayHead + profitByDayBody1 + profitByDayBody2 + '</div>';
+
+                    $('#div-for-chart').empty();
+                    $('#div-for-chart1').empty();
+                    $('#div-for-chart2').empty();
+                    $('#div-for-chart3').empty().append(profitTable, profitByDay);
+                }
+            });
+        } else {
+            showErrorAlert({
+                responseJSON: {
+                    errors: [{msg: 'Неправильний порядок дат.'}]
+                }
+            });
+
+            $('#div-for-chart').empty();
+            $('#div-for-chart1').empty();
+            $('#div-for-chart2').empty();
+            $('#div-for-chart3').empty();
         }
     }
 
@@ -166,6 +283,7 @@ $(document).ready(function () {
                 success: function (result) {
                     $('#div-for-chart1').empty();
                     $('#div-for-chart2').empty();
+                    $('#div-for-chart3').empty();
                     $('#div-for-chart').empty().append('<canvas id="myChart" height="125"></canvas>');
 
                     var ctx = document.getElementById("myChart").getContext('2d');
@@ -189,6 +307,7 @@ $(document).ready(function () {
             $('#div-for-chart').empty();
             $('#div-for-chart1').empty();
             $('#div-for-chart2').empty();
+            $('#div-for-chart3').empty();
         }
     }
     function checkSequence(data) {

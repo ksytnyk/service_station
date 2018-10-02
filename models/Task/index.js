@@ -476,7 +476,7 @@ Task.getAllTasksForChart = function (data) {
                         $between: [new Date(data.fromDateChart), new Date(data.toDateChart)]
                     }
                 },
-                attributes: ['planedExecutorID', 'status', 'cost'],
+                attributes: ['planedExecutorID', 'status', 'cost', 'endTime'],
             })
             .then(tasks => {
                 resolve(tasks);

@@ -14,6 +14,10 @@ const describeTaskTypeTable = {
         type: Sequelize.STRING,
         field: 'type_name'
     },
+    articleCode: {
+        type: Sequelize.STRING,
+        field: 'article_code'
+    },
     typeOfCar: {
         type: Sequelize.INTEGER,
         field: 'type_of_car',
@@ -260,7 +264,8 @@ TaskType.createTaskType = function (taskType) {
             typeName: taskType.typeName,
             typeOfCar: null,
             carModel: null,
-            carMarkk: null
+            carMarkk: null,
+            articleCode: null
         };
         */
         if (taskType.typeOfCar !== 'default' && taskType.typeOfCar) {

@@ -25,7 +25,7 @@ $(document).ready(function () {
 
                         $('#task-type-select').append($('<option>', {
                             value: item.id,
-                            text: item.typeName + ' (' + title + ')',
+                            text: item.typeName +' / '+ item.articleCode + ' (' + title + ')',
                             taskTypeID: item.typeName,
                             id: 'taskTypeID' + item.id,
                             title: title
@@ -917,7 +917,7 @@ function updateTaskOnClick(value) {
 
                                 $('#update-form-task-type-select').append($('<option>', {
                                     value: item.id,
-                                    text: item.typeName + ' (' + title + ')',
+                                    text: item.typeName + ' / ' + item.articleCode +  ' (' + title + ')',
                                     updateTaskTypeID: item.typeName,
                                     id: 'updateTaskTypeID' + item.id,
                                     title: title

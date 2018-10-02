@@ -19,6 +19,9 @@ textarea {
     color: #F44336;
     margin-left: 2px;
 }
+.required label.not-required:after {
+    content:none;
+}
 
 input,
 textarea {

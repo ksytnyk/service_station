@@ -196,7 +196,7 @@ function headerFix() {
     });
 }
 
-function formatDate(date) {
+function formatDate(date, timeEmpty) {
     var date = new Date(date);
     var array = [
         date.getFullYear(),
@@ -211,7 +211,9 @@ function formatDate(date) {
         if (item < 10) item = "0" + item;
         return item;
     });
-
+        if(timeEmpty){
+            return res[0] + '.' + res[1] + '.' + res[2]
+        }
     return res[0] + '.' + res[1] + '.' + res[2] + ' ' + res[3] + ':' + res[4];
       //  + ':' + res[5];
 }
