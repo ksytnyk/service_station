@@ -13,7 +13,7 @@
                         <label>Назва задачі</label>
                         <input type="text" class="form-control" id="update-form-type-name" name="typeName">
                     </div>
-                    <div class="from-group col-xs-6">
+                    <div class="form-group col-xs-6">
                         <label>Артикул</label>
                         <input type="text" class="form-control" id="update-form-type-article" name="articleCode">
                     </div>
@@ -54,6 +54,7 @@
                             <span class="input-group-addon">грн</span>
                         </div>
                     </div>
+
 
                     {!Detail table !}
                     {!<div class="form-group required col-xs-12">!}
