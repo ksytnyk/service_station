@@ -615,10 +615,19 @@ router.post('/create-task', validation.createAndUpdateTask(), (req, res) => {
 
                     let result;
                     if (needToOverride) {
-
-                        result = await TaskType.updateTaskType(req.body.typeID, search);
+                        try {
+                            result = await TaskType.updateTaskType(req.body.typeID, search);
+                        } catch (errors) {
+                            console.warn(errors);
+                            res.status(400).send({errors: errors});
+                        }
                     } else {
-                        result = await TaskType.createTaskType(search);
+                        try {
+                            result = await TaskType.createTaskType(search);
+                        } catch (errors) {
+                            console.warn(errors);
+                            res.status(400).send({errors: errors});
+                        }
                     }
                     if (!req.body.typeID) {
                         req.body.typeID = result.taskTypes[0].dataValues.id;
@@ -668,6 +677,8 @@ router.post('/create-task', validation.createAndUpdateTask(), (req, res) => {
 router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
     req.body.endTime = countEndTime(req.body.startTime, +req.body.estimationTime);
 
+    const needToOverride = !!req.body.override;
+
     Request
         .getRequestById(req.body.requestID)
         .then(request => {
@@ -675,100 +686,101 @@ router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
 
             Request
                 .updateRequest(req.body.requestID, {cost: newCost})
-                .then(() => {
+                .then(async () => {
                     var search = {
                         typeName: req.body.name,
-                        typeOfCar: request[0].dataValues.typeOfCar,
-                        carMarkk: request[0].dataValues.carMarkk,
-                        carModel: request[0].dataValues.carModel,
+                        typeOfCar: request[0].dataValues.transportTypeID,
+                        carMarkk: request[0].dataValues.transportMarkkID,
+                        carModel: request[0].dataValues.transportModelID,
                         cost: req.body.cost,
                         estimationTime: req.body.estimationTime,
                         planedExecutorID: req.body.planedExecutorID
                     };
 
-                    if (!req.body.typeID) {
+                    /*if (!req.body.typeID) {
                         search.typeID = true;
+                    }*/
+
+                    let result;
+                    if (needToOverride) {
+                        try {
+                            result = await TaskType.updateTaskType(req.body.typeID, search);
+                        } catch (errors) {
+                            console.warn(errors);
+                            res.status(400).send({errors: errors});
+                        }
+                    } else {
+                        try {
+                            result = await TaskType.createTaskType(search);
+                        } catch (errors) {
+                            console.warn(errors);
+                            res.status(400).send({errors: errors});
+                        }
                     }
-
-                    TaskType
-                        .createTaskType(search)
-                        .then(result => {
-                            if (!req.body.typeID) {
-                                req.body.typeID = result.taskTypes[0].dataValues.id;
-                            }
-
+                    if (!req.body.typeID) {
+                        req.body.typeID = result.taskTypes[0].dataValues.id;
+                    }
+                    Task
+                        .updateTask(req.body.id, req.body)
+                        .then(() => {
                             Task
-                                .updateTask(req.body.id, req.body)
-                                .then(() => {
+                                .getTaskById(req.body.id)
+                                .then(task => {
                                     Task
-                                        .getTaskById(req.body.id)
-                                        .then(task => {
-
-                                            Task
-                                                .getAllTasksStatusOfRequest(req.body.requestID)
-                                                .then(allTasks => {
-
+                                        .getAllTasksStatusOfRequest(req.body.requestID)
+                                        .then(allTasks => {
+                                            Models.TaskDetail
+                                                .createTaskDetail(req.body.id, JSON.parse(req.body.detail))
+                                                .then(() => {
                                                     Models.TaskDetail
-                                                        .createTaskDetail(req.body.id, JSON.parse(req.body.detail))
+                                                        .updateDetailType(JSON.parse(req.body.changeDetail))
                                                         .then(() => {
-
                                                             Models.TaskDetail
-                                                                .updateDetailType(JSON.parse(req.body.changeDetail))
+                                                                .deleteTaskDetail(JSON.parse(req.body.deleteDetail))
                                                                 .then(() => {
-
                                                                     Models.TaskDetail
-                                                                        .deleteTaskDetail(JSON.parse(req.body.deleteDetail))
-                                                                        .then(() => {
+                                                                        .getTaskDetail(req.body.id)
+                                                                        .then(details => {
+                                                                            var condition = false;
+                                                                            var counter = 1;
 
-                                                                            Models.TaskDetail
-                                                                                .getTaskDetail(req.body.id)
-                                                                                .then(details => {
-                                                                                    var condition = false;
-                                                                                    var counter = 1;
+                                                                            for (var key in allTasks) {
+                                                                                if (allTasks[key].dataValues.status !== 3) {
+                                                                                    break;
+                                                                                }
+                                                                                if (counter === allTasks.length) {
+                                                                                    condition = true;
+                                                                                    Request
+                                                                                        .changeStatus(req.body.requestID, {status: status.DONE})
+                                                                                        .then((isDone) => {
+                                                                                            if (request[0].user.dataValues.userEmail)
+                                                                                                nodemailer('done-request', request[0].user.dataValues);
 
-                                                                                    for (var key in allTasks) {
-                                                                                        if (allTasks[key].dataValues.status !== 3) {
-                                                                                            break;
-                                                                                        }
-                                                                                        if (counter === allTasks.length) {
-                                                                                            condition = true;
-                                                                                            Request
-                                                                                                .changeStatus(req.body.requestID, {status: status.DONE})
-                                                                                                .then((isDone) => {
-                                                                                                    if (request[0].user.dataValues.userEmail)
-                                                                                                        nodemailer('done-request', request[0].user.dataValues);
-
-                                                                                                    res.status(200).send({
-                                                                                                        isDone: isDone,
-                                                                                                        request: request,
-                                                                                                        task: task,
-                                                                                                        requestID: req.body.requestID,
-                                                                                                        newCost: newCost,
-                                                                                                        details: details
-                                                                                                    })
-                                                                                                })
-                                                                                                .catch(errors => {
-                                                                                                    console.warn(errors);
-                                                                                                    res.status(400).send({errors: errors});
-                                                                                                });
-                                                                                        }
-                                                                                        counter++;
-                                                                                    }
-
-                                                                                    if (!condition) {
-                                                                                        res.status(200).send({
-                                                                                            request: request,
-                                                                                            task: task,
-                                                                                            requestID: req.body.requestID,
-                                                                                            newCost: newCost,
-                                                                                            details: details
+                                                                                            res.status(200).send({
+                                                                                                isDone: isDone,
+                                                                                                request: request,
+                                                                                                task: task,
+                                                                                                requestID: req.body.requestID,
+                                                                                                newCost: newCost,
+                                                                                                details: details
+                                                                                            })
                                                                                         })
-                                                                                    }
+                                                                                        .catch(errors => {
+                                                                                            console.warn(errors);
+                                                                                            res.status(400).send({errors: errors});
+                                                                                        });
+                                                                                }
+                                                                                counter++;
+                                                                            }
+                                                                            if (!condition) {
+                                                                                res.status(200).send({
+                                                                                    request: request,
+                                                                                    task: task,
+                                                                                    requestID: req.body.requestID,
+                                                                                    newCost: newCost,
+                                                                                    details: details
                                                                                 })
-                                                                                .catch(errors => {
-                                                                                    console.warn(errors);
-                                                                                    res.status(400).send({errors: errors});
-                                                                                });
+                                                                            }
                                                                         })
                                                                         .catch(errors => {
                                                                             console.warn(errors);
@@ -784,17 +796,16 @@ router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
                                                             console.warn(errors);
                                                             res.status(400).send({errors: errors});
                                                         });
-
                                                 })
                                                 .catch(errors => {
                                                     console.warn(errors);
                                                     res.status(400).send({errors: errors});
                                                 });
+                                        })
+                                        .catch(errors => {
+                                            console.warn(errors);
+                                            res.status(400).send({errors: errors});
                                         });
-                                })
-                                .catch(errors => {
-                                    console.warn(errors);
-                                    res.status(400).send({errors: errors});
                                 });
                         })
                         .catch(errors => {
