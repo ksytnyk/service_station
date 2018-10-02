@@ -590,13 +590,15 @@ router.post('/create-task', validation.createAndUpdateTask(), (req, res) => {
 
     req.body.endTime = countEndTime(req.body.startTime, +req.body.estimationTime);
 
+    const needToOverride = !!req.body.override;
+
     Request
         .getRequestById(req.body.requestID)
         .then(request => {
             var newCost = +request[0].dataValues.cost + +req.body.cost;
             Request
                 .updateRequest(req.body.requestID, {cost: newCost})
-                .then(() => {
+                .then(async () => {
                     var search = {
                         typeName: req.body.name,
                         typeOfCar: request[0].dataValues.transportTypeID,
@@ -607,33 +609,34 @@ router.post('/create-task', validation.createAndUpdateTask(), (req, res) => {
                         planedExecutorID: req.body.planedExecutorID
                     };
 
-                    if (!req.body.typeID) {
+                    /*if (!req.body.typeID) {
                         search.typeID = true;
+                    }*/
+
+                    let result;
+                    if (needToOverride) {
+
+                        result = await TaskType.updateTaskType(req.body.typeID, search);
+                    } else {
+                        result = await TaskType.createTaskType(search);
                     }
-                    TaskType
-                        .createTaskType(search)
-                        .then(result => {
-                            if (!req.body.typeID) {
-                                req.body.typeID = result.taskTypes[0].dataValues.id;
-                            }
-                            Task
-                                .createTask(req.body)
-                                .then(task => {
+                    if (!req.body.typeID) {
+                        req.body.typeID = result.taskTypes[0].dataValues.id;
+                    }
+
+                    Task
+                        .createTask(req.body)
+                        .then(task => {
+                            Models.TaskDetail
+                                .createTaskDetail(task.id, JSON.parse(req.body.detail))
+                                .then(() => {
                                     Models.TaskDetail
-                                        .createTaskDetail(task.id, JSON.parse(req.body.detail))
-                                        .then(() => {
-                                            Models.TaskDetail
-                                                .getTaskDetail(task.id)
-                                                .then(taskDetail => {
-                                                    res.status(200).send({
-                                                        result: task,
-                                                        taskDetail: taskDetail
-                                                    });
-                                                })
-                                                .catch(errors => {
-                                                    console.warn(errors);
-                                                    res.status(400).send({errors: errors});
-                                                });
+                                        .getTaskDetail(task.id)
+                                        .then(taskDetail => {
+                                            res.status(200).send({
+                                                result: task,
+                                                taskDetail: taskDetail
+                                            });
                                         })
                                         .catch(errors => {
                                             console.warn(errors);
@@ -649,6 +652,7 @@ router.post('/create-task', validation.createAndUpdateTask(), (req, res) => {
                             console.warn(errors);
                             res.status(400).send({errors: errors});
                         });
+
                 })
                 .catch(errors => {
                     console.warn(errors);

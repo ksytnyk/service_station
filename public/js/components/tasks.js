@@ -869,6 +869,8 @@ $(document).ready(function () {
 function clearModalAddTask() {
     $('.create-form-task').val('');
     $('#detail-type-tbody').empty();
+    $('#override-checkbox').prop('checked',false);
+    $('.override-block').removeClass('hidden');
 }
 
 function updateTaskOnClick(value) {

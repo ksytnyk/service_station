@@ -44,6 +44,7 @@ $(document).ready(function () {
         $('.task-estimation-time').val('');
         $('.task-planed-executor-id').val('').change();
         $('.task-type-input').val(searchVariable);
+        $('.override-block').addClass('hidden');
         searchVariable = '';
     });
 

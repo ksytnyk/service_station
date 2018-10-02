@@ -256,7 +256,7 @@ TaskType.getTaskTypesByCarAttributes = function (typeOfCar, carMarkk, carModel) 
 
 TaskType.createTaskType = function (taskType) {
     return new Promise((resolve, reject) => {
-        var search = {
+        /*var search = {
             typeName: taskType.typeName,
             typeOfCar: null,
             carModel: null,
@@ -285,15 +285,15 @@ TaskType.createTaskType = function (taskType) {
         }
         else {
             delete taskType.carMarkk;
-        }
+        }*/
 
-        TaskType
+        /*TaskType
             .findAll({
                 where: search
             })
             .then(result => {
 
-                if (result.length === 0 && taskType.typeID) {
+                if (result.length === 0 && taskType.typeID) {*/
                     TaskType
                         .build(taskType)
                         .save()
@@ -307,7 +307,7 @@ TaskType.createTaskType = function (taskType) {
                             console.warn(error);
                             reject(error);
                         });
-                } else {
+                /*} else {
                     resolve({
                         taskTypes: result,
                         hasResult: false
@@ -317,7 +317,7 @@ TaskType.createTaskType = function (taskType) {
             .catch(error => {
                 console.warn(error);
                 reject(error);
-            });
+            });*/
     });
 };
 
