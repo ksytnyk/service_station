@@ -45,6 +45,7 @@
     <div id="div-for-chart"></div>
     <div id="div-for-chart1"></div>
     <div id="div-for-chart2"></div>
+    <div id="div-for-chart3"></div>
 </div>
 
 {>"modal_windows/users/create_user"/}

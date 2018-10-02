@@ -152,6 +152,7 @@ $(document).ready(function () {
             $('#div-for-chart1').empty();
             $('#div-for-chart2').empty();
             $('#div-for-chart').empty();
+            $('#div-for-chart3').empty();
         }
     }
 
@@ -161,6 +162,7 @@ $(document).ready(function () {
             fromDateChart: setTimeToDate(data[0].value),
             toDateChart: setTimeToDate(data[1].value)
         };
+
         if (checkSequence(newData)) {
             $.ajax({
                 url: "/admin/chart/profit",
@@ -172,6 +174,7 @@ $(document).ready(function () {
                         counts = response.data.conunts;
                     var totalCount = 0;
                     var totalSumm = 0;
+                    var today = new Date();
 
                     var profitByDayHead =  '' +
                         '<h4>Прибуток по дням</h4>' +
@@ -180,22 +183,31 @@ $(document).ready(function () {
                         '<thead>' +
                         '<tr>' +
                         '<th class="tac">День</th>' +
-                        '<th class="tac status status-bgc-pending">Виконано задач</th>' +
-                        '<th class="tac status">Прибуток</th>' +
+                        '<th class="tac">Виконано задач</th>' +
+                        '<th class="tac">Прибуток</th>' +
                         '</tr>' +
                         '</thead>' +
                         '<tbody>';
 
 
+
                     var profitByDayBody1 = '';
-                     for(var i = 0; i < dates.length; i++){
+                     for(var i = dates.length-1; i >= 0; i--){
                          totalCount += counts[i];
                          totalSumm += money[i];
-                         profitByDayBody1 +=   '<tr>' +
-                         '<td class="tac" class="tac">'+ dates[i] +'</td>' +
-                         '<td class="tac status-bgc-processing"> '+ counts[i] +' </td>' +
+                         profitByDayBody1 +=
+                             formatDate(today, true) === dates[i] ?
+                                 '<tr class="status-bgc-done">' +
+                         '<td class="tac">'+ dates[i] +'</td>' +
+                         '<td class="tac"> '+ counts[i] +' </td>' +
                          '<td class="tac">'+ money[i] +'грн</td>' +
-                         '</tr>';
+                         '</tr>'
+                             :
+                             '<tr>' +
+                             '<td class="tac" class="tac">'+ dates[i] +'</td>' +
+                             '<td class="tac"> '+ counts[i] +' </td>' +
+                             '<td class="tac">'+ money[i] +'грн</td>' +
+                             '</tr>';
                      }
 
                     var profitByDayBody2 = '' +
@@ -210,16 +222,16 @@ $(document).ready(function () {
                         '<thead>' +
                         '<tr>' +
                         '<th class="tac">Від - До</th>' +
-                        '<th class="tac status status-bgc-processing">Виконано задач</th>' +
-                        '<th class="tac status">Прибуток</th>' +
+                        '<th class="tac">Виконано задач</th>' +
+                        '<th class="tac">Прибуток</th>' +
                         '</tr>' +
                         '</thead>' +
                         '<tbody>';
 
                     var totalProfitBody1 = '' +
                         '<tr>' +
-                        '<td class="tac" class="tac">'+ formatDate(setTimeToDate(data[0].value)) + ' - ' + formatDate(setTimeToDate(data[1].value))+'</td>' +
-                        '<td class="tac status-bgc-processing"> '+ totalCount +' </td>' +
+                        '<td class="tac" >'+ formatDate(newData.fromDateChart, true) + ' - ' + formatDate(newData.toDateChart, true)+'</td>' +
+                        '<td class="tac"> '+ totalCount +' </td>' +
                         '<td class="tac"> '+ totalSumm +' грн</td>' +
                         '</tr>';
 
@@ -229,24 +241,26 @@ $(document).ready(function () {
                         '</div>';
 
 
-                    var profitTable = totalProfitHead + totalProfitBody1 + totalProfitBody2;
-                    var profitByDay = profitByDayHead + profitByDayBody1 + profitByDayBody2;
+                    var profitTable = '<div class="profitChart">' + totalProfitHead + totalProfitBody1 + totalProfitBody2 + '</div>';
+                    var profitByDay =  '<div class="profitChart">' + profitByDayHead + profitByDayBody1 + profitByDayBody2 + '</div>';
 
+                    $('#div-for-chart').empty();
                     $('#div-for-chart1').empty();
                     $('#div-for-chart2').empty();
-                    $('#div-for-chart').empty().append(profitTable, profitByDay);
+                    $('#div-for-chart3').empty().append(profitTable, profitByDay);
                 }
             });
         } else {
-        //     showErrorAlert({
-        //         responseJSON: {
-        //             errors: [{msg: 'Неправильний порядок дат.'}]
-        //         }
-        //     });
-        //
-        //     $('#div-for-chart').empty();
-        //     $('#div-for-chart1').empty();
-        //     $('#div-for-chart2').empty();
+            showErrorAlert({
+                responseJSON: {
+                    errors: [{msg: 'Неправильний порядок дат.'}]
+                }
+            });
+
+            $('#div-for-chart').empty();
+            $('#div-for-chart1').empty();
+            $('#div-for-chart2').empty();
+            $('#div-for-chart3').empty();
         }
     }
 
@@ -265,6 +279,7 @@ $(document).ready(function () {
                 success: function (result) {
                     $('#div-for-chart1').empty();
                     $('#div-for-chart2').empty();
+                    $('#div-for-chart3').empty();
                     $('#div-for-chart').empty().append('<canvas id="myChart" height="125"></canvas>');
 
                     var ctx = document.getElementById("myChart").getContext('2d');
@@ -288,6 +303,7 @@ $(document).ready(function () {
             $('#div-for-chart').empty();
             $('#div-for-chart1').empty();
             $('#div-for-chart2').empty();
+            $('#div-for-chart3').empty();
         }
     }
     function checkSequence(data) {

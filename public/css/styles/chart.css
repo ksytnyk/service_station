@@ -50,3 +50,10 @@
 .chart .table tr th:last-child {
     border-right: none;
 }
+
+.profitChart{
+    max-width: 66.6%;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
+}
