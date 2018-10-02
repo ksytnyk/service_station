@@ -946,7 +946,7 @@ router.post('/chart/tasks', (req, res) => {
 router.post('/chart/profit', (req, res) => {
     console.log(req.body);
     Task.getAllTasksForChart(req.body).then(tasks => {
-        console.log(tasks);
+        // console.log(tasks);
         res.status(200).send({data: tasks});
     }).catch(error => {
         console.log(error);
