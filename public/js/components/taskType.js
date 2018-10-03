@@ -2,6 +2,80 @@ $(document).ready(function () {
 
     updateTaskType('.update-task-type');
 
+
+    $('#model1').on('change', () => {
+        var body = {
+            typeOfCar: $('#typeOfCar1').val(),
+            carMarkk: $('#markk1').val(),
+            carModel: $('#model1').val()
+        };
+        console.log(body);
+        $.ajax({
+            url: getRole(window.location.pathname) + '/get-task-types',
+            type: 'post',
+            data: body,
+            success: (response) =>{
+                updateDetailSelector(response.detailTypes);
+            }
+        });
+    });
+
+    /**
+     * Update Selector detail inside create Type task popup
+     * @param details array details
+     */
+    var updateDetailSelector = (details) => {
+        $('#detail-type-select').empty();
+        var options = [];
+        details.forEach(detail => {
+            options.push(
+                '<option id="detailTypeID'+ detail.id +'" detailPrice="'+ detail.detailPrice +'" value="' + detail.id + '" detailName="' + detail.detailName +
+                ' / '+ detail.detailCode + '" detailPrice="'+ detail.detailPrice +'" title="Усі категорії"> '+ detail.detailName +' / ' + detail.detailCode + '</option>"'
+            );
+            $('#detail-type-select').append(options);
+        })
+    };
+
+    /**
+     * Send to server request create Task Type
+     * inside array details
+     */
+    $('#create-task-type').on('click', (event) => {
+        event.preventDefault();
+        var formDataArray = $('#create-type-task-form').serializeArray();
+        var body = {
+            typeName: formDataArray[0].value,
+            articleCode: formDataArray[1].value,
+            typeOfCar: formDataArray[2].value,
+            carMarkk: formDataArray[3].value,
+            carModel: formDataArray[4].value,
+            planedExecutorID: formDataArray[5].value,
+            estimationTime: formDataArray[6].value,
+            cost: formDataArray[7].value,
+            details: []
+        };
+        var rows = $('#detail-type-tbody').children();
+
+        for(var i = 0; i < rows.length; i++){
+            body.details.push({
+                detailID:rows[i].getAttribute('detailid'),
+                detailQuantity: rows[i].getAttribute('detailquantity'),
+                detailType:rows[i].getAttribute('detailType'),
+                detailName:rows[i].getAttribute('detailName')
+            })
+        }
+
+        $.ajax({
+            url: getRole(window.location.pathname) + '/create-task-type',
+            type: 'post',
+            data: body,
+            success:  (response) =>  {
+                console.log(response);
+            }
+        })
+    });
+
+
     function updateTaskType(value) {
         $(value).on('click', function () {
             $('#update-form-id').val($(this).data('id'));

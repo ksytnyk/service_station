@@ -1141,6 +1141,7 @@ router.post('/request-type', (req, res) => {
 });
 
 router.post('/create-task-type', validation.createAndUpdateTaskType('create'), (req, res) => {
+    console.log(req.body);
     req.body.typeID = true;
     TaskType
         .createTaskType(req.body)
