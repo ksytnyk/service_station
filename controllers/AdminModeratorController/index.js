@@ -963,7 +963,6 @@ router.post('/chart/tasks', (req, res) => {
 });
 
 router.post('/chart/profit', (req, res) => {
-    console.log(req.body);
     Task.getAllTasksForChart(req.body).then(tasks => {
         res.status(200).send({data: countDoneTaskMoney(req.body, tasks)});
     }).catch(error => {

@@ -288,6 +288,7 @@ table.dataTable {
     border-collapse:collapse !important;
 }
 
+
 .table {
     table-layout: fixed;
 }
@@ -345,6 +346,9 @@ thead {
 
 .table .table {
     border:none;
+}
+.table #tasks-table_wrapper .row:first-child{
+    display:none;
 }
 .table .tac {
     text-align: center;
