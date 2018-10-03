@@ -262,6 +262,7 @@ span[disabled]{
 }
 .panel div.dataTables_wrapper div.dataTables_filter label{
     width:100%;
+    margin-bottom: 15px;
 }
 a.clean-search{
     width: 2%;
@@ -284,7 +285,9 @@ table.dataTable {
     margin-top:0 !important;
     margin-bottom: 85px !important;
     border-radius: 3px;
+    border-collapse:collapse !important;
 }
+
 .table {
     table-layout: fixed;
 }
@@ -338,6 +341,10 @@ thead {
     font-size: 20px;
     padding-left: 15px;
     background-color: #ddd;
+}
+
+.table .table {
+    border:none;
 }
 .table .tac {
     text-align: center;
