@@ -15,6 +15,15 @@
     width: 125px;
 }
 
+.datepicker-bookkeeper{
+    position: relative;
+    left: 50%;
+    margin-bottom:-25px;
+    z-index: 1;
+    /*width:33.3%;*/
+    transform: translate(-50%);
+}
+
 .chart .status-bgc-pending {
     background-color: rgba(255, 165, 0, 0.45) !important;
     color: #222;

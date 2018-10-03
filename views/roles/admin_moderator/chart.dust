@@ -6,6 +6,9 @@
 
 <div class="col-xs-12 chart">
     <form role="form" id="between-dates">
+
+
+{@ne key=typeUser value=6}
         <div class="form-group col-xs-2">
             <label for="from-date-for-statistic">
                 Від (дата / час)
@@ -18,7 +21,6 @@
             </label>
             <input class="form-control datetimepickerN" id="to-date-for-statistic" name="toDateChart">
         </div>
-        {@ne key=typeUser value=2}
             <div class="form-group col-xs-2">
                 <button type="button" class="btn btn-primary col-xs-12" id="chart-request" style="margin-top: 25px;">
                     Замовлення
@@ -34,12 +36,33 @@
                     Фінанси
                 </button>
             </div>
+            <div class="form-group col-xs-2">
+                <button type="button" class="btn col-xs-12" id="chart-real-profit" style="margin-top: 25px;">
+                    Прибуток
+                </button>
+            </div>
         {/ne}
-        <div class="form-group col-xs-2">
-            <button type="button" class="btn col-xs-12" id="chart-real-profit" style="margin-top: 25px;">
-                Прибуток
-            </button>
-        </div>
+        {@eq key=typeUser value=6}
+            <div class="col-xs-6 datepicker-bookkeeper">
+                <div class="form-group col-xs-6">
+                    <label for="from-date-for-statistic">
+                        Від (дата / час)
+                    </label>
+                    <input class="form-control datetimepickerN" id="from-date-for-statistic" name="fromDateChart">
+                </div>
+                <div class="form-group col-xs-6">
+                    <label for="to-date-for-statistic">
+                        До (дата / час)
+                    </label>
+                    <input class="form-control datetimepickerN" id="to-date-for-statistic" name="toDateChart">
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn col-xs-12" id="chart-real-profit" style="visibility: hidden; margin-top: 25px;">
+                    Прибуток
+                </button>
+            </div>
+        {/eq}
     </form>
     <div id="statistic-table"></div>
 </div>
