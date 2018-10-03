@@ -602,6 +602,7 @@ router.post('/create-task', validation.createAndUpdateTask(), (req, res) => {
                 .then(async () => {
                     var search = {
                         typeName: req.body.name,
+                        articleCode: req.body.articleCode,
                         typeOfCar: request[0].dataValues.transportTypeID,
                         carMarkk: request[0].dataValues.transportMarkkID,
                         carModel: request[0].dataValues.transportModelID,
@@ -676,6 +677,7 @@ router.post('/create-task', validation.createAndUpdateTask(), (req, res) => {
 });
 
 router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
+    console.log(req.body);
     req.body.endTime = countEndTime(req.body.startTime, +req.body.estimationTime);
 
     const needToOverride = !!req.body.override;
@@ -690,6 +692,7 @@ router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
                 .then(async () => {
                     var search = {
                         typeName: req.body.name,
+                        articleCode: req.body.articleCode,
                         typeOfCar: request[0].dataValues.transportTypeID,
                         carMarkk: request[0].dataValues.transportMarkkID,
                         carModel: request[0].dataValues.transportModelID,
@@ -1140,7 +1143,6 @@ router.post('/request-type', (req, res) => {
 
 router.post('/create-task-type', validation.createAndUpdateTaskType('create'), (req, res) => {
     req.body.typeID = true;
-
     TaskType
         .createTaskType(req.body)
         .then((result) => {

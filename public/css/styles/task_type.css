@@ -8,3 +8,8 @@
 .update_task_type .select2 {
     width: 100% !important;
 }
+.name-and-article{
+    width:47%;
+    display:inline;
+    margin-left:5px;
+}

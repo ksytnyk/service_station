@@ -13,21 +13,26 @@
                     <input type="hidden" name="requestID" id="requestIDForTask">
                     <div class="form-group required col-xs-4" id="create_new_task">
                         <label>Назва задачі</label> / <label class="not-required">Артикул</label>
-                        <input type="text" class="form-control create-form-task hidden task-type-input" id="task-type-input" name="name">
+                        <input type="text" class="name-and-article form-control create-form-task hidden task-type-input" id="task-type-input" name="name">
+                        <input type="text" class="name-and-article form-control create-form-task hidden task-type-input" id="task-type-article-code">
                         <div class="input-group">
                             <select class="form-control add_select2 create-form-task task-type-select" id="task-type-select" name="name2">
                                 {#taskTypes}
                                 {@eq key=title value="0"}
-                                <option value="{id}" taskTypeID="{typeName}" id="taskTypeID{id}" title="Усі категорії">{typeName} / {articleCode} (Усі категорії)</option>
+                                <option value="{id}" taskTypeID="{typeName}" updateTaskArticle="{articleCode}"
+        id="taskTypeID{id}" title="Усі категорії">{typeName} / {articleCode} (Усі категорії)</option>
                                 {/eq}
                                 {@eq key=title value="1"}
-                                <option value="{id}" taskTypeID="{typeName}" id="taskTypeID{id}" title="Категорія: {typeOfCar}">{typeName} / {articleCode} (Категорія: {transportType.transportTypeName})</option>
+                                <option value="{id}" taskTypeID="{typeName}" updateTaskArticle="{articleCode}"
+        id="taskTypeID{id}" title="Категорія: {typeOfCar}">{typeName} / {articleCode} (Категорія: {transportType.transportTypeName})</option>
                                 {/eq}
                                 {@eq key=title value="2"}
-                                <option value="{id}" taskTypeID="{typeName}" id="taskTypeID{id}" title="Категорія: {typeOfCar}, {carMarkk}">{typeName} / {articleCode} (Категорія: {transportType.transportTypeName}, {transportMarkk.transportMarkkName})</option>
+                                <option value="{id}" taskTypeID="{typeName}" updateTaskArticle="{articleCode}"
+                                        id="taskTypeID{id}" title="Категорія: {typeOfCar}, {carMarkk}">{typeName} / {articleCode} (Категорія: {transportType.transportTypeName}, {transportMarkk.transportMarkkName})</option>
                                 {/eq}
                                 {@eq key=title value="3"}
-                                <option value="{id}" taskTypeID="{typeName}" id="taskTypeID{id}" title="Категорія: {typeOfCar}, {carMarkk}, {carModel}">{typeName} / {articleCode} (Категорія: {transportType.transportTypeName}, {transportMarkk.transportMarkkName}, {transportModel.transportModelName})</option>
+                                <option value="{id}" taskTypeID="{typeName}" updateTaskArticle="{articleCode}"
+                                        id="taskTypeID{id}" title="Категорія: {typeOfCar}, {carMarkk}, {carModel}">{typeName} / {articleCode} (Категорія: {transportType.transportTypeName}, {transportMarkk.transportMarkkName}, {transportModel.transportModelName})</option>
                                 {/eq}
                                 {/taskTypes}
                             </select>

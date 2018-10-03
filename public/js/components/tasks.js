@@ -94,6 +94,11 @@ $(document).ready(function () {
             name: 'detail',
             value: JSON.stringify(detailArray)
         });
+        if($('#task-type-article-code').val()){
+            dataArr.push({name:'articleCode', value: $('#task-type-article-code').val()})
+        }else{
+            dataArr.push({name:'articleCode', value: $('#taskTypeID' + $('.task-type-select').serializeArray()[0].value).attr('updateTaskArticle')})
+        }
 
         $.ajax({
             url: getRole(window.location.pathname) + '/create-task',
@@ -259,6 +264,11 @@ $(document).ready(function () {
                     value: JSON.stringify(changeDetailArray)
                 }
             );
+        }
+        if($('#update-form-task-article-code').val()){
+            dataArr.push({name:'articleCode', value: $('#update-form-task-article-code').val()})
+        }else{
+            dataArr.push({name:'articleCode', value: $('#taskTypeID' + $('.update-form-task-type-select').serializeArray()[0].value).attr('updateTaskArticle')})
         }
 
         $.ajax({
@@ -871,6 +881,7 @@ function clearModalAddTask() {
     $('#detail-type-tbody').empty();
     $('#override-checkbox').prop('checked',false);
     $('.override-block').removeClass('hidden');
+    $('.update-form-task-article-code').addClass('hidden');
 }
 
 function updateTaskOnClick(value) {

@@ -40,6 +40,8 @@ $(document).ready(function () {
         $('#create_new_task .select2').addClass("hidden");
         $('#create_new_task .input-group').addClass("hidden");
         $('.task-type-input').removeClass("hidden");
+        $('.override-block').addClass("hidden");
+        $('.task-type-article-code').removeClass("hidden");
         $('.task-cost').val('');
         $('.task-estimation-time').val('');
         $('.task-planed-executor-id').val('').change();
@@ -56,6 +58,8 @@ $(document).ready(function () {
         $('#update_new_task .select2').addClass("hidden");
         $('#update_new_task .input-group').addClass("hidden");
         $('.update-form-task-type-input').removeClass("hidden");
+        $('.update-form-task-article-code').removeClass("hidden");
+        $('.override-block').addClass("hidden");
         if (getRole(window.location.pathname) === '/admin') {
             $('#update-form-task-cost').val('');
         }
