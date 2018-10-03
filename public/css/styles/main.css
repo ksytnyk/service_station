@@ -253,8 +253,8 @@ span[disabled]{
     box-shadow: none;
 }
 .panel div.dataTables_wrapper div.dataTables_filter input {
-    font-size: 18px;
-    height: 40px;
+    font-size: 16px;
+    height: 30px;
     width: 80%;
 }
 .panel div.dataTables_wrapper div.dataTables_filter label{
@@ -263,14 +263,14 @@ span[disabled]{
 a.clean-search{
     width: 2%;
     position: absolute;
-    right:32px;
-    top:6px;
+    right: 38px;
+    top: 4px;
     z-index: 1;
 }
 a.clean-search span.glyphicon.glyphicon-remove{
     width: 40px;
-    font-size:24px !important;
-    margin:0 !important;
+    font-size: 21px !important;
+    margin: 0 !important;
 }
 #change-task-status-comment{
     width: 100%;
@@ -636,5 +636,20 @@ thead {
 #detail-type-input::-webkit-inner-spin-button,
 #detail-type-input::-webkit-outer-spin-button {
     -webkit-appearance: none;
+    margin: 0;
+}
+.modal-dialog.update_task .override-block,
+.modal-dialog.create_task .override-block {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-top: 7px
+}
+.modal-dialog.update_task .override-block input,
+.modal-dialog.create_task .override-block input {
+    margin: 0 5px 0;
+}
+.modal-dialog.update_task .override-block label,
+.modal-dialog.create_task .override-block label {
     margin: 0;
 }
