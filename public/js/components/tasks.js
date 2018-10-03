@@ -1143,6 +1143,8 @@ function setDefaultTaskNameOnCreateTask() {
     $('.task-type-select').val('').change();
     $('#create_new_task .select2').removeClass("hidden");
     $('.task-type-input').addClass("hidden");
+    $('#task-type-article-code').addClass("hidden");
+
     $('#create_new_task .input-group').removeClass("hidden");
     $('#detail-type-select').val('').change();
     $('#detail-type').val('').change();

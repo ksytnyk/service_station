@@ -14,7 +14,7 @@
                     <div class="form-group required col-xs-4" id="create_new_task">
                         <label>Назва задачі</label> / <label class="not-required">Артикул</label>
                         <input type="text" class="name-and-article form-control create-form-task hidden task-type-input" id="task-type-input" name="name">
-                        <input type="text" class="name-and-article form-control create-form-task hidden task-type-input" id="task-type-article-code">
+                        <input type="text" class="name-and-article form-control create-form-task hidden" id="task-type-article-code">
                         <div class="input-group">
                             <select class="form-control add_select2 create-form-task task-type-select" id="task-type-select" name="name2">
                                 {#taskTypes}

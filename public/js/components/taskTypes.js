@@ -40,6 +40,7 @@ $(document).ready(function () {
         $('#create_new_task .select2').addClass("hidden");
         $('#create_new_task .input-group').addClass("hidden");
         $('.task-type-input').removeClass("hidden");
+        $('#task-type-article-code').removeClass("hidden");
         $('.override-block').addClass("hidden");
         $('.task-type-article-code').removeClass("hidden");
         $('.task-cost').val('');
