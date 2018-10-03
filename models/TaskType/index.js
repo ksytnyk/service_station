@@ -16,7 +16,8 @@ const describeTaskTypeTable = {
     },
     articleCode: {
         type: Sequelize.STRING,
-        field: 'article_code'
+        field: 'article_code',
+        defaultValue: null
     },
     typeOfCar: {
         type: Sequelize.INTEGER,
