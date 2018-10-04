@@ -32,12 +32,12 @@ Models.TaskDetail.sync();
 
 // --- TaskDetail Model ---
 
-Models.TaskDetail.deleteTaskDetail = id => {
+Models.TaskDetail.deleteTaskDetailByParam = (field, value) => {
     return new Promise((resolve, reject) => {
         Models.TaskDetail
             .destroy({
                 where: {
-                    id
+                    [field]: value
                 }
             })
             .then(() => {
