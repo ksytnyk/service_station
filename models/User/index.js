@@ -162,7 +162,7 @@ User.createUser = function (user) {
                 resolve(result);
             })
             .catch(error => {
-                console.warn(11111111, error);
+                console.warn(error);
                 reject(error);
             });
     });
