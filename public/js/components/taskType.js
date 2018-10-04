@@ -24,23 +24,24 @@ $(document).ready(function () {
         });
     };
 
-   var  getDetailByTypeTaskID = () => {
-     return {
-          details:[
-              {id:64,
-                taskID:65,
-                detailID:3,
-               detailQuantity:1,
-               detailType:1, createdAt:"2018-10-03T12:46:19.338Z", updatedAt:"2018-10-03T12:46:19.338Z",
-               detail:{"id":3, detailName:"Поршень", detailCode:"2342349", detailPrice:200, transportTypeID:2,
-               transportMarkkID:4, transportModelID:6, createdAt:"2018-09-19T09:46:58.098Z", updatedAt:"2018-09-24T11:01:52.835Z"}
-              },
-              {id:68, taskID:65,detailID:10,detailQuantity:2,detailType:2,createdAt:"2018-10-04T10:17:12.825Z",updatedAt:"2018-10-04T10:17:12.825Z",
-                  detail:{id:10,detailName:"Шатун ",detailCode:"3223221",detailPrice:122,
-                      transportTypeID:2,transportMarkkID:4,transportModelID:6,createdAt:"2018-09-24T07:36:47.693Z",updatedAt:"2018-09-24T07:36:47.693Z"}}
-              ]
-          };
+    /**
+     * get array details by task id
+     * @param taskId
+     */
+   var  getDetailByTypeTaskID = (taskId) => {
+       $.ajax({
+           url: getRole(window.location.pathname) + '/details-of-task-type/' + taskId,
+           type: 'get',
+           success: (response) => {
+               pushDetailsToTable(response.detailTypes, '#detail-table-body-id');
+           }
+       });
    };
+
+   // bind button and get details func
+    $('.update-task-type').on('click', (event) => {
+        getDetailByTypeTaskID(event.currentTarget.getAttribute('data-id'));
+    });
 
     //if user change model car get list details and insert to
     // detail selector in CREATE task type page
@@ -152,6 +153,21 @@ $(document).ready(function () {
         // after inert element to page need repeat bind listener
         deleteTaskType('.delete-task-type');
         updateTaskType('.update-task-type');
+    };
+
+    /**
+     * push details to details table in update task table
+     * @param details - details array
+     * @param tableBodyID - table body id like '#table-body-id'
+     */
+    var pushDetailsToTable = (details, tableBodyID) => {
+        var rows = [];
+        details.forEach(detail => {
+            rows.push(
+                '<tr><td>Detail name / detail code</td><td>detail cost </td><td>selector</td><td>quantity</td><td>X</td></tr>'
+            )
+        })
+        $(tableBodyID).append(rows);
     };
 
     function updateTaskType(value) {
