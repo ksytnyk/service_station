@@ -1149,7 +1149,8 @@ router.post('/create-task-type', validation.createAndUpdateTaskType(), async (re
             if (details.length) {
                 try {
                     await Models.TaskDetail.createTaskTypeDetail(taskTypeID, JSON.parse(details));
-                    res.status(200).send({taskType: result.taskTypes[0].dataValues});
+                    const response = await Models.TaskDetail.getTaskTypeDetail(taskTypeID);
+                    res.status(200).send({taskType: response});
                 } catch (errors) {
                     console.warn(errors);
                     res.status(400).send({errors: errors});
@@ -1556,17 +1557,6 @@ router.get('/details-of-task/:id', (req, res) => {
             console.warn(errors);
             res.status(400).send({errors});
         });
-});
-
-router.get('/details-of-task-type/:id', async (req, res) => {
-    const {id} = req.params;
-    try {
-        const details = await Models.TaskDetail.getTaskTypeDetail(id);
-        res.status(200).send({details});
-    } catch (errors) {
-        console.warn(errors);
-        res.status(400).send({errors});
-    }
 });
 
 module.exports = router;
