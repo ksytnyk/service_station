@@ -9,7 +9,6 @@ $(document).ready(function () {
             carMarkk: $('#markk1').val(),
             carModel: $('#model1').val()
         };
-        console.log(body);
         $.ajax({
             url: getRole(window.location.pathname) + '/get-task-types',
             type: 'post',
@@ -43,17 +42,11 @@ $(document).ready(function () {
     $('#create-task-type').on('click', (event) => {
         event.preventDefault();
         var formDataArray = $('#create-type-task-form').serializeArray();
-        var body = {
-            typeName: formDataArray[0].value,
-            articleCode: formDataArray[1].value,
-            typeOfCar: formDataArray[2].value,
-            carMarkk: formDataArray[3].value,
-            carModel: formDataArray[4].value,
-            planedExecutorID: formDataArray[5].value,
-            estimationTime: formDataArray[6].value,
-            cost: formDataArray[7].value,
+
+        let body = {
             details: []
         };
+        formDataArray.forEach(item => body[item.name] = item.value);
         var rows = $('#detail-type-tbody').children();
 
         for(var i = 0; i < rows.length; i++){
@@ -65,12 +58,20 @@ $(document).ready(function () {
             })
         }
         body.details = JSON.stringify(body.details);
+
         $.ajax({
             url: getRole(window.location.pathname) + '/create-task-type',
             type: 'post',
             data: body,
-            success:  (response) =>  {
-                console.log(response);
+            success: response => {
+                console.log('create-task-type-response', response);
+                $('.in .close').click();
+                showSuccessAlert('Додавання задачі пройшло успішно.');
+            },
+            error: err => {
+                console.log('error', err);
+                $('.in .close').click();
+                showErrorAlert(err);
             }
         })
     });

@@ -16,7 +16,8 @@ const describeTaskTypeTable = {
     },
     articleCode: {
         type: Sequelize.STRING,
-        field: 'article_code'
+        field: 'article_code',
+        defaultValue: null
     },
     typeOfCar: {
         type: Sequelize.INTEGER,
@@ -258,18 +259,75 @@ TaskType.getTaskTypesByCarAttributes = function (typeOfCar, carMarkk, carModel) 
     });
 };
 
-TaskType.createTaskType = function (taskType) {
+TaskType.createUnicalTaskType = function (taskType) {
     return new Promise((resolve, reject) => {
-        /*var search = {
+        var search = {
             typeName: taskType.typeName,
             typeOfCar: null,
             carModel: null,
             carMarkk: null,
             articleCode: null
         };
-        */
         if (taskType.typeOfCar !== 'default' && taskType.typeOfCar) {
-            /*search.typeOfCar = +taskType.typeOfCar;*/
+            search.typeOfCar = +taskType.typeOfCar;
+            taskType.typeOfCar = +taskType.typeOfCar;
+        } else {
+            delete taskType.typeOfCar;
+        }
+        if (taskType.carModel !== 'default' && taskType.carModel) {
+            search.carModel = +taskType.carModel;
+            taskType.carModel = +taskType.carModel;
+        } else {
+            delete taskType.carModel;
+        }
+        if (taskType.carMarkk !== 'default' && taskType.carMarkk) {
+            search.carMarkk = +taskType.carMarkk;
+            taskType.carMarkk = +taskType.carMarkk;
+        } else {
+            delete taskType.carMarkk;
+        }
+        if (taskType.articleCode !== '' && taskType.articleCode) {
+            search.articleCode = taskType.articleCode;
+        } else {
+            delete taskType.articleCode;
+        }
+
+        TaskType
+            .findAll({
+                where: search
+            })
+            .then(result => {
+                if (!result.length) {
+                    TaskType
+                        .build(taskType)
+                        .save()
+                        .then(taskTypes => {
+                            resolve({
+                                taskTypes: [taskTypes],
+                                hasResult: false
+                            });
+                        })
+                        .catch(error => {
+                            console.warn(error);
+                            reject(error);
+                        });
+                } else {
+                    resolve({
+                        taskTypes: result,
+                        hasResult: true
+                    });
+                }
+            })
+            .catch(error => {
+                console.warn(error);
+                reject(error);
+            });
+    });
+};
+
+TaskType.createTaskType = function (taskType) {
+    return new Promise((resolve, reject) => {
+        if (taskType.typeOfCar !== 'default' && taskType.typeOfCar) {
             taskType.typeOfCar = +taskType.typeOfCar;
         }
         else {
@@ -277,7 +335,6 @@ TaskType.createTaskType = function (taskType) {
         }
 
         if (taskType.carModel !== 'default' && taskType.carModel) {
-            /*search.carModel = +taskType.carModel;*/
             taskType.carModel = +taskType.carModel;
         }
         else {
@@ -285,44 +342,24 @@ TaskType.createTaskType = function (taskType) {
         }
 
         if (taskType.carMarkk !== 'default' && taskType.carMarkk) {
-            /*search.carMarkk = +taskType.carMarkk;*/
             taskType.carMarkk = +taskType.carMarkk;
         }
         else {
             delete taskType.carMarkk;
         }
 
-        /*TaskType
-            .findAll({
-                where: search
-            })
-            .then(result => {
-
-                if (result.length === 0 && taskType.typeID) {*/
-                    TaskType
-                        .build(taskType)
-                        .save()
-                        .then(taskTypes => {
-                            resolve({
-                                taskTypes: [taskTypes],
-                                hasResult: true
-                            });
-                        })
-                        .catch(error => {
-                            console.warn(error);
-                            reject(error);
-                        });
-                /*} else {
-                    resolve({
-                        taskTypes: result,
-                        hasResult: false
-                    });
-                }
+        TaskType
+            .build(taskType)
+            .save()
+            .then(taskTypes => {
+                resolve({
+                    taskTypes: [taskTypes]
+                });
             })
             .catch(error => {
                 console.warn(error);
                 reject(error);
-            });*/
+            });
     });
 };
 

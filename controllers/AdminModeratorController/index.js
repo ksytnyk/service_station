@@ -1140,30 +1140,30 @@ router.post('/request-type', (req, res) => {
 
 });
 
-router.post('/create-task-type', validation.createAndUpdateTaskType('create'), (req, res) => {
-    req.body.typeID = true;
-    TaskType
-        .createTaskType(req.body)
-        .then((result) => {
-            if (result.hasResult) {
-                req.flash('success_alert', true);
-                req.flash('success_msg', 'Додавання задачі пройшло успішно.');
-                res.redirect(req.baseUrl + '/task-type');
+router.post('/create-task-type', validation.createAndUpdateTaskType(), async (req, res) => {
+    try {
+        const result = await TaskType.createUnicalTaskType(req.body);
+        if (!result.hasResult) {
+            const {id: taskTypeID} = result.taskTypes[0].dataValues;
+            const {details} = req.body;
+            if (details.length) {
+                try {
+                    await Models.TaskDetail.createTaskTypeDetail(taskTypeID, JSON.parse(details));
+                    res.status(200).send({taskType: result.taskTypes[0].dataValues});
+                } catch (errors) {
+                    console.warn(errors);
+                    res.status(400).send({errors: errors});
+                }
+            } else {
+                res.status(200).send({taskType: result.taskTypes[0].dataValues});
             }
-            else {
-                var msg = 'Задача "' + req.body.typeName + '" вже існує. Скористайтеся пошуком.';
-
-                req.flash('error_alert', true);
-                req.flash('error_msg', {msg: msg});
-                res.redirect(req.baseUrl + '/task-type');
-            }
-        })
-        .catch(error => {
-            console.warn(error);
-            req.flash('error_alert', true);
-            req.flash('error_msg', {msg: 'Виникла помилка при додаванні задачі.'});
-            res.redirect(req.baseUrl + '/task-type');
-        });
+        } else {
+            res.status(400).send({errors: 'Задача "' + req.body.typeName + '" вже існує. Скористайтеся пошуком.'});
+        }
+    } catch (errors) {
+        console.warn(errors);
+        res.status(400).send({errors: errors});
+    }
 });
 
 router.put('/update-task-type/:id', validation.createAndUpdateTaskType(), (req, res) => {

@@ -147,7 +147,7 @@ module.exports = {
     //     }
     // },
 
-    createAndUpdateTaskType: function (value) {
+    createAndUpdateTaskType: function () {
         return function (req, res, next) {
 
             for (let key in req.body) {
@@ -165,15 +165,15 @@ module.exports = {
             if (errors) {
                 console.warn(errors);
 
-                if (value) {
+                /*if (value) {
                     req.flash('error_alert', true);
                     req.flash('error_msg', errors);
                     res.redirect(req.baseUrl + '/task-type');
-                } else {
+                } else {*/
                     res.status(400).send({
                         errors: errors
                     });
-                }
+                //}
             } else {
                 next();
             }

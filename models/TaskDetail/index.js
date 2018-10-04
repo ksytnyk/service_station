@@ -6,7 +6,13 @@ const sequelize = require('../connection');
 const describeTaskDetailTable = {
     taskID: {
         type: Sequelize.INTEGER,
-        field: 'task_id'
+        field: 'task_id',
+        defaultValue: null
+    },
+    taskTypeID: {
+        type: Sequelize.INTEGER,
+        field: 'task_type_id',
+        defaultValue: null
     },
     detailID: {
         type: Sequelize.INTEGER,
