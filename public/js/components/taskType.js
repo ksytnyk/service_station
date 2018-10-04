@@ -52,7 +52,7 @@ $(document).ready(function () {
     //if user change model car get list details and insert to
     // detail selector in UPDATE task type page
     $('#model').on('change', () => {
-        getDetailType($('#typeOfCar').val(), $('#markk').val(), $('#model').val(), '#update-detail-type-select')
+            getDetailType($('#typeOfCar').val(), $('#markk').val(), $('#model').val(), '#update-detail-type-select')
     });
 
     /**
@@ -162,13 +162,17 @@ $(document).ready(function () {
      * @param tableBodyID - table body id like '#table-body-id'
      */
     var pushDetailsToTable = (details, tableBodyID) => {
+        $(tableBodyID).empty();
         var rows = [];
-        console.log(details);
         details.forEach(detail => {
+            console.log(detail);
             rows.push(
-                '<tr><td>Detail name / detail code</td><td>detail cost </td><td>selector</td><td>quantity</td><td>X</td></tr>'
+                '<tr detailId="'+ detail.id +'" detailName="'+ detail.detail.detailName +' / '+detail.detail.detailCode+'" detailtype="'+ detail.detailType +'" ' +
+                'detailquantity="'+ detail.detailQuantity+'" id="idr-999999" ><td>'+
+                detail.detail.detailName+' / ' + detail.detail.detailCode +
+                '</td><td>'+ detail.detail.detailPrice+'</td><td>selector</td><td>'+detail.detailQuantity+'</td><td>X</td></tr>'
             )
-        })
+        });
         $(tableBodyID).append(rows);
     };
 
