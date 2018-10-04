@@ -64,7 +64,7 @@ $(document).ready(function () {
                 detailName:rows[i].getAttribute('detailName')
             })
         }
-
+        body.details = JSON.stringify(body.details);
         $.ajax({
             url: getRole(window.location.pathname) + '/create-task-type',
             type: 'post',
