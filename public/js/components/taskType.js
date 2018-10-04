@@ -26,6 +26,7 @@ $(document).ready(function () {
 
     /**
      * get array details by task id
+     * and push to table in update task type
      * @param taskId
      */
    var  getDetailByTypeTaskID = (taskId) => {
@@ -33,7 +34,7 @@ $(document).ready(function () {
            url: getRole(window.location.pathname) + '/details-of-task-type/' + taskId,
            type: 'get',
            success: (response) => {
-               pushDetailsToTable(response.detailTypes, '#detail-table-body-id');
+               pushDetailsToTable(response.details, '#update-detail-type-tbody');
            }
        });
    };
@@ -119,6 +120,7 @@ $(document).ready(function () {
      * @param tableBodyID - html selector by id table body like '#my-custom-id'
      */
     var pushTaskTypeInTable = (task, tableBodyID) => {
+        console.log(task);
         var deleteIcon ='';
         if( getRole(window.location.pathname) === "/admin"){
             deleteIcon =  '<a href="#" class="delete-task-type modal-window-link"' +
@@ -162,6 +164,7 @@ $(document).ready(function () {
      */
     var pushDetailsToTable = (details, tableBodyID) => {
         var rows = [];
+        console.log(details);
         details.forEach(detail => {
             rows.push(
                 '<tr><td>Detail name / detail code</td><td>detail cost </td><td>selector</td><td>quantity</td><td>X</td></tr>'
