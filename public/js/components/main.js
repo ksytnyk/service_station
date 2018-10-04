@@ -175,7 +175,7 @@ function showErrorAlert(err) {
     if (!Array.isArray(errors)) {
         errorsTemplate = ("<div>" + errors + "</div>");
     } else {
-        errorsTemplate = err.responseJSON.errors.map(error => {
+        errorsTemplate = errors.map(error => {
             return ("<div>" + error.msg + "</div>");
         });
     }

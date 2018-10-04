@@ -740,7 +740,7 @@ router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
                                                         .updateDetailType(JSON.parse(req.body.changeDetail))
                                                         .then(() => {
                                                             Models.TaskDetail
-                                                                .deleteTaskDetail(JSON.parse(req.body.deleteDetail))
+                                                                .deleteTaskDetailByParam('id', JSON.parse(req.body.deleteDetail))
                                                                 .then(() => {
                                                                     Models.TaskDetail
                                                                         .getTaskDetail(req.body.id)
@@ -829,43 +829,46 @@ router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
         });
 });
 
-router.delete('/delete-task/:id', (req, res) => {
-    Task
-        .destroy({
-            where: {
-                id: Number(req.params.id)
-            }
-        })
-        .then(() => {
-            Request
-                .getRequestById(req.body.requestID)
-                .then(request => {
-                    var newCost = +request[0].dataValues.cost - +req.body.taskOldCost;
+router.delete('/delete-task/:id', async (req, res) => {
+    const {id} = req.params;
+    try {
+        await Models.TaskDetail.deleteTaskDetailByParam('taskID', id);
+        Task
+            .deleteTask(id)
+            .then(() => {
+                Request
+                    .getRequestById(req.body.requestID)
+                    .then(request => {
+                        var newCost = +request[0].dataValues.cost - +req.body.taskOldCost;
 
-                    Request
-                        .updateRequest(req.body.requestID, {cost: newCost})
-                        .then(() => {
-                            res.status(200).send({
-                                request: request,
-                                id: req.params.id,
-                                requestID: req.body.requestID,
-                                newCost: newCost
+                        Request
+                            .updateRequest(req.body.requestID, {cost: newCost})
+                            .then(() => {
+                                res.status(200).send({
+                                    request: request,
+                                    id,
+                                    requestID: req.body.requestID,
+                                    newCost: newCost
+                                });
+                            })
+                            .catch(errors => {
+                                console.warn(errors);
+                                res.status(400).send({errors: errors});
                             });
-                        })
-                        .catch(errors => {
-                            console.warn(errors);
-                            res.status(400).send({errors: errors});
-                        });
-                })
-                .catch(errors => {
-                    console.warn(errors);
-                    res.status(400).send({errors: errors});
-                });
-        })
-        .catch(errors => {
-            console.warn(errors);
-            res.status(400).send({errors: errors});
-        });
+                    })
+                    .catch(errors => {
+                        console.warn(errors);
+                        res.status(400).send({errors: errors});
+                    });
+            })
+            .catch(errors => {
+                console.warn(errors);
+                res.status(400).send({errors: errors});
+            });
+    } catch (errors) {
+        console.warn(errors);
+        res.status(400).send({errors: errors});
+    }
 });
 
 router.put('/cancel-task/:id', (req, res) => {
@@ -1173,7 +1176,7 @@ router.put('/update-task-type/:id', validation.createAndUpdateTaskType(), async 
         const user = await User.getUserById(req.body.planedExecutorID);
         /*await Models.TaskDetail.createTaskTypeDetail(req.params.id, JSON.parse(req.body.detail));
         await Models.TaskDetail.updateDetailType(JSON.parse(req.body.changeDetail));
-        await Models.TaskDetail.deleteTaskDetail(JSON.parse(req.body.deleteDetail));*/
+        await Models.TaskDetail.deleteTaskDetailByParam('id', JSON.parse(req.body.deleteDetail));*/
 
         res.status(200).send({
             user,
@@ -1185,16 +1188,17 @@ router.put('/update-task-type/:id', validation.createAndUpdateTaskType(), async 
     }
 });
 
-router.delete('/delete-task-type/:id', (req, res) => {
-    TaskType
-        .deleteTaskType(req.params.id)
-        .then(() => {
-            res.status(200).send();
-        })
-        .catch(errors => {
-            console.warn(errors);
-            res.status(400).send({errors});
-        });
+router.delete('/delete-task-type/:id', async (req, res) => {
+    const {id} = req.params;
+    try {
+        await Models.TaskDetail.deleteTaskDetailByParam('taskTypeID', id);
+        await TaskType.deleteTaskType(id);
+
+        res.status(200).send();
+    } catch (errors) {
+        console.warn(errors);
+        res.status(400).send({errors});
+    }
 });
 
 router.put('/start-request/:id', (req, res) => {
@@ -1557,6 +1561,17 @@ router.get('/details-of-task/:id', (req, res) => {
             console.warn(errors);
             res.status(400).send({errors});
         });
+});
+
+router.get('/details-of-task-type/:id', async (req, res) => {
+    const {id} = req.params;
+    try {
+        const details = await Models.TaskDetail.getTaskTypeDetail(id);
+        res.status(200).send({details});
+    } catch (errors) {
+        console.warn(errors);
+        res.status(400).send({errors});
+    }
 });
 
 module.exports = router;
