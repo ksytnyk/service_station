@@ -170,11 +170,15 @@ function showErrorAlert(err) {
         "display": "block",
         "left": "15px"
     });
-
-    var errorsTemplate = err.responseJSON.errors.map(error => {
-        return ("<div>" + error.msg + "</div>");
-    });
-
+    let errorsTemplate;
+    const {errors} = err.responseJSON;
+    if (!Array.isArray(errors)) {
+        errorsTemplate = ("<div>" + errors + "</div>");
+    } else {
+        errorsTemplate = err.responseJSON.errors.map(error => {
+            return ("<div>" + error.msg + "</div>");
+        });
+    }
     $('#errors-block').html(errorsTemplate);
 
     hideAlert();

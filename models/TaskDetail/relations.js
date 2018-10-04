@@ -11,10 +11,12 @@ Models.Request = require('../Request');
 Models.TransportType = require('../TransportType');
 Models.TransportMarkk = require('../TransportMarkk');
 Models.TransportModel = require('../TransportModel');
+Models.TaskType = require('../TaskType');
 
 //Relations
 Models.TaskDetail.belongsTo(Models.Task, {foreignKey: 'taskID'});
 Models.TaskDetail.belongsTo(Models.Detail, {foreignKey: 'detailID'});
+Models.TaskDetail.belongsTo(Models.TaskType, {foreignKey: 'taskTypeID'});
 Models.Detail.hasMany(Models.TaskDetail, {foreignKey: 'detailID'});
 Models.Detail.belongsTo(Models.TransportType, {foreignKey: 'transportTypeID', as: 'transportType'});
 Models.Detail.belongsTo(Models.TransportMarkk, {foreignKey: 'transportMarkkID', as: 'transportMarkk'});
@@ -76,6 +78,20 @@ Models.TaskDetail.getTaskDetail = (taskID) => {
                 resolve(result);
             })
             .catch((err) => {
+                reject(err);
+            })
+    })
+};
+
+Models.TaskDetail.createTaskTypeDetail = (taskTypeID, array) => {
+    return new Promise((resolve, reject) => {
+        array.forEach(item => item.taskTypeID = taskTypeID);
+        Models.TaskDetail
+            .bulkCreate(array)
+            .then(result => {
+                resolve(result);
+            })
+            .catch(err => {
                 reject(err);
             })
     })
