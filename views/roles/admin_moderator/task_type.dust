@@ -34,7 +34,7 @@
                 <th style="width: 50px;"></th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="tasks-table">
             {#taskType}
             <tr id="idr-task-type-{id}">
                 <th class="tac" scope="row">{id}</th>

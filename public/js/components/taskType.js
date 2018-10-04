@@ -100,6 +100,7 @@ $(document).ready(function () {
             data: body,
             success: response => {
                 console.log('create-task-type-response', response);
+                pushTaskTypeInTable(response.taskType, '#tasks-table');
                 $('.in .close').click();
                 showSuccessAlert('Додавання задачі пройшло успішно.');
             },
@@ -111,6 +112,47 @@ $(document).ready(function () {
         })
     });
 
+    /**
+     * Push row with task info after create task Type
+     * @param task - object with task information
+     * @param tableBodyID - html selector by id table body like '#my-custom-id'
+     */
+    var pushTaskTypeInTable = (task, tableBodyID) => {
+        var deleteIcon ='';
+        if( getRole(window.location.pathname) === "/admin"){
+            deleteIcon =  '<a href="#" class="delete-task-type modal-window-link"' +
+                ' data-toggle="modal" data-target="#deleteTaskTypeFormModal" data-id="'+ task.id+'"' +
+                ' title="Видалити задачу"><span class="glyphicon glyphicon-remove" aria-hidden="true" style="font-size: 19px;"/></a>';
+        }
+        var row = ''+
+            '<tr id="idr-task-type-'+ task.id +'">'+
+            '<th class="tac" scope="row">'+ task.id +'</th>' +
+            '<td class="tac">'+ task.typeName +'</td>'+
+            '<td class="tac">'+ task.articleCode +'</td>' +
+            '<td class="tac">'+ task.typeOfCar + '</td>' +
+            '<td class="tac">' + task.carMarkk + '</td>' +
+            '<td class="tac">' + task.carModel + '</td>' +
+            '<td class="tac">' + task.cost + '</td>' +
+            '<td class="tac">' + task.planedExecutorID +'Lastname Fristname</td>' +
+            '<td class="tac">' + task.estimationTime+'</td>' +
+            '<td class="tac">'+
+            '<a href="#" class="update-task-type modal-window-link" data-toggle="modal" data-target="#updateTaskTypeFormModal"' +
+            ' data-id="'+ task.id +'" data-type-name="'+ task.typeName +'" data-article-code="'+ task.articleCode +'" data-type-of-car="'+ task.typeOfCar+ '"' +
+            ' data-car-markk="'+ task.carMarkk+'" data-car-markk-name="{transportMarkk.transportMarkkName}" data-car-model="'+ task.carModel+'"' +
+            ' data-car-model-name="{transportModel.transportModelName}" data-cost="'+ task.cost +'" data-planed-executor-id="'+ task.planedExecutorID+'"' +
+            ' data-estimation-time="'+ task.estimationTime +'" title="Редагувати задачу">' +
+            '<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="font-size: 17px; margin-right: 10px;"/>' +
+            '</a>' +
+                deleteIcon +
+            '</td>' +
+            '</tr>';
+
+        $(tableBodyID).append(row);
+
+        // after inert element to page need repeat bind listener
+        deleteTaskType('.delete-task-type');
+        updateTaskType('.update-task-type');
+    };
 
     function updateTaskType(value) {
         $(value).on('click', function () {
