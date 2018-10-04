@@ -1149,8 +1149,8 @@ router.post('/create-task-type', validation.createAndUpdateTaskType(), async (re
             if (details.length) {
                 try {
                     await Models.TaskDetail.createTaskTypeDetail(taskTypeID, JSON.parse(details));
-                    const response = await Models.TaskDetail.getTaskTypeDetail(taskTypeID);
-                    res.status(200).send({taskType: response});
+                    const taskType = await TaskType.getTaskTypeByID(taskTypeID);
+                    res.status(200).send({taskType});
                 } catch (errors) {
                     console.warn(errors);
                     res.status(400).send({errors: errors});
