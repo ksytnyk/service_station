@@ -30,12 +30,12 @@ Models.TaskDetail.sync();
 
 // --- TaskDetail Model ---
 
-Models.TaskDetail.deleteTaskDetail = (array) => {
+Models.TaskDetail.deleteTaskDetail = id => {
     return new Promise((resolve, reject) => {
         Models.TaskDetail
             .destroy({
                 where: {
-                    id: array
+                    id
                 }
             })
             .then(() => {
@@ -88,6 +88,26 @@ Models.TaskDetail.createTaskTypeDetail = (taskTypeID, array) => {
         array.forEach(item => item.taskTypeID = taskTypeID);
         Models.TaskDetail
             .bulkCreate(array)
+            .then(result => {
+                resolve(result);
+            })
+            .catch(err => {
+                reject(err);
+            })
+    })
+};
+
+Models.TaskDetail.getTaskTypeDetail = taskTypeID => {
+    return new Promise((resolve, reject) => {
+        Models.TaskDetail
+            .findAll({
+                where: {
+                    taskTypeID
+                },
+                include: {
+                    model: Models.Detail
+                }
+            })
             .then(result => {
                 resolve(result);
             })
