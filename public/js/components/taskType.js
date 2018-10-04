@@ -102,7 +102,7 @@ $(document).ready(function () {
             data: body,
             success: response => {
                 console.log('create-task-type-response', response);
-                pushTaskTypeInTable(response.taskType, '#tasks-table');
+                pushTaskTypeInTable(response.taskType[0], '#tasks-table');
                 $('.in .close').click();
                 showSuccessAlert('Додавання задачі пройшло успішно.');
             },
@@ -120,7 +120,6 @@ $(document).ready(function () {
      * @param tableBodyID - html selector by id table body like '#my-custom-id'
      */
     var pushTaskTypeInTable = (task, tableBodyID) => {
-        console.log(task);
         var deleteIcon ='';
         if( getRole(window.location.pathname) === "/admin"){
             deleteIcon =  '<a href="#" class="delete-task-type modal-window-link"' +
@@ -132,17 +131,17 @@ $(document).ready(function () {
             '<th class="tac" scope="row">'+ task.id +'</th>' +
             '<td class="tac">'+ task.typeName +'</td>'+
             '<td class="tac">'+ task.articleCode +'</td>' +
-            '<td class="tac">'+ task.typeOfCar + '</td>' +
-            '<td class="tac">' + task.carMarkk + '</td>' +
-            '<td class="tac">' + task.carModel + '</td>' +
+            '<td class="tac">'+ task.transportType.transportTypeName + '</td>' +
+            '<td class="tac">' + task.transportMarkk.transportMarkkName + '</td>' +
+            '<td class="tac">' + task.transportModel.transportModelName + '</td>' +
             '<td class="tac">' + task.cost + '</td>' +
-            '<td class="tac">' + task.planedExecutorID +'Lastname Fristname</td>' +
+            '<td class="tac">'+ task.planedExecutor.userSurname + ' '+ task.planedExecutor.userName +'</td>' +
             '<td class="tac">' + task.estimationTime+'</td>' +
             '<td class="tac">'+
             '<a href="#" class="update-task-type modal-window-link" data-toggle="modal" data-target="#updateTaskTypeFormModal"' +
             ' data-id="'+ task.id +'" data-type-name="'+ task.typeName +'" data-article-code="'+ task.articleCode +'" data-type-of-car="'+ task.typeOfCar+ '"' +
-            ' data-car-markk="'+ task.carMarkk+'" data-car-markk-name="{transportMarkk.transportMarkkName}" data-car-model="'+ task.carModel+'"' +
-            ' data-car-model-name="{transportModel.transportModelName}" data-cost="'+ task.cost +'" data-planed-executor-id="'+ task.planedExecutorID+'"' +
+            ' data-car-markk="'+ task.carMarkk+'" data-car-markk-name="'+ task.transportMarkk.transportMarkkName +'" data-car-model="'+ task.carModel+'"' +
+            ' data-car-model-name="'+ task.transportModel.transportModelName +'" data-cost="'+ task.cost +'" data-planed-executor-id="'+ task.planedExecutorID+'"' +
             ' data-estimation-time="'+ task.estimationTime +'" title="Редагувати задачу">' +
             '<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="font-size: 17px; margin-right: 10px;"/>' +
             '</a>' +
