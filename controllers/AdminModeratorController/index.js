@@ -1166,28 +1166,22 @@ router.post('/create-task-type', validation.createAndUpdateTaskType(), async (re
     }
 });
 
-router.put('/update-task-type/:id', validation.createAndUpdateTaskType(), (req, res) => {
+router.put('/update-task-type/:id', validation.createAndUpdateTaskType(), async (req, res) => {
+    try {
+        const taskType = await TaskType.updateTaskType(req.params.id, req.body);
+        const user = await User.getUserById(req.body.planedExecutorID);
+        /*await Models.TaskDetail.createTaskTypeDetail(req.params.id, JSON.parse(req.body.detail));
+        await Models.TaskDetail.updateDetailType(JSON.parse(req.body.changeDetail));
+        await Models.TaskDetail.deleteTaskDetail(JSON.parse(req.body.deleteDetail));*/
 
-    TaskType
-        .updateTaskType(req.params.id, req.body)
-        .then((taskType) => {
-            User
-                .getUserById(req.body.planedExecutorID)
-                .then(user => {
-                    res.status(200).send({
-                        user: user,
-                        taskType: taskType[0]
-                    });
-                })
-                .catch(errors => {
-                    console.warn(errors);
-                    res.status(400).send({errors: errors});
-                });
-        })
-        .catch(errors => {
-            console.warn(errors);
-            res.status(400).send({errors: errors});
+        res.status(200).send({
+            user,
+            taskType: taskType[0]
         });
+    } catch (errors) {
+        console.warn(errors);
+        res.status(400).send({errors});
+    }
 });
 
 router.delete('/delete-task-type/:id', (req, res) => {
@@ -1196,9 +1190,9 @@ router.delete('/delete-task-type/:id', (req, res) => {
         .then(() => {
             res.status(200).send();
         })
-        .catch(error => {
-            console.warn(error);
-            res.status(400).send({errors: errors});
+        .catch(errors => {
+            console.warn(errors);
+            res.status(400).send({errors});
         });
 });
 
@@ -1211,9 +1205,9 @@ router.put('/start-request/:id', (req, res) => {
                 isBeginButton: true
             })
         })
-        .catch(error => {
-            console.warn(error);
-            res.status(400).send({errors: errors});
+        .catch(errors => {
+            console.warn(errors);
+            res.status(400).send({errors});
         });
 });
 

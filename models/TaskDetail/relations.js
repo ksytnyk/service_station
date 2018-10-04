@@ -12,6 +12,7 @@ Models.TransportType = require('../TransportType');
 Models.TransportMarkk = require('../TransportMarkk');
 Models.TransportModel = require('../TransportModel');
 Models.TaskType = require('../TaskType');
+Models.User = require('../User');
 
 //Relations
 Models.TaskDetail.belongsTo(Models.Task, {foreignKey: 'taskID'});
@@ -21,6 +22,7 @@ Models.Detail.hasMany(Models.TaskDetail, {foreignKey: 'detailID'});
 Models.Detail.belongsTo(Models.TransportType, {foreignKey: 'transportTypeID', as: 'transportType'});
 Models.Detail.belongsTo(Models.TransportMarkk, {foreignKey: 'transportMarkkID', as: 'transportMarkk'});
 Models.Detail.belongsTo(Models.TransportModel, {foreignKey: 'transportModelID', as: 'transportModel'});
+Models.TaskType.belongsTo(Models.User, {foreignKey: 'planedExecutorID', as: 'planedExecutor'});
 
 //Creating in DB
 Models.Detail.sync();
@@ -104,9 +106,31 @@ Models.TaskDetail.getTaskTypeDetail = taskTypeID => {
                 where: {
                     taskTypeID
                 },
-                include: {
-                    model: Models.Detail
-                }
+                include: [{
+                    model: Models.Detail,
+                    include: [
+                        {
+                            model: Models.TransportType,
+                            as: 'transportType'
+                        },
+                        {
+                            model: Models.TransportMarkk,
+                            as: 'transportMarkk'
+                        },
+                        {
+                            model: Models.TransportModel,
+                            as: 'transportModel'
+                        }
+                    ]
+                },{
+                    model: Models.TaskType,
+                    include: [
+                        {
+                            model: Models.User,
+                            as: 'planedExecutor'
+                        }
+                    ]
+                }]
             })
             .then(result => {
                 resolve(result);
