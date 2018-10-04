@@ -60,6 +60,73 @@
                         </div>
                     </div>
 
+                    <div class="form-group required col-xs-12">
+
+                        <label>Деталі</label>
+                        <div class="detail-type-table">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>Назва деталі / Код деталі</th>
+                                    <th>Ціна грн./одн.</th>
+                                    <th style="width: 80px;">Тип</th>
+                                    <th style="width: 60px;">К-сть</th>
+                                    <th style="width: 40px;"></th>
+                                </tr>
+                                </thead>
+                                <tbody id="update-detail-type-tbody">
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    <div class="row">
+                    <div class="col-xs-7">
+                    <select class="form-control add_select2" id="update-detail-type-select" name="detailID">
+                    {#detailTypes}
+                    {@eq key=title value="0"}
+                            <option id="detailTypeID{id}" value="{id}" detailName="{detailName} / {detailCode}" detailPrice="{detailPrice}" title="Усі категорії">
+                    {detailName} / {detailCode} (Усі категорії)
+                    </option>
+                    {/eq}
+                    {@eq key=title value="1"}
+                            <option id="detailTypeID{id}" value="{id}" detailName="{detailName} / {detailCode}" detailPrice="{detailPrice}" title="Категорія: {transportTypeID}">
+                    {detailName} / {detailCode} (Категорія: {transportType.transportTypeName})
+                    </option>
+                    {/eq}
+                    {@eq key=title value="2"}
+                    <option id="detailTypeID{id}" value="{id}" detailName="{detailName} / {detailCode}" detailPrice="{detailPrice}"
+                            title="Категорія: {transportTypeID}, {transportMarkkID}">
+                    {detailName} / {detailCode} (Категорія: {transportType.transportTypeName}, {transportMarkk.transportMarkkName})
+                    </option>
+                    {/eq}
+                    {@eq key=title value="3"}
+                            <option id="detailTypeID{id}" value="{id}" detailName="{detailName} / {detailCode}" detailPrice="{detailPrice}"
+                                    title="Категорія: {transportTypeID}, {transportModelID}, {transportModelID}">
+                    {detailName} / {detailCode} (Категорія: {transportType.transportTypeName}, {transportMarkk.transportMarkkName}, {transportModel.transportModelName})
+                    </option>
+                    {/eq}
+                    {/detailTypes}
+                    </select>
+                    </div>
+                    <div class="col-xs-2 form-group" style="padding: 0;">
+                    <select class="form-control add_select2" name="detailType" id="update-detail-type">
+                        <option value="1">Сервіс</option>
+                    {@lt key=typeUser value=3}
+                        <option value="2">Клієнт</option>
+                    {/lt}
+                        <option value="3">Відсутня</option>
+                    </select>
+                    </div>
+                        <div class="col-xs-2 form-group">
+                            <input id="update-detail-type-input" class="form-control create-form-task" min="1" type="number" />
+                        </div>
+                        <div class="col-xs-1 form-group" style="padding-left: 0;">
+                            <input type="button" id="update-add-detail" class="btn btn-default red-button-plus" value="+"/>
+                        </div>
+                    </div>
+                    </div>
+
                     <div class="form-group col-xs-12" style="margin-top: 25px;">
                         <button class="btn btn-success width task-type-update-button agree">
                             Оновити

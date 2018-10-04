@@ -2,38 +2,55 @@ $(document).ready(function () {
 
     updateTaskType('.update-task-type');
 
-
-    $('#model1').on('change', () => {
+    /**
+     * get details for task by type, mark and model car
+     * @param typeCar - type Car id
+     * @param mark - mark Car id
+     * @param model - model Car id
+     * @param elementId - id element for insert detail must be id html selector
+     */
+    var getDetailType = (typeCar, mark, model, elementId) => {
         var body = {
-            typeOfCar: $('#typeOfCar1').val(),
-            carMarkk: $('#markk1').val(),
-            carModel: $('#model1').val()
+            typeOfCar: typeCar,
+            carMarkk: mark,
+            carModel: model
         };
-        console.log(body);
         $.ajax({
             url: getRole(window.location.pathname) + '/get-task-types',
             type: 'post',
             data: body,
             success: (response) =>{
-                updateDetailSelector(response.detailTypes);
+                updateDetailSelector(response.detailTypes, elementId);
             }
         });
+    };
+
+    //if user change model car get list details and insert to
+    // detail selector in CREATE task type page
+    $('#model1').on('change', () => {
+            getDetailType($('#typeOfCar1').val(), $('#markk1').val(), $('#model1').val(), '#detail-type-select.create-task-detail-select')
+    });
+    //if user change model car get list details and insert to
+    // detail selector in UPDATE task type page
+    $('#model').on('change', () => {
+        getDetailType($('#typeOfCar').val(), $('#markk').val(), $('#model').val(), '#update-detail-type-select')
     });
 
     /**
      * Update Selector detail inside create Type task popup
      * @param details array details
+     * @param elementId - inset option to this element
      */
-    var updateDetailSelector = (details) => {
-        $('#detail-type-select').empty();
+    var updateDetailSelector = (details, elementId) => {
+        $(elementId).empty();
         var options = [];
         details.forEach(detail => {
             options.push(
                 '<option id="detailTypeID'+ detail.id +'" detailPrice="'+ detail.detailPrice +'" value="' + detail.id + '" detailName="' + detail.detailName +
                 ' / '+ detail.detailCode + '" detailPrice="'+ detail.detailPrice +'" title="Усі категорії"> '+ detail.detailName +' / ' + detail.detailCode + '</option>"'
             );
-            $('#detail-type-select').append(options);
-        })
+        });
+        $(elementId).append(options);
     };
 
     /**
@@ -95,6 +112,10 @@ $(document).ready(function () {
             $('#update-form-planed-executor-id').val($(this).data('planed-executor-id')).change();
             $('#update-form-estimation-time').val($(this).data('estimation-time'));
             $('#update-form-cost').val($(this).data('cost'));
+
+            //if user change model car get list details and insert to
+            // detail selector in UPDATE task type page
+            getDetailType($("#typeOfCar").val(), $("#markk").val(), $("#model").val(), '#update-detail-type-select');
         });
     }
 
@@ -103,12 +124,26 @@ $(document).ready(function () {
 
         var dataArr = $('#task-type-update-form').serializeArray();
 
-        console.log(dataArr);
+        var requestBody = {
+            typeName: dataArr[0].value,
+            articleCode: dataArr[1].value,
+            typeOfCar: dataArr[2].value,
+            carMarkk: dataArr[3].value,
+            carModel: dataArr[4].value,
+            planedExecutorID: dataArr[5].value,
+            estimationTime: dataArr[6].value,
+            cost: dataArr[7].value,
+            details: [],
+            deleteDetail: [],
+            changeDetail: [],
+        };
+
+        console.log(requestBody);
 
         $.ajax({
             url: getRole(window.location.pathname) + '/update-task-type/' + dataArr[0].value,
             type: 'put',
-            data: dataArr,
+            data: requestBody,
             success: function (data) {
                 showSuccessAlert('Редагування задачі пройшло успішно.');
 
