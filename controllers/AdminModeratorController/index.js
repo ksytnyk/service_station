@@ -1532,7 +1532,7 @@ router.put('/update-detail/:id', validation.createAndUpdateDetail(), (req, res) 
         })
         .catch(errors => {
             console.warn(errors);
-            res.status(400).send({errors: errors});
+            res.status(400).send({errors});
         });
 });
 
@@ -1542,9 +1542,9 @@ router.delete('/delete-detail/:id', (req, res) => {
         .then(() => {
             res.status(200).send();
         })
-        .catch(error => {
-            console.warn(error);
-            res.status(400).send({errors: errors});
+        .catch(errors => {
+            console.warn(errors);
+            res.status(400).send({errors});
         });
 });
 
@@ -1558,9 +1558,21 @@ router.get('/details-of-task/:id', (req, res) => {
                 details: details
             })
         })
-        .catch(error => {
-            console.warn(error);
-            res.status(400).send({errors: errors});
+        .catch(errors => {
+            console.warn(errors);
+            res.status(400).send({errors});
         });
 });
+
+router.get('/details-of-task-type/:id', async (req, res) => {
+    const {id} = req.params;
+    try {
+        const details = await Models.TaskDetail.getTaskTypeDetail(id);
+        res.status(200).send({details});
+    } catch (errors) {
+        console.warn(errors);
+        res.status(400).send({errors});
+    }
+});
+
 module.exports = router;
