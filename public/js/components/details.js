@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+    customDetailID = 999999;
+
     updateDetail('.update-detail');
 
     function updateDetail(value) {
@@ -138,7 +140,7 @@ $(document).ready(function () {
             detailQuantity = $('#detail-type-input').val(),
             detailType = $('#detail-type').val(),
             detailName = $('#detailTypeID' + detailID).attr('detailName'),
-           detailPrice = $('#detailTypeID' + detailID).attr('detailPrice');
+            detailPrice = $('#detailTypeID' + detailID).attr('detailPrice');
 
         if( detailID !== null && detailQuantity !== '' && detailType !== null) {
 
@@ -228,7 +230,8 @@ $(document).ready(function () {
             });
 
             // Emit on plus button clicked (update task modal)
-            var detailTemplate0 = '<tr id="idr-' + customDetailID + '"><td>' + detailName +  '</td><td>'+ detailPrice +'</td><td>';
+            var detailTemplate0 = '<tr detailQuantity="'+ detailQuantity+'" detailName="'+detailName+'" detailType="'+ detailType +' " detailID="'+ detailID+'"' +
+                ' id="idr-' + customDetailID + '"><td>' + detailName +  '</td><td>'+ detailPrice +'</td><td>';
             var detailTemplate1 = 'Клієнт';
 
             var detailTemplate2 = '</td><td>' + detailQuantity + '</td><td>';
