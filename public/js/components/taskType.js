@@ -210,10 +210,12 @@ $(document).ready(function () {
 
     /**
      * push details to details table in update task table
+     * GLOBAL function
      * @param details - details array
      * @param tableBodyID - table body id like '#table-body-id'
      */
-    var pushDetailsToTable = (details, tableBodyID) => {
+     pushDetailsToTable = (details, tableBodyID) => {
+         console.log(details);
         $(tableBodyID).empty();
         var rows = [];
         details.forEach(detail => {

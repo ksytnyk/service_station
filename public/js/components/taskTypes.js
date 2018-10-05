@@ -10,6 +10,7 @@ $(document).ready(function () {
                     $('.task-cost').val(data.taskType[0].cost);
                     $('.task-estimation-time').val(data.taskType[0].estimationTime);
                     $('.task-planed-executor-id').val(data.taskType[0].planedExecutorID).change();
+                    pushDetailsToTable(data.taskType[0].taskDetail, '#detail-type-tbody')
                 }
             })
         }
@@ -26,6 +27,8 @@ $(document).ready(function () {
                         $('#update-form-task-cost').val(data.taskType[0].cost);
                         $('#update-form-task-estimation-time').val(data.taskType[0].estimationTime);
                         $('#update-form-task-planed-executor').val(data.taskType[0].planedExecutorID).change();
+                        // push detail to detail table if user select task type in task create window
+                        // pushDetailsToTable(data.taskType[0].taskDetail, '#update-detail-type-tbody')
                     } else {
                         isFirstUpdateClick = false;
                     }

@@ -400,6 +400,17 @@ TaskType.getTaskTypeByID = function (taskTypeID) {
                     {
                         model: TransportModel,
                         as: 'transportModel'
+                    },
+                    {
+                        model: TaskDetail,
+                        as: 'taskDetail',
+                        include: [
+                            {
+                                model: Detail,
+                                as: 'detail'
+                            }
+
+                        ]
                     }
                 ]
             })
