@@ -9,19 +9,27 @@ $(document).ready(function () {
      * @param elementId - id element for insert detail must be id html selector
      */
     var getDetailType = (typeCar, mark, model, elementId) => {
-        var body = {
-            typeOfCar: typeCar,
-            carMarkk: mark,
-            carModel: model
-        };
-        $.ajax({
-            url: getRole(window.location.pathname) + '/get-task-types',
-            type: 'post',
-            data: body,
-            success: (response) =>{
-                updateDetailSelector(response.detailTypes, elementId);
-            }
-        });
+        if (typeCar && mark && model) {
+            var body = {
+                typeOfCar: typeCar,
+                carMarkk: mark,
+                carModel: model
+            };
+            $.ajax({
+                url: getRole(window.location.pathname) + '/get-task-types',
+                type: 'post',
+                data: body,
+                success: (response) => {
+                    if (elementId) {
+                        updateDetailSelector(response.detailTypes, elementId);
+                    } else {
+                        console.warn("Detail selector element id is empty! ");
+                    }
+                }
+            });
+        } else {
+            console.warn("Type Car, Mark or Model ids is empty !");
+        }
     };
 
     /**
@@ -29,17 +37,21 @@ $(document).ready(function () {
      * and push to table in update task type
      * @param taskId
      */
-   var  getDetailByTypeTaskID = (taskId) => {
-       $.ajax({
-           url: getRole(window.location.pathname) + '/details-of-task-type/' + taskId,
-           type: 'get',
-           success: (response) => {
-               pushDetailsToTable(response.details, '#update-detail-type-tbody');
-           }
-       });
-   };
+    var getDetailByTypeTaskID = (taskId) => {
+        if (taskId) {
+            $.ajax({
+                url: getRole(window.location.pathname) + '/details-of-task-type/' + taskId,
+                type: 'get',
+                success: (response) => {
+                    pushDetailsToTable(response.details, '#update-detail-type-tbody');
+                }
+            });
+        } else {
+            console.warn("Task id is empty !");
+        }
+    };
 
-   // bind button edit task and get details func
+    // bind button edit task and get details func
     var editTaskTypeButtonBind = (bindingClass) => {
         $(bindingClass).on('click', (event) => {
             getDetailByTypeTaskID(event.currentTarget.getAttribute('data-id'));
@@ -51,12 +63,12 @@ $(document).ready(function () {
     //if user change model car get list details and insert to
     // detail selector in CREATE task type page
     $('#model1').on('change', () => {
-            getDetailType($('#typeOfCar1').val(), $('#markk1').val(), $('#model1').val(), '#detail-type-select.create-task-detail-select')
+        getDetailType($('#typeOfCar1').val(), $('#markk1').val(), $('#model1').val(), '#detail-type-select.create-task-detail-select')
     });
     //if user change model car get list details and insert to
     // detail selector in UPDATE task type page
     $('#model').on('change', () => {
-            getDetailType($('#typeOfCar').val(), $('#markk').val(), $('#model').val(), '#update-detail-type-select')
+        getDetailType($('#typeOfCar').val(), $('#markk').val(), $('#model').val(), '#update-detail-type-select')
     });
 
     /**
@@ -69,8 +81,8 @@ $(document).ready(function () {
         var options = [];
         details.forEach(detail => {
             options.push(
-                '<option id="detailTypeID'+ detail.id +'" detailPrice="'+ detail.detailPrice +'" value="' + detail.id + '" detailName="' + detail.detailName +
-                ' / '+ detail.detailCode + '" detailPrice="'+ detail.detailPrice +'" title="Усі категорії"> '+ detail.detailName +' / ' + detail.detailCode + '</option>"'
+                '<option id="detailTypeID' + detail.id + '" detailPrice="' + detail.detailPrice + '" value="' + detail.id + '" detailName="' + detail.detailName +
+                ' / ' + detail.detailCode + '" detailPrice="' + detail.detailPrice + '" title="Усі категорії"> ' + detail.detailName + ' / ' + detail.detailCode + '</option>"'
             );
         });
         $(elementId).append(options);
@@ -99,6 +111,7 @@ $(document).ready(function () {
                 detailArray = [];
                 deleteDetailArray = [];
                 changeDetailArray = [];
+                clearCreateTaskTypeForm();
 
                 console.log('create-task-type-response', response);
                 pushTaskTypeInTable(response.taskType[0], '#tasks-table');
@@ -113,43 +126,81 @@ $(document).ready(function () {
         })
     });
 
+    // bind cancel button with clear create task-type form function
+    $( '.cancel-create-task-type').on('click', () => {
+        clearCreateTaskTypeForm();
+    });
+
+    /**
+     * Make clear field for create task type form
+     */
+    var clearCreateTaskTypeForm = () => {
+        $('.form-control').val('');
+        $('#detail-type-tbody').empty();
+        $('#detail-type-select').empty();
+
+        // $('#update-form-type-article').val();
+        // $('#typeOfCar1').val();
+        // $('#markk1').val();
+        // $('#model1').val();
+        // $('.task-planed-executor-id').val();
+    };
+
     /**
      * Push row with task info after create task Type
      * @param task - object with task information
      * @param tableBodyID - html selector by id table body like '#my-custom-id'
      */
     var pushTaskTypeInTable = (task, tableBodyID) => {
-        var deleteIcon ='';
-        if( getRole(window.location.pathname) === "/admin"){
-            deleteIcon =  '<a href="#" class="delete-task-type modal-window-link"' +
-                ' data-toggle="modal" data-target="#deleteTaskTypeFormModal" data-id="'+ task.id+'"' +
-                ' title="Видалити задачу"><span class="glyphicon glyphicon-remove" aria-hidden="true" style="font-size: 19px;"/></a>';
-        }
-        var row = ''+
-            '<tr id="idr-task-type-'+ task.id +'">'+
-            '<th class="tac" scope="row">'+ task.id +'</th>' +
-            '<td class="tac">'+ task.typeName +'</td>'+
-            '<td class="tac">'+ task.articleCode +'</td>' +
-            '<td class="tac">'+ task.transportType.transportTypeName + '</td>' +
-            '<td class="tac">' + task.transportMarkk.transportMarkkName + '</td>' +
-            '<td class="tac">' + task.transportModel.transportModelName + '</td>' +
-            '<td class="tac">' + task.cost + '</td>' +
-            '<td class="tac">'+ task.planedExecutor.userSurname + ' '+ task.planedExecutor.userName +'</td>' +
-            '<td class="tac">' + task.estimationTime+'</td>' +
-            '<td class="tac">'+
-            '<a href="#" class="update-task-type modal-window-link" data-toggle="modal" data-target="#updateTaskTypeFormModal"' +
-            ' data-id="'+ task.id +'" data-type-name="'+ task.typeName +'" data-article-code="'+ task.articleCode +'" data-type-of-car="'+ task.typeOfCar+ '"' +
-            ' data-car-markk="'+ task.carMarkk+'" data-car-markk-name="'+ task.transportMarkk.transportMarkkName +'" data-car-model="'+ task.carModel+'"' +
-            ' data-car-model-name="'+ task.transportModel.transportModelName +'" data-cost="'+ task.cost +'" data-planed-executor-id="'+ task.planedExecutorID+'"' +
-            ' data-estimation-time="'+ task.estimationTime +'" title="Редагувати задачу">' +
-            '<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="font-size: 17px; margin-right: 10px;"/>' +
-            '</a>' +
+        if (task && tableBodyID) {
+            var taskModel = {
+                id: task.id ? task.id : '',
+                typeName: task.typeName ? task.typeName : '',
+                articleCode: task.articleCode ? task.articleCode : '',
+                transportTypeName: task.transportType ? (task.transportType.transportTypeName ? task.transportType.transportTypeName : '') : '',
+                transportMarkkName: task.transportMarkk ? (task.transportMarkk.transportMarkkName ? task.transportMarkk.transportMarkkName : '') : '',
+                transportModelName: task.transportModel ? (task.transportModel.transportModelName ? task.transportModel.transportModelName : '') : '',
+                cost: task.cost ? task.cost : '',
+                userSurname: task.planedExecutor ? (task.planedExecutor.userSurname ? task.planedExecutor.userSurname : '') : '',
+                userName: task.planedExecutor ? (task.planedExecutor.userName ? task.planedExecutor.userName : '') : '',
+                estimationTime: task.estimationTime ? task.estimationTime : ''
+            };
+
+            var deleteIcon = '';
+            if (getRole(window.location.pathname) === "/admin") {
+                deleteIcon = '<a href="#" class="delete-task-type modal-window-link"' +
+                    ' data-toggle="modal" data-target="#deleteTaskTypeFormModal" data-id="' + taskModel.id + '"' +
+                    ' title="Видалити задачу"><span class="glyphicon glyphicon-remove" aria-hidden="true" style="font-size: 19px;"/></a>';
+            }
+            var row = '' +
+                '<tr id="idr-task-type-' + taskModel.id + '">' +
+                '<th class="tac" scope="row">' + taskModel.id + '</th>' +
+                '<td class="tac">' + taskModel.typeName + '</td>' +
+                '<td class="tac">' + taskModel.articleCode + '</td>' +
+                '<td class="tac"> Details </td>' +
+
+                '<td class="tac">' + taskModel.transportTypeName + '</td>' +
+                '<td class="tac">' + taskModel.transportMarkkName + '</td>' +
+                '<td class="tac">' + taskModel.transportModelName + '</td>' +
+                '<td class="tac">' + taskModel.cost + '</td>' +
+                '<td class="tac">' + taskModel.userSurname + ' ' + task.userName + '</td>' +
+                '<td class="tac">' + taskModel.estimationTime + '</td>' +
+                '<td class="tac">' +
+                '<a href="#" class="update-task-type modal-window-link" data-toggle="modal" data-target="#updateTaskTypeFormModal"' +
+                ' data-id="' + taskModel.id + '" data-type-name="' + taskModel.typeName + '" data-article-code="' + taskModel.articleCode + '" data-type-of-car="' + taskModel.typeOfCar + '"' +
+                ' data-car-markk="' + taskModel.carMarkk + '" data-car-markk-name="' + taskModel.transportMarkkName + '" data-car-model="' + taskModel.carModel + '"' +
+                ' data-car-model-name="' + taskModel.transportModelName + '" data-cost="' + taskModel.cost + '" data-planed-executor-id="' + taskModel.planedExecutorID + '"' +
+                ' data-estimation-time="' + taskModel.estimationTime + '" title="Редагувати задачу">' +
+                '<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="font-size: 17px; margin-right: 10px;"/>' +
+                '</a>' +
                 deleteIcon +
-            '</td>' +
-            '</tr>';
+                '</td>' +
+                '</tr>';
 
-        $(tableBodyID).append(row);
-
+            $(tableBodyID).append(row);
+        } else {
+            console.warn('Task object or id table is empty ');
+        }
         // after inert element to page need repeat bind listener
         deleteTaskType('.delete-task-type');
         updateTaskType('.update-task-type');
@@ -167,19 +218,19 @@ $(document).ready(function () {
         var rows = [];
         details.forEach(detail => {
             var selector = '';
-           if(getRole(window.location.pathname) === '/admin' || getRole(window.location.pathname) === '/moderator') {
-               selector = '' +
-                   '<select detail-id="' + detail.id + '" class="change-detail-type-select" >' +
-                   '<option value="1">Сервіс</option>' +
-                   '<option value="2">Клієнт</option>' +
-                   '<option value="3">Відсутня</option>' +
-                   '</select>';
-           }
+            if (getRole(window.location.pathname) === '/admin' || getRole(window.location.pathname) === '/moderator') {
+                selector = '' +
+                    '<select detail-id="' + detail.id + '" class="change-detail-type-select" >' +
+                    '<option value="1">Сервіс</option>' +
+                    '<option value="2">Клієнт</option>' +
+                    '<option value="3">Відсутня</option>' +
+                    '</select>';
+            }
             rows.push(
-                '<tr detailId="'+ detail.id +'" detailName="'+ detail.detail.detailName +' / '+detail.detail.detailCode+'" detailtype="'+ detail.detailType +'" ' +
-                'detailquantity="'+ detail.detailQuantity+'" id="idr-'+ detail.id +'" ><td>'+
-                detail.detail.detailName+' / ' + detail.detail.detailCode +
-                '</td><td>'+ detail.detail.detailPrice+'</td><td>'+ selector +'</td><td>'+detail.detailQuantity+'</td><td>' +
+                '<tr detailId="' + detail.id + '" detailName="' + detail.detail.detailName + ' / ' + detail.detail.detailCode + '" detailtype="' + detail.detailType + '" ' +
+                'detailquantity="' + detail.detailQuantity + '" id="idr-' + detail.id + '" ><td>' +
+                detail.detail.detailName + ' / ' + detail.detail.detailCode +
+                '</td><td>' + detail.detail.detailPrice + '</td><td>' + selector + '</td><td>' + detail.detailQuantity + '</td><td>' +
                 '<a class="delete-detail-from-modal" title="Видалити деталь" ' +
                 ' detail-id="' + detail.id + '">' +
                 '<span class="glyphicon glyphicon-remove" aria-hidden="true"/></a>' +
@@ -289,24 +340,24 @@ $(document).ready(function () {
                     '<td class="tac">' + data.user.userSurname + ' ' + data.user.userName + '</td>' +
                     '<td class="tac">' + data.taskType.estimationTime + '</td>' +
                     '<td class="tac">' +
-                        '<a href="#" class="update-task-type modal-window-link"' +
-                        ' data-toggle="modal" data-target="#updateTaskTypeFormModal" title="Редагувати задачу"' +
-                        ' data-id="' + data.taskType.id + '"' +
-                        ' data-type-name="' + data.taskType.typeName + '"' +
-                        ' data-article-code="'+ data.taskType.articleCode +'"'+
-                        ' data-type-of-car="' + data.taskType.transportType.id + '"' +
-                        ' data-car-markk="' + data.taskType.transportMarkk.id + '"' +
-                        ' data-car-model="' + data.taskType.transportModel.id + '"' +
-                        ' data-car-markk-name="' + data.taskType.transportMarkk.transportMarkkName + '"' +
-                        ' data-car-model-name="' + data.taskType.transportModel.transportModelName + '"' +
-                        ' data-cost="' + data.taskType.cost + '"' +
-                        ' data-planed-executor-id="' + data.user.id + '"' +
-                        ' data-estimation-time="' + data.taskType.estimationTime + '">' +
-                            '<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="font-size: 17px; margin-right: 10px;"/>' +
-                        '</a>';
+                    '<a href="#" class="update-task-type modal-window-link"' +
+                    ' data-toggle="modal" data-target="#updateTaskTypeFormModal" title="Редагувати задачу"' +
+                    ' data-id="' + data.taskType.id + '"' +
+                    ' data-type-name="' + data.taskType.typeName + '"' +
+                    ' data-article-code="' + data.taskType.articleCode + '"' +
+                    ' data-type-of-car="' + data.taskType.transportType.id + '"' +
+                    ' data-car-markk="' + data.taskType.transportMarkk.id + '"' +
+                    ' data-car-model="' + data.taskType.transportModel.id + '"' +
+                    ' data-car-markk-name="' + data.taskType.transportMarkk.transportMarkkName + '"' +
+                    ' data-car-model-name="' + data.taskType.transportModel.transportModelName + '"' +
+                    ' data-cost="' + data.taskType.cost + '"' +
+                    ' data-planed-executor-id="' + data.user.id + '"' +
+                    ' data-estimation-time="' + data.taskType.estimationTime + '">' +
+                    '<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="font-size: 17px; margin-right: 10px;"/>' +
+                    '</a>';
 
                 if (getRole(window.location.pathname) === '/admin') {
-                    newTaskType1 =  '<a href="#" class="delete-task-type modal-window-link" ' +
+                    newTaskType1 = '<a href="#" class="delete-task-type modal-window-link" ' +
                         ' data-toggle="modal" data-target="#deleteTaskTypeFormModal" title="Видалити задачу"' +
                         ' data-id="' + dataArr[0].value + '">' +
                         '<span class="glyphicon glyphicon-remove" aria-hidden="true" style="font-size: 19px;"/>' +

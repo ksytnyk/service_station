@@ -122,7 +122,7 @@
                         <button class="btn btn-success width task-type-create-button agree" id="create-task-type">
                             Додати
                         </button>
-                        <button class="btn btn-danger pull-right width" data-dismiss="modal">
+                        <button class="btn btn-danger pull-right width cancel-create-task-type" data-dismiss="modal">
                             Закрити
                         </button>
                     </div>
