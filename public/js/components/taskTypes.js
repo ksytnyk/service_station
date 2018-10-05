@@ -10,7 +10,20 @@ $(document).ready(function () {
                     $('.task-cost').val(data.taskType[0].cost);
                     $('.task-estimation-time').val(data.taskType[0].estimationTime);
                     $('.task-planed-executor-id').val(data.taskType[0].planedExecutorID).change();
-                    pushDetailsToTable(data.taskType[0].taskDetail, '#detail-type-tbody')
+                        // if task type contain detail, push detail to detail table
+                        pushDetailsToTable(data.taskType[0].taskDetail, '#detail-type-tbody');
+                     //   console.log(data.taskType[0].taskDetail);
+                    // data.taskType[0].taskDetail.forEach(detail => {
+                    //     console.log(detail);
+                    //     detailArray.push({
+                    //         detailID: detail.id,
+                    //         detailQuantity: detail.detailQuantity,
+                    //         detailType: detail.detailType,
+                    //         detailName: detail.detail.detailName + '/'  +  detail.detail.detailCode
+                    //     })
+                    // })
+                    // need make detailArray empty and push new detail inside
+                    // detailArray.push()
                 }
             })
         }
