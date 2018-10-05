@@ -1174,9 +1174,9 @@ router.put('/update-task-type/:id', validation.createAndUpdateTaskType(), async 
     try {
         const taskType = await TaskType.updateTaskType(req.params.id, req.body);
         const user = await User.getUserById(req.body.planedExecutorID);
-        /*await Models.TaskDetail.createTaskTypeDetail(req.params.id, JSON.parse(req.body.detail));
+        await Models.TaskDetail.createTaskTypeDetail(req.params.id, JSON.parse(req.body.details));
         await Models.TaskDetail.updateDetailType(JSON.parse(req.body.changeDetail));
-        await Models.TaskDetail.deleteTaskDetailByParam('id', JSON.parse(req.body.deleteDetail));*/
+        await Models.TaskDetail.deleteTaskDetailByParam('id', JSON.parse(req.body.deleteDetail));
 
         res.status(200).send({
             user,
