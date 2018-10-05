@@ -39,10 +39,14 @@ $(document).ready(function () {
        });
    };
 
-   // bind button and get details func
-    $('.update-task-type').on('click', (event) => {
-        getDetailByTypeTaskID(event.currentTarget.getAttribute('data-id'));
-    });
+   // bind button edit task and get details func
+    var editTaskTypeButtonBind = (bindingClass) => {
+        $(bindingClass).on('click', (event) => {
+            getDetailByTypeTaskID(event.currentTarget.getAttribute('data-id'));
+        });
+    };
+    editTaskTypeButtonBind('.update-task-type');
+
 
     //if user change model car get list details and insert to
     // detail selector in CREATE task type page
@@ -154,6 +158,8 @@ $(document).ready(function () {
         // after inert element to page need repeat bind listener
         deleteTaskType('.delete-task-type');
         updateTaskType('.update-task-type');
+        //binding edit task button and function get list detail
+        editTaskTypeButtonBind('.update-task-type');
     };
 
     /**
@@ -165,15 +171,36 @@ $(document).ready(function () {
         $(tableBodyID).empty();
         var rows = [];
         details.forEach(detail => {
-            console.log(detail);
+            var selector = '';
+           if(getRole(window.location.pathname) === '/admin' || getRole(window.location.pathname) === '/moderator') {
+               selector = '' +
+                   '<select detail-id="' + detail.id + '" class="change-detail-type-select" >' +
+                   '<option value="1">Сервіс</option>' +
+                   '<option value="2">Клієнт</option>' +
+                   '<option value="3">Відсутня</option>' +
+                   '</select>';
+           }
             rows.push(
                 '<tr detailId="'+ detail.id +'" detailName="'+ detail.detail.detailName +' / '+detail.detail.detailCode+'" detailtype="'+ detail.detailType +'" ' +
-                'detailquantity="'+ detail.detailQuantity+'" id="idr-999999" ><td>'+
+                'detailquantity="'+ detail.detailQuantity+'" id="idr-'+ detail.id +'" ><td>'+
                 detail.detail.detailName+' / ' + detail.detail.detailCode +
-                '</td><td>'+ detail.detail.detailPrice+'</td><td>selector</td><td>'+detail.detailQuantity+'</td><td>X</td></tr>'
-            )
+                '</td><td>'+ detail.detail.detailPrice+'</td><td>'+ selector +'</td><td>'+detail.detailQuantity+'</td><td>' +
+                '<a class="delete-detail-from-modal" title="Видалити деталь" ' +
+                ' detail-id="' + detail.id + '">' +
+                '<span class="glyphicon glyphicon-remove" aria-hidden="true"/></a>' +
+                '</td></tr>'
+            );
+            customDetailID--;
         });
         $(tableBodyID).append(rows);
+        details.forEach(detail => {
+            $('#idr-' + detail.id + ' .change-detail-type-select').val(detail.detailType);
+        });
+
+        // bind delete icon to listener
+        deleteDetailFromModal('.delete-detail-from-modal');
+        // bind selector type detail to listener
+        changeDetailTypeSelect('.change-detail-type-select');
     };
 
     function updateTaskType(value) {
@@ -207,119 +234,99 @@ $(document).ready(function () {
 
         var dataArr = $('#task-type-update-form').serializeArray();
 
-        // get old details list
-        var oldDetail = getDetailByTypeTaskID();
-        var newDetail = [];
-
-        var rows = $('#update-detail-type-tbody').children();
-
-        for(var i = 0; i < rows.length; i++){
-            newDetail.push({
-                detailID:rows[i].getAttribute('detailid'),
-                detailQuantity: rows[i].getAttribute('detailquantity'),
-                detailType:rows[i].getAttribute('detailType'),
-                detailName:rows[i].getAttribute('detailName')
-            })
-        }
-        console.log(oldDetail);
-        console.log(newDetail);
-
-            // detailID
-            // detailQuantity
-            // detailType
-            // detailName
-
-
         var requestBody = {
-            typeName: dataArr[0].value,
-            articleCode: dataArr[1].value,
-            typeOfCar: dataArr[2].value,
-            carMarkk: dataArr[3].value,
-            carModel: dataArr[4].value,
-            planedExecutorID: dataArr[5].value,
-            estimationTime: dataArr[6].value,
-            cost: dataArr[7].value,
-            details: [],
-            deleteDetail: [],
-            changeDetail: [],
+            id: dataArr[0].value,
+            typeName: dataArr[1].value,
+            articleCode: dataArr[2].value,
+            typeOfCar: dataArr[3].value,
+            carMarkk: dataArr[4].value,
+            carModel: dataArr[5].value,
+            planedExecutorID: dataArr[6].value,
+            estimationTime: dataArr[7].value,
+            cost: dataArr[8].value,
+            details: JSON.stringify(detailArray),
+            deleteDetail: JSON.stringify(deleteDetailArray),
+            changeDetail: JSON.stringify(changeDetailArray),
         };
 
-        console.log(requestBody);
+        $.ajax({
+            url: getRole(window.location.pathname) + '/update-task-type/' + dataArr[0].value,
+            type: 'put',
+            data: requestBody,
+            success: function (data) {
+                showSuccessAlert('Редагування задачі пройшло успішно.');
 
-        // $.ajax({
-        //     url: getRole(window.location.pathname) + '/update-task-type/' + dataArr[0].value,
-        //     type: 'put',
-        //     data: requestBody,
-        //     success: function (data) {
-        //         showSuccessAlert('Редагування задачі пройшло успішно.');
-        //
-        //         if (data.taskType.transportType === null) {
-        //             data.taskType.transportType = {
-        //                 transportTypeName: ''
-        //             }
-        //         }
-        //         if (data.taskType.transportMarkk === null) {
-        //             data.taskType.transportMarkk = {
-        //                 transportMarkkName: ''
-        //             }
-        //         }
-        //         if (data.taskType.transportModel === null) {
-        //             data.taskType.transportModel = {
-        //                 transportModelName: ''
-        //             }
-        //         }
-        //
-        //         $('.in .close').click();
-        //
-        //         var idr = "#idr-task-type-" + dataArr[0].value;
-        //         var newTaskType,
-        //             newTaskType1 = '',
-        //             newTaskType2 = '</td>';
-        //
-        //         newTaskType = '' +
-        //             '<th class="tac" scope="row">' + data.taskType.id + '</th>' +
-        //             '<td class="tac">' + data.taskType.typeName + '</td>' +
-        //             '<td class="tac">' + data.taskType.articleCode + '</td>' +
-        //             '<td class="tac">' + data.taskType.transportType.transportTypeName + '</td>' +
-        //             '<td class="tac">' + data.taskType.transportMarkk.transportMarkkName + '</td>' +
-        //             '<td class="tac">' + data.taskType.transportModel.transportModelName + '</td>' +
-        //             '<td class="tac">' + data.taskType.cost + '</td>' +
-        //             '<td class="tac">' + data.user.userSurname + ' ' + data.user.userName + '</td>' +
-        //             '<td class="tac">' + data.taskType.estimationTime + '</td>' +
-        //             '<td class="tac">' +
-        //                 '<a href="#" class="update-task-type modal-window-link"' +
-        //                 ' data-toggle="modal" data-target="#updateTaskTypeFormModal" title="Редагувати задачу"' +
-        //                 ' data-id="' + data.taskType.id + '"' +
-        //                 ' data-type-name="' + data.taskType.typeName + '"' +
-        //                 ' data-type-of-car="' + data.taskType.transportType.id + '"' +
-        //                 ' data-car-markk="' + data.taskType.transportMarkk.id + '"' +
-        //                 ' data-car-model="' + data.taskType.transportModel.id + '"' +
-        //                 ' data-car-markk-name="' + data.taskType.transportMarkk.transportMarkkName + '"' +
-        //                 ' data-car-model-name="' + data.taskType.transportModel.transportModelName + '"' +
-        //                 ' data-cost="' + data.taskType.cost + '"' +
-        //                 ' data-planed-executor-id="' + data.user.id + '"' +
-        //                 ' data-estimation-time="' + data.taskType.estimationTime + '">' +
-        //                     '<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="font-size: 17px; margin-right: 10px;"/>' +
-        //                 '</a>';
-        //
-        //         if (getRole(window.location.pathname) === '/admin') {
-        //             newTaskType1 =  '<a href="#" class="delete-task-type modal-window-link" ' +
-        //                 ' data-toggle="modal" data-target="#deleteTaskTypeFormModal" title="Видалити задачу"' +
-        //                 ' data-id="' + dataArr[0].value + '">' +
-        //                 '<span class="glyphicon glyphicon-remove" aria-hidden="true" style="font-size: 19px;"/>' +
-        //                 '</a>';
-        //         }
-        //
-        //         $(idr).empty().append(newTaskType + newTaskType1 + newTaskType2);
-        //
-        //         updateTaskType(idr + ' .update-task-type');
-        //         deleteTaskType(idr + ' .delete-task-type');
-        //     },
-        //     error: function (err) {
-        //         $('.in .close').click();
-        //         showErrorAlert(err);
-        //     }
-        // });
+                if (data.taskType.transportType === null) {
+                    data.taskType.transportType = {
+                        transportTypeName: ''
+                    }
+                }
+                if (data.taskType.transportMarkk === null) {
+                    data.taskType.transportMarkk = {
+                        transportMarkkName: ''
+                    }
+                }
+                if (data.taskType.transportModel === null) {
+                    data.taskType.transportModel = {
+                        transportModelName: ''
+                    }
+                }
+
+                $('.in .close').click();
+
+                var idr = "#idr-task-type-" + dataArr[0].value;
+                var newTaskType,
+                    newTaskType1 = '',
+                    newTaskType2 = '</td>';
+
+                newTaskType = '' +
+                    '<th class="tac" scope="row">' + data.taskType.id + '</th>' +
+                    '<td class="tac">' + data.taskType.typeName + '</td>' +
+                    '<td class="tac">' + data.taskType.articleCode + '</td>' +
+                    '<td class="tac">' + data.taskType.transportType.transportTypeName + '</td>' +
+                    '<td class="tac">' + data.taskType.transportMarkk.transportMarkkName + '</td>' +
+                    '<td class="tac">' + data.taskType.transportModel.transportModelName + '</td>' +
+                    '<td class="tac">' + data.taskType.cost + '</td>' +
+                    '<td class="tac">' + data.user.userSurname + ' ' + data.user.userName + '</td>' +
+                    '<td class="tac">' + data.taskType.estimationTime + '</td>' +
+                    '<td class="tac">' +
+                        '<a href="#" class="update-task-type modal-window-link"' +
+                        ' data-toggle="modal" data-target="#updateTaskTypeFormModal" title="Редагувати задачу"' +
+                        ' data-id="' + data.taskType.id + '"' +
+                        ' data-type-name="' + data.taskType.typeName + '"' +
+                        ' data-article-code="'+ data.taskType.articleCode +'"'+
+                        ' data-type-of-car="' + data.taskType.transportType.id + '"' +
+                        ' data-car-markk="' + data.taskType.transportMarkk.id + '"' +
+                        ' data-car-model="' + data.taskType.transportModel.id + '"' +
+                        ' data-car-markk-name="' + data.taskType.transportMarkk.transportMarkkName + '"' +
+                        ' data-car-model-name="' + data.taskType.transportModel.transportModelName + '"' +
+                        ' data-cost="' + data.taskType.cost + '"' +
+                        ' data-planed-executor-id="' + data.user.id + '"' +
+                        ' data-estimation-time="' + data.taskType.estimationTime + '">' +
+                            '<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="font-size: 17px; margin-right: 10px;"/>' +
+                        '</a>';
+
+                if (getRole(window.location.pathname) === '/admin') {
+                    newTaskType1 =  '<a href="#" class="delete-task-type modal-window-link" ' +
+                        ' data-toggle="modal" data-target="#deleteTaskTypeFormModal" title="Видалити задачу"' +
+                        ' data-id="' + dataArr[0].value + '">' +
+                        '<span class="glyphicon glyphicon-remove" aria-hidden="true" style="font-size: 19px;"/>' +
+                        '</a>';
+                }
+
+                $(idr).empty().append(newTaskType + newTaskType1 + newTaskType2);
+
+                updateTaskType(idr + ' .update-task-type');
+                deleteTaskType(idr + ' .delete-task-type');
+
+                // bind edit task button with get details list function
+                editTaskTypeButtonBind('.update-task-type');
+            },
+            error: function (err) {
+                $('.in .close').click();
+                showErrorAlert(err);
+            }
+        });
     });
 
     deleteTaskType('.delete-task-type');
