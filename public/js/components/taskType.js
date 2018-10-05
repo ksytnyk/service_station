@@ -88,23 +88,18 @@ $(document).ready(function () {
             details: []
         };
         formDataArray.forEach(item => body[item.name] = item.value);
-        var rows = $('#detail-type-tbody').children();
 
-        for(var i = 0; i < rows.length; i++){
-            body.details.push({
-                detailID:rows[i].getAttribute('detailid'),
-                detailQuantity: rows[i].getAttribute('detailquantity'),
-                detailType:rows[i].getAttribute('detailType'),
-                detailName:rows[i].getAttribute('detailName')
-            })
-        }
-        body.details = JSON.stringify(body.details);
+        body.details = JSON.stringify(detailArray);
 
         $.ajax({
             url: getRole(window.location.pathname) + '/create-task-type',
             type: 'post',
             data: body,
             success: response => {
+                detailArray = [];
+                deleteDetailArray = [];
+                changeDetailArray = [];
+
                 console.log('create-task-type-response', response);
                 pushTaskTypeInTable(response.taskType[0], '#tasks-table');
                 $('.in .close').click();
@@ -255,6 +250,10 @@ $(document).ready(function () {
             data: requestBody,
             success: function (data) {
                 showSuccessAlert('Редагування задачі пройшло успішно.');
+
+                detailArray = [];
+                deleteDetailArray = [];
+                changeDetailArray = [];
 
                 if (data.taskType.transportType === null) {
                     data.taskType.transportType = {

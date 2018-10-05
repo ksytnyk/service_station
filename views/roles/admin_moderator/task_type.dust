@@ -25,6 +25,7 @@
                 <th class="tac" style="width: 15px;">ID</th>
                 <th class="tac">Назва задачі</th>
                 <th class="tac">Артикул</th>
+                <th class="tac">Деталі</th>
                 <th class="tac" title="Тип транспорту" style="width: 75px;">Тип тр.</th>
                 <th class="tac" title="Марка транспорту">Марка тр.</th>
                 <th class="tac" title="Модель транспорту">Модель тр.</th>
@@ -40,6 +41,44 @@
                 <th class="tac" scope="row">{id}</th>
                 <td class="tac">{typeName}</td>
                 <td class="tac">{articleCode}</td>
+                <td class="tac" style="min-width: 200px;">
+                    <span style="display:block">
+                            <strong>
+                                Запчастини сервісу:
+                            </strong>
+                            {#taskDetail}
+                                {#detail}
+                                {@eq key=detailType value=1}
+                                    {detailName}
+                                {/eq}
+                                {/detail}
+                            {/taskDetail}
+                    </span>
+                        <sapn style="display:block">
+                            <strong>
+                                Запчастини клієнта:
+                            </strong>
+                            {#taskDetail}
+                                {#detail}
+                                {@eq key=detailType value=2}
+                                    {detailName}
+                                {/eq}
+                                {/detail}
+                            {/taskDetail}
+                        </sapn>
+                        <span style="display:block">
+                            <strong>
+                                Відсутні запчастини:
+                            </strong>
+                            {#taskDetail}
+                                {#detail}
+                                {@eq key=detailType value=3}
+                                    {detailName}
+                                {/eq}
+                                {/detail}
+                            {/taskDetail}
+                       </span>
+                </td>
                 <td class="tac">{transportType.transportTypeName}</td>
                 <td class="tac">{transportMarkk.transportMarkkName}</td>
                 <td class="tac">{transportModel.transportModelName}</td>

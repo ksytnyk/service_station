@@ -6,6 +6,8 @@ const User = require('../User');
 const TransportType = require('../TransportType');
 const TransportMarkk = require('../TransportMarkk');
 const TransportModel = require('../TransportModel');
+const TaskDetail = require('../TaskDetail');
+const Detail = require('../Detail');
 
 const taskTypesFactory = require('../../helpers/taskTypesFactory');
 
@@ -61,6 +63,8 @@ TaskType.belongsTo(User, {foreignKey: 'planedExecutorID', as: 'planedExecutor'})
 TaskType.belongsTo(TransportType, {foreignKey: 'typeOfCar', as: 'transportType'});
 TaskType.belongsTo(TransportMarkk, {foreignKey: 'carMarkk', as: 'transportMarkk'});
 TaskType.belongsTo(TransportModel, {foreignKey: 'carModel', as: 'transportModel'});
+TaskDetail.belongsTo(Detail, {foreignKey: 'detailID', as: 'detail'});
+TaskType.hasMany(TaskDetail, {foreignKey: 'taskTypeID', as: 'taskDetail'});
 
 TaskType.sync();
 
@@ -84,6 +88,16 @@ TaskType.getAllTaskType = function () {
                     {
                         model: TransportModel,
                         as: 'transportModel'
+                    },
+                    {
+                        model: TaskDetail,
+                        as: 'taskDetail',
+                        include: [
+                            {
+                                model: Detail,
+                                as: 'detail'
+                            }
+                        ]
                     }
                 ]
             })
