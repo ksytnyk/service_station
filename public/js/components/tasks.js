@@ -94,11 +94,13 @@ $(document).ready(function () {
             name: 'detail',
             value: JSON.stringify(detailArray)
         });
+
         if($('#task-type-article-code').val()){
             dataArr.push({name:'articleCode', value: $('#task-type-article-code').val()})
         }else{
             dataArr.push({name:'articleCode', value: $('#taskTypeID' + $('.task-type-select').serializeArray()[0].value).attr('updateTaskArticle')})
         }
+
 
         $.ajax({
             url: getRole(window.location.pathname) + '/create-task',
@@ -182,7 +184,8 @@ $(document).ready(function () {
 
                 if (getRole(window.location.pathname) === '/admin') {
                     editDeleteButtons += '' +
-                        '<a href="#" class="delete-task modal-window-link" title="Видалити задачу" data-toggle="modal" data-current="' + getIdRole(window.location.pathname) + '" data-id="' + data.result.id + '"' +
+                        '<a href="#" class="delete-task modal-window-link" title="Видалити задачу" data-toggle="modal" data-current="' +
+                        getIdRole(window.location.pathname) + '" data-id="' + data.result.id + '"' +
                         ' data-target="#deleteTaskFormModal"' +
                         ' data-request-id="' + data.result.requestID + '"' +
                         ' data-task-old-cost="' + data.result.cost + '">' +
@@ -206,6 +209,7 @@ $(document).ready(function () {
 
             },
             error: function (err) {
+                detailArray = [];
                 $('.in .close').click();
                 showErrorAlert(err);
             }
@@ -1072,7 +1076,8 @@ function deleteDetailFromModal(value) {
     $(value).on('click', function () {
         element = $(this).attr('detail-id');
         $('#idr-' + element).remove();
-
+        console.log('element', element);
+        console.log('detail array ', detailArray);
         for (var i = 0; i < detailArray.length; i++) {
             if (detailArray[i].customDetailID === +element) {
                 detailArray.splice(i, 1);

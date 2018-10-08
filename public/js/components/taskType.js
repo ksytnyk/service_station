@@ -222,14 +222,14 @@ $(document).ready(function () {
             var selector = '';
             if (getRole(window.location.pathname) === '/admin' || getRole(window.location.pathname) === '/moderator') {
                 selector = '' +
-                    '<select detail-id="' + detail.id + '" class="change-detail-type-select" >' +
+                    '<select detail-id="' + detail.detail.id + '" class="change-detail-type-select" >' +
                     '<option value="1">Сервіс</option>' +
                     '<option value="2">Клієнт</option>' +
                     '<option value="3">Відсутня</option>' +
                     '</select>';
             }
             rows.push(
-                '<tr detailId="' + detail.id + '" detailName="' + detail.detail.detailName + ' / ' + detail.detail.detailCode + '" detailtype="' + detail.detailType + '" ' +
+                '<tr detailId="' + detail.detail.id + '" detailName="' + detail.detail.detailName + ' / ' + detail.detail.detailCode + '" detailtype="' + detail.detailType + '" ' +
                 'detailquantity="' + detail.detailQuantity + '" id="idr-' + detail.id + '" ><td>' +
                 detail.detail.detailName + ' / ' + detail.detail.detailCode +
                 '</td><td>' + detail.detail.detailPrice + '</td><td>' + selector + '</td><td>' + detail.detailQuantity + '</td><td>' +

@@ -13,15 +13,16 @@ $(document).ready(function () {
                         // if task type contain detail, push detail to detail table
                         pushDetailsToTable(data.taskType[0].taskDetail, '#detail-type-tbody');
                      //   console.log(data.taskType[0].taskDetail);
-                    // data.taskType[0].taskDetail.forEach(detail => {
-                    //     console.log(detail);
-                    //     detailArray.push({
-                    //         detailID: detail.id,
-                    //         detailQuantity: detail.detailQuantity,
-                    //         detailType: detail.detailType,
-                    //         detailName: detail.detail.detailName + '/'  +  detail.detail.detailCode
-                    //     })
-                    // })
+                    data.taskType[0].taskDetail.forEach(detail => {
+                        console.log(detail);
+                        detailArray.push({
+                            detailID: detail.detail.id,
+                            detailQuantity: detail.detailQuantity,
+                            detailType: '' + detail.detailType,
+                            detailName: detail.detail.detailName + ' / '  +  detail.detail.detailCode,
+                            customDetailID: detail.detail.id
+                        })
+                    })
                     // need make detailArray empty and push new detail inside
                     // detailArray.push()
                 }
