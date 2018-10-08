@@ -9,7 +9,7 @@ $(document).ready(function () {
      * @param elementId - id element for insert detail must be id html selector
      */
     var getDetailType = (typeCar, mark, model, elementId) => {
-        if (typeCar && mark && model) {
+        if(typeCar && mark && model) {
             var body = {
                 typeOfCar: typeCar,
                 carMarkk: mark,
@@ -27,8 +27,8 @@ $(document).ready(function () {
                     }
                 }
             });
-        } else {
-            console.warn("Type Car, Mark or Model ids is empty !");
+        }else{
+            console.warn('taskType - 31 ', 'Error update details selector. Type car, mark or model is empty! ');
         }
     };
 
@@ -94,12 +94,19 @@ $(document).ready(function () {
      */
     $('#create-task-type').on('click', (event) => {
         event.preventDefault();
-        var formDataArray = $('#create-type-task-form').serializeArray();
+        //var formDataArray = $('#create-type-task-form').serializeArray();
 
         let body = {
+            typeName:  $('#create-form-type-name').val() ? $('#create-form-type-name').val(): '',
+            articleCode: $('#create-form-type-article').val() ? $('#create-form-type-article').val() : '',
+            typeOfCar: $('#typeOfCar1').val() ? $('#typeOfCar1').val() : '',
+            carMarkk:  $('#markk1').val() ? $('#markk1').val(): '',
+            carModel:  $('#model1').val() ? $('#model1').val() : '',
+            planedExecutorID: $('#planed-executor-create-tasktype').val() ? $('#planed-executor-create-tasktype').val() : '',
+            estimationTime:  $('#estimation-time-create-tasktype').val() ? $('#estimation-time-create-tasktype').val(): '',
+            cost:  $('#cost-create-tasktype').val() ? $('#cost-create-tasktype').val(): '',
             details: []
         };
-        formDataArray.forEach(item => body[item.name] = item.value);
 
         body.details = JSON.stringify(detailArray);
 
@@ -113,7 +120,7 @@ $(document).ready(function () {
                 changeDetailArray = [];
                 clearCreateTaskTypeForm();
 
-                console.log('create-task-type-response', response);
+                // console.log('create-task-type-response', response);
                 pushTaskTypeInTable(response.taskType[0], '#tasks-table');
                 $('.in .close').click();
                 showSuccessAlert('Додавання задачі пройшло успішно.');
@@ -248,7 +255,7 @@ $(document).ready(function () {
                     '</select>';
             }
             rows.push(
-                '<tr detailId="' + detail.detail.id + '" detailName="' + detail.detail.detailName + ' / ' + detail.detail.detailCode + '" detailtype="' + detail.detailType + '" ' +
+                '<tr detailId="' + detail.id + '" detailName="' + detail.detail.detailName + ' / ' + detail.detail.detailCode + '" detailtype="' + detail.detailType + '" ' +
                 'detailquantity="' + detail.detailQuantity + '" id="idr-' + detail.id + '" ><td>' +
                 detail.detail.detailName + ' / ' + detail.detail.detailCode +
                 '</td><td>' + detail.detail.detailPrice + '</td><td>' + selector + '</td><td>' + detail.detailQuantity + '</td><td>' +
@@ -298,30 +305,39 @@ $(document).ready(function () {
 
     $('.task-type-update-button').on('click', function (event) {
         event.preventDefault();
-
-        var dataArr = $('#task-type-update-form').serializeArray();
-
         var requestBody = {
-            id: dataArr[0].value,
-            typeName: dataArr[1].value,
-            articleCode: dataArr[2].value,
-            typeOfCar: dataArr[3].value,
-            carMarkk: dataArr[4].value,
-            carModel: dataArr[5].value,
-            planedExecutorID: dataArr[6].value,
-            estimationTime: dataArr[7].value,
-            cost: dataArr[8].value,
+            id: $('#update-form-id').val() ? $('#update-form-id').val() : '' ,
+            typeName:  $('#update-form-type-name').val() ?  $('#update-form-type-name').val() : '' ,
+            articleCode: $('#update-form-type-article').val() ? $('#update-form-type-article').val(): '' ,
+            typeOfCar: $('#typeOfCar').val() ? $('#typeOfCar').val(): '',
+            carMarkk:  $('#markk').val() ? $('#markk').val() : '',
+            carModel:  $('#model').val() ? $('#model').val() : '',
+            planedExecutorID: $('#update-form-planed-executor-id').val() ? $('#update-form-planed-executor-id').val() : '',
+            estimationTime:   $('#update-form-estimation-time').val() ?  $('#update-form-estimation-time').val(): '',
+            cost:  $('#update-form-cost').val() ? $('#update-form-cost').val(): '',
             details: JSON.stringify(detailArray),
             deleteDetail: JSON.stringify(deleteDetailArray),
             changeDetail: JSON.stringify(changeDetailArray),
         };
 
+        console.log(requestBody);
+
         $.ajax({
-            url: getRole(window.location.pathname) + '/update-task-type/' + dataArr[0].value,
+            url: getRole(window.location.pathname) + '/update-task-type/' + requestBody.id,
             type: 'put',
             data: requestBody,
             success: function (data) {
                 showSuccessAlert('Редагування задачі пройшло успішно.');
+                console.log(data);
+              if(data.taskType.cost === null){
+                  data.taskType.cost = '';
+              }
+              if(data.taskType.articleCode === null ){
+                  data.taskType.articleCode = '';
+              }
+              if(data.taskType.estimationTime === null ){
+                  data.taskType.estimationTime = '';
+              }
 
                 detailArray = [];
                 deleteDetailArray = [];
@@ -345,7 +361,7 @@ $(document).ready(function () {
 
                 $('.in .close').click();
 
-                var idr = "#idr-task-type-" + dataArr[0].value;
+                var idr = "#idr-task-type-" + requestBody.id;
                 var newTaskType,
                     newTaskType1 = '',
                     newTaskType2 = '</td>',
@@ -398,7 +414,7 @@ $(document).ready(function () {
                 if (getRole(window.location.pathname) === '/admin') {
                     newTaskType1 = '<a href="#" class="delete-task-type modal-window-link" ' +
                         ' data-toggle="modal" data-target="#deleteTaskTypeFormModal" title="Видалити задачу"' +
-                        ' data-id="' + dataArr[0].value + '">' +
+                        ' data-id="' + requestBody.id + '">' +
                         '<span class="glyphicon glyphicon-remove" aria-hidden="true" style="font-size: 19px;"/>' +
                         '</a>';
                 }
