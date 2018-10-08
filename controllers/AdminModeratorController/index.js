@@ -1172,15 +1172,16 @@ router.post('/create-task-type', validation.createAndUpdateTaskType(), async (re
 
 router.put('/update-task-type/:id', validation.createAndUpdateTaskType(), async (req, res) => {
     try {
-        const taskType = await TaskType.updateTaskType(req.params.id, req.body);
+        await TaskType.updateTaskType(req.params.id, req.body);
         const user = await User.getUserById(req.body.planedExecutorID);
         await Models.TaskDetail.createTaskTypeDetail(req.params.id, JSON.parse(req.body.details));
         await Models.TaskDetail.updateDetailType(JSON.parse(req.body.changeDetail));
         await Models.TaskDetail.deleteTaskDetailByParam('id', JSON.parse(req.body.deleteDetail));
+        const taksTypeChaged = await TaskType.getTaskTypeByID(req.params.id);
 
         res.status(200).send({
             user,
-            taskType: taskType[0]
+            taskType: taksTypeChaged[0]
         });
     } catch (errors) {
         console.warn(errors);
