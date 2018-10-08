@@ -12,9 +12,7 @@ $(document).ready(function () {
                     $('.task-planed-executor-id').val(data.taskType[0].planedExecutorID).change();
                         // if task type contain detail, push detail to detail table
                         pushDetailsToTable(data.taskType[0].taskDetail, '#detail-type-tbody');
-                     //   console.log(data.taskType[0].taskDetail);
                     data.taskType[0].taskDetail.forEach(detail => {
-                        console.log(detail);
                         detailArray.push({
                             detailID: detail.detail.id,
                             detailQuantity: detail.detailQuantity,
@@ -42,7 +40,22 @@ $(document).ready(function () {
                         $('#update-form-task-estimation-time').val(data.taskType[0].estimationTime);
                         $('#update-form-task-planed-executor').val(data.taskType[0].planedExecutorID).change();
                         // push detail to detail table if user select task type in task create window
-                        // pushDetailsToTable(data.taskType[0].taskDetail, '#update-detail-type-tbody')
+                        var deletedDetailsArray = $('#update-detail-type-tbody').children();
+                        var deletedID = [];
+                        for(var i = 0;  i < deletedDetailsArray.length; i++){
+                            deletedID.push(deletedDetailsArray[i].getAttribute('detailid'))
+                        }
+                        deleteDetailArray = deletedID;
+                       pushDetailsToTable(data.taskType[0].taskDetail, '#update-detail-type-tbody');
+                        data.taskType[0].taskDetail.forEach(detail => {
+                            detailArray.push({
+                                detailID: detail.detail.id,
+                                detailQuantity: detail.detailQuantity,
+                                detailType: '' + detail.detailType,
+                                detailName: detail.detail.detailName + ' / '  +  detail.detail.detailCode,
+                                customDetailID: detail.detail.id
+                            })
+                        })
                     } else {
                         isFirstUpdateClick = false;
                     }
