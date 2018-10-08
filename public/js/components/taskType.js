@@ -153,6 +153,7 @@ $(document).ready(function () {
      */
     var pushTaskTypeInTable = (task, tableBodyID) => {
         if (task && tableBodyID) {
+            console.log(task);
             var taskModel = {
                 id: task.id ? task.id : '',
                 typeName: task.typeName ? task.typeName : '',
@@ -166,6 +167,19 @@ $(document).ready(function () {
                 estimationTime: task.estimationTime ? task.estimationTime : ''
             };
 
+            var client = '',
+                service = '',
+                empty = '';
+            task.taskDetail.forEach(detail => {
+                if(detail.detailType ===1){
+                    service += ' ' + detail.detail.detailName + ', ';
+                }else if(detail.detailType === 2) {
+                    client += ' ' + detail.detail.detailName + ', ';
+                }else {
+                    empty += ' ' + detail.detail.detailName+ ', ';
+                }
+            })
+
             var deleteIcon = '';
             if (getRole(window.location.pathname) === "/admin") {
                 deleteIcon = '<a href="#" class="delete-task-type modal-window-link"' +
@@ -177,14 +191,19 @@ $(document).ready(function () {
                 '<th class="tac" scope="row">' + taskModel.id + '</th>' +
                 '<td class="tac">' + taskModel.typeName + '</td>' +
                 '<td class="tac">' + taskModel.articleCode + '</td>' +
-                '<td class="tac"> Details </td>' +
-
-                '<td class="tac">' + taskModel.transportTypeName + '</td>' +
-                '<td class="tac">' + taskModel.transportMarkkName + '</td>' +
-                '<td class="tac">' + taskModel.transportModelName + '</td>' +
+                '<td class="tac"> ' +
+                    '<span class="transport-column"> ' + taskModel.transportTypeName + '</span>' +
+                    '<span class="transport-column"> ' + taskModel.transportMarkkName + '</span>' +
+                    '<span class="transport-column"> ' + taskModel.transportModelName + '</span>' +
+                '</td>' +
                 '<td class="tac">' + taskModel.cost + '</td>' +
-                '<td class="tac">' + taskModel.userSurname + ' ' + task.userName + '</td>' +
+                '<td class="tac">' + taskModel.userSurname + ' ' + taskModel.userName + '</td>' +
                 '<td class="tac">' + taskModel.estimationTime + '</td>' +
+                '<td class=""> ' +
+                '<span class="transport-column"><strong>Запчастини сервісу:</strong> ' + service +'</span>' +
+                '<span class="transport-column"><strong>Запчастини клієнта:</strong> '+ client +'</span>' +
+                ' <span class="transport-column"><strong>Відсутні запчастини: </strong>'+ empty +'</span></td>' +
+                ' </td>' +
                 '<td class="tac">' +
                 '<a href="#" class="update-task-type modal-window-link" data-toggle="modal" data-target="#updateTaskTypeFormModal"' +
                 ' data-id="' + taskModel.id + '" data-type-name="' + taskModel.typeName + '" data-article-code="' + taskModel.articleCode + '" data-type-of-car="' + taskModel.typeOfCar + '"' +
@@ -222,7 +241,7 @@ $(document).ready(function () {
             var selector = '';
             if (getRole(window.location.pathname) === '/admin' || getRole(window.location.pathname) === '/moderator') {
                 selector = '' +
-                    '<select detail-id="' + detail.detail.id + '" class="change-detail-type-select" >' +
+                    '<select detail-id="' + detail.id + '" class="change-detail-type-select" >' +
                     '<option value="1">Сервіс</option>' +
                     '<option value="2">Клієнт</option>' +
                     '<option value="3">Відсутня</option>' +
@@ -329,18 +348,36 @@ $(document).ready(function () {
                 var idr = "#idr-task-type-" + dataArr[0].value;
                 var newTaskType,
                     newTaskType1 = '',
-                    newTaskType2 = '</td>';
+                    newTaskType2 = '</td>',
+                client = '',
+                service = '',
+                empty = '';
+                data.taskType.taskDetail.forEach(detail => {
+                    if(detail.detailType ===1){
+                        service += ' ' + detail.detail.detailName + ', ';
+                    }else if(detail.detailType === 2) {
+                        client += ' ' + detail.detail.detailName + ', ';
+                    }else {
+                        empty += ' ' + detail.detail.detailName+ ', ';
+                    }
+                })
 
                 newTaskType = '' +
                     '<th class="tac" scope="row">' + data.taskType.id + '</th>' +
                     '<td class="tac">' + data.taskType.typeName + '</td>' +
                     '<td class="tac">' + data.taskType.articleCode + '</td>' +
-                    '<td class="tac">' + data.taskType.transportType.transportTypeName + '</td>' +
-                    '<td class="tac">' + data.taskType.transportMarkk.transportMarkkName + '</td>' +
-                    '<td class="tac">' + data.taskType.transportModel.transportModelName + '</td>' +
+                    '<td class="tac"> ' +
+                        '<span class="transport-column">' + data.taskType.transportType.transportTypeName + ' </span>' +
+                        '<span class="transport-column">' + data.taskType.transportMarkk.transportMarkkName + ' </span>' +
+                        '<span class="transport-column">' + data.taskType.transportModel.transportModelName + ' </span>' +
+                    '</td>' +
                     '<td class="tac">' + data.taskType.cost + '</td>' +
                     '<td class="tac">' + data.user.userSurname + ' ' + data.user.userName + '</td>' +
                     '<td class="tac">' + data.taskType.estimationTime + '</td>' +
+                    '<td class=""> ' +
+                    '<span class="transport-column"><strong>Запчастини сервісу:</strong> ' + service +'</span>' +
+                    '<span class="transport-column"><strong>Запчастини клієнта:</strong> '+ client +'</span>' +
+                    ' <span class="transport-column"><strong>Відсутні запчастини: </strong>'+ empty +'</span></td>' +
                     '<td class="tac">' +
                     '<a href="#" class="update-task-type modal-window-link"' +
                     ' data-toggle="modal" data-target="#updateTaskTypeFormModal" title="Редагувати задачу"' +

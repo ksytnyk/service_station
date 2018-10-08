@@ -29,6 +29,7 @@ $(document).ready(function () {
     });
 
     $('#update-form-task-type-select').on('change', function () {
+        detailArray = [];
 
         if ($(this).val() !== null) {
             $.ajax({
@@ -45,7 +46,9 @@ $(document).ready(function () {
                         for(var i = 0;  i < deletedDetailsArray.length; i++){
                             deletedID.push(deletedDetailsArray[i].getAttribute('detailid'))
                         }
-                        deleteDetailArray = deletedID;
+                        if(deletedDetailsArray.length)
+                            deleteDetailArray = deletedID;
+
                        pushDetailsToTable(data.taskType[0].taskDetail, '#update-detail-type-tbody');
                         data.taskType[0].taskDetail.forEach(detail => {
                             detailArray.push({

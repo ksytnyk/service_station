@@ -25,13 +25,11 @@
                 <th class="tac" style="width: 15px;">ID</th>
                 <th class="tac">Назва задачі</th>
                 <th class="tac">Артикул</th>
-                <th class="tac">Деталі</th>
-                <th class="tac" title="Тип транспорту" style="width: 75px;">Тип тр.</th>
-                <th class="tac" title="Марка транспорту">Марка тр.</th>
-                <th class="tac" title="Модель транспорту">Модель тр.</th>
+                <th class="tac" title="Тип транспорту" style="width: 75px;">Авто.</th>
                 <th class="tac" style="width: 65px;">Вартість</th>
                 <th class="tac">Виконавець</th>
                 <th class="tac" style="width: 40px;">Час</th>
+                <th class="tac" style="width: 300px;">Деталі</th>
                 <th style="width: 50px;"></th>
             </tr>
             </thead>
@@ -41,50 +39,53 @@
                 <th class="tac" scope="row">{id}</th>
                 <td class="tac">{typeName}</td>
                 <td class="tac">{articleCode}</td>
-                <td class="tac" style="min-width: 200px;">
-                    <span style="display:block">
-                            <strong>
-                                Запчастини сервісу:
-                            </strong>
-                            {#taskDetail}
-                                {#detail}
-                                {@eq key=detailType value=1}
-                                    {detailName}
-                                {/eq}
-                                {/detail}
-                            {/taskDetail}
-                    </span>
-                        <sapn style="display:block">
-                            <strong>
-                                Запчастини клієнта:
-                            </strong>
-                            {#taskDetail}
-                                {#detail}
-                                {@eq key=detailType value=2}
-                                    {detailName}
-                                {/eq}
-                                {/detail}
-                            {/taskDetail}
-                        </sapn>
-                        <span style="display:block">
-                            <strong>
-                                Відсутні запчастини:
-                            </strong>
-                            {#taskDetail}
-                                {#detail}
-                                {@eq key=detailType value=3}
-                                    {detailName}
-                                {/eq}
-                                {/detail}
-                            {/taskDetail}
-                       </span>
+                <td class="tac">
+                    <span class="transport-column">{transportType.transportTypeName} </span>
+                    <span class="transport-column">{transportMarkk.transportMarkkName} </span>
+                    <span class="transport-column">{transportModel.transportModelName}</span>
                 </td>
-                <td class="tac">{transportType.transportTypeName}</td>
-                <td class="tac">{transportMarkk.transportMarkkName}</td>
-                <td class="tac">{transportModel.transportModelName}</td>
+
                 <td class="tac">{cost}</td>
                 <td class="tac">{planedExecutor.userSurname} {planedExecutor.userName}</td>
                 <td class="tac">{estimationTime}</td>
+            <td class="" style="min-width: 200px;">
+                <span class="transport-column">
+                    <strong>
+                        Запчастини сервісу:
+                    </strong>
+                    {#taskDetail}
+                        {#detail}
+                            {@eq key=detailType value=1}
+                                {detailName},
+                            {/eq}
+                        {/detail}
+                    {/taskDetail}
+                </span>
+                <sapn class="transport-column">
+                    <strong>
+                        Запчастини клієнта:
+                    </strong>
+                {#taskDetail}
+                    {#detail}
+                        {@eq key=detailType value=2}
+                            {detailName},
+                        {/eq}
+                    {/detail}
+                {/taskDetail}
+                </sapn>
+                <span class="transport-column">
+                    <strong>
+                        Відсутні запчастини:
+                    </strong>
+                    {#taskDetail}
+                        {#detail}
+                            {@eq key=detailType value=3}
+                                {detailName},
+                            {/eq}
+                        {/detail}
+                    {/taskDetail}
+                </span>
+            </td>
                 <td class="tac">
                     <a href="#"
                        class="update-task-type modal-window-link"
