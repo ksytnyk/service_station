@@ -608,7 +608,8 @@ router.post('/create-task', validation.createAndUpdateTask(), (req, res) => {
                         carModel: request[0].dataValues.transportModelID,
                         cost: req.body.cost,
                         estimationTime: req.body.estimationTime,
-                        planedExecutorID: req.body.planedExecutorID
+                        planedExecutorID: req.body.planedExecutorID,
+                        detail: JSON.parse(req.body.detail)
                     };
 
                     /*if (!req.body.typeID) {
@@ -626,6 +627,7 @@ router.post('/create-task', validation.createAndUpdateTask(), (req, res) => {
                     } else {
                         try {
                             result = await TaskType.createTaskType(search);
+                            await Models.TaskDetail.createTaskTypeDetail(result.taskTypes[0].dataValues.id, JSON.parse(req.body.detail));
                         } catch (errors) {
                             console.warn(errors);
                             res.status(400).send({errors: errors});
