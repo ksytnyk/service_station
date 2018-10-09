@@ -101,6 +101,25 @@ $(document).ready(function () {
             dataArr.push({name:'articleCode', value: $('#taskTypeID' + $('.task-type-select').serializeArray()[0].value).attr('updateTaskArticle')})
         }
 
+        // if($('#override-checkbox').prop('checked')){
+        //     var detailForTaskType = [],
+        //         rows = $('#detail-type-tbody').children();
+        //     console.log(rows);
+        //     for(var i = 0; i < rows.length; i++){
+        //         detailForTaskType.push({
+        //             detailID: rows[i].getAttribute('detailid'),
+        //             detailQuantity: rows[i].getAttribute('detailquantity'),
+        //             detailType: rows[i].getAttribute('detailtype'),
+        //             detailName: rows[i].getAttribute('detailname'),
+        //         })
+        //     }
+        //
+        //     dataArr.push({
+        //         name: 'detailTaskType',
+        //         value: JSON.stringify(detailForTaskType)
+        //     })
+        // }
+        // console.log(dataArr);
 
         $.ajax({
             url: getRole(window.location.pathname) + '/create-task',

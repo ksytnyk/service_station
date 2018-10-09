@@ -287,6 +287,7 @@ $(document).ready(function () {
 function changeDetailTypeSelect (value) {
     $(value).on('change', function () {
         var element = $(this).attr('detail-id');
+   //   $('#idr-'+ element)[0].attributes['detailtype'].value = $(this).val();
 
         for (var i = 0; i < detailArray.length; i++) {
             if (detailArray[i].customDetailID === +element) {
