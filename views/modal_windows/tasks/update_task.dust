@@ -218,7 +218,7 @@
                         <div class="form-group col-xs-6">
                             <div class="override-block">
                                 <input type="checkbox" name="override" id="override-checkbox-update"/>
-                                <label for="override-checkbox-update">Оновити задачу в каталозі?</label>
+                                <label for="override-checkbox-update">Додати задачу в каталог?</label>
                             </div>
                         </div>
                         <div class='form-group col-xs-6'>

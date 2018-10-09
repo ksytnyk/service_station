@@ -9,12 +9,21 @@ $(document).ready(function () {
      * @param elementId - id element for insert detail must be id html selector
      */
     var getDetailType = (typeCar, mark, model, elementId) => {
-        if(typeCar && mark && model) {
-            var body = {
-                typeOfCar: typeCar,
-                carMarkk: mark,
-                carModel: model
+         var body = {
+                typeOfCar: checkFieldValue(typeCar),
+                carMarkk: checkFieldValue(mark),
+                carModel: checkFieldValue(model)
             };
+         if(!body.carModel){
+             delete body['carModel'];
+         }
+        if(!body.carMarkk){
+            delete body['carMarkk'];
+        }
+        if(!body.typeOfCar){
+            console.warn('Type of car model and mark transport is empty');
+            return;
+        }else{
             $.ajax({
                 url: getRole(window.location.pathname) + '/get-task-types',
                 type: 'post',
@@ -27,8 +36,6 @@ $(document).ready(function () {
                     }
                 }
             });
-        }else{
-            console.warn('taskType - 31 ', 'Error update details selector. Type car, mark or model is empty! ');
         }
     };
 
@@ -62,12 +69,12 @@ $(document).ready(function () {
 
     //if user change model car get list details and insert to
     // detail selector in CREATE task type page
-    $('#model1').on('change', () => {
+    $('#model1, #typeOfCar1, #markk1').on('change', () => {
         getDetailType($('#typeOfCar1').val(), $('#markk1').val(), $('#model1').val(), '#detail-type-select.create-task-detail-select')
     });
     //if user change model car get list details and insert to
     // detail selector in UPDATE task type page
-    $('#model').on('change', () => {
+    $('#model,  #typeOfCar, #markk').on('change', () => {
         getDetailType($('#typeOfCar').val(), $('#markk').val(), $('#model').val(), '#update-detail-type-select')
     });
 
@@ -95,16 +102,21 @@ $(document).ready(function () {
     $('#create-task-type').on('click', (event) => {
         event.preventDefault();
         //var formDataArray = $('#create-type-task-form').serializeArray();
-
         let body = {
-            typeName:  $('#create-form-type-name').val() ? $('#create-form-type-name').val(): '',
-            articleCode: $('#create-form-type-article').val() ? $('#create-form-type-article').val() : '',
-            typeOfCar: $('#typeOfCar1').val() ? $('#typeOfCar1').val() : '',
-            carMarkk:  $('#markk1').val() ? $('#markk1').val(): '',
-            carModel:  $('#model1').val() ? $('#model1').val() : '',
-            planedExecutorID: $('#planed-executor-create-tasktype').val() ? $('#planed-executor-create-tasktype').val() : '',
-            estimationTime:  $('#estimation-time-create-tasktype').val() ? $('#estimation-time-create-tasktype').val(): '',
-            cost:  $('#cost-create-tasktype').val() ? $('#cost-create-tasktype').val(): '',
+            typeName:  "", articleCode: "",
+            typeOfCar: "", carMarkk:  "", carModel:  "",
+            planedExecutorID:  "", estimationTime:  "",
+            cost: '', details: []
+        };
+        body = {
+            typeName:  $('#create-form-type-name').val(),
+            articleCode: $('#create-form-type-article').val(),
+            typeOfCar: $('#typeOfCar1').val(),
+            carMarkk:  $('#markk1').val(),
+            carModel:  $('#model1').val(),
+            planedExecutorID: $('#planed-executor-create-tasktype').val(),
+            estimationTime:  $('#estimation-time-create-tasktype').val(),
+            cost:  $('#cost-create-tasktype').val(),
             details: []
         };
 
@@ -145,12 +157,11 @@ $(document).ready(function () {
         $('.form-control').val('');
         $('#detail-type-tbody').empty();
         $('#detail-type-select').empty();
+        $('#typeOfCar1').val('first').change();
+        $('#markk1').val('first').change();
+        $('#model1').val('first').change();
+        $('.task-planed-executor-id').val('first').change();
 
-        // $('#update-form-type-article').val();
-        // $('#typeOfCar1').val();
-        // $('#markk1').val();
-        // $('#model1').val();
-        // $('.task-planed-executor-id').val();
     };
 
     /**
@@ -160,7 +171,6 @@ $(document).ready(function () {
      */
     var pushTaskTypeInTable = (task, tableBodyID) => {
         if (task && tableBodyID) {
-            console.log(task);
             var taskModel = {
                 id: task.id ? task.id : '',
                 typeName: task.typeName ? task.typeName : '',
@@ -241,7 +251,6 @@ $(document).ready(function () {
      * @param tableBodyID - table body id like '#table-body-id'
      */
      pushDetailsToTable = (details, tableBodyID) => {
-         console.log(details);
         $(tableBodyID).empty();
         var rows = [];
         details.forEach(detail => {
@@ -303,61 +312,81 @@ $(document).ready(function () {
         });
     }
 
+    /**
+     * if string field empty or undef or null make empty string;
+     * @param value any string field
+     * @returns {*} return empty string ""
+     */
+    var checkFieldValue = (value) => {
+        if(value === null || value === undefined || value === "undefined" || value === 'default' || !value ){
+            return "" ;
+        }else{
+            return value;
+        }
+    };
+
+    /**
+     * send update task type
+     */
     $('.task-type-update-button').on('click', function (event) {
         event.preventDefault();
+
         var requestBody = {
-            id: $('#update-form-id').val() ? $('#update-form-id').val() : '' ,
-            typeName:  $('#update-form-type-name').val() ?  $('#update-form-type-name').val() : '' ,
-            articleCode: $('#update-form-type-article').val() ? $('#update-form-type-article').val(): '' ,
-            typeOfCar: $('#typeOfCar').val() ? $('#typeOfCar').val(): '',
-            carMarkk:  $('#markk').val() ? $('#markk').val() : '',
-            carModel:  $('#model').val() ? $('#model').val() : '',
-            planedExecutorID: $('#update-form-planed-executor-id').val() ? $('#update-form-planed-executor-id').val() : '',
-            estimationTime:   $('#update-form-estimation-time').val() ?  $('#update-form-estimation-time').val(): '',
-            cost:  $('#update-form-cost').val() ? $('#update-form-cost').val(): '',
+            id: "" ,  typeName:  "" , articleCode: "" , typeOfCar: "",
+            carMarkk: "", carModel:  "", planedExecutorID: "",
+            estimationTime: "", cost: "",
+            details: [], deleteDetail: [], changeDetail: [],
+        };
+        requestBody = {
+            id: checkFieldValue($('#update-form-id').val()) ,
+            typeName: checkFieldValue($('#update-form-type-name').val()) ,
+            articleCode: checkFieldValue( $('#update-form-type-article').val()) ,
+            typeOfCar:  checkFieldValue($('#typeOfCar').val()) ,
+            carMarkk:   checkFieldValue($('#markk').val()) ,
+            carModel:   checkFieldValue($('#model').val()) ,
+            planedExecutorID: checkFieldValue($('#update-form-planed-executor-id').val()),
+            estimationTime:   checkFieldValue($('#update-form-estimation-time').val()),
+            cost:  checkFieldValue($('#update-form-cost').val()),
             details: JSON.stringify(detailArray),
             deleteDetail: JSON.stringify(deleteDetailArray),
             changeDetail: JSON.stringify(changeDetailArray),
         };
-
-        console.log(requestBody);
 
         $.ajax({
             url: getRole(window.location.pathname) + '/update-task-type/' + requestBody.id,
             type: 'put',
             data: requestBody,
             success: function (data) {
+
                 showSuccessAlert('Редагування задачі пройшло успішно.');
-                console.log(data);
-              if(data.taskType.cost === null){
-                  data.taskType.cost = '';
-              }
-              if(data.taskType.articleCode === null ){
-                  data.taskType.articleCode = '';
-              }
-              if(data.taskType.estimationTime === null ){
-                  data.taskType.estimationTime = '';
-              }
+                if(data.user){
+                    for( var key in data.user){
+                        data.user[key] = checkFieldValue(data.user[key]);
+                    }
+                }else{
+                    data.user = {
+                        userSurname: "",
+                        userName: ""
+                    }
+                }
+                if(data.taskType){
+                    for( var key in data.taskType){
+                        data.taskType[key] = checkFieldValue(data.taskType[key]);
+                    }
+                    if(!data.taskType.transportModel.transportModelName) {
+                        data.taskType.transportModel = {transportModelName : ""}
+                    }
+                    if(!data.taskType.transportType.transportTypeName) {
+                        data.taskType.transportType = {transportTypeName : ""}
+                    }
+                    if(!data.taskType.transportMarkk.transportMarkkName) {
+                        data.taskType.transportMarkk = {transportMarkkName : ""}
+                    }
+                }
 
                 detailArray = [];
                 deleteDetailArray = [];
                 changeDetailArray = [];
-
-                if (data.taskType.transportType === null) {
-                    data.taskType.transportType = {
-                        transportTypeName: ''
-                    }
-                }
-                if (data.taskType.transportMarkk === null) {
-                    data.taskType.transportMarkk = {
-                        transportMarkkName: ''
-                    }
-                }
-                if (data.taskType.transportModel === null) {
-                    data.taskType.transportModel = {
-                        transportModelName: ''
-                    }
-                }
 
                 $('.in .close').click();
 

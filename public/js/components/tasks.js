@@ -1077,8 +1077,6 @@ function deleteDetailFromModal(value) {
     $(value).on('click', function () {
         element = $(this).attr('detail-id');
         $('#idr-' + element).remove();
-        console.log('element', element);
-        console.log('detail array ', detailArray);
         for (var i = 0; i < detailArray.length; i++) {
             if (detailArray[i].customDetailID === +element) {
                 detailArray.splice(i, 1);
