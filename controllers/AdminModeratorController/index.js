@@ -208,7 +208,6 @@ router.get('/create-request', (req, res) => {
                     TransportType
                         .getAllTransportType()
                         .then(types => {
-
                             res.render('roles/admin_moderator/create_request', {
                                 assignedExecutorUsers: users,
                                 customers: usersCustomers,
@@ -239,7 +238,6 @@ router.post('/create-request', validation.createAndUpdateRequest(), (req, res) =
                 .then(customer => {
                     if (customer.userEmail)
                         nodemailer('create-request', customer);
-
                     res.status(200).send({
                         result: result,
                         customer: customer
@@ -717,6 +715,7 @@ router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
                     // } else {
                         try {
                             result = await TaskType.createTaskType(search);
+                           // await Models.TaskDetail.createTaskTypeDetail(result.taskTypes[0].dataValues.id, JSON.parse(req.body.detailForType));
                         } catch (errors) {
                             console.warn(errors);
                             res.status(400).send({errors: errors});

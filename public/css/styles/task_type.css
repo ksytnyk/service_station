@@ -17,3 +17,7 @@
 .transport-column{
     display:block;
 }
+
+.transport-column strong{
+    margin-right:5px;
+}

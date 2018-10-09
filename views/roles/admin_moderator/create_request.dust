@@ -40,7 +40,7 @@
             <div class="input-group">
                 <select class="form-control add_select2 disable_input" name="customerID" id="customers">
                     {#customers}
-                    <option value="{id}">{userName} {userSurname}</option>
+                    <option value="{id}"> {userCompanyName} / {userName} {userSurname} / {userPhone} </option>
                     {/customers}
                 </select>
                 <span class="input-group-addon plus disable_input" id="add_new_user">
