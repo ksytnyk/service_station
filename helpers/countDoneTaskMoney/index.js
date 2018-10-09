@@ -1,6 +1,6 @@
 const formatDate = require('../../helpers/formatDate');
 
-module.exports = function (dates, tasks) {
+module.exports = function (dates, requests) {
     var fromDateChart = new Date(dates.fromDateChart);
     var toDateChart = new Date(dates.toDateChart);
 
@@ -8,15 +8,15 @@ module.exports = function (dates, tasks) {
     while (fromDateChart <= toDateChart) {
         requestsObj[formatDate(fromDateChart, true)] = {
             count: 0,
-            summ: 0
+            sum_cost: 0
         };
         fromDateChart.setDate(fromDateChart.getDate() + 1);
     }
 
-    tasks.map(item => {
-        if(item.status === 3){
-            requestsObj[formatDate(item.endTime, true)].summ += item.cost;
-            requestsObj[formatDate(item.endTime, true)].count++;
+    requests.map(item=> {
+        if(item.dataValues.status === 3){
+            requestsObj[formatDate(item.dataValues.estimatedTime, true)].sum_cost += item.dataValues.cost;
+            requestsObj[formatDate(item.dataValues.estimatedTime, true)].count++;
         }
     });
 
@@ -26,7 +26,7 @@ module.exports = function (dates, tasks) {
 
     for (var key in requestsObj) {
         datesArr.push(key);
-        moneyArr.push(requestsObj[key].summ);
+        moneyArr.push(requestsObj[key].sum_cost);
         countsArr.push(requestsObj[key].count)
     }
 

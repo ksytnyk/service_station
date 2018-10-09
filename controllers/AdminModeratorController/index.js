@@ -968,11 +968,8 @@ router.post('/chart/tasks', (req, res) => {
 });
 
 router.post('/chart/profit', (req, res) => {
-    Task.getAllTasksForChart(req.body).then(tasks => {
-        res.status(200).send({data: countDoneTaskMoney(req.body, tasks)});
-    }).catch(error => {
-        console.log(error);
-        res.status(400).send({error: error});
+    Request.getAllRequestsForChart(req.body).then(request => {
+        res.status(200).send({data: countDoneTaskMoney(req.body, request)});
     });
 });
 

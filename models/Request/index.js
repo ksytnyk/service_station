@@ -307,9 +307,9 @@ Request.getAllRequestsForChart = function (data) {
     return new Promise((resolve, reject) => {
         Request
             .findAll({
-                attributes: ['cost', 'createdAt', 'status'],
+                attributes: ['cost', 'createdAt', 'status', 'estimatedTime'],
                 where: {
-                    createdAt: {
+                    estimatedTime: {
                         $between: [new Date(data.fromDateChart), new Date(data.toDateChart)]
                     }
                 }

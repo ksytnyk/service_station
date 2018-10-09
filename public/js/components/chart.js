@@ -187,7 +187,7 @@ $(document).ready(function () {
                         '<thead>' +
                         '<tr>' +
                         '<th class="tac">День</th>' +
-                        '<th class="tac">Виконано задач</th>' +
+                        '<th class="tac">Розраховано по дням</th>' +
                         '<th class="tac">Прибуток</th>' +
                         '</tr>' +
                         '</thead>' +
@@ -226,7 +226,7 @@ $(document).ready(function () {
                         '<thead>' +
                         '<tr>' +
                         '<th class="tac">Від - До</th>' +
-                        '<th class="tac">Виконано задач</th>' +
+                        '<th class="tac">Розраховано замовлень</th>' +
                         '<th class="tac">Прибуток</th>' +
                         '</tr>' +
                         '</thead>' +
