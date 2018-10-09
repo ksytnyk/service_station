@@ -591,7 +591,7 @@ router.post('/create-task', validation.createAndUpdateTask(), (req, res) => {
 
     req.body.endTime = countEndTime(req.body.startTime, +req.body.estimationTime);
 
-    const needToOverride = !!req.body.override;
+    const addToTaskType = !!req.body.override;
 
     Request
         .getRequestById(req.body.requestID)
@@ -617,14 +617,14 @@ router.post('/create-task', validation.createAndUpdateTask(), (req, res) => {
                     }*/
 
                     let result;
-                    if (needToOverride) {
-                        try {
-                            result = await TaskType.updateTaskType(req.body.typeID, search);
-                        } catch (errors) {
-                            console.warn(errors);
-                            res.status(400).send({errors: errors});
-                        }
-                    } else {
+                    if (addToTaskType) {
+                    //     try {
+                    //         result = await TaskType.updateTaskType(req.body.typeID, search);
+                    //     } catch (errors) {
+                    //         console.warn(errors);
+                    //         res.status(400).send({errors: errors});
+                    //     }
+                    // } else {
                         try {
                             result = await TaskType.createTaskType(search);
                             await Models.TaskDetail.createTaskTypeDetail(result.taskTypes[0].dataValues.id, JSON.parse(req.body.detail));
@@ -679,10 +679,9 @@ router.post('/create-task', validation.createAndUpdateTask(), (req, res) => {
 });
 
 router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
-    console.log(req.body);
     req.body.endTime = countEndTime(req.body.startTime, +req.body.estimationTime);
 
-    const needToOverride = !!req.body.override;
+    const addToTaskType = !!req.body.override;
 
     Request
         .getRequestById(req.body.requestID)
@@ -708,14 +707,14 @@ router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
                     }*/
 
                     let result;
-                    if (needToOverride) {
-                        try {
-                            result = await TaskType.updateTaskType(req.body.typeID, search);
-                        } catch (errors) {
-                            console.warn(errors);
-                            res.status(400).send({errors: errors});
-                        }
-                    } else {
+                    if (addToTaskType) {
+                    //     try {
+                    //         result = await TaskType.updateTaskType(req.body.typeID, search);
+                    //     } catch (errors) {
+                    //         console.warn(errors);
+                    //         res.status(400).send({errors: errors});
+                    //     }
+                    // } else {
                         try {
                             result = await TaskType.createTaskType(search);
                         } catch (errors) {
@@ -1482,7 +1481,6 @@ router.get('/details', (req, res) => {
     Models.Detail
         .getAll()
         .then(details => {
-            console.log(details);
             res.render('roles/admin_moderator/details', {
                 typeUser: req.session.passport.user.userTypeID,
                 details: details
