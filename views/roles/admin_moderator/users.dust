@@ -10,6 +10,14 @@
        title="Очистити пошук">
         <span class="glyphicon glyphicon-remove" aria-hidden="true" style="margin-top: 15px; font-size: 19px;"/>
     </a>
+    <div class="col-xs-6" style="padding-left: 0;">
+        <a class="btn btn-primary modal-window-link"
+           data-toggle="modal"
+           data-target="#createUserFormModal"
+           title="Додати користувача">
+            Додати користувача
+        </a>
+    </div>
     <div class="panel panel-default">
         <table class="table dtable">
             <thead>
