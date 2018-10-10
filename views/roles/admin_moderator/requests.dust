@@ -52,12 +52,27 @@
                 </li>
         {/eq}
     </ul>
-    <div class="panel panel-default">
+    {!<div class="col-xs-12">!}
+        {!<div class="form-group col-xs-2">!}
+            {!<label for="from-date-for-statistic">!}
+                {!Від (дата / час)!}
+            {!</label>!}
+            {!<input class="form-control datetimepickerN" id="from-date-for-statistic" name="fromDateChart">!}
+        {!</div>!}
+        {!<div class="form-group col-xs-2">!}
+            {!<label for="to-date-for-statistic">!}
+                {!До (дата / час)!}
+            {!</label>!}
+            {!<input class="form-control datetimepickerN" id="to-date-for-statistic" name="toDateChart">!}
+        {!</div>!}
+    {!</div>!}
     <a href="#"
        class="clean-search"
        title="Очистити пошук">
         <span class="glyphicon glyphicon-remove" aria-hidden="true" style="margin-top: 15px; font-size: 19px;"/>
     </a>
+    <div class="panel panel-default">
+
         <table class="table dtable-requests">
             <thead>
             <tr>

@@ -13,9 +13,9 @@
             <a href="/{@eq key=typeUser value=3}executor{/eq}/tasks/hold">Очікують запчастини</a>
         </li>
 
-        {!<li role="presentation" class="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/pending">!}
-            {!<a href="/{@eq key=typeUser value=1}admin{/eq}{@eq key=typeUser value=2}moderator{/eq}/requests/pending">Не початі</a>!}
-        {!</li>!}
+        <li role="presentation" class="/{@eq key=typeUser value=3}executor{/eq}/requests/pending">
+            <a href="/{@eq key=typeUser value=3}executor{/eq}/task/pending">Не початі</a>
+        </li>
         <li role="presentation" class="/{@eq key=typeUser value=3}executor{/eq}/tasks/processing">
             <a href="/{@eq key=typeUser value=3}executor{/eq}/tasks/processing">Виконуються</a>
         </li>

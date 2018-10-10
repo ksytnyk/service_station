@@ -13,6 +13,7 @@ const status = require('../../constants/status');
 const Models = require('../../models/TaskDetail/relations');
 
 router.get('/tasks/:status', (req, res) => {
+    console.log(req.params.status);
     let findBy;
     if (req.params.status === 'all') {
         findBy =  {
@@ -37,6 +38,12 @@ router.get('/tasks/:status', (req, res) => {
     else if (req.params.status === 'done'){
         findBy ={
             status: status.DONE,
+            planedExecutorID: req.session.passport.user.id,
+        }
+    }
+    else if (req.params.status === 'pending'){
+        findBy ={
+            status: status.PENDING,
             planedExecutorID: req.session.passport.user.id,
         }
     }
