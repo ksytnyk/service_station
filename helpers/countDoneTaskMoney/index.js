@@ -15,8 +15,8 @@ module.exports = function (dates, requests) {
 
     requests.map(item=> {
         if(item.dataValues.payed){
-            requestsObj[formatDate(item.dataValues.estimatedTime, true)].sum_cost += item.dataValues.cost;
-            requestsObj[formatDate(item.dataValues.estimatedTime, true)].count++;
+            requestsObj[formatDate(item.dataValues.payedDate, true)].sum_cost += item.dataValues.cost;
+            requestsObj[formatDate(item.dataValues.payedDate, true)].count++;
         }
     });
 

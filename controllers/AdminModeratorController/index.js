@@ -487,8 +487,14 @@ router.put('/change-request-status/:id', (req, res) => {
 });
 
 router.put('/set-payed/:id', (req, res) => {
+    var request = req.body;
+    if(req.body.payed === 'true'){
+        request['payedDate'] = new Date();
+    }else{
+        request['payedDate'] = null;
+    }
     Request
-        .updateRequest(req.params.id, req.body)
+        .updateRequest(req.params.id, request)
         .then(() => {
             Request
                 .getRequestById(req.params.id)
@@ -960,7 +966,8 @@ router.post('/chart/tasks', (req, res) => {
 });
 
 router.post('/chart/profit', (req, res) => {
-    Request.getAllRequestsForChart(req.body).then(request => {
+    Request.getAllPayedRequestForChart(req.body).then(request => {
+        console.log('controller ', request);
         res.status(200).send({data: countDoneTaskMoney(req.body, request)});
     });
 });

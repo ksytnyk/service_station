@@ -81,6 +81,11 @@ const describeRequestTable = {
         type: Sequelize.BOOLEAN,
         field: 'give_out',
         defaultValue: false
+    },
+    payedDate: {
+        type: Sequelize.DATE,
+        field: 'payed_date',
+        defaultValue: null
     }
 };
 
@@ -307,11 +312,33 @@ Request.getAllRequestsForChart = function (data) {
     return new Promise((resolve, reject) => {
         Request
             .findAll({
-                attributes: ['cost', 'createdAt', 'status', 'estimatedTime', 'payed'],
+                attributes: ['cost', 'createdAt', 'status'],
                 where: {
-                    estimatedTime: {
+                    createdAt: {
                         $between: [new Date(data.fromDateChart), new Date(data.toDateChart)]
                     }
+                }
+            })
+            .then(requests => {
+                resolve(requests);
+            })
+            .catch(err => {
+                console.warn(err);
+                reject(err);
+            });
+    });
+};
+
+Request.getAllPayedRequestForChart = (data) => {
+    return new Promise((resolve, reject) => {
+        Request
+            .findAll({
+                attributes: ['cost', 'createdAt', 'status', 'payed', 'payedDate'],
+                where: {
+                    createdAt: {
+                        $between: [new Date(data.fromDateChart), new Date(data.toDateChart)]
+                    },
+                    payed: true
                 }
             })
             .then(requests => {
