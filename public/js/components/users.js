@@ -35,14 +35,14 @@ $(document).ready(function () {
                 var newUserInfo = '' +
                     '<th class="tac" scope="row">' + dataArr[0].value + '</th>' +
                     '<td class="pr">' +
-                        '<div class="col-lg-4"><strong>Прізвище Ім\'я: </strong>' + dataArr[3].value + ' ' + dataArr[2].value + '</div>' +
-                        '<div class="col-lg-4"><strong>Адреса: </strong>' + dataArr[5].value + '</div>' +
-                        '<div class="col-lg-4"><strong>Логін: </strong>' + dataArr[7].value + '</div>' +
-                        '<div class="col-lg-4"><strong>Контактний номер: </strong>' + dataArr[6].value + '</div>' +
-                        '<div class="col-lg-4"><strong>Email: </strong>' + dataArr[8].value + '</div>' +
-                        '<div class="col-lg-4"><strong>Пароль: </strong>' + dataArr[10].value + '</div>' +
-                        '<div class="col-lg-4"><strong>Компанія: </strong>' + dataArr[4].value + '</div>' +
-                        '<div class="col-lg-4"><strong>Роль: </strong>' + getRoleName(dataArr[9].value) + '</div>' +
+                    '<div class="col-lg-4"><strong>Прізвище Ім\'я: </strong>' + dataArr[3].value + ' ' + dataArr[2].value + '</div>' +
+                    '<div class="col-lg-4"><strong>Адреса: </strong>' + dataArr[5].value + '</div>' +
+                    '<div class="col-lg-4"><strong>Логін: </strong>' + dataArr[7].value + '</div>' +
+                    '<div class="col-lg-4"><strong>Контактний номер: </strong>' + dataArr[6].value + '</div>' +
+                    '<div class="col-lg-4"><strong>Email: </strong>' + dataArr[8].value + '</div>' +
+                    '<div class="col-lg-4"><strong>Пароль: </strong>' + dataArr[10].value + '</div>' +
+                    '<div class="col-lg-4"><strong>Компанія: </strong>' + dataArr[4].value + '</div>' +
+                    '<div class="col-lg-4"><strong>Роль: </strong>' + getRoleName(dataArr[9].value) + '</div>' +
                     '</td><td class="tac">';
 
                 var newUserEditButton = '' +
@@ -140,12 +140,74 @@ $(document).ready(function () {
         }
     }
 
-    $('#createUserFormModal input.bfh-phone').keypress(function(){
+    $('#createUserFormModal input.bfh-phone').keypress(function () {
         let phone = $('#createUserFormModal input.bfh-phone').val();
         let password = $('input[name=userLogin]');
         let login = $('input[name=userPassword]');
         password.val(phone);
         login.val(phone);
     })
+
+    // /**
+    //  * check field user create form and if is valid, send data to server
+    //  */
+    // $('#create-user-button').on('click', (event) => {
+    //     var user = {
+    //         userCompanyName: "",
+    //         userSurname: "",
+    //         userName: "",
+    //         userPhone: "",
+    //         userTypeID: "",
+    //         userLogin: "",
+    //         userPassword: "",
+    //         userEmail: "",
+    //         userAddress: ""
+    //     };
+    //     var invalid = true;
+    //     event.preventDefault();
+    //     var inputElements = $('#create-user-form').find('input');
+    //     user.userTypeID = $('select[name="userTypeID"]').val();
+    //     for (var i = 0; i < inputElements.length; i++) {
+    //         if (inputElements[i].getAttribute('name') !== 'userEmail') {
+    //             if (inputElements[i].getAttribute('name') !== 'userAddress') {
+    //                 if (!inputElements[i].value) {
+    //                     inputElements[i].style = "border-color:red;";
+    //                     invalid = true;
+    //                 } else {
+    //                     inputElements[i].style = "border-color:#ccc;";
+    //                     user[inputElements[i].getAttribute('name')] = inputElements[i].value;
+    //                     invalid = false;
+    //                 }
+    //             } else {
+    //                 user.userAddress = inputElements[i].value;
+    //             }
+    //         } else {
+    //             user.userEmail = inputElements[i].value;
+    //         }
+    //     }
+    //     if (invalid === false) {
+    //         createUser(user)
+    //     }
+    // });
+    //
+    // /**
+    //  * send user create data to server
+    //  * @param user
+    //  */
+    // var createUser = (user) => {
+    //     $.ajax({
+    //         url: getRole(window.location.pathname) + '/create-user',
+    //         type: 'post',
+    //         data: user,
+    //         success: function () {
+    //             showSuccessAlert('Створення користувача пройшло успішно.');
+    //             $('.in .close').click();
+    //         },
+    //         error: function (err) {
+    //             $('.in .close').click();
+    //             showErrorAlert(err);
+    //         }
+    //     })
+    // }
 
 });
