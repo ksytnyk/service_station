@@ -101,26 +101,6 @@ $(document).ready(function () {
             dataArr.push({name:'articleCode', value: $('#taskTypeID' + $('.task-type-select').serializeArray()[0].value).attr('updateTaskArticle')})
         }
 
-        // if($('#override-checkbox').prop('checked')){
-        //     var detailForTaskType = [],
-        //         rows = $('#detail-type-tbody').children();
-        //     console.log(rows);
-        //     for(var i = 0; i < rows.length; i++){
-        //         detailForTaskType.push({
-        //             detailID: rows[i].getAttribute('detailid'),
-        //             detailQuantity: rows[i].getAttribute('detailquantity'),
-        //             detailType: rows[i].getAttribute('detailtype'),
-        //             detailName: rows[i].getAttribute('detailname'),
-        //         })
-        //     }
-        //
-        //     dataArr.push({
-        //         name: 'detailTaskType',
-        //         value: JSON.stringify(detailForTaskType)
-        //     })
-        // }
-        // console.log(dataArr);
-
         $.ajax({
             url: getRole(window.location.pathname) + '/create-task',
             type: 'post',
@@ -288,11 +268,40 @@ $(document).ready(function () {
                 }
             );
         }
-        if($('#update-form-task-article-code').val()){
-            dataArr.push({name:'articleCode', value: $('#update-form-task-article-code').val()})
-        }else{
-            dataArr.push({name:'articleCode', value: $('#taskTypeID' + $('.update-form-task-type-select').serializeArray()[0].value).attr('updateTaskArticle')})
+
+        if ($('#update-form-task-article-code').val()) {
+            dataArr.push({
+                name: 'articleCode',
+                value: $('#update-form-task-article-code').val()
+            })
+        } else {
+            dataArr.push({
+                name: 'articleCode',
+                value: $('#taskTypeID' + $('.update-form-task-type-select').serializeArray()[0].value).attr('updateTaskArticle')
+            })
         }
+
+        if ($('#override-checkbox-update').prop('checked')) {
+            var detailForTaskType = [];
+            var rows = $('#update-detail-type-tbody').children();
+
+            // console.log(rows);
+            for (var i = 0; i < rows.length; i++) {
+                detailForTaskType.push({
+                    detailID: rows[i].getAttribute('detail-id'),
+                    detailQuantity: rows[i].getAttribute('detailquantity'),
+                    detailType: rows[i].getAttribute('detailtype'),
+                    detailName: rows[i].getAttribute('detailname'),
+                })
+            }
+
+            dataArr.push({
+                name: 'detailTaskType',
+                value: JSON.stringify(detailForTaskType)
+            })
+        }
+
+        // console.log(dataArr);
 
         $.ajax({
             url: getRole(window.location.pathname) + '/update-task/' + $('#update-form-task-id').val(),
@@ -1033,7 +1042,7 @@ function updateTaskOnClick(value) {
                     data.details.forEach(function (item) {
 
                         // Emit when modal render
-                        var detailTemplate0 = '<tr detailID="'+item.id+'" detailType="'+ item.detailType+'" ' +
+                        var detailTemplate0 = '<tr detail-id="'+item.detailID + '" detailID="'+item.id+'" detailType="'+ item.detailType+'" ' +
                             'id="idr-' + item.id + '"><td>' + item.detail.detailName + " / " + item.detail.detailCode + '</td><td>' + item.detail.detailPrice + '</td><td>';
                         //   console.log("detail price " + item.detail.detailPrice);
                         var detailTemplate1 = 'Клієнт';

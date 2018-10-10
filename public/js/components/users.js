@@ -148,66 +148,50 @@ $(document).ready(function () {
         login.val(phone);
     })
 
-    // /**
-    //  * check field user create form and if is valid, send data to server
-    //  */
-    // $('#create-user-button').on('click', (event) => {
-    //     var user = {
-    //         userCompanyName: "",
-    //         userSurname: "",
-    //         userName: "",
-    //         userPhone: "",
-    //         userTypeID: "",
-    //         userLogin: "",
-    //         userPassword: "",
-    //         userEmail: "",
-    //         userAddress: ""
-    //     };
-    //     var invalid = true;
-    //     event.preventDefault();
-    //     var inputElements = $('#create-user-form').find('input');
-    //     user.userTypeID = $('select[name="userTypeID"]').val();
-    //     for (var i = 0; i < inputElements.length; i++) {
-    //         if (inputElements[i].getAttribute('name') !== 'userEmail') {
-    //             if (inputElements[i].getAttribute('name') !== 'userAddress') {
-    //                 if (!inputElements[i].value) {
-    //                     inputElements[i].style = "border-color:red;";
-    //                     invalid = true;
-    //                 } else {
-    //                     inputElements[i].style = "border-color:#ccc;";
-    //                     user[inputElements[i].getAttribute('name')] = inputElements[i].value;
-    //                     invalid = false;
-    //                 }
-    //             } else {
-    //                 user.userAddress = inputElements[i].value;
-    //             }
-    //         } else {
-    //             user.userEmail = inputElements[i].value;
-    //         }
-    //     }
-    //     if (invalid === false) {
-    //         createUser(user)
-    //     }
-    // });
-    //
-    // /**
-    //  * send user create data to server
-    //  * @param user
-    //  */
-    // var createUser = (user) => {
-    //     $.ajax({
-    //         url: getRole(window.location.pathname) + '/create-user',
-    //         type: 'post',
-    //         data: user,
-    //         success: function () {
-    //             showSuccessAlert('Створення користувача пройшло успішно.');
-    //             $('.in .close').click();
-    //         },
-    //         error: function (err) {
-    //             $('.in .close').click();
-    //             showErrorAlert(err);
-    //         }
-    //     })
-    // }
+    /**
+     * check field user create form and if is valid, send data to server
+     */
+    $('#create-user-button').on('click', (event) => {
+        event.preventDefault();
+        var user = {
+            userCompanyName: "",
+            userSurname: "",
+            userName: "",
+            userPhone: "",
+            userTypeID: "",
+            userLogin: "",
+            userPassword: "",
+            userEmail: "",
+            userAddress: ""
+        };
+        var inputElements = $('#create-user-form').find('input');
+        user.userTypeID = $('select[name="userTypeID"]').val();
+        for (var i = 0; i < inputElements.length; i++) {
+                        user[inputElements[i].getAttribute('name')] = inputElements[i].value;
+        }
+        createUser(user)
+    });
+
+    /**
+     * send user create data to server
+     * @param user
+     */
+    var createUser = (user) => {
+        $.ajax({
+            url: getRole(window.location.pathname) + '/create-user',
+            type: 'post',
+            data: user,
+            success: function () {
+                showSuccessAlert('Створення користувача пройшло успішно.');
+                setTimeout(() => {
+                    window.location.reload();
+                }, 500);
+            },
+            error: function (err) {
+                // $('.in .close').click();
+                showErrorAlert(err);
+            }
+        })
+    }
 
 });

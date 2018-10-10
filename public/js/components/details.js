@@ -230,7 +230,7 @@ $(document).ready(function () {
             });
 
             // Emit on plus button clicked (update task modal)
-            var detailTemplate0 = '<tr detailQuantity="'+ detailQuantity+'" detailName="'+detailName+'" detailType="'+ detailType +' " detailID="'+ detailID+'"' +
+            var detailTemplate0 = '<tr detail-id="' + detailID + '" detailQuantity="'+ detailQuantity+'" detailName="'+detailName+'" detailType="'+ detailType +' " detailID="'+ detailID+'"' +
                 ' id="idr-' + customDetailID + '"><td>' + detailName +  '</td><td>'+ detailPrice +'</td><td>';
             var detailTemplate1 = 'Клієнт';
 
@@ -287,7 +287,7 @@ $(document).ready(function () {
 function changeDetailTypeSelect (value) {
     $(value).on('change', function () {
         var element = $(this).attr('detail-id');
-   //   $('#idr-'+ element)[0].attributes['detailtype'].value = $(this).val();
+     $('#idr-'+ element)[0].attributes['detailtype'].value = $(this).val();
 
         for (var i = 0; i < detailArray.length; i++) {
             if (detailArray[i].customDetailID === +element) {

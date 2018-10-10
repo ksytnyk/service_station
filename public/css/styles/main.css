@@ -502,7 +502,7 @@ thead {
 /* ALERTS */
 .alerts_block {
     position: fixed;
-    z-index: 5;
+    z-index: 5000;
     width: 1170px;
 }
 .alerts-errors-info,

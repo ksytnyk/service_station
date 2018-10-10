@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
     $('#task-type-select').on('change', function () {
-
+        detailArray = [];
         if ($(this).val() !== null) {
             $.ajax({
                 url: getRole(window.location.pathname) + '/get-task-prise/' + $('.task-type-select').val(),

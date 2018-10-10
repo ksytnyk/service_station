@@ -264,7 +264,7 @@ $(document).ready(function () {
                     '</select>';
             }
             rows.push(
-                '<tr detailId="' + detail.id + '" detailName="' + detail.detail.detailName + ' / ' + detail.detail.detailCode + '" detailtype="' + detail.detailType + '" ' +
+                '<tr detail-id="' + detail.detailID + '" detailId="' + detail.id + '" detailName="' + detail.detail.detailName + ' / ' + detail.detail.detailCode + '" detailtype="' + detail.detailType + '" ' +
                 'detailquantity="' + detail.detailQuantity + '" id="idr-' + detail.id + '" ><td>' +
                 detail.detail.detailName + ' / ' + detail.detail.detailCode +
                 '</td><td>' + detail.detail.detailPrice + '</td><td>' + selector + '</td><td>' + detail.detailQuantity + '</td><td>' +

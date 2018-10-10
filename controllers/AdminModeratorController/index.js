@@ -38,7 +38,7 @@ router.get('/users', (req, res) => {
         });
 });
 
-router.post('/create-user', validation.createAndUpdateUser('create'), (req, res) => {
+router.post('/create-user', validation.createAndUpdateUser(), (req, res) => {
     if (req.baseUrl === '/moderator') {
         req.body.userTypeID = roles.CUSTOMER;
     }
@@ -49,15 +49,16 @@ router.post('/create-user', validation.createAndUpdateUser('create'), (req, res)
             if (req.body.userEmail)
                 nodemailer('create-user', req.body);
 
-            req.flash('success_alert', true);
-            req.flash('success_msg', 'Додавання користувача пройшло успішно.');
-            res.redirect('back');
+            res.status(200).send();
         })
         .catch(error => {
             console.warn(error);
-            req.flash('error_alert', true);
-            req.flash('error_msg', {msg: `В системі вже існує користувач з логіном: "${req.body.userLogin}".`});
-            res.redirect('back');
+            // req.flash('error_alert', true);
+            // req.flash('error_msg', {msg: `В системі вже існує користувач з логіном: "${req.body.userLogin}".`});
+            // res.redirect('back');
+            res.status(400).send({
+                errors: error
+            })
         });
 });
 
@@ -616,13 +617,13 @@ router.post('/create-task', validation.createAndUpdateTask(), (req, res) => {
 
                     let result;
                     if (addToTaskType) {
-                    //     try {
-                    //         result = await TaskType.updateTaskType(req.body.typeID, search);
-                    //     } catch (errors) {
-                    //         console.warn(errors);
-                    //         res.status(400).send({errors: errors});
-                    //     }
-                    // } else {
+                        //     try {
+                        //         result = await TaskType.updateTaskType(req.body.typeID, search);
+                        //     } catch (errors) {
+                        //         console.warn(errors);
+                        //         res.status(400).send({errors: errors});
+                        //     }
+                        // } else {
                         try {
                             result = await TaskType.createTaskType(search);
                             await Models.TaskDetail.createTaskTypeDetail(result.taskTypes[0].dataValues.id, JSON.parse(req.body.detail));
@@ -706,16 +707,9 @@ router.put('/update-task/:id', validation.createAndUpdateTask(), (req, res) => {
 
                     let result;
                     if (addToTaskType) {
-                    //     try {
-                    //         result = await TaskType.updateTaskType(req.body.typeID, search);
-                    //     } catch (errors) {
-                    //         console.warn(errors);
-                    //         res.status(400).send({errors: errors});
-                    //     }
-                    // } else {
                         try {
                             result = await TaskType.createTaskType(search);
-                           // await Models.TaskDetail.createTaskTypeDetail(result.taskTypes[0].dataValues.id, JSON.parse(req.body.detailForType));
+                            await Models.TaskDetail.createTaskTypeDetail(result.taskTypes[0].dataValues.id, JSON.parse(req.body.detailTaskType));
                         } catch (errors) {
                             console.warn(errors);
                             res.status(400).send({errors: errors});

@@ -29,7 +29,7 @@ module.exports = {
         };
     },
 
-    createAndUpdateUser: function (value) {
+    createAndUpdateUser: function () {
 
         return function (req, res, next) {
 
@@ -45,7 +45,7 @@ module.exports = {
             req.checkBody('userSurname', '"Прізвище" - обов\'язкове поле.').notEmpty();
             req.checkBody('userCompanyName', '"Компанія" - обов\'язкове поле.').notEmpty();
             // req.checkBody('userAddress', '"Адреса" - обов\'язкове поле.').notEmpty();
-            req.checkBody('userPhone', '"Контактний номер" - обов\'язкове поле.').isLength({ min: 13 });
+            req.checkBody('userPhone', '"Контактний номер" - обов\'язкове поле.').isLength({min: 13});
             req.checkBody('userLogin', '"Логін" - обов\'язкове поле.').notEmpty();
             // req.checkBody('userEmail', '"Email" - обов\'язкове поле.').notEmpty();
             // req.checkBody('userEmail', '"Email" - помилковий формат.').isEmail();
@@ -54,16 +54,9 @@ module.exports = {
             let errors = req.validationErrors();
 
             if (errors) {
-                if (value) {
-                    console.warn(errors);
-                    req.flash('error_alert', true);
-                    req.flash('error_msg', errors);
-                    res.redirect('back');
-                } else {
-                    res.status(400).send({
-                        errors: errors
-                    });
-                }
+                res.status(400).send({
+                    errors: errors
+                });
             } else {
                 next();
             }
@@ -96,7 +89,7 @@ module.exports = {
     createAndUpdateTask: function () {
         return function (req, res, next) {
 
-            if(req.baseUrl === '/executor' || req.baseUrl === '/admin' || req.baseUrl === '/moderator'){
+            if (req.baseUrl === '/executor' || req.baseUrl === '/admin' || req.baseUrl === '/moderator') {
                 req.checkBody('cost', '"Вартість" - обов\'язкове поле.').notEmpty();
                 req.checkBody('cost', 'Поле "Вартість" може містити лише цифри.').isFloat();
                 req.checkBody('estimationTime', '"Час виконання" - обов\'язкове поле.').notEmpty();
@@ -104,7 +97,7 @@ module.exports = {
                 req.checkBody('startTime', '"Час початку" - обов\'язкове поле.').notEmpty();
             }
 
-            if(req.baseUrl === '/admin' || req.baseUrl === '/moderator') {
+            if (req.baseUrl === '/admin' || req.baseUrl === '/moderator') {
                 req.checkBody('name', '"Назва задачі" - обов\'язкове поле.').notEmpty();
                 req.checkBody('planedExecutorID', '"Виконавець" - обов\'язкове поле.').notEmpty();
                 req.checkBody('assignedUserID', '"Доручити задачу" - обов\'язкове поле.').notEmpty();
@@ -170,9 +163,9 @@ module.exports = {
                     req.flash('error_msg', errors);
                     res.redirect(req.baseUrl + '/task-type');
                 } else {*/
-                    res.status(400).send({
-                        errors: errors
-                    });
+                res.status(400).send({
+                    errors: errors
+                });
                 //}
             } else {
                 next();
@@ -236,7 +229,7 @@ module.exports = {
 
             req.checkBody('detailName', '"Назва деталі" - обов\'язкове поле.').notEmpty();
             req.checkBody('detailPrice', '"Вартість" - обов\'язкове поле.').notEmpty();
-            req.checkBody('detailCode','"Код деталі" - обов\'язкове поле.').notEmpty();
+            req.checkBody('detailCode', '"Код деталі" - обов\'язкове поле.').notEmpty();
             req.checkBody('detailPrice', 'Поле "Вартість" може містити лише цифри.').isFloat();
 
             let errors = req.validationErrors();
