@@ -18,7 +18,7 @@ $(document).ready(function () {
                             detailQuantity: detail.detailQuantity,
                             detailType: '' + detail.detailType,
                             detailName: detail.detail.detailName + ' / '  +  detail.detail.detailCode,
-                            customDetailID: detail.detail.id
+                            customDetailID: detail.id
                         })
                     })
                     // need make detailArray empty and push new detail inside
