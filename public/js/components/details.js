@@ -292,9 +292,6 @@ function changeDetailTypeSelect (value) {
         for (var i = 0; i < detailArray.length; i++) {
             if (detailArray[i].customDetailID === +element) {
                 detailArray[i].detailType = $(this).val();
-
-               // console.log( 1, 'detailArray', detailArray);
-               // console.log( 1, 'changeDetailArray', changeDetailArray);
                 return;
             }
         }

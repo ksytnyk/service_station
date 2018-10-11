@@ -135,7 +135,6 @@ $(document).ready(function () {
                 changeDetailArray = [];
                 clearCreateTaskTypeForm();
 
-                // console.log('create-task-type-response', response);
                 pushTaskTypeInTable(response.taskType[0], '#tasks-table');
                 $('.in .close').click();
                 showSuccessAlert('Додавання задачі пройшло успішно.');

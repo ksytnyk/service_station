@@ -13,7 +13,6 @@ const status = require('../../constants/status');
 const Models = require('../../models/TaskDetail/relations');
 
 router.get('/tasks/:status', (req, res) => {
-    console.log(req.params.status);
     let findBy;
     if (req.params.status === 'all') {
         findBy =  {
@@ -176,7 +175,6 @@ router.put('/cancel-task/:id', (req, res) => {
         .then(() => {
             Task.getTaskById(req.params.id)
                 .then(task =>{
-                    console.log('task', task);
                     Models.TaskDetail
                     .getTaskDetail(task.dataValues.id)
                     .then(detail => {
@@ -209,7 +207,6 @@ router.put('/cancel-task/:id', (req, res) => {
 });
 
 router.put('/set-task-status/:id', (req, res) => {
-    console.log(22222222, req.body);
 
     Task
         .updateTask(req.params.id, req.body)

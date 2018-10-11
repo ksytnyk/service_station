@@ -219,7 +219,6 @@ Task.getTaskById = function (id) {
     });
 };
 Task.getTaskByExecutorId = function (findBy) {
-    console.log(findBy);
     return new Promise((resolve, reject) => {
         Task
             .findAll({

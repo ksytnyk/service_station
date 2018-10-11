@@ -100,7 +100,6 @@ function printOnClick(value) {
                     detailsService = detailsService.slice(0, (detailsService.length - 2));
 
                     summaryDetailsCost += detailsCost;
-                   // console.log(task);
 
                     $('.check-table tbody').append('<tr>' +
                         '<td>' +

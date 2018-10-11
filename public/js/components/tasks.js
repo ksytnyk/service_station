@@ -285,7 +285,6 @@ $(document).ready(function () {
             var detailForTaskType = [];
             var rows = $('#update-detail-type-tbody').children();
 
-            // console.log(rows);
             for (var i = 0; i < rows.length; i++) {
                 detailForTaskType.push({
                     detailID: rows[i].getAttribute('detail-id'),
@@ -975,7 +974,6 @@ function updateTaskOnClick(value) {
                         $('#update-detail-type-select').find('option').remove();
                         data.detailTypes.forEach(item => {
                             var title = setDetailTypesTitle(item);
-                            // console.log(item.detailPrice);
                             $('#update-detail-type-select').append($('<option>', {
                                 value: item.id,
                                 text: item.detailName + " / " + item.detailCode + ' (' + title + ')',

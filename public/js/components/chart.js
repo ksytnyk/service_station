@@ -274,7 +274,6 @@ $(document).ready(function () {
     }
 
     function toggleShowTable() {
-        console.log(toggle);
         if(toggle === 'on'){
             toggle = 'of';
             $('.table-finance').addClass('hidden');

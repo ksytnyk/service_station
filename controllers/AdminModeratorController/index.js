@@ -89,7 +89,16 @@ router.delete('/delete-user/:id', (req, res) => {
 });
 
 router.get('/requests/:status', (req, res) => {
-    let findBy, hold;
+    let findBy, hold, period;
+
+    if(req.query.from && req.query.to){
+        period = {
+            $between: [
+                new Date(req.query.from),
+                new Date(req.query.to)
+            ]
+        }
+    }
 
     if (req.params.status === 'all' || req.params.status === 'hold') {
         findBy = {
@@ -97,7 +106,7 @@ router.get('/requests/:status', (req, res) => {
                 $between: [1, 5]
             },
             hadDeleted: false
-        }
+        };
     }
     else if (req.params.status === 'pending') {
         findBy = {
@@ -159,6 +168,9 @@ router.get('/requests/:status', (req, res) => {
                 $ne: status.DONE
             }
         }
+    }
+    if(period){
+        findBy['createdAt'] = period;
     }
 
     Request
@@ -967,7 +979,6 @@ router.post('/chart/tasks', (req, res) => {
 
 router.post('/chart/profit', (req, res) => {
     Request.getAllPayedRequestForChart(req.body).then(request => {
-        console.log('controller ', request);
         res.status(200).send({data: countDoneTaskMoney(req.body, request)});
     });
 });

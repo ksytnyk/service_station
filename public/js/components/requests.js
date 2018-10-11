@@ -1,16 +1,11 @@
 $(document).ready(function () {
-
-    // if (window.location.pathname.includes('requests')) {
-    //     var toDate = new Date();
-    //     var fromDate = new Date();
-    //
-    //     fromDate.setDate(toDate.getDate() - 30);
-    //     $('#from-date-request').val(formatDate(fromDate));
-    //     $('#to-date-request').val(formatDate(toDate));
-    //     setTimeout(function () {
-    //
-    //     }, 1);
-    // }
+    if (window.location.pathname.includes('requests')) {
+        var params = getSearchParameters();
+        if (params) {
+            $('#from-date-request').val(params.from);
+            $('#to-date-request').val(params.to);
+        }
+    }
 
     $('[data-toggle="popover"]').popover();
 
@@ -75,11 +70,13 @@ $(document).ready(function () {
                 }
             });
         } else {
-            showErrorAlert({responseJSON: {
-                errors: [
-                        { msg: "Заповніть усі обов'язкові поля!"}
+            showErrorAlert({
+                responseJSON: {
+                    errors: [
+                        {msg: "Заповніть усі обов'язкові поля!"}
                     ]
-            }});
+                }
+            });
         }
     });
 
@@ -107,83 +104,83 @@ $(document).ready(function () {
         var oldEstimatedTime = $('#update_request').attr('estimated-time');
         var dataArr = $('#createRequestForm').serializeArray();
 
-            if (window.location.pathname.includes('create-request')) {
-                if ($('#request-name-select').serializeArray()[0]) {
-                    var requestID = $('#request-name-select').serializeArray()[0].value;
-                    var requestName = $('#requestID' + requestID).attr('requestID');
-                    if (dataArr[4].value === '') {
-                        dataArr[4].value = requestName;
-                    }
-                }
-            } else {
-                if ($('#update-request-name-select').serializeArray()[0]) {
-                    var updateRequestName = $('#update-request-name-select').serializeArray()[0].value;
-                    if (dataArr[4].value === '') {
-                        dataArr[4].value = updateRequestName;
-                    }
+        if (window.location.pathname.includes('create-request')) {
+            if ($('#request-name-select').serializeArray()[0]) {
+                var requestID = $('#request-name-select').serializeArray()[0].value;
+                var requestName = $('#requestID' + requestID).attr('requestID');
+                if (dataArr[4].value === '') {
+                    dataArr[4].value = requestName;
                 }
             }
-
-            var index = 6;
-            if (dataArr.length === 9) {
-                index = 5;
-            }
-
-            if (dataArr[index].value && dataArr[index + 1].value) {
-                dataArr[index].value = checkDateForUpdate(oldStartTime, dataArr[index].value);
-                dataArr[index + 1].value = checkDateForUpdate(oldEstimatedTime, dataArr[index + 1].value);
-            }
-
-            $.ajax({
-                url: getRole(window.location.pathname) + '/update-request/' + $(this).attr("request-id"),
-                type: 'put',
-                data: dataArr,
-                success: function (data) {
-                    showSuccessAlert('Редагування замовлення пройшло успішно.');
-
-                    $('.print_check_button').attr('customer-phone', data.customer.userPhone);
-
-                    if (window.location.pathname.includes('create-request')) {
-
-                        var input = $('#request-name-input')[0].className;
-                        if (!input.includes('hidden')) {
-                            $('#request-name-select option[value=' + data.request.id + ']').remove();
-                            $('#request-name-select')
-                                .append($('<option>', {
-                                    value: data.request.id,
-                                    text: data.request.name,
-                                    requestID: data.request.name,
-                                    id: 'requestID' + data.request.id
-                                }))
-                                .val(data.request.id).change();
-                        }
-                    } else {
-
-                        var input = $('#update-request-name-input')[0].className;
-                        if (!input.includes('hidden')) {
-                            $('#update-request-name-select option[value=' + data.request.id + ']').remove();
-                            $('#update-request-name-select')
-                                .append($('<option>', {
-                                    value: data.request.id,
-                                    text: data.request.name,
-                                    updateRequestID: data.request.name,
-                                    id: 'updateRequestID' + data.request.id
-                                }))
-                                .val(data.request.id).change();
-                        }
-                    }
-
-                    $('.disable_input').attr('disabled', true);
-                    $('#update_request').hide()
-                        .attr('start-time', formatDate(dataArr[2].value))
-                        .attr('estimated-time', formatDate(dataArr[3].value));
-                    $('#access_update_request').show();
-                    $('.disabled-plus').addClass('disabled');
-                },
-                error: function (err) {
-                    showErrorAlert(err);
+        } else {
+            if ($('#update-request-name-select').serializeArray()[0]) {
+                var updateRequestName = $('#update-request-name-select').serializeArray()[0].value;
+                if (dataArr[4].value === '') {
+                    dataArr[4].value = updateRequestName;
                 }
-            });
+            }
+        }
+
+        var index = 6;
+        if (dataArr.length === 9) {
+            index = 5;
+        }
+
+        if (dataArr[index].value && dataArr[index + 1].value) {
+            dataArr[index].value = checkDateForUpdate(oldStartTime, dataArr[index].value);
+            dataArr[index + 1].value = checkDateForUpdate(oldEstimatedTime, dataArr[index + 1].value);
+        }
+
+        $.ajax({
+            url: getRole(window.location.pathname) + '/update-request/' + $(this).attr("request-id"),
+            type: 'put',
+            data: dataArr,
+            success: function (data) {
+                showSuccessAlert('Редагування замовлення пройшло успішно.');
+
+                $('.print_check_button').attr('customer-phone', data.customer.userPhone);
+
+                if (window.location.pathname.includes('create-request')) {
+
+                    var input = $('#request-name-input')[0].className;
+                    if (!input.includes('hidden')) {
+                        $('#request-name-select option[value=' + data.request.id + ']').remove();
+                        $('#request-name-select')
+                            .append($('<option>', {
+                                value: data.request.id,
+                                text: data.request.name,
+                                requestID: data.request.name,
+                                id: 'requestID' + data.request.id
+                            }))
+                            .val(data.request.id).change();
+                    }
+                } else {
+
+                    var input = $('#update-request-name-input')[0].className;
+                    if (!input.includes('hidden')) {
+                        $('#update-request-name-select option[value=' + data.request.id + ']').remove();
+                        $('#update-request-name-select')
+                            .append($('<option>', {
+                                value: data.request.id,
+                                text: data.request.name,
+                                updateRequestID: data.request.name,
+                                id: 'updateRequestID' + data.request.id
+                            }))
+                            .val(data.request.id).change();
+                    }
+                }
+
+                $('.disable_input').attr('disabled', true);
+                $('#update_request').hide()
+                    .attr('start-time', formatDate(dataArr[2].value))
+                    .attr('estimated-time', formatDate(dataArr[3].value));
+                $('#access_update_request').show();
+                $('.disabled-plus').addClass('disabled');
+            },
+            error: function (err) {
+                showErrorAlert(err);
+            }
+        });
     });
 
     $('.delete-request').on('click', function () {
@@ -458,14 +455,14 @@ $(document).ready(function () {
                         //     });
                         // }
                         // else {
-                            $.each(data.requestTypes, function (i, item) {
-                                $('.request-name-select').append($('<option>', {
-                                    value: item.id,
-                                    text: item.name,
-                                    requestID: item.name,
-                                    id: 'requestID' + item.id
-                                }));
-                            });
+                        $.each(data.requestTypes, function (i, item) {
+                            $('.request-name-select').append($('<option>', {
+                                value: item.id,
+                                text: item.name,
+                                requestID: item.name,
+                                id: 'requestID' + item.id
+                            }));
+                        });
                         // }
 
                         $('#request-name-select')
@@ -480,18 +477,18 @@ $(document).ready(function () {
         });
     });
 
-    // // Change data period
-    // $(".datetimepickerN").on("dp.hide", function () {
-    //     changeURL($('#from-date-request').val(), $('#to-date-request').val());
-    //     // $('li.active').click();
-    // });
+    // Change data period
+    $(".datetimepickerN").on("dp.hide", function () {
+        changeURL($('#from-date-request').val(), $('#to-date-request').val());
+        // $('li.active').click();
+    });
 });
 
 function changeRequestStatus(value) {
     $(value).on('click', function (event) {
         event.preventDefault();
 
-        if (window.location.pathname.includes('trash')){
+        if (window.location.pathname.includes('trash')) {
             var hadDeleted = true;
         }
 
@@ -650,6 +647,7 @@ function changeRequestStatus(value) {
         })
     })
 }
+
 function setPayed(value) {
     $(value).on('click', function () {
         var requestID = $(this).attr('request-id'),
@@ -692,6 +690,7 @@ function setPayed(value) {
         })
     })
 }
+
 function setGiveOut(value) {
     $(value).on('click', function () {
         var requestID = $(this).data('request-id'),
@@ -725,9 +724,59 @@ function setRequestStatusCanceled(value) {
     });
 }
 
-//  changeURL= (from, to) => {
-//     if(from && to){
-//         console.log('got to ',window.location.href + "?from=" + from+ "&to=" + to );
-//        window.location.href = window.location.href + "?from=" + from+ "&to=" + to;
-//     }
-// };
+/**
+ * Add to url date period form - to
+ * @param from - data start period
+ * @param to - data end period
+ */
+changeURL = (from, to) => {
+    if (from && to) {
+        if (checkSequence(from, to)) {
+            var params = getSearchParameters();
+            if (!params.from || !params.to) {
+                window.location.href = window.location.href + "?from=" + from + "&to=" + to;
+            } else {
+                window.location.href = window.location.origin + window.location.pathname + "?from=" + from + "&to=" + to;
+            }
+        } else {
+            showErrorAlert({
+                responseJSON: {
+                    errors: [{msg: 'Неправильний порядок дат.'}]
+                }
+            });
+        }
+    }
+};
+
+/**
+ * Get params by ulr
+ * @returns {{}} parasm string
+ */
+function getSearchParameters() {
+    var prmstr = window.location.search.substr(1);
+    return prmstr != null && prmstr != "" ? transformToAssocArray(prmstr) : {};
+}
+
+/**
+ * Prepare params string
+ * @param prmstr params array contain key: value
+ */
+function transformToAssocArray(prmstr) {
+    var params = {};
+    var prmarr = prmstr.split("&");
+    for (var i = 0; i < prmarr.length; i++) {
+        var tmparr = prmarr[i].split("=");
+        params[tmparr[0]] = tmparr[1];
+    }
+    return params;
+}
+
+/**
+ * Check date date start less date end
+ * @param from - start period
+ * @param to - end period
+ * @returns {boolean}
+ */
+function checkSequence(from, to) {
+    return to > from;
+}
