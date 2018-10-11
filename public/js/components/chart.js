@@ -17,26 +17,31 @@ $(document).ready(function () {
     }
 
     var lastChart = '';
+    var toggle = 'of';
 
     $(".datetimepickerN").on("dp.change", function () {
         $(lastChart).click();
     });
 
     $('#chart-request').on('click', function () {
+        $('.toggle-finance').addClass('hidden');
         chartRequest();
         lastChart = '#chart-request';
     });
 
     $('#chart-tasks').on('click', function () {
+        $('.toggle-finance').addClass('hidden');
         chartTasks();
         lastChart = '#chart-tasks';
     });
 
     $('#chart-finances').on('click', function () {
+        $('.toggle-finance').removeClass('hidden');
         chartFinances();
         lastChart = '#chart-finances';
     });
     $('#chart-real-profit').on('click', () => {
+        $('.toggle-finance').addClass('hidden');
         realProfit();
         lastChart = '#chart-real-profit';
     });
@@ -268,7 +273,32 @@ $(document).ready(function () {
         }
     }
 
+    function toggleShowTable() {
+        console.log(toggle);
+        if(toggle === 'on'){
+            toggle = 'of';
+            $('.table-finance').addClass('hidden');
+            $('#myChart').removeClass('hidden');
+        }else{
+            toggle = 'on';
+            $('.table-finance').removeClass('hidden');
+            $('#myChart').addClass('hidden');
+        }
+    }
+
+    $('.toggle-group').on('click', () => {
+        $('#finance-toggle').bootstrapToggle(toggle);
+       toggleShowTable();
+    });
+
     function chartFinances() {
+        var chart ='';
+        var table = '';
+        if(toggle === 'on'){
+           chart='hidden'
+        }else{
+            table='hidden'
+        }
         var data = $('#between-dates').serializeArray();
         var newData = {
             fromDateChart: setTimeToDate(data[0].value),
@@ -281,17 +311,63 @@ $(document).ready(function () {
                 type: 'post',
                 data: newData,
                 success: function (result) {
+                    $('#finance-toggle').bootstrapToggle(toggle);
+                    var today = new Date();
+                    var tableHead,
+                        tableBody1,
+                        tableBody2;
                     $('#div-for-chart1').empty();
                     $('#div-for-chart2').empty();
                     $('#div-for-chart3').empty();
-                    $('#div-for-chart').empty().append('<canvas id="myChart" height="125"></canvas>');
+                    $('#div-for-chart').empty().append('<canvas id="myChart" class="'+ chart +'" height="125"></canvas>');
 
                     var ctx = document.getElementById("myChart").getContext('2d');
 
                     Chart.defaults.global.defaultFontColor = '#333';
                     Chart.defaults.global.defaultFontSize = 14;
+                    var datesForCahart = [];
+                    result.data.dates.forEach(item => {
+                       datesForCahart.push(item.slice(8,10));
+                    });
+                    new Chart(ctx, setChart(datesForCahart, result.data.money, '#398439', '#5dd65d', "Фінансова статистика", "Всього"));
+                     tableHead =  '<div class="table-finance  '+ table +'">' +
+                        '<h4>Статистика по днях</h4>' +
+                        '<div class="panel panel-default">' +
+                        '<table class="table">' +
+                        '<thead>' +
+                        '<tr>' +
+                        '<th class="tac">День</th>' +
+                        '<th class="tac">Кількість замовлень</th>' +
+                        '<th class="tac">Дохід</th>' +
+                        '</tr>' +
+                        '</thead>' +
+                        '<tbody>';
 
-                    new Chart(ctx, setChart(result.data.dates, result.data.money, '#398439', '#5dd65d', "Фінансова статистика", "Всього"));
+                     tableBody1 = '';
+                    for(var i = result.data.dates.length-1; i >= 0; i--){
+                        tableBody1 +=
+                            formatDate(today, true) === result.data.dates[i] ?
+                                '<tr class="status-bgc-done">' +
+                                '<td class="tac">'+ result.data.dates[i] +'</td>' +
+                                '<td class="tac"> '+ result.data.quantity[i] +' </td>' +
+                                '<td class="tac">'+ result.data.money[i] +' грн</td>' +
+                                '</tr>'
+                                :
+                                '<tr>' +
+                                '<td class="tac" class="tac">'+ result.data.dates[i] +'</td>' +
+                                '<td class="tac"> '+ result.data.quantity[i] +' </td>' +
+                                '<td class="tac">'+ result.data.money[i] +' грн</td>' +
+                                '</tr>';
+                    }
+
+                    tableBody2 = '' +
+                        '</tbody>' +
+                        '</table>' +
+                        '</div>'+
+                        '</div>';
+
+                    $('#div-for-chart').append(tableHead + tableBody1 + tableBody2);
+
                 },
                 error: function (err) {
                     showErrorAlert(err);

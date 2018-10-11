@@ -6,24 +6,31 @@ module.exports = function (dates, requests) {
 
     var requestsObj = {};
     while (fromDateChart <= toDateChart) {
-        requestsObj[formatDate(fromDateChart, true)] = 0;
+        requestsObj[formatDate(fromDateChart, true)] = {
+            count: 0,
+            sum_cost: 0
+        };
         fromDateChart.setDate(fromDateChart.getDate() + 1);
     }
 
     requests.map(item => {
-        requestsObj[formatDate(item.createdAt, true)] += item.cost;
+        requestsObj[formatDate(item.createdAt, true)].sum_cost += item.cost;
+        requestsObj[formatDate(item.createdAt, true)].count++;
     });
 
     var datesArr = [];
     var moneyArr = [];
+    var quantityReq = [];
 
     for (var key in requestsObj) {
-        datesArr.push(key.slice(-2));
-        moneyArr.push(requestsObj[key]);
+        datesArr.push(key);
+        moneyArr.push(requestsObj[key].sum_cost);
+        quantityReq.push(requestsObj[key].count);
     }
 
     return {
         dates: datesArr,
-        money: moneyArr
+        money: moneyArr,
+        quantity: quantityReq
     };
 };

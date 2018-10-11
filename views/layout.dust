@@ -5,6 +5,7 @@
     <title>Service Station</title>
     <link rel="shortcut icon" href="/favicon.png" type="image/png">
     <link rel="stylesheet" href="/css/libs/bootstrap.css">
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
     {@eq key=typeUser value=5}
         <link rel="stylesheet" href="/css/libs/dataTables.bootstrap.min.css">
@@ -65,6 +66,7 @@
 <script src="/js/libs/jquery.dataTables.min.js"></script>
 <script src="/js/libs/moment.js"></script>
 <script src="/js/libs/bootstrap-datetimepicker.min.js"></script>
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
 {@eq key=typeUser value=5}
     <script src="/js/libs/dataTables.bootstrap.min.js"></script>

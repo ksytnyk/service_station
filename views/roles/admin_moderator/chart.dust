@@ -11,13 +11,13 @@
 {@ne key=typeUser value=6}
         <div class="form-group col-xs-2">
             <label for="from-date-for-statistic">
-                Від (дата / час)
+                Від (дата)
             </label>
             <input class="form-control datetimepickerN" id="from-date-for-statistic" name="fromDateChart">
         </div>
         <div class="form-group col-xs-2">
             <label for="to-date-for-statistic">
-                До (дата / час)
+                До (дата)
             </label>
             <input class="form-control datetimepickerN" id="to-date-for-statistic" name="toDateChart">
         </div>
@@ -41,18 +41,21 @@
                     Прибуток
                 </button>
             </div>
+             <div class="form-group col-xs-2 toggle-finance">
+                 <input type="checkbox" id="finance-toggle" data-toggle="toggle" data-on="Таблиця" data-off="Графік">
+             </div>
         {/ne}
         {@eq key=typeUser value=6}
             <div class="col-xs-6 datepicker-bookkeeper">
                 <div class="form-group col-xs-6">
                     <label for="from-date-for-statistic">
-                        Від (дата / час)
+                        Від (дата)
                     </label>
                     <input class="form-control datetimepickerN" id="from-date-for-statistic" name="fromDateChart">
                 </div>
                 <div class="form-group col-xs-6">
                     <label for="to-date-for-statistic">
-                        До (дата / час)
+                        До (дата)
                     </label>
                     <input class="form-control datetimepickerN" id="to-date-for-statistic" name="toDateChart">
                 </div>

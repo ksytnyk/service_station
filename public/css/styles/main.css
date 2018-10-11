@@ -287,7 +287,14 @@ table.dataTable {
     border-radius: 3px;
     border-collapse:collapse !important;
 }
-
+.nav-pills > li {
+    margin-bottom:11px;
+}
+.date-select-block{
+    position: absolute;
+    left: 53.5%;
+    top: 34px;
+}
 
 .table {
     table-layout: fixed;

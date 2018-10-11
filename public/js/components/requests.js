@@ -1,5 +1,17 @@
 $(document).ready(function () {
 
+    // if (window.location.pathname.includes('requests')) {
+    //     var toDate = new Date();
+    //     var fromDate = new Date();
+    //
+    //     fromDate.setDate(toDate.getDate() - 30);
+    //     $('#from-date-request').val(formatDate(fromDate));
+    //     $('#to-date-request').val(formatDate(toDate));
+    //     setTimeout(function () {
+    //
+    //     }, 1);
+    // }
+
     $('[data-toggle="popover"]').popover();
 
     $('#create_request').on('click', function () {
@@ -467,6 +479,12 @@ $(document).ready(function () {
             }
         });
     });
+
+    // // Change data period
+    // $(".datetimepickerN").on("dp.hide", function () {
+    //     changeURL($('#from-date-request').val(), $('#to-date-request').val());
+    //     // $('li.active').click();
+    // });
 });
 
 function changeRequestStatus(value) {
@@ -706,3 +724,10 @@ function setRequestStatusCanceled(value) {
         $('#change-request-status-comment').val($(this).data('request-comment'));
     });
 }
+
+//  changeURL= (from, to) => {
+//     if(from && to){
+//         console.log('got to ',window.location.href + "?from=" + from+ "&to=" + to );
+//        window.location.href = window.location.href + "?from=" + from+ "&to=" + to;
+//     }
+// };
