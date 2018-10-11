@@ -338,7 +338,7 @@ $(document).ready(function () {
                    tableBody1 = '';
                     for(var i = response.requests.length-1; i >= 0; i--){
                         tableBody1 +=
-                                '<tr class="status-bgc-done">' +
+                                '<tr>' +
                                 '<td class="tac">'+ response.requests[i].id +'</td>' +
                                 '<td class="tac">'+ response.requests[i].name +'</td>' +
                                 '<td class="tac"> '+ response.requests[i].user.userName + ' ' + response.requests[i].user.userSurname + ' / '+  response.requests[i].user.userPhone +' </td>' +
