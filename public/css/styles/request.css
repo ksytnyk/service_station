@@ -1,28 +1,43 @@
 .requests .nav > li > a {
     padding: 10px 14px;
 }
+
 .requests p {
     margin: 3px 0;
     font-size: 13px;
 }
+
 .requests a {
     display: block;
 }
+
+.date-select-block input.datetimepickerN {
+    width: 69%;
+    float: right;
+}
+
+.label-for-request-dp {
+    margin-top: 6px;
+}
+
 .requests .requests_id {
     position: absolute;
     top: 8px;
     left: 8px;
     width: 35px;
 }
+
 .requests .bt {
     margin: 5px 0 0 -8px;
     border-top: 1px solid #ccc;
     padding: 5px 8px 0;
     width: 450px
 }
+
 .requests .table tbody tr:nth-child(2n) {
     background-color: #fff;
 }
+
 .requests .task_table p {
     font-size: 13px;
 }
@@ -60,20 +75,25 @@
 .requests .request-form-status:last-child {
     margin-right: 0;
 }
+
 .requests .width-id {
     width: 35px;
 }
+
 .requests .width-des-par-com {
     width: 450px;
     box-sizing: border-box;
 }
-.requests .width-control-buttons{
+
+.requests .width-control-buttons {
     width: 15px;
 }
+
 .requests .overdue {
     color: #d7050c;
     font-weight: bold;
 }
+
 .requests .border {
     position: absolute;
     width: 100%;
@@ -84,6 +104,7 @@
     /*box-shadow: 0 -1px 0 #ccc;*/
     border-bottom: 1px solid #ccc;
 }
+
 .requests .request_history {
     height: 75px;
     overflow-y: scroll;
@@ -91,26 +112,32 @@
     left: 0;
     bottom: 0;
 }
+
 .requests .request_history .table {
     margin-bottom: 0;
 }
+
 .requests .request_history .table td {
     padding-top: 0;
     padding-bottom: 0;
     box-shadow: 0 1px 0 #ccc;
     border-top: none;
 }
+
 .requests .request_history p {
     margin: 4px 0 3px;
 }
+
 .requests .bookkeeper tr td:last-child {
     background-color: #fff;
 }
+
 .requests .set_payed_true,
 .requests .set_payed_false {
     margin: 2% 1% 0 1%;
     min-width: 48%;
 }
+
 .requests .panel > div:first-child .row:first-child div {
     width: 50%;
     padding-right: 4px;
@@ -119,14 +146,17 @@
 .requests .panel > div:first-child .row:first-child label {
     width: 100%;
 }
+
 .requests .panel > div:first-child .row:first-child div .dataTables_filter {
     width: 100%;
 }
+
 .requests .set_give_out {
     background-color: rgba(196, 89, 0, 0.75);
     color: #fff;
     border: 1px solid rgba(184, 84, 0, 0.75);
 }
+
 .requests .set_give_out:hover {
     background-color: rgba(196, 90, 0, 0.85);
 }

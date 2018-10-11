@@ -53,15 +53,15 @@
         {/eq}
     </ul>
     <div class="col-xs-6 date-select-block">
-        <div class=" col-xs-4">
-            <label for="from-date-request">
-                Від (дата / час)
+        <div class=" col-xs-6">
+            <label class="label-for-request-dp" for="from-date-request">
+                Від (дата)
             </label>
             <input class="form-control datetimepickerN" id="from-date-request" name="fromDateRequest">
         </div>
-        <div class=" col-xs-4">
-            <label for="to-date-request">
-                До (дата / час)
+        <div class=" col-xs-6">
+            <label class="label-for-request-dp" for="to-date-request">
+                До (дата)
             </label>
             <input class="form-control datetimepickerN" id="to-date-request" name="toDateRequest">
         </div>
