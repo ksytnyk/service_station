@@ -45,6 +45,16 @@ $(document).ready(function () {
         realProfit();
         lastChart = '#chart-real-profit';
     });
+    $('#done-but-not-pay').on('click', () => {
+        $('.toggle-finance').addClass('hidden');
+        doneButNotPay();
+        lastChart = '#done-but-not-pay';
+    });
+
+    $('.toggle-group').on('click', () => {
+        $('#finance-toggle').bootstrapToggle(toggle);
+        toggleShowTable();
+    });
 
     function chartRequest() {
         var data = $('#between-dates').serializeArray();
@@ -72,6 +82,7 @@ $(document).ready(function () {
                 $('#div-for-chart').empty().append('<canvas id="myChart" height="42"></canvas>');
                 $('#div-for-chart1').empty().append('<canvas id="myChart1" height="42"></canvas>');
                 $('#div-for-chart2').empty().append('<canvas id="myChart2" height="42"></canvas>');
+                $('#div-for-chart4').empty();
 
                 var ctx = document.getElementById("myChart").getContext('2d');
                 var ctx1 = document.getElementById("myChart1").getContext('2d');
@@ -149,6 +160,7 @@ $(document).ready(function () {
 
                 $('#div-for-chart1').empty();
                 $('#div-for-chart2').empty();
+                $('#div-for-chart4').empty();
                 $('#div-for-chart').empty().append(template + template1 + template2);
             });
         } else {
@@ -165,7 +177,7 @@ $(document).ready(function () {
         }
     }
 
-   function realProfit(){
+    function realProfit(){
         var data = $('#between-dates').serializeArray();
         var newData = {
             fromDateChart: setTimeToDate(data[0].value),
@@ -256,6 +268,7 @@ $(document).ready(function () {
                     $('#div-for-chart').empty();
                     $('#div-for-chart1').empty();
                     $('#div-for-chart2').empty();
+                    $('#div-for-chart4').empty();
                     $('#div-for-chart3').empty().append(profitTable, profitByDay);
                 }
             });
@@ -285,10 +298,70 @@ $(document).ready(function () {
         }
     }
 
-    $('.toggle-group').on('click', () => {
-        $('#finance-toggle').bootstrapToggle(toggle);
-       toggleShowTable();
-    });
+    doneButNotPay = () => {
+        var data = $('#between-dates').serializeArray();
+        var requestBody = {
+            fromDateChart: setTimeToDate(data[0].value),
+            toDateChart: setTimeToDate(data[1].value)
+        };
+
+        if (checkSequence(requestBody)) {
+            $.post("/admin/chart/done-not-pay",
+                requestBody,
+                (response) => {
+
+                    $('#div-for-chart1').empty();
+                    $('#div-for-chart2').empty();
+                    $('#div-for-chart').empty();
+                    $('#div-for-chart3').empty();
+
+                    var tableHead = '',
+                        tableBody1 = '',
+                        tableBody2 = '';
+
+                    tableHead = ''+
+                    '<h4>Виконані і не розраховані замовлення</h4>' +
+                    '<div class="panel panel-default">' +
+                    '<table class="table">' +
+                    '<thead>' +
+                    '<tr>' +
+                    '<th class="tac">ID</th>' +
+                    '<th class="tac">Назва замовлення</th>' +
+                    '<th class="tac">Клієнт</th>' +
+                    '<th class="tac">Сумма</th>' +
+                    '</tr>' +
+                    '</thead>' +
+                    '<tbody>';
+
+
+
+                   tableBody1 = '';
+                    for(var i = response.requests.length-1; i >= 0; i--){
+                        tableBody1 +=
+                                '<tr class="status-bgc-done">' +
+                                '<td class="tac">'+ response.requests[i].id +'</td>' +
+                                '<td class="tac">'+ response.requests[i].name +'</td>' +
+                                '<td class="tac"> '+ response.requests[i].user.userName + ' ' + response.requests[i].user.userSurname + ' / '+  response.requests[i].user.userPhone +' </td>' +
+                                '<td class="tac">'+ response.requests[i].cost +' грн</td>' +
+                                '</tr>'
+                    }
+
+                    tableBody2 = '' +
+                        '</tbody>' +
+                        '</table>' +
+                        '</div>';
+                    $('#div-for-chart4').empty().append(tableHead + tableBody1 + tableBody2);
+
+                })
+        }else {
+            showErrorAlert({
+                responseJSON: {
+                    errors: [{msg: 'Неправильний порядок дат.'}]
+                }
+            });
+
+        }
+    };
 
     function chartFinances() {
         var chart ='';
@@ -318,6 +391,7 @@ $(document).ready(function () {
                     $('#div-for-chart1').empty();
                     $('#div-for-chart2').empty();
                     $('#div-for-chart3').empty();
+                    $('#div-for-chart4').empty();
                     $('#div-for-chart').empty().append('<canvas id="myChart" class="'+ chart +'" height="125"></canvas>');
 
                     var ctx = document.getElementById("myChart").getContext('2d');
@@ -385,6 +459,7 @@ $(document).ready(function () {
             $('#div-for-chart3').empty();
         }
     }
+
     function checkSequence(data) {
         return data.toDateChart > data.fromDateChart;
     }

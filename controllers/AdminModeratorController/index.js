@@ -983,6 +983,14 @@ router.post('/chart/profit', (req, res) => {
     });
 });
 
+router.post('/chart/done-not-pay', (req, res) => {
+    Request.getAllRequestsForStat(req.body).then(requests => {
+        res.status(200).send({
+            requests
+        });
+    });
+});
+
 router.post('/get-task-prise/:id', (req, res) => {
     TaskType
         .getTaskTypeByID(req.params.id)

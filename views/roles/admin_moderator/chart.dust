@@ -41,6 +41,11 @@
                     Прибуток
                 </button>
             </div>
+            <div class="form-group col-xs-3">
+                <button type="button" class="btn col-xs-12" id="done-but-not-pay" style="margin-top: 25px;">
+                    Виконані не розраховані
+                </button>
+            </div>
              <div class="form-group col-xs-2 toggle-finance">
                  <input type="checkbox" id="finance-toggle" data-toggle="toggle" data-on="Таблиця" data-off="Графік">
              </div>
@@ -74,6 +79,7 @@
     <div id="div-for-chart1"></div>
     <div id="div-for-chart2"></div>
     <div id="div-for-chart3"></div>
+    <div id="div-for-chart4"></div>
 </div>
 
 {>"modal_windows/users/create_user"/}

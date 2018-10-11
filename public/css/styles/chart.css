@@ -1,6 +1,7 @@
 .chart .panel {
     border: 1px solid #aaa;
 }
+
 .chart h4 {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 15.5px;
@@ -11,14 +12,15 @@
     margin-top: 22px;
     margin-bottom: 22px;
 }
+
 .chart .status {
     width: 125px;
 }
 
-.datepicker-bookkeeper{
+.datepicker-bookkeeper {
     position: relative;
     left: 50%;
-    margin-bottom:-25px;
+    margin-bottom: -25px;
     z-index: 1;
     /*width:33.3%;*/
     transform: translate(-50%);
@@ -28,41 +30,52 @@
     background-color: rgba(255, 165, 0, 0.45) !important;
     color: #222;
 }
+
 .chart .status-bgc-processing {
     background-color: rgba(51, 122, 183, 0.3) !important;
     color: #222;
 }
+
 .chart .status-bgc-hold {
     background-color: rgba(255, 0, 0, 0.25) !important;
     color: #222;
 }
+
 .chart .status-bgc-done {
     background-color: rgba(0, 128, 0, 0.25) !important;
     color: #222;
 }
+
 .chart .status-bgc-canceled {
     background-color: rgba(0, 0, 0, 0.15) !important;
     color: #000;
 }
+
 .chart .table > thead > tr > th,
-.chart .table > tbody > tr > th ,
+.chart .table > tbody > tr > th,
 .chart .table > tbody > tr > td {
     border-bottom: 1px solid #aaa;
     border-right: 1px solid #aaa;
 }
+
 .chart .table > tbody > tr:last-child > th,
 .chart .table > tbody > tr:last-child > td {
     border-bottom: none;
 
 }
+
 .chart .table tr td:last-child,
 .chart .table tr th:last-child {
     border-right: none;
 }
 
-.profitChart{
+.profitChart {
     max-width: 66.6%;
     position: relative;
     left: 50%;
     transform: translate(-50%);
+}
+
+.toggle-finance {
+    margin-top: 25px;
 }

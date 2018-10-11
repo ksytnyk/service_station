@@ -350,6 +350,34 @@ Request.getAllPayedRequestForChart = (data) => {
     });
 };
 
+Request.getAllRequestsForStat = (data) => {
+    return new Promise((resolve, reject) => {
+        Request
+            .findAll({
+                attributes: [ 'id', 'cost', 'createdAt', 'status', 'payed', 'payedDate', 'name'],
+                include: [
+                    {
+                        model: User
+                    }
+                ],
+                where: {
+                    createdAt: {
+                        $between: [new Date(data.fromDateChart), new Date(data.toDateChart)]
+                    },
+                    payed: false,
+                    status: status.DONE
+                }
+            })
+            .then(requests => {
+                resolve(requests);
+            })
+            .catch(err => {
+                console.warn(err);
+                reject(err);
+            });
+    });
+}
+
 Request.getRequests = function (carMarkk, carModel) {
     return new Promise((resolve, reject) => {
         Request
