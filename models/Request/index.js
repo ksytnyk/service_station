@@ -3,7 +3,6 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../connection');
 const User = require('../User');
-const Task = require('../Task');
 const RequestHistory = require('../RequestHistory');
 const status = require('../../constants/status');
 const requestTypesFactory = require('../../helpers/requestTypesFactory');
