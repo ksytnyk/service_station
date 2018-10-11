@@ -181,13 +181,13 @@ $(document).ready(function () {
                     var today = new Date();
 
                     var profitByDayHead =  '' +
-                        '<h4>Прибуток по дням</h4>' +
+                        '<h4>По днях</h4>' +
                         '<div class="panel panel-default">' +
                         '<table class="table">' +
                         '<thead>' +
                         '<tr>' +
                         '<th class="tac">День</th>' +
-                        '<th class="tac">Розраховано по дням</th>' +
+                        '<th class="tac">Розраховано замовлень</th>' +
                         '<th class="tac">Прибуток</th>' +
                         '</tr>' +
                         '</thead>' +
@@ -204,13 +204,13 @@ $(document).ready(function () {
                                  '<tr class="status-bgc-done">' +
                          '<td class="tac">'+ dates[i] +'</td>' +
                          '<td class="tac"> '+ counts[i] +' </td>' +
-                         '<td class="tac">'+ money[i] +'грн</td>' +
+                         '<td class="tac">'+ money[i] +' грн</td>' +
                          '</tr>'
                              :
                              '<tr>' +
                              '<td class="tac" class="tac">'+ dates[i] +'</td>' +
                              '<td class="tac"> '+ counts[i] +' </td>' +
-                             '<td class="tac">'+ money[i] +'грн</td>' +
+                             '<td class="tac">'+ money[i] +' грн</td>' +
                              '</tr>';
                      }
 
@@ -220,7 +220,7 @@ $(document).ready(function () {
                         '</div>';
 
                     var totalProfitHead = '' +
-                        '<h4>Прибуток</h4>' +
+                        '<h4>Всього</h4>' +
                         '<div class="panel panel-default">' +
                         '<table class="table">' +
                         '<thead>' +

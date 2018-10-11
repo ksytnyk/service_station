@@ -48,20 +48,21 @@ $(document).ready(() => {
     }
 
     function renderTypes(types, idItem) {
+        if (Array.isArray(types)) {
+            types.forEach(item => {
+                let option = "<option value='" + item.id + "'",
+                    option1 = "",
+                    option2 = ">" + item.transportTypeName + "</option>";
 
-        types.forEach(item => {
-            let option = "<option value='" + item.id + "'",
-                option1 = "",
-                option2 = ">" + item.transportTypeName + "</option>";
+                if (+($('#typeOfCar').attr('default-value')) === item.id) {
+                    option1 = " selected";
+                }
 
-            if ( +($('#typeOfCar').attr('default-value')) === item.id ) {
-                option1 = " selected";
-            }
+                $("#typeOfCar" + idItem).append(option + option1 + option2);
+            });
 
-            $("#typeOfCar" + idItem).append(option + option1 + option2);
-        });
-
-        $("#typeOfCar" + idItem).select2();
+            $("#typeOfCar" + idItem).select2();
+        }
     }
 
     let link;
@@ -80,11 +81,13 @@ $(document).ready(() => {
     function renderMarkks(markk, idItem) {
         $("#markk" + idItem).append("<option value='default'>Оберіть марку транспорту</option>");
 
-        markk.forEach(item => {
-            $("#markk" + idItem).append("<option value='" + item.id + "'>" + item.transportMarkkName + "</option>")
-        });
+        if (Array.isArray(markk)) {
+            markk.forEach(item => {
+                $("#markk" + idItem).append("<option value='" + item.id + "'>" + item.transportMarkkName + "</option>")
+            });
 
-        $("#markk" + idItem).select2();
+            $("#markk" + idItem).select2();
+        }
     }
 
     function getModels(model, idItem) {
@@ -101,9 +104,11 @@ $(document).ready(() => {
     function renderModels(models, idItem) {
         $("#model" + idItem).append("<option value='default'>Оберіть модель транспорту</option>");
 
-        models.forEach(item => {
-            $("#model" + idItem).append("<option value='" + item.id + "'>" + item.transportModelName + "</option>")
-        });
-        $("#model" + idItem).select2();
+        if (Array.isArray(models)) {
+            models.forEach(item => {
+                $("#model" + idItem).append("<option value='" + item.id + "'>" + item.transportModelName + "</option>")
+            });
+            $("#model" + idItem).select2();
+        }
     }
 })

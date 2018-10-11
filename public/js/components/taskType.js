@@ -9,21 +9,24 @@ $(document).ready(function () {
      * @param elementId - id element for insert detail must be id html selector
      */
     var getDetailType = (typeCar, mark, model, elementId) => {
-         var body = {
-                typeOfCar: checkFieldValue(typeCar),
-                carMarkk: checkFieldValue(mark),
-                carModel: checkFieldValue(model)
-            };
-         if(!body.carModel){
-             delete body['carModel'];
-         }
-        if(!body.carMarkk){
+        var body = {
+            typeOfCar: checkFieldValue(typeCar),
+            carMarkk: checkFieldValue(mark),
+            carModel: checkFieldValue(model)
+        };
+
+        if (!body.carModel) {
+            delete body['carModel'];
+        }
+
+        if (!body.carMarkk) {
             delete body['carMarkk'];
         }
-        if(!body.typeOfCar){
+
+        if (!body.typeOfCar) {
             console.warn('Type of car model and mark transport is empty');
             return;
-        }else{
+        } else {
             $.ajax({
                 url: getRole(window.location.pathname) + '/get-task-types',
                 type: 'post',
@@ -103,20 +106,20 @@ $(document).ready(function () {
         event.preventDefault();
         //var formDataArray = $('#create-type-task-form').serializeArray();
         let body = {
-            typeName:  "", articleCode: "",
-            typeOfCar: "", carMarkk:  "", carModel:  "",
-            planedExecutorID:  "", estimationTime:  "",
+            typeName: "", articleCode: "",
+            typeOfCar: "", carMarkk: "", carModel: "",
+            planedExecutorID: "", estimationTime: "",
             cost: '', details: []
         };
         body = {
-            typeName:  $('#create-form-type-name').val(),
+            typeName: $('#create-form-type-name').val(),
             articleCode: $('#create-form-type-article').val(),
             typeOfCar: $('#typeOfCar1').val(),
-            carMarkk:  $('#markk1').val(),
-            carModel:  $('#model1').val(),
+            carMarkk: $('#markk1').val(),
+            carModel: $('#model1').val(),
             planedExecutorID: $('#planed-executor-create-tasktype').val(),
-            estimationTime:  $('#estimation-time-create-tasktype').val(),
-            cost:  $('#cost-create-tasktype').val(),
+            estimationTime: $('#estimation-time-create-tasktype').val(),
+            cost: $('#cost-create-tasktype').val(),
             details: []
         };
 
@@ -146,7 +149,7 @@ $(document).ready(function () {
     });
 
     // bind cancel button with clear create task-type form function
-    $( '.cancel-create-task-type').on('click', () => {
+    $('.cancel-create-task-type').on('click', () => {
         clearCreateTaskTypeForm();
     });
 
@@ -157,10 +160,11 @@ $(document).ready(function () {
         $('.form-control').val('');
         $('#detail-type-tbody').empty();
         $('#detail-type-select').empty();
-        $('#typeOfCar1').val('first').change();
-        $('#markk1').val('first').change();
-        $('#model1').val('first').change();
-        $('.task-planed-executor-id').val('first').change();
+        $('#typeOfCar1').val('').change();
+        $('#markk1').empty();
+        $('#model1').empty();
+        $('#detail-type').val('').change();
+        $('.task-planed-executor-id').val('').change();
 
     };
 
@@ -171,6 +175,8 @@ $(document).ready(function () {
      */
     var pushTaskTypeInTable = (task, tableBodyID) => {
         if (task && tableBodyID) {
+            $('.dataTables_empty').parent().remove();
+
             var taskModel = {
                 id: task.id ? task.id : '',
                 typeName: task.typeName ? task.typeName : '',
@@ -188,12 +194,12 @@ $(document).ready(function () {
                 service = '',
                 empty = '';
             task.taskDetail.forEach(detail => {
-                if(detail.detailType ===1){
+                if (detail.detailType === 1) {
                     service += ' ' + detail.detail.detailName + ', ';
-                }else if(detail.detailType === 2) {
+                } else if (detail.detailType === 2) {
                     client += ' ' + detail.detail.detailName + ', ';
-                }else {
-                    empty += ' ' + detail.detail.detailName+ ', ';
+                } else {
+                    empty += ' ' + detail.detail.detailName + ', ';
                 }
             })
 
@@ -209,17 +215,17 @@ $(document).ready(function () {
                 '<td class="tac">' + taskModel.typeName + '</td>' +
                 '<td class="tac">' + taskModel.articleCode + '</td>' +
                 '<td class="tac"> ' +
-                    '<span class="transport-column"> ' + taskModel.transportTypeName + '</span>' +
-                    '<span class="transport-column"> ' + taskModel.transportMarkkName + '</span>' +
-                    '<span class="transport-column"> ' + taskModel.transportModelName + '</span>' +
+                '<span class="transport-column"> ' + taskModel.transportTypeName + '</span>' +
+                '<span class="transport-column"> ' + taskModel.transportMarkkName + '</span>' +
+                '<span class="transport-column"> ' + taskModel.transportModelName + '</span>' +
                 '</td>' +
                 '<td class="tac">' + taskModel.cost + '</td>' +
                 '<td class="tac">' + taskModel.userSurname + ' ' + taskModel.userName + '</td>' +
                 '<td class="tac">' + taskModel.estimationTime + '</td>' +
                 '<td class=""> ' +
-                '<span class="transport-column"><strong>Запчастини сервісу:</strong> ' + service +'</span>' +
-                '<span class="transport-column"><strong>Запчастини клієнта:</strong> '+ client +'</span>' +
-                ' <span class="transport-column"><strong>Відсутні запчастини: </strong>'+ empty +'</span></td>' +
+                '<span class="transport-column"><strong>Запчастини сервісу:</strong> ' + service + '</span>' +
+                '<span class="transport-column"><strong>Запчастини клієнта:</strong> ' + client + '</span>' +
+                ' <span class="transport-column"><strong>Відсутні запчастини: </strong>' + empty + '</span></td>' +
                 ' </td>' +
                 '<td class="tac">' +
                 '<a href="#" class="update-task-type modal-window-link" data-toggle="modal" data-target="#updateTaskTypeFormModal"' +
@@ -250,7 +256,7 @@ $(document).ready(function () {
      * @param details - details array
      * @param tableBodyID - table body id like '#table-body-id'
      */
-     pushDetailsToTable = (details, tableBodyID) => {
+    pushDetailsToTable = (details, tableBodyID) => {
         $(tableBodyID).empty();
         var rows = [];
         details.forEach(detail => {
@@ -305,7 +311,7 @@ $(document).ready(function () {
             $('#update-form-planed-executor-id').val($(this).data('planed-executor-id')).change();
             $('#update-form-estimation-time').val($(this).data('estimation-time'));
             $('#update-form-cost').val($(this).data('cost'));
-
+            $('#update-detail-type').val('').change();
             //if user change model car get list details and insert to
             // detail selector in UPDATE task type page
             getDetailType($("#typeOfCar").val(), $("#markk").val(), $("#model").val(), '#update-detail-type-select');
@@ -318,9 +324,9 @@ $(document).ready(function () {
      * @returns {*} return empty string ""
      */
     var checkFieldValue = (value) => {
-        if(value === null || value === undefined || value === "undefined" || value === 'default' || !value ){
-            return "" ;
-        }else{
+        if (value === null || value === undefined || value === "undefined" || value === 'default' || !value) {
+            return "";
+        } else {
             return value;
         }
     };
@@ -332,21 +338,21 @@ $(document).ready(function () {
         event.preventDefault();
 
         var requestBody = {
-            id: "" ,  typeName:  "" , articleCode: "" , typeOfCar: "",
-            carMarkk: "", carModel:  "", planedExecutorID: "",
+            id: "", typeName: "", articleCode: "", typeOfCar: "",
+            carMarkk: "", carModel: "", planedExecutorID: "",
             estimationTime: "", cost: "",
             details: [], deleteDetail: [], changeDetail: [],
         };
         requestBody = {
-            id: checkFieldValue($('#update-form-id').val()) ,
-            typeName: checkFieldValue($('#update-form-type-name').val()) ,
-            articleCode: checkFieldValue( $('#update-form-type-article').val()) ,
-            typeOfCar:  checkFieldValue($('#typeOfCar').val()) ,
-            carMarkk:   checkFieldValue($('#markk').val()) ,
-            carModel:   checkFieldValue($('#model').val()) ,
+            id: checkFieldValue($('#update-form-id').val()),
+            typeName: checkFieldValue($('#update-form-type-name').val()),
+            articleCode: checkFieldValue($('#update-form-type-article').val()),
+            typeOfCar: checkFieldValue($('#typeOfCar').val()),
+            carMarkk: checkFieldValue($('#markk').val()),
+            carModel: checkFieldValue($('#model').val()),
             planedExecutorID: checkFieldValue($('#update-form-planed-executor-id').val()),
-            estimationTime:   checkFieldValue($('#update-form-estimation-time').val()),
-            cost:  checkFieldValue($('#update-form-cost').val()),
+            estimationTime: checkFieldValue($('#update-form-estimation-time').val()),
+            cost: checkFieldValue($('#update-form-cost').val()),
             details: JSON.stringify(detailArray),
             deleteDetail: JSON.stringify(deleteDetailArray),
             changeDetail: JSON.stringify(changeDetailArray),
@@ -359,28 +365,28 @@ $(document).ready(function () {
             success: function (data) {
 
                 showSuccessAlert('Редагування задачі пройшло успішно.');
-                if(data.user){
-                    for( var key in data.user){
+                if (data.user) {
+                    for (var key in data.user) {
                         data.user[key] = checkFieldValue(data.user[key]);
                     }
-                }else{
+                } else {
                     data.user = {
                         userSurname: "",
                         userName: ""
                     }
                 }
-                if(data.taskType){
-                    for( var key in data.taskType){
+                if (data.taskType) {
+                    for (var key in data.taskType) {
                         data.taskType[key] = checkFieldValue(data.taskType[key]);
                     }
-                    if(!data.taskType.transportModel.transportModelName) {
-                        data.taskType.transportModel = {transportModelName : ""}
+                    if (!data.taskType.transportModel.transportModelName) {
+                        data.taskType.transportModel = {transportModelName: ""}
                     }
-                    if(!data.taskType.transportType.transportTypeName) {
-                        data.taskType.transportType = {transportTypeName : ""}
+                    if (!data.taskType.transportType.transportTypeName) {
+                        data.taskType.transportType = {transportTypeName: ""}
                     }
-                    if(!data.taskType.transportMarkk.transportMarkkName) {
-                        data.taskType.transportMarkk = {transportMarkkName : ""}
+                    if (!data.taskType.transportMarkk.transportMarkkName) {
+                        data.taskType.transportMarkk = {transportMarkkName: ""}
                     }
                 }
 
@@ -394,16 +400,16 @@ $(document).ready(function () {
                 var newTaskType,
                     newTaskType1 = '',
                     newTaskType2 = '</td>',
-                client = '',
-                service = '',
-                empty = '';
+                    client = '',
+                    service = '',
+                    empty = '';
                 data.taskType.taskDetail.forEach(detail => {
-                    if(detail.detailType ===1){
+                    if (detail.detailType === 1) {
                         service += ' ' + detail.detail.detailName + ', ';
-                    }else if(detail.detailType === 2) {
+                    } else if (detail.detailType === 2) {
                         client += ' ' + detail.detail.detailName + ', ';
-                    }else {
-                        empty += ' ' + detail.detail.detailName+ ', ';
+                    } else {
+                        empty += ' ' + detail.detail.detailName + ', ';
                     }
                 })
 
@@ -412,17 +418,17 @@ $(document).ready(function () {
                     '<td class="tac">' + data.taskType.typeName + '</td>' +
                     '<td class="tac">' + data.taskType.articleCode + '</td>' +
                     '<td class="tac"> ' +
-                        '<span class="transport-column">' + data.taskType.transportType.transportTypeName + ' </span>' +
-                        '<span class="transport-column">' + data.taskType.transportMarkk.transportMarkkName + ' </span>' +
-                        '<span class="transport-column">' + data.taskType.transportModel.transportModelName + ' </span>' +
+                    '<span class="transport-column">' + data.taskType.transportType.transportTypeName + ' </span>' +
+                    '<span class="transport-column">' + data.taskType.transportMarkk.transportMarkkName + ' </span>' +
+                    '<span class="transport-column">' + data.taskType.transportModel.transportModelName + ' </span>' +
                     '</td>' +
                     '<td class="tac">' + data.taskType.cost + '</td>' +
                     '<td class="tac">' + data.user.userSurname + ' ' + data.user.userName + '</td>' +
                     '<td class="tac">' + data.taskType.estimationTime + '</td>' +
                     '<td class=""> ' +
-                    '<span class="transport-column"><strong>Запчастини сервісу:</strong> ' + service +'</span>' +
-                    '<span class="transport-column"><strong>Запчастини клієнта:</strong> '+ client +'</span>' +
-                    ' <span class="transport-column"><strong>Відсутні запчастини: </strong>'+ empty +'</span></td>' +
+                    '<span class="transport-column"><strong>Запчастини сервісу:</strong> ' + service + '</span>' +
+                    '<span class="transport-column"><strong>Запчастини клієнта:</strong> ' + client + '</span>' +
+                    ' <span class="transport-column"><strong>Відсутні запчастини: </strong>' + empty + '</span></td>' +
                     '<td class="tac">' +
                     '<a href="#" class="update-task-type modal-window-link"' +
                     ' data-toggle="modal" data-target="#updateTaskTypeFormModal" title="Редагувати задачу"' +
