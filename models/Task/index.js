@@ -260,7 +260,6 @@ Task.getTaskByExecutorId = function (findBy) {
                 where: findBy
             })
             .then(result => {
-               // console.log(result);
                 resolve(result)
             })
             .catch(err => {
