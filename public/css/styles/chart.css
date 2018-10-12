@@ -51,6 +51,17 @@
     color: #000;
 }
 
+.chart .forecast {
+    background-color: #ba72d2;
+    color: #fff;
+    border: 1px solid #a262b8;
+}
+
+.chart .forecast:hover {
+    background-color: #a262b8;
+    border: 1px solid #8c559f;
+}
+
 .chart .table > thead > tr > th,
 .chart .table > tbody > tr > th,
 .chart .table > tbody > tr > td {
@@ -76,6 +87,6 @@
     transform: translate(-50%);
 }
 
-.toggle-finance {
+.toggle {
     margin-top: 25px;
 }

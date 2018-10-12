@@ -8,69 +8,89 @@
     <form role="form" id="between-dates">
 
 
-{@ne key=typeUser value=6}
-        <div class="form-group col-xs-2">
-            <label for="from-date-for-statistic">
-                Від (дата)
-            </label>
-            <input class="form-control datetimepickerN" id="from-date-for-statistic" name="fromDateChart">
-        </div>
-        <div class="form-group col-xs-2">
-            <label for="to-date-for-statistic">
-                До (дата)
-            </label>
-            <input class="form-control datetimepickerN" id="to-date-for-statistic" name="toDateChart">
-        </div>
-            <div class="form-group col-xs-2">
-                <button type="button" class="btn btn-primary col-xs-12" id="chart-request" style="margin-top: 25px;">
-                    Замовлення
-                </button>
-            </div>
-            <div class="form-group col-xs-2">
-                <button type="button" class="btn btn-warning col-xs-12" id="chart-tasks" style="margin-top: 25px;">
-                    Задачі
-                </button>
-            </div>
-            <div class="form-group col-xs-2">
-                <button type="button" class="btn btn-success col-xs-12" id="chart-finances" style="margin-top: 25px;">
-                    Фінанси
-                </button>
-            </div>
-            <div class="form-group col-xs-2">
-                <button type="button" class="btn col-xs-12" id="chart-real-profit" style="margin-top: 25px;">
-                    Прибуток
-                </button>
-            </div>
-            <div class="form-group col-xs-3">
-                <button type="button" class="btn btn-danger col-xs-12" id="done-but-not-pay" style="margin-top: 25px;">
-                    Виконані не розраховані
-                </button>
-            </div>
-            <div class="form-group col-xs-2 toggle-finance">
-                <input type="checkbox" id="finance-toggle" data-toggle="toggle" data-on="Таблиця" data-off="Графік">
-            </div>
-
-        {/ne}
-        {@eq key=typeUser value=6}
-            <div class="col-xs-6 datepicker-bookkeeper">
-                <div class="form-group col-xs-6">
+        {@ne key=typeUser value=6}
+        <div class="form-group col-xs-4">
+            <div class="row">
+                <div class="col-xs-6">
                     <label for="from-date-for-statistic">
                         Від (дата)
                     </label>
-                    <input class="form-control datetimepickerN" id="from-date-for-statistic" name="fromDateChart">
+                    <input class="form-control datetimepickerN"
+                           id="from-date-for-statistic"
+                           name="fromDateChart"/>
                 </div>
-                <div class="form-group col-xs-6">
+                <div class="col-xs-6">
                     <label for="to-date-for-statistic">
                         До (дата)
                     </label>
-                    <input class="form-control datetimepickerN" id="to-date-for-statistic" name="toDateChart">
+                    <input class="form-control datetimepickerN"
+                           id="to-date-for-statistic"
+                           name="toDateChart"/>
+                </div>
+                <div class="col-xs-6">
+                    <input type="checkbox"
+                           id="finance-toggle"
+                           data-toggle="toggle"
+                           data-on="Таблиця"
+                           data-off="Графік"/>
                 </div>
             </div>
-            <div class="form-group">
-                <button type="button" class="btn col-xs-12" id="chart-real-profit" style="visibility: hidden; margin-top: 25px;">
-                    Прибуток
-                </button>
+        </div>
+        <div class="form-group col-xs-8">
+            <div class="row">
+                <div class="col-xs-4">
+                    <button type="button" class="btn btn-primary col-xs-12" id="chart-request"
+                            style="margin-top: 25px;">
+                        Замовлення
+                    </button>
+                </div>
+                <div class="col-xs-4">
+                    <button type="button" class="btn btn-warning col-xs-12" id="chart-tasks" style="margin-top: 25px;">
+                        Задачі
+                    </button>
+                </div>
+                <div class="col-xs-4">
+                    <button type="button" class="btn forecast col-xs-12" id="chart-finances"
+                            style="margin-top: 25px;">
+                        Прогнозований прибуток
+                    </button>
+                </div>
+                <div class="col-xs-4">
+                    <button type="button" class="btn btn-success col-xs-12" id="chart-real-profit" style="margin-top: 25px;">
+                        Реальний прибуток
+                    </button>
+                </div>
+                <div class="col-xs-4">
+                    <button type="button" class="btn btn-danger col-xs-12" id="done-but-not-pay"
+                            style="margin-top: 25px;">
+                        Виконані не розраховані
+                    </button>
+                </div>
             </div>
+        </div>
+
+        {/ne}
+        {@eq key=typeUser value=6}
+        <div class="col-xs-6 datepicker-bookkeeper">
+            <div class="form-group col-xs-6">
+                <label for="from-date-for-statistic">
+                    Від (дата)
+                </label>
+                <input class="form-control datetimepickerN" id="from-date-for-statistic" name="fromDateChart">
+            </div>
+            <div class="form-group col-xs-6">
+                <label for="to-date-for-statistic">
+                    До (дата)
+                </label>
+                <input class="form-control datetimepickerN" id="to-date-for-statistic" name="toDateChart">
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="button" class="btn col-xs-12" id="chart-real-profit"
+                    style="visibility: hidden; margin-top: 25px;">
+                Прибуток
+            </button>
+        </div>
         {/eq}
     </form>
     <div id="statistic-table"></div>

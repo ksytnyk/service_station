@@ -24,29 +24,29 @@ $(document).ready(function () {
     });
 
     $('#chart-request').on('click', function () {
-        $('.toggle-finance').addClass('hidden');
+        $('.toggle').addClass('hidden');
         chartRequest();
         lastChart = '#chart-request';
     });
 
     $('#chart-tasks').on('click', function () {
-        $('.toggle-finance').addClass('hidden');
+        $('.toggle').addClass('hidden');
         chartTasks();
         lastChart = '#chart-tasks';
     });
 
     $('#chart-finances').on('click', function () {
-        $('.toggle-finance').removeClass('hidden');
+        $('.toggle').removeClass('hidden');
         chartFinances();
         lastChart = '#chart-finances';
     });
     $('#chart-real-profit').on('click', () => {
-        $('.toggle-finance').addClass('hidden');
+        $('.toggle').addClass('hidden');
         realProfit();
         lastChart = '#chart-real-profit';
     });
     $('#done-but-not-pay').on('click', () => {
-        $('.toggle-finance').addClass('hidden');
+        $('.toggle').addClass('hidden');
         doneButNotPay();
         lastChart = '#done-but-not-pay';
     });
@@ -79,9 +79,9 @@ $(document).ready(function () {
             var title = ["Нові замовлення", "Виконані замовлення", "Анульовані замовлення"];
 
             $.post("/admin/chart/requests", newData, function (result) {
-                $('#div-for-chart').empty().append('<canvas id="myChart" height="42"></canvas>');
-                $('#div-for-chart1').empty().append('<canvas id="myChart1" height="42"></canvas>');
-                $('#div-for-chart2').empty().append('<canvas id="myChart2" height="42"></canvas>');
+                $('#div-for-chart').empty().append('<h4>Нові замовлення</h4><canvas id="myChart" height="42"></canvas>');
+                $('#div-for-chart1').empty().append('<h4>Виконані замовлення</h4><canvas id="myChart1" height="42"></canvas>');
+                $('#div-for-chart2').empty().append('<h4>Анульовані замовлення</h4><canvas id="myChart2" height="42"></canvas>');
                 $('#div-for-chart4').empty();
 
                 var ctx = document.getElementById("myChart").getContext('2d');
@@ -91,9 +91,9 @@ $(document).ready(function () {
                 Chart.defaults.global.defaultFontColor = '#333';
                 Chart.defaults.global.defaultFontSize = 14;
 
-                new Chart(ctx, setChart(result.data.dates, result.data.newRequests, borderColor[0], pointBackgroundColor[0], title[0], title[0]));
-                new Chart(ctx1, setChart(result.data.dates, result.data.doneRequests, borderColor[1], pointBackgroundColor[1], title[1], title[1]));
-                new Chart(ctx2, setChart(result.data.dates, result.data.canceledRequests, borderColor[2], pointBackgroundColor[2], title[2], title[2]));
+                new Chart(ctx, setChart(result.data.dates, result.data.newRequests, borderColor[0], pointBackgroundColor[0], title[0]));
+                new Chart(ctx1, setChart(result.data.dates, result.data.doneRequests, borderColor[1], pointBackgroundColor[1], title[1]));
+                new Chart(ctx2, setChart(result.data.dates, result.data.canceledRequests, borderColor[2], pointBackgroundColor[2], title[2]));
             });
         } else {
             showErrorAlert({
@@ -392,7 +392,7 @@ $(document).ready(function () {
                     $('#div-for-chart2').empty();
                     $('#div-for-chart3').empty();
                     $('#div-for-chart4').empty();
-                    $('#div-for-chart').empty().append('<canvas id="myChart" class="'+ chart +'" height="125"></canvas>');
+                    $('#div-for-chart').empty().append('<h4>Прогнозований прибуток</h4><canvas id="myChart" class="'+ chart +'" height="125"></canvas>');
 
                     var ctx = document.getElementById("myChart").getContext('2d');
 
@@ -402,7 +402,7 @@ $(document).ready(function () {
                     result.data.dates.forEach(item => {
                        datesForCahart.push(item.slice(8,10));
                     });
-                    new Chart(ctx, setChart(datesForCahart, result.data.money, '#398439', '#5dd65d', "Фінансова статистика", "Всього"));
+                    new Chart(ctx, setChart(datesForCahart, result.data.money, '#8c559f', '#ba72d2', "Всього"));
                      tableHead =  '<div class="table-finance  '+ table +'">' +
                         '<h4>Статистика по днях</h4>' +
                         '<div class="panel panel-default">' +
@@ -464,7 +464,7 @@ $(document).ready(function () {
         return data.toDateChart > data.fromDateChart;
     }
 
-    function setChart(labels, data, borderColor, pointBgc, title, label) {
+    function setChart(labels, data, borderColor, pointBgc, label) {
         return {
             type: 'line',
             data: {
@@ -490,13 +490,6 @@ $(document).ready(function () {
                 },
                 legend: {
                     display: false
-                },
-                title: {
-                    display: true,
-                    fontSize: 16,
-                    padding: 10,
-                    fontColor: '#333',
-                    text: title
                 },
                 elements: {
                     line: {
