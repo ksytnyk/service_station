@@ -42,13 +42,14 @@
                 </button>
             </div>
             <div class="form-group col-xs-3">
-                <button type="button" class="btn col-xs-12" id="done-but-not-pay" style="margin-top: 25px;">
+                <button type="button" class="btn btn-danger col-xs-12" id="done-but-not-pay" style="margin-top: 25px;">
                     Виконані не розраховані
                 </button>
             </div>
-             <div class="form-group col-xs-2 toggle-finance">
-                 <input type="checkbox" id="finance-toggle" data-toggle="toggle" data-on="Таблиця" data-off="Графік">
-             </div>
+            <div class="form-group col-xs-2 toggle-finance">
+                <input type="checkbox" id="finance-toggle" data-toggle="toggle" data-on="Таблиця" data-off="Графік">
+            </div>
+
         {/ne}
         {@eq key=typeUser value=6}
             <div class="col-xs-6 datepicker-bookkeeper">
