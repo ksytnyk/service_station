@@ -56,7 +56,7 @@
                     {#taskDetail}
                         {#detail}
                             {@eq key=detailType value=1}
-                                {detailName},
+                                {detailName} - {detailQuantity},
                             {/eq}
                         {/detail}
                     {/taskDetail}
@@ -68,7 +68,7 @@
                 {#taskDetail}
                     {#detail}
                         {@eq key=detailType value=2}
-                            {detailName},
+                            {detailName} - {detailQuantity},
                         {/eq}
                     {/detail}
                 {/taskDetail}
@@ -80,7 +80,7 @@
                     {#taskDetail}
                         {#detail}
                             {@eq key=detailType value=3}
-                                {detailName},
+                                {detailName} - {detailQuantity},
                             {/eq}
                         {/detail}
                     {/taskDetail}

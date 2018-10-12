@@ -405,11 +405,11 @@ $(document).ready(function () {
                     empty = '';
                 data.taskType.taskDetail.forEach(detail => {
                     if (detail.detailType === 1) {
-                        service += ' ' + detail.detail.detailName + ', ';
+                        service += ' ' + detail.detail.detailName + ' - ' +detail.detailQuantity + ', ';
                     } else if (detail.detailType === 2) {
-                        client += ' ' + detail.detail.detailName + ', ';
+                        client += ' ' + detail.detail.detailName + ' - ' + detail.detailQuantity + ', ';
                     } else {
-                        empty += ' ' + detail.detail.detailName + ', ';
+                        empty += ' ' + detail.detail.detailName + ' - ' + detail.detailQuantity + ', ';
                     }
                 })
 

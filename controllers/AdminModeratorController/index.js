@@ -1194,11 +1194,11 @@ router.put('/update-task-type/:id', validation.createAndUpdateTaskType(), async 
         await Models.TaskDetail.createTaskTypeDetail(req.params.id, JSON.parse(req.body.details));
         await Models.TaskDetail.updateDetailType(JSON.parse(req.body.changeDetail));
         await Models.TaskDetail.deleteTaskDetailByParam('id', JSON.parse(req.body.deleteDetail));
-        const taksTypeChaged = await TaskType.getTaskTypeByID(req.params.id);
+        const taskTypeChanged = await TaskType.getTaskTypeByID(req.params.id);
 
         res.status(200).send({
             user,
-            taskType: taksTypeChaged[0]
+            taskType: taskTypeChanged[0]
         });
     } catch (errors) {
         console.warn(errors);
