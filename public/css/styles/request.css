@@ -12,13 +12,19 @@
 }
 
 .date-select-block input.datetimepickerN {
-    width: 69%;
+    width: 68%;
     float: right;
+}
+
+.date-field {
+    padding-right: 0;
+    padding-left: 0;
 }
 
 .label-for-request-dp {
     margin-top: 6px;
     font-weight: normal;
+    margin-left: 16px;
 }
 
 .requests .requests_id {

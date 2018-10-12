@@ -258,14 +258,14 @@ span[disabled]{
 .panel div.dataTables_wrapper div.dataTables_filter input {
     font-size: 16px;
     height: 30px;
-    width: 80%;
+    width: 83%;
 }
 .panel div.dataTables_wrapper div.dataTables_filter label{
     width:100%;
     margin-bottom: 15px;
 }
 a.clean-search{
-    width: 2%;
+    width: 0;
     position: absolute;
     right: 38px;
     top: 4px;

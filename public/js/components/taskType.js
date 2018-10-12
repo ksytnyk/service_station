@@ -48,6 +48,7 @@ $(document).ready(function () {
      * @param taskId
      */
     var getDetailByTypeTaskID = (taskId) => {
+        $('#update-detail-type-select').empty();
         if (taskId) {
             $.ajax({
                 url: getRole(window.location.pathname) + '/details-of-task-type/' + taskId,

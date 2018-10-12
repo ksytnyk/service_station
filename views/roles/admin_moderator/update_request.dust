@@ -45,7 +45,7 @@
             <div class="input-group disabled-plus disabled">
                 <select class="form-control add_select2 disable_input" name="customerID" id="customers" disabled>
                     {#customers}
-                    <option value="{id}" {@eq key=id value=customer.id}selected{/eq}>{userSurname} {userName}</option>
+                    <option value="{id}" {@eq key=id value=customer.id}selected{/eq}>{userCompanyName} / {userSurname} {userName} / {userPhone}</option>
                     {/customers}
                 </select>
                 <span class="input-group-addon disable_input plus" id="add_new_user" disabled>
