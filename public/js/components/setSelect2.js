@@ -12,10 +12,10 @@ $(document).ready(function () {
     });
     $('.create_request .select2').css({
         'width': '99%',
-        'max-width': '257px'
+        'max-width': '220px'
     });
     $('.update_request .select2').css({
         'width': '99%',
-        'max-width': '257px'
+        'max-width': '220px'
     });
 });

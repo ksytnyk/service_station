@@ -140,13 +140,16 @@ $(document).ready(function () {
         }
     }
 
-    $('#createUserFormModal input.bfh-phone').keypress(function () {
+    /**
+     * Copy phone number to login and password input
+     */
+    $('#createUserFormModal input.bfh-phone').on('keyup', function () {
         let phone = $('#createUserFormModal input.bfh-phone').val();
         let password = $('input[name=userLogin]');
         let login = $('input[name=userPassword]');
         password.val(phone);
         login.val(phone);
-    })
+    });
 
     /**
      * check field user create form and if is valid, send data to server
